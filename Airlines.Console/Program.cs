@@ -4,187 +4,142 @@ namespace Airlines
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var flights = Array.Empty<string>();
-            var airlines = Array.Empty<string>();
             var airports = Array.Empty<string>();
+            var airlines = Array.Empty<string>();
+            var flights = Array.Empty<string>();
+
+            ReadInput("Airport", ref airports);
+            ReadInput("Airline", ref airlines);
+            ReadInput("Flight", ref flights);
+
+            PrintData("Airport", airports);
+            PrintData("Airlines", airlines);
+            PrintData("Flights", flights);
+        }
+
+        static void ReadInput(string type, ref string[] data)
+        {
+            Console.WriteLine($"Enter {type} name, or type 'done' to finish:\n");
 
             while (true)
             {
-                string airport = Console.ReadLine();
+                string input = Console.ReadLine();
 
-                if (ValidateAirport(airport))
+                if (input.ToLower() == "done")
                 {
-                    airports = AddAirport(airport, airports);
+                    Console.WriteLine();
+                    break;
                 }
 
-                PrintAirports(airports);
-            }
-
-            while (false)
-            {
-                string airline = Console.ReadLine();
-                if (ValidateAirline(airline))
+                if (type == "Airport")
                 {
-                    airlines = AddAirline(airline, airlines);
+                    if (ValidateAirport(input))
+                    {
+                        data = AddData(input, data);
+                    }
                 }
-
-                PrintAirlines(airlines);
-            }
-
-            while (false)
-            {
-                string flight = Console.ReadLine();
-                if (ValidateFlight(flight))
+                else if (type == "Airline")
                 {
-                    flights = AddFlight(flight, flights);
+                    if (ValidateAirline(input))
+                    {
+                        data = AddData(input, data);
+                    }
                 }
+                else if (type == "Flight")
+                {
 
-                PrintFlights(flights);
+                    if (ValidateFlight(input))
+                    {
+                        data = AddData(input, data);
+                    }
+                }
             }
         }
-        
+
         static bool ValidateAirport(string airport)
         {
-            if (airport == null)
+            if (string.IsNullOrEmpty(airport))
             {
-                Console.WriteLine("The airport name is null!");
+                Console.WriteLine(" Error: Airport name cannot be null or empty!");
                 return false;
             }
 
             if (airport.Length != 3)
             {
-                Console.WriteLine($"The airport name {airport} must be 3 symbols!");
+                Console.WriteLine($" Error: Airport name '{airport}' must be exactly 3 characters long!");
                 return false;
             }
 
-
-            char[] charArray = airport.ToCharArray();
-
-            for (int i = 0; i < charArray.Length; i++) 
+            if (!airport.All(char.IsLetter))
             {
-                if (!Char.IsLetter(charArray[i]))
-                {
-                    Console.WriteLine($"{charArray[i]} is not alphabetic!");
-                    return false;
-                }
+                Console.WriteLine($" Error: Airport name '{airport}' must contain only alphabetic characters!");
+                return false;
             }
+
             return true;
         }
 
-        static bool ValidateAirline(string airline) 
+        static bool ValidateAirline(string airline)
         {
-            if (airline == null)
+            if (string.IsNullOrEmpty(airline))
             {
-                Console.WriteLine("The airline name is null!");
+                Console.WriteLine(" Error: Airline name cannot be null or empty!");
                 return false;
             }
 
             if (airline.Length >= 6)
             {
-                Console.WriteLine($"The airline name {airline} must be less than 6 symbols!");
+                Console.WriteLine($" Error: Airline name '{airline}' must be less than 6 characters long!");
                 return false;
             }
+
             return true;
         }
 
         static bool ValidateFlight(string flight)
         {
-            if (flight == null)
+            if (string.IsNullOrEmpty(flight))
             {
-                Console.WriteLine("The flight name is null!");
+                Console.WriteLine(" Error: Flight name cannot be null or empty!");
                 return false;
             }
 
-            char[] charArray = flight.ToCharArray();
-
-            for (int i = 0; i < charArray.Length; i++)
+            if (!flight.All(char.IsLetterOrDigit))
             {
-                if (!Char.IsLetterOrDigit(charArray[i]))
-                {
-                    Console.WriteLine($"{charArray[i]} is not alphabetic or numeric!");
-                    return false;
-                }
+                Console.WriteLine($" Error: Flight code '{flight}' must contain only alphabetic or numeric characters!");
+                return false;
             }
+
             return true;
         }
 
-        static string[] AddAirport(string airport, string[] oldAirports)
+        static string[] AddData(string item, string[] oldData)
         {
-            var updatedAirports = new string[oldAirports.Length + 1];
+            var updatedData = new string[oldData.Length + 1];
 
-            for (int i = 0; i < oldAirports.Length; i++)
+            for (int i = 0; i < oldData.Length; i++)
             {
-                updatedAirports[i] = oldAirports[i];
+                updatedData[i] = oldData[i];
             }
-            updatedAirports[updatedAirports.Length - 1] = airport;
+            updatedData[updatedData.Length - 1] = item;
 
-            return updatedAirports;
+            Console.WriteLine($" {item} was added successfully!");
+
+            return updatedData;
         }
 
-        static string[] AddAirline(string airline, string[] oldAirlines)
+        static void PrintData(string type, string[] data)
         {
-            var updatedAirlines = new string[oldAirlines.Length + 1];
-
-            for (int i = 0; i < oldAirlines.Length; i++)
-            {
-                updatedAirlines[i] = oldAirlines[i];
-            }
-            updatedAirlines[updatedAirlines.Length - 1] = airline;
-
-            return updatedAirlines;
-        }
-
-        static string[] AddFlight(string flight, string[] oldFlights)
-        {
-            var updatedFlights = new string[oldFlights.Length + 1];
-
-            for (int i = 0; i < oldFlights.Length; i++)
-            {
-                updatedFlights[i] = oldFlights[i];
-            }
-            updatedFlights[updatedFlights.Length - 1] = flight;
-
-            return updatedFlights;
-        }
-
-        static void PrintAirports(string[] airports)
-        {
-            Console.Write("Airports: ");
-            if (airports.Length == 0) 
+            Console.Write($" {type}s: ");
+            if (data.Length == 0)
             {
                 Console.WriteLine("none");
             }
             else
             {
-                Console.WriteLine(String.Join(", ", airports));
-            } 
-        }
-
-        static void PrintAirlines(string[] airlines)
-        {
-            Console.Write("Airlines: ");
-            if (airlines.Length == 0)
-            {
-                Console.WriteLine("none");
-            }
-            else
-            {
-                Console.WriteLine(String.Join(", ", airlines));
-            }
-        }
-
-        static void PrintFlights(string[] flights) 
-        {
-            Console.WriteLine("Flights ");
-            if (flights.Length == 0)
-            {
-                Console.WriteLine("none");
-            }
-            else
-            {
-                Console.WriteLine(String.Join(", ", flights));
+                Console.WriteLine(string.Join(", ", data));
             }
         }
     }
