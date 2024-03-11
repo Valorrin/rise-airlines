@@ -35,7 +35,7 @@ namespace Airlines
 
                 if (type == "Airport")
                 {
-                    if (ValidateAirport(input))
+                    if (ValidateAirport(input, data))
                     {
                         data = AddData(input, data);
                     }
@@ -58,7 +58,7 @@ namespace Airlines
             }
         }
 
-        static bool ValidateAirport(string airport)
+        static bool ValidateAirport(string airport , string[] airports)
         {
             if (string.IsNullOrEmpty(airport))
             {
@@ -78,10 +78,16 @@ namespace Airlines
                 return false;
             }
 
+            if (airports.Contains(airport))
+            {
+                Console.WriteLine($" Error: Airport name '{airport}' already exist!");
+                return false;
+            }
+
             return true;
         }
 
-        static bool ValidateAirline(string airline)
+        static bool ValidateAirline(string airline, string[] airlines)
         {
             if (string.IsNullOrEmpty(airline))
             {
@@ -95,10 +101,16 @@ namespace Airlines
                 return false;
             }
 
+            if (airlines.Contains(airline))
+            {
+                Console.WriteLine($" Error: Airline name '{airline}' already exist!");
+                return false;
+            }
+
             return true;
         }
 
-        static bool ValidateFlight(string flight)
+        static bool ValidateFlight(string flight, string[] flights)
         {
             if (string.IsNullOrEmpty(flight))
             {
@@ -109,6 +121,12 @@ namespace Airlines
             if (!flight.All(char.IsLetterOrDigit))
             {
                 Console.WriteLine($" Error: Flight code '{flight}' must contain only alphabetic or numeric characters!");
+                return false;
+            }
+
+            if (flight.Contains(flight))
+            {
+                Console.WriteLine($" Error: Flight name '{flight}' already exist!");
                 return false;
             }
 
@@ -141,6 +159,22 @@ namespace Airlines
             {
                 Console.WriteLine(string.Join(", ", data));
             }
+        }
+
+        static string Search(string searchTerm, string[] data)
+        {
+            for (int i = 0; i < data.Length; i++)
+            {
+                if (data[i] == searchTerm)
+                {
+                    Console.WriteLine($"\n {data[i]} was found!");
+                    return data[i];
+                }
+            }
+
+            Console.WriteLine($"\n {searchTerm} not found!");
+            return " ";
+
         }
     }
 }
