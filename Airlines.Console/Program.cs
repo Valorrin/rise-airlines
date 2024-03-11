@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Airlines
 {
@@ -13,6 +15,14 @@ namespace Airlines
             ReadInput("Airport", ref airports);
             ReadInput("Airline", ref airlines);
             ReadInput("Flight", ref flights);
+
+            PrintData("Airport", airports);
+            PrintData("Airlines", airlines);
+            PrintData("Flights", flights);
+
+            AirportsSorting(airports);
+            AirlinesSorting(airlines);
+            FlightSorting(flights);
 
             PrintData("Airport", airports);
             PrintData("Airlines", airlines);
@@ -42,7 +52,7 @@ namespace Airlines
                 }
                 else if (type == "Airline")
                 {
-                    if (ValidateAirline(input))
+                    if (ValidateAirline(input, data))
                     {
                         data = AddData(input, data);
                     }
@@ -50,7 +60,7 @@ namespace Airlines
                 else if (type == "Flight")
                 {
 
-                    if (ValidateFlight(input))
+                    if (ValidateFlight(input, data))
                     {
                         data = AddData(input, data);
                     }
@@ -58,7 +68,7 @@ namespace Airlines
             }
         }
 
-        static bool ValidateAirport(string airport , string[] airports)
+        static bool ValidateAirport(string airport, string[] airports)
         {
             if (string.IsNullOrEmpty(airport))
             {
@@ -124,7 +134,7 @@ namespace Airlines
                 return false;
             }
 
-            if (flight.Contains(flight))
+            if (flights.Contains(flight))
             {
                 Console.WriteLine($" Error: Flight name '{flight}' already exist!");
                 return false;
@@ -161,20 +171,80 @@ namespace Airlines
             }
         }
 
-        static string Search(string searchTerm, string[] data)
+        static string[] AirportsSorting(string[] airports)
         {
-            for (int i = 0; i < data.Length; i++)
+            var n = airports.Length;
+            string temp;
+
+            for (int j = 0; j < n - 1; j++)
             {
-                if (data[i] == searchTerm)
+                for (int i = j + 1; i < n; i++)
                 {
-                    Console.WriteLine($"\n {data[i]} was found!");
-                    return data[i];
+                    if (airports[j].CompareTo(airports[i]) > 0)
+                    {
+                        temp = airports[j];
+                        airports[j] = airports[i];
+                        airports[i] = temp;
+                    }
                 }
             }
 
-            Console.WriteLine($"\n {searchTerm} not found!");
-            return " ";
-
+            return airports;
         }
+
+        static string[] AirlinesSorting(string[] airlines)
+        {
+            int n = airlines.Length;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                int minIndex = i;
+
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (string.Compare(airlines[j], airlines[minIndex]) < 0)
+                    {
+                        minIndex = j;
+                    }
+                }
+
+                if (minIndex != i)
+                {
+                    string temp = airlines[i];
+                    airlines[i] = airlines[minIndex];
+                    airlines[minIndex] = temp;
+                }
+            }
+
+            return airlines;
+        }
+
+        static string[] FlightSorting(string[] flights)
+        {
+            int n = flights.Length;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                int minIndex = i;
+
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (string.Compare(flights[j], flights[minIndex]) < 0)
+                    {
+                        minIndex = j;
+                    }
+                }
+
+                if (minIndex != i)
+                {
+                    string temp = flights[i];
+                    flights[i] = flights[minIndex];
+                    flights[minIndex] = temp;
+                }
+            }
+
+            return flights;
+        }
+
     }
 }
