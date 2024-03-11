@@ -27,6 +27,8 @@ namespace Airlines
             PrintData("Airport", airports);
             PrintData("Airlines", airlines);
             PrintData("Flights", flights);
+
+            Search(airports, airlines, flights);
         }
 
         static void ReadInput(string type, ref string[] data)
@@ -246,5 +248,55 @@ namespace Airlines
             return flights;
         }
 
+        static void Search(string[] airports, string[] airlines, string[] flights)
+        {
+            AirportsSorting(airports);
+            AirlinesSorting(airlines);
+            AirlinesSorting(flights);
+
+            Console.WriteLine($"\nEnter search term or type 'done' to finish:\n");
+
+            while (true)
+            {
+                string searchTerm = Console.ReadLine();
+
+                bool termFound = false;
+
+                if (string.IsNullOrEmpty(searchTerm))
+                {
+                    Console.WriteLine(" Error: search term cannot be null or empty!");
+                    continue;
+                }
+
+                if (searchTerm.ToLower() == "done")
+                {
+                    Console.WriteLine();
+                    break;
+                }
+
+                if (Array.BinarySearch(airports, searchTerm) >= 0)
+                {
+                    termFound = true;
+                    Console.WriteLine($" {searchTerm} is Airport name.");
+                }
+
+                if (Array.BinarySearch(airlines, searchTerm) >= 0)
+                {
+                    termFound = true;
+                    Console.WriteLine($" {searchTerm} is Airline name.");
+                }
+
+                if (Array.BinarySearch(flights, searchTerm) >= 0)
+                {
+                    termFound = true;
+                    Console.WriteLine($" {searchTerm} is Flight name.");
+                }
+
+                if (!termFound)
+                {
+                    Console.WriteLine($" {searchTerm} was not found.");
+                }
+            }
+        }
     }
 }
