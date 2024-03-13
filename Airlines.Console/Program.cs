@@ -4,7 +4,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Airlines
 {
-    internal class Program
+    public class Program
     {
         static void Main()
         {
@@ -31,7 +31,7 @@ namespace Airlines
             Search(airports, airlines, flights);
         }
 
-        static string[] ReadInput(string type, string[] currentData)
+        public static string[] ReadInput(string type, string[] currentData)
         {
             var newData = currentData;
 
@@ -74,7 +74,7 @@ namespace Airlines
             return newData;
         }
 
-        static bool ValidateAirport(string airport, string[] airports)
+        public static bool ValidateAirport(string airport, string[] airports)
         {
             if (string.IsNullOrEmpty(airport))
             {
@@ -103,7 +103,7 @@ namespace Airlines
             return true;
         }
 
-        static bool ValidateAirline(string airline, string[] airlines)
+        public static bool ValidateAirline(string airline, string[] airlines)
         {
             if (string.IsNullOrEmpty(airline))
             {
@@ -126,7 +126,7 @@ namespace Airlines
             return true;
         }
 
-        static bool ValidateFlight(string flight, string[] flights)
+        public static bool ValidateFlight(string flight, string[] flights)
         {
             if (string.IsNullOrEmpty(flight))
             {
@@ -149,7 +149,7 @@ namespace Airlines
             return true;
         }
 
-        static string[] AddData(string item, string[] oldData)
+        public static string[] AddData(string item, string[] oldData)
         {
             var updatedData = new string[oldData.Length + 1];
 
@@ -164,7 +164,7 @@ namespace Airlines
             return updatedData;
         }
 
-        static void PrintData(string type, string[] data)
+        public static void PrintData(string type, string[] data)
         {
             Console.Write($" {type}s: ");
             if (data.Length == 0)
@@ -177,7 +177,7 @@ namespace Airlines
             }
         }
 
-        static string[] AirportsSorting(string[] airports)
+        public static string[] AirportsSorting(string[] airports)
         {
             var n = airports.Length;
             string temp;
@@ -198,7 +198,7 @@ namespace Airlines
             return airports;
         }
 
-        static string[] AirlinesSorting(string[] airlines)
+        public static string[] AirlinesSorting(string[] airlines)
         {
             int n = airlines.Length;
 
@@ -225,7 +225,7 @@ namespace Airlines
             return airlines;
         }
 
-        static string[] FlightSorting(string[] flights)
+        public static string[] FlightSorting(string[] flights)
         {
             int n = flights.Length;
 
@@ -252,7 +252,7 @@ namespace Airlines
             return flights;
         }
 
-        static void Search(string[] airports, string[] airlines, string[] flights)
+        public static void Search(string[] airports, string[] airlines, string[] flights)
         {
             AirportsSorting(airports);
             AirlinesSorting(airlines);
