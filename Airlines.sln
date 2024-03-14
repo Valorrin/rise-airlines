@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airlines.Console", "Airlines.Console\Airlines.Console.csproj", "{87E67496-141B-49F7-BEDE-85602A2EE072}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airlines.UnitTests", "Airlines.UnitTest\Airlines.UnitTests.csproj", "{2E6E9ED0-2C5A-4663-B69D-32E842EEB5A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airlines.Console", "Airlines.Console\Airlines.Console.csproj", "{87E67496-141B-49F7-BEDE-85602A2EE072}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{87E67496-141B-49F7-BEDE-85602A2EE072}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87E67496-141B-49F7-BEDE-85602A2EE072}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87E67496-141B-49F7-BEDE-85602A2EE072}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E6E9ED0-2C5A-4663-B69D-32E842EEB5A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E6E9ED0-2C5A-4663-B69D-32E842EEB5A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E6E9ED0-2C5A-4663-B69D-32E842EEB5A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E6E9ED0-2C5A-4663-B69D-32E842EEB5A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
