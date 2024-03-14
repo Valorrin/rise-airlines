@@ -12,9 +12,9 @@ namespace Airlines
             var airlines = Array.Empty<string>();
             var flights = Array.Empty<string>();
 
-            ReadInput("Airport", ref airports);
-            ReadInput("Airline", ref airlines);
-            ReadInput("Flight", ref flights);
+            airports = ReadInput("Airport", airports);
+            airlines = ReadInput("Airline", airlines);
+            flights = ReadInput("Flight", flights);
 
             PrintData("Airport", airports);
             PrintData("Airlines", airlines);
@@ -31,8 +31,10 @@ namespace Airlines
             Search(airports, airlines, flights);
         }
 
-        static void ReadInput(string type, ref string[] data)
+        static string[] ReadInput(string type, string[] currentData)
         {
+            var newData = currentData;
+
             Console.WriteLine($"Enter {type} name, or type 'done' to finish:\n");
 
             while (true)
@@ -47,27 +49,29 @@ namespace Airlines
 
                 if (type == "Airport")
                 {
-                    if (ValidateAirport(input, data))
+                    if (ValidateAirport(input, newData))
                     {
-                        data = AddData(input, data);
+                        newData = AddData(input, newData);
                     }
                 }
                 else if (type == "Airline")
                 {
-                    if (ValidateAirline(input, data))
+                    if (ValidateAirline(input, newData))
                     {
-                        data = AddData(input, data);
+                        newData = AddData(input, newData);
                     }
                 }
                 else if (type == "Flight")
                 {
 
-                    if (ValidateFlight(input, data))
+                    if (ValidateFlight(input, newData))
                     {
-                        data = AddData(input, data);
+                        newData = AddData(input, newData);
                     }
                 }
             }
+
+            return newData;
         }
 
         static bool ValidateAirport(string airport, string[] airports)
