@@ -29,7 +29,7 @@ namespace Airlines.UnitTest
         [Fact]
         public void LinearSearch_ShouldFindTarget()
         {
-            string[] array = { "a", "b", "c", "d" };
+            string[] array = ["a", "b", "c", "d"];
             string target = "c";
 
             int result = LinearSearch(array, target);
@@ -40,7 +40,7 @@ namespace Airlines.UnitTest
         [Fact]
         public void LinearSearch_ShouldNotFindTarget()
         {
-            string[] array = { "a", "b", "c", "d" };
+            string[] array = ["a", "b", "c", "d"];
             string target = "e";
 
             int result = LinearSearch(array, target);

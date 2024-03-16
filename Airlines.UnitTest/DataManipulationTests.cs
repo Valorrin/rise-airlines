@@ -19,7 +19,7 @@ namespace Airlines.UnitTests
         public void AddData_ShouldAddItemToNonEmptyArray()
         {
             string item = "def";
-            string[] data = { "abc", "xyz", null };
+            string[] data = ["abc", "xyz", null];
 
             var result = AddData(item, data);
 

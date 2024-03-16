@@ -42,7 +42,7 @@ namespace Airlines.UnitTest
         public void Validate_ShouldReturnFalse_WhenValueExistsInArray()
         {
             string value = "Bob";
-            string[] values = { "Alice", "Bob", "Charlie" };
+            string[] values = ["Alice", "Bob", "Charlie"];
 
             bool result = Validate(value, values);
 
@@ -54,7 +54,7 @@ namespace Airlines.UnitTest
         [Fact]
         public void ValidateAirport_ShouldReturnTrue_WhenValidAirport()
         {
-            string[] airports = { "abc", "ccc" };
+            string[] airports = ["abc", "ccc"];
 
             bool result = ValidateAirport("new", airports);
 
@@ -68,7 +68,7 @@ namespace Airlines.UnitTest
         [InlineData("")]
         public void ValidateAirport_ShouldReturnFalse_WhenInvalidAirport(string airport)
         {
-            string[] airports = { "abc", "ccc" };
+            string[] airports = ["abc", "ccc"];
 
             bool result = ValidateAirport(airport, airports);
 
@@ -83,7 +83,7 @@ namespace Airlines.UnitTest
         [InlineData("ab12")]
         public void ValidateAirline_ShouldReturnTrue_WhenValidAirline(string airline)
         {
-            string[] airlines = { "air1", "air2" };
+            string[] airlines = ["air1", "air2"];
 
             bool result = ValidateAirline(airline, airlines);
 
@@ -96,7 +96,7 @@ namespace Airlines.UnitTest
         [InlineData("")]
         public void ValidateAirline_ShouldReturnFalse_WhenInvalidAirline(string airline)
         {
-            string[] airlines = { "air1", "air2" };
+            string[] airlines = ["air1", "air2"];
 
             bool result = ValidateAirline(airline, airlines);
 
@@ -110,7 +110,7 @@ namespace Airlines.UnitTest
         [InlineData("123456")]
         public void ValidateFlight_ShouldReturnTrue_WhenValidFlight(string flight)
         {
-            string[] flights = { "flight1", "flight2" };
+            string[] flights = ["flight1", "flight2"];
 
             bool result = ValidateFlight(flight, flights);
 
@@ -123,7 +123,7 @@ namespace Airlines.UnitTest
         [InlineData("")]
         public void ValidateFlight_ShouldReturnFalse_WhenInvalidFlight(string flight)
         {
-            string[] flights = { "flight1", "flight2" };
+            string[] flights = ["flight1", "flight2"];
 
             bool result = ValidateFlight(flight, flights);
 
