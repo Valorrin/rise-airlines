@@ -1,9 +1,9 @@
 ﻿
 namespace Airlines
 {
-    internal class Program
+    public class Program
     {
-        static void Main()
+        public static void Main()
         {
             var airports = new string[10000];
             var airlines = new string[10000];
@@ -28,7 +28,7 @@ namespace Airlines
             Search(airports, airlines, flights);
         }
 
-        static string[] ReadInput(string type, string[] currentData)
+        public static string[] ReadInput(string type, string[] currentData)
         {
             var newData = currentData;
 
@@ -37,6 +37,12 @@ namespace Airlines
             while (true)
             {
                 string input = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine(" Error: The name cannot be null or empty!");
+                    continue;
+                }
 
                 if (input == "done")
                 {
@@ -71,7 +77,7 @@ namespace Airlines
             return newData;
         }
 
-        static bool Validate(string value, string[] values)
+        public static bool Validate(string value, string[] values)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -79,7 +85,7 @@ namespace Airlines
                 return false;
             }
 
-            if (values.Contains(value))
+            if (LinearSearch(values, value) >= 0)
             {
                 Console.WriteLine($" Error: The name already exist!");
                 return false;
@@ -88,12 +94,12 @@ namespace Airlines
             return true;
         }
 
-        static bool ValidateAirport(string airport, string[] airports)
+        public static bool ValidateAirport(string airport, string[] airports)
         {
             if (!Validate(airport, airports))
             {
                 return false;
-            }     
+            }
 
             if (airport.Length != 3)
             {
@@ -110,7 +116,7 @@ namespace Airlines
             return true;
         }
 
-        static bool ValidateAirline(string airline, string[] airlines)
+        public static bool ValidateAirline(string airline, string[] airlines)
         {
             if (!Validate(airline, airlines))
             {
@@ -126,7 +132,7 @@ namespace Airlines
             return true;
         }
 
-        static bool ValidateFlight(string flight, string[] flights)
+        public static bool ValidateFlight(string flight, string[] flights)
         {
             if (!Validate(flight, flights))
             {
@@ -142,7 +148,7 @@ namespace Airlines
             return true;
         }
 
-        static string[] AddData(string item, string[] data)
+        public static string[] AddData(string item, string[] data)
         {
 
             for (int i = 0; i < data.Length; i++)
@@ -160,7 +166,7 @@ namespace Airlines
             return data;
         }
 
-        static void PrintData(string type, string[] data)
+        public static void PrintData(string type, string[] data)
         {
             Console.Write($" {type}s: ");
 
@@ -174,7 +180,7 @@ namespace Airlines
             Console.WriteLine();
         }
 
-        static string[] SortAirports(string[] airports)
+        public static string[] SortAirports(string[] airports)
         {
             int n = airports.Length;
             string temp;
@@ -195,7 +201,7 @@ namespace Airlines
             return airports;
         }
 
-        static string[] SortAirlines(string[] airlines)
+        public static string[] SortAirlines(string[] airlines)
         {
             int n = airlines.Length;
 
@@ -220,7 +226,7 @@ namespace Airlines
             return airlines;
         }
 
-        static string[] SortFlights(string[] flights)
+        public static string[] SortFlights(string[] flights)
         {
             int n = flights.Length;
 
@@ -245,7 +251,19 @@ namespace Airlines
             return flights;
         }
 
-        static int BinarySearch(string[] arr, string target)
+        public static int LinearSearch(string[] array, string target)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == target)
+                {
+                    return i; 
+                }
+            }
+            return -1;
+        }
+
+        public static int BinarySearch(string[] arr, string target)
         {
             int l = 0, r = arr.Length - 1;
             while (l <= r)
@@ -266,8 +284,8 @@ namespace Airlines
             return -1;
         }
 
-        static void Search(string[] airports, string[] airlines, string[] flights)
-        {         
+        public static void Search(string[] airports, string[] airlines, string[] flights)
+        {
             Console.WriteLine($"\nEnter search term or type 'done' to finish:\n");
 
             while (true)

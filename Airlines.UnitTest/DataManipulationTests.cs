@@ -5,15 +5,25 @@ namespace Airlines.UnitTests
     public class DataManipulationTests
     {
         [Fact]
-        public void AddData_ItemAddedSuccessfully()
+        public void AddData_ShouldAddItemToEmptyArray()
         {
-            string itemToAdd = "New Item";
-            string[] oldData = { "Item1", "Item2", "Item3" };
+            string item = "abc";
+            string[] data = new string[3];
 
-            string[] updatedData = AddData(itemToAdd, oldData);
+            var result = AddData(item, data);
 
-            Assert.Equal(oldData.Length + 1, updatedData.Length);
-            Assert.Equal(itemToAdd, updatedData[updatedData.Length - 1]);
+            Assert.Equal(new string[] { "abc", null, null }, result);
+        }
+
+        [Fact]
+        public void AddData_ShouldAddItemToNonEmptyArray()
+        {
+            string item = "def";
+            string[] data = ["abc", "xyz", null];
+
+            var result = AddData(item, data);
+
+            Assert.Equal(new string[] { "abc", "xyz", "def" }, result);
         }
     }
 }
