@@ -7,7 +7,7 @@ namespace Airlines.UnitTest
         [Fact]
         public void ValidateAirportShouldReturnTrue()
         {
-            string[] airports = { "abc", "ccc" };
+            string[] airports = ["abc", "ccc"];
 
             bool result = ValidateAirport("new", airports);
 
@@ -21,7 +21,7 @@ namespace Airlines.UnitTest
         [InlineData("")]
         public void ValidateAirportShouldReturnFalse(string airport)
         {
-            string[] airports = { "abc", "ccc" };
+            string[] airports = ["abc", "ccc"];
 
             bool result = ValidateAirport(airport, airports);
 
@@ -34,7 +34,7 @@ namespace Airlines.UnitTest
         [InlineData("ab12")]
         public void ValidateAirlineShoudReturnTrue(string airline)
         {
-            string[] airlines = { "air1", "air2" };
+            string[] airlines = ["air1", "air2"];
 
             bool result = ValidateAirline(airline, airlines);
 
@@ -47,7 +47,7 @@ namespace Airlines.UnitTest
         [InlineData("")]
         public void ValidateAirlineShoudReturnFalse(string airline)
         {
-            string[] airlines = { "air1", "air2" };
+            string[] airlines = ["air1", "air2"];
 
             bool result = ValidateAirline(airline, airlines);
 
@@ -59,7 +59,7 @@ namespace Airlines.UnitTest
         [InlineData("123456")]
         public void ValidateFlightShoudReturnTrue(string flight)
         {
-            string[] flights = { "flight1", "flight2" };
+            string[] flights = ["flight1", "flight2"];
 
             bool result = ValidateFlight(flight, flights);
 
@@ -72,7 +72,7 @@ namespace Airlines.UnitTest
         [InlineData("")]
         public void ValidateFlightShoudReturnFalse(string flight)
         {
-            string[] flights = { "flight1", "flight2" };
+            string[] flights = ["flight1", "flight2"];
 
             bool result = ValidateFlight(flight, flights);
 
