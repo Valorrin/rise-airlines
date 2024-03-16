@@ -1,8 +1,8 @@
 stages:
   - build
-  - Test
+  - test
 
-image: mcr.microsoft.com/dotnet/sdk:8.0
+image: "mcr.microsoft.com/dotnet/sdk:8.0"
 
 build_job:
   stage: build
@@ -11,17 +11,16 @@ build_job:
     - dotnet build
 
 NUnit-Test:
-  stage: Test
+  stage: test
   
   script:
-    - dotnet restore
-    # - 'dotnet tool restore'
+    - 'dotnet tool restore'
     - 'dotnet test --verbosity normal --logger "trx;LogFileName=test_results.xml" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/ /p:Threshold=50 /p:ThresholdType=line /p:ThresholdStat=total'
   coverage: '/Total\s*\|\s*(\d+(?:\.\d+)?)/'
   artifacts:
     paths:
-      - ./Airlines.UnitTest/TestResults/*.xml
+      - ./**/TestResults/*.xml
     reports:
       coverage_report:
         coverage_format: cobertura
-        path: './Airlines.UnitTest/TestResults/coverage.cobertura.xml'
+        path: './*/TestResults/coverage.cobertura.xml'
