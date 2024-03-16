@@ -5,7 +5,7 @@ namespace Airlines.UnitTest
     public class SortingTests
     {
         [Fact]
-        public void AirportBoubleSortShouldWork()
+        public void BubbleSort_ShouldSortAirportsCorrectly()
         {
             string[] array = ["aaa", "ccc", "bbb"];
             string[] result = ["aaa", "bbb", "ccc"];
@@ -16,23 +16,23 @@ namespace Airlines.UnitTest
         }
 
         [Fact]
-        public void AirlineSelectionSortShouldWork() 
+        public void SelectionSort_ShouldSortAirlinesCorrectly() 
         {
             string[] array = ["aaa", "ccc", "bbb"];
             string[] result = ["aaa", "bbb", "ccc"];
 
-            string[] sorted = SortAirports(array);
+            string[] sorted = SortAirlines(array);
 
             Assert.Equal(sorted, result);
         }
 
         [Fact]
-        public void FlightSelectionSortShouldWork()
+        public void SelectionSort_ShouldSortFlightsCorrectly()
         {
             string[] array = ["aaa", "ccc", "bbb"];
             string[] result = ["aaa", "bbb", "ccc"];
 
-            string[] sorted = SortAirports(array);
+            string[] sorted = SortFlights(array);
 
             Assert.Equal(sorted, result);
         }

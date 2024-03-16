@@ -85,7 +85,7 @@ namespace Airlines
                 return false;
             }
 
-            if (values.Contains(value))
+            if (LinearSearch(values, value) >= 0)
             {
                 Console.WriteLine($" Error: The name already exist!");
                 return false;
@@ -249,6 +249,18 @@ namespace Airlines
             }
 
             return flights;
+        }
+
+        public static int LinearSearch(string[] array, string target)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == target)
+                {
+                    return i; 
+                }
+            }
+            return -1;
         }
 
         public static int BinarySearch(string[] arr, string target)

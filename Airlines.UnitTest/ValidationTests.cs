@@ -4,10 +4,57 @@ namespace Airlines.UnitTest
 {
     public class ValidationTests
     {
+        // Generic value validation tests
         [Fact]
-        public void ValidateAirportShouldReturnTrue()
+        public void Validate_ShouldReturnTrue_WhenValueIsValidAndNotInArray()
         {
-            string[] airports = ["abc", "ccc"];
+            string value = "John";
+            string[] values = ["Alice", "Bob", "Charlie"];
+
+            bool result = Validate(value, values);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void Validate_ShouldReturnFalse_WhenValueIsNull()
+        {
+            string value = null;
+            string[] values = ["Alice", "Bob", "Charlie"];
+
+            bool result = Validate(value, values);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Validate_ShouldReturnFalse_WhenValueIsEmpty()
+        {
+            string value = "";
+            string[] values = ["Alice", "Bob", "Charlie"];
+
+            bool result = Validate(value, values);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Validate_ShouldReturnFalse_WhenValueExistsInArray()
+        {
+            string value = "Bob";
+            string[] values = { "Alice", "Bob", "Charlie" };
+
+            bool result = Validate(value, values);
+
+            Assert.False(result);
+        }
+
+
+        // Airport validation tests
+        [Fact]
+        public void ValidateAirport_ShouldReturnTrue_WhenValidAirport()
+        {
+            string[] airports = { "abc", "ccc" };
 
             bool result = ValidateAirport("new", airports);
 
@@ -19,22 +66,24 @@ namespace Airlines.UnitTest
         [InlineData("1234")]
         [InlineData("abcd")]
         [InlineData("")]
-        public void ValidateAirportShouldReturnFalse(string airport)
+        public void ValidateAirport_ShouldReturnFalse_WhenInvalidAirport(string airport)
         {
-            string[] airports = ["abc", "ccc"];
+            string[] airports = { "abc", "ccc" };
 
             bool result = ValidateAirport(airport, airports);
 
             Assert.False(result);
         }
 
+
+        // Airline validation tests
         [Theory]
         [InlineData("12345")]
         [InlineData("abcde")]
         [InlineData("ab12")]
-        public void ValidateAirlineShoudReturnTrue(string airline)
+        public void ValidateAirline_ShouldReturnTrue_WhenValidAirline(string airline)
         {
-            string[] airlines = ["air1", "air2"];
+            string[] airlines = { "air1", "air2" };
 
             bool result = ValidateAirline(airline, airlines);
 
@@ -45,21 +94,23 @@ namespace Airlines.UnitTest
         [InlineData("123456")]
         [InlineData("abcdefg")]
         [InlineData("")]
-        public void ValidateAirlineShoudReturnFalse(string airline)
+        public void ValidateAirline_ShouldReturnFalse_WhenInvalidAirline(string airline)
         {
-            string[] airlines = ["air1", "air2"];
+            string[] airlines = { "air1", "air2" };
 
             bool result = ValidateAirline(airline, airlines);
 
             Assert.False(result);
         }
 
+
+        // Flight validation tests
         [Theory]
         [InlineData("newflight")]
         [InlineData("123456")]
-        public void ValidateFlightShoudReturnTrue(string flight)
+        public void ValidateFlight_ShouldReturnTrue_WhenValidFlight(string flight)
         {
-            string[] flights = ["flight1", "flight2"];
+            string[] flights = { "flight1", "flight2" };
 
             bool result = ValidateFlight(flight, flights);
 
@@ -70,9 +121,9 @@ namespace Airlines.UnitTest
         [InlineData("???")]
         [InlineData("?a1")]
         [InlineData("")]
-        public void ValidateFlightShoudReturnFalse(string flight)
+        public void ValidateFlight_ShouldReturnFalse_WhenInvalidFlight(string flight)
         {
-            string[] flights = ["flight1", "flight2"];
+            string[] flights = { "flight1", "flight2" };
 
             bool result = ValidateFlight(flight, flights);
 
