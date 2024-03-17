@@ -77,7 +77,7 @@ public class Program
         return newData;
     }
 
-    public static bool Validate(string value, string[] values)
+    public static bool Validate(string? value, string[] values)
     {
         if (string.IsNullOrEmpty(value))
         {
