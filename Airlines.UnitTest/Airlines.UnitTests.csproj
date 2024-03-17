@@ -10,7 +10,8 @@
 	  <EnableNETAnalyzers>true</EnableNETAnalyzers>
 	<AnalysisLevel>latest</AnalysisLevel>
 	<AnalysisMode>minimum</AnalysisMode>
-	<TreatWarningsAsErrors>false</TreatWarningsAsErrors>	  <AnalysisLevel>latest</AnalysisLevel>
+	<TreatWarningsAsErrors>false</TreatWarningsAsErrors>	  
+	  <AnalysisLevel>latest</AnalysisLevel>
 	  <AnalysisMode>minimum</AnalysisMode>
 	  
 	    
