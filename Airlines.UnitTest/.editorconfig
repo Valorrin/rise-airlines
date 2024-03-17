@@ -1,0 +1,14 @@
+# Unit Test Specific Conventions
+[*.{cs,vb}]
+# Override method naming for test methods
+dotnet_diagnostic.CA1707.severity = none
+
+dotnet_naming_rule.test_methods_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.test_methods_should_be_pascal_case.symbols  = test_methods
+dotnet_naming_rule.test_methods_should_be_pascal_case.style    = pascal_case_style
+
+dotnet_naming_symbols.test_methods.applicable_kinds           = method
+dotnet_naming_symbols.test_methods.applicable_accessibilities = public, internal
+dotnet_naming_symbols.test_methods.applicable_attributes      = TestMethod*, Fact, Theory
+
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
