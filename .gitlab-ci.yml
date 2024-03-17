@@ -7,7 +7,6 @@ image: mcr.microsoft.com/dotnet/sdk:8.0
 build_job:
  stage: build
  script:
-  - cd ./src/Airlines
   - dotnet build -warnaserror
 
 NUnit-Test:
