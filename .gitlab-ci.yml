@@ -8,7 +8,7 @@ build_job:
   stage: build
   script:
     - dotnet restore
-    - dotnet build --no-restore -warnaserror
+    - dotnet build -warnaserror
 
 NUnit-Test:
   stage: Test
