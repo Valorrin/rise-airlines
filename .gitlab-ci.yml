@@ -8,7 +8,7 @@ build_job:
  stage: build
  script:
   - 'dotnet restore'
-  - 'dotnet build'
+  - 'dotnet build -warnaserror'
 
 xunit_test:
   stage: test
