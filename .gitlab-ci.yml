@@ -1,21 +1,19 @@
 stages:
-  - build
-  - Test
+- build
+- test
 
 image: mcr.microsoft.com/dotnet/sdk:8.0
 
 build_job:
-  stage: build
-  script:
-    - dotnet restore
-    - 'dotnet build -warnaserror'
+ stage: build
+ script:
+  - 'dotnet restore'
+  - 'dotnet build -warnaserror'
 
-NUnit-Test:
-  stage: Test
-  
+xunit_test:
+  stage: test
   script:
-    - dotnet restore
-    # - 'dotnet tool restore'
+    - 'dotnet restore'
     - 'dotnet test --verbosity normal --logger "trx;LogFileName=test_results.xml" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./TestResults/ /p:Threshold=50 /p:ThresholdType=line /p:ThresholdStat=total'
   coverage: '/Total\s*\|\s*(\d+(?:\.\d+)?)/'
   artifacts:
