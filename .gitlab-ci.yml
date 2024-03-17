@@ -5,10 +5,10 @@ stages:
 image: mcr.microsoft.com/dotnet/sdk:8.0
 
 build_job:
-  stage: build
-  script:
-    - dotnet restore
-    - dotnet build -warnaserror
+ stage: build
+ script:
+  - cd ./src/Airlines
+  - dotnet build -warnaserror
 
 NUnit-Test:
   stage: Test
