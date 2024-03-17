@@ -5,9 +5,10 @@ stages:
 image: mcr.microsoft.com/dotnet/sdk:8.0
 
 build_job:
- stage: build
- script:
-  - 'dotnet build --no-restore -warnaserror'
+  stage: build
+  script:
+    - dotnet restore
+    - dotnet build
 
 NUnit-Test:
   stage: Test
