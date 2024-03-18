@@ -1,11 +1,11 @@
 ﻿namespace Airlines.Console;
 public static class Search
 {
-    public static int LinearSearch(string[] array, string target)
+    public static int LinearSearch(List<string> data, string target)
     {
-        for (var i = 0; i < array.Length; i++)
+        for (var i = 0; i < data.Count; i++)
         {
-            if (array[i] == target)
+            if (data[i] == target)
             {
                 return i;
             }
@@ -13,14 +13,14 @@ public static class Search
         return -1;
     }
 
-    public static int BinarySearch(string[] arr, string target)
+    public static int BinarySearch(List<string> data, string target)
     {
-        int l = 0, r = arr.Length - 1;
+        int l = 0, r = data.Count - 1;
         while (l <= r)
         {
             var m = l + ((r - l) / 2);
 
-            var comparisonResult = string.Compare(arr[m], target);
+            var comparisonResult = string.Compare(data[m], target);
 
             if (comparisonResult == 0)
                 return m;
@@ -34,7 +34,7 @@ public static class Search
         return -1;
     }
 
-    public static void PrintSearchResult(string[] airports, string[] airlines, string[] flights)
+    public static void PrintSearchResult(List<string> airports, List<string> airlines, List<string> flights)
     {
         System.Console.WriteLine($"\nEnter search term or type 'done' to finish:\n");
 

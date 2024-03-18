@@ -10,9 +10,9 @@ public class Program
 {
     public static void Main()
     {
-        var airports = new string[10000];
-        var airlines = new string[10000];
-        var flights = new string[10000];
+        var airports = new List<string>();
+        var airlines = new List<string>();
+        var flights = new List<string>();
 
         airports = ReadInput("Airport", airports);
         airlines = ReadInput("Airline", airlines);
@@ -22,9 +22,9 @@ public class Program
         PrintData("Airline", airlines);
         PrintData("Flight", flights);
 
-        _ = airports.SortAirports(true);
-        _ = airlines.SortAirlines(false);
-        _ = flights.SortFlights(false);
+        airports.SortAirports(true);
+        airlines.SortAirlines(false);
+        flights.SortFlights(false);
 
         PrintData("Airport", airports);
         PrintData("Airline", airlines);
@@ -33,7 +33,7 @@ public class Program
         PrintSearchResult(airports, airlines, flights);
     }
 
-    public static string[] ReadInput(string type, string[] currentData)
+    public static List<string> ReadInput(string type, List<string> currentData)
     {
         var newData = currentData;
 

@@ -3,7 +3,7 @@
 namespace Airlines.Console;
 public static class Validation
 {
-    public static bool Validate(string? value, string[] values)
+    public static bool Validate(string? value, List<string> values)
     {
         if (string.IsNullOrEmpty(value))
         {
@@ -20,7 +20,7 @@ public static class Validation
         return true;
     }
 
-    public static bool ValidateAirport(string airport, string[] airports)
+    public static bool ValidateAirport(string airport, List<string> airports)
     {
         if (!Validate(airport, airports))
         {
@@ -42,7 +42,7 @@ public static class Validation
         return true;
     }
 
-    public static bool ValidateAirline(string airline, string[] airlines)
+    public static bool ValidateAirline(string airline, List<string> airlines)
     {
         if (!Validate(airline, airlines))
         {
@@ -58,7 +58,7 @@ public static class Validation
         return true;
     }
 
-    public static bool ValidateFlight(string flight, string[] flights)
+    public static bool ValidateFlight(string flight, List<string> flights)
     {
         if (!Validate(flight, flights))
         {
