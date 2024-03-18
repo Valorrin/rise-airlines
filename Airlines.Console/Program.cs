@@ -2,7 +2,7 @@
 using static Airlines.Console.Validation;
 using static Airlines.Console.Search;
 using static Airlines.Console.Sort;
-using static Airlines.Console.Data;
+using static Airlines.Console.DataManipulation;
 
 namespace Airlines;
 
@@ -29,8 +29,6 @@ public class Program
         PrintData("Airport", airports);
         PrintData("Airline", airlines);
         PrintData("Flight", flights);
-
-        PrintSearchResult(airports, airlines, flights);
     }
 
     public static List<string> ReadInput(string type, List<string> currentData)
@@ -80,5 +78,27 @@ public class Program
         }
 
         return newData;
+    }
+
+    public static void ReadCommands()
+    {
+        System.Console.WriteLine($"Enter command:\n");
+
+        while (true)
+        {
+            var command = System.Console.ReadLine();
+
+            if (string.IsNullOrEmpty(command))
+            {
+                System.Console.WriteLine(" Error: The command cannot be null or empty!");
+                continue;
+            }
+
+            string searchTerm = "aaa";
+
+            if (command == "search")
+            {            
+            }
+        }
     }
 }

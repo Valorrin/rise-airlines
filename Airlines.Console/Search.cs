@@ -34,50 +34,43 @@ public static class Search
         return -1;
     }
 
-    public static void PrintSearchResult(List<string> airports, List<string> airlines, List<string> flights)
+    public static string PrintSearchResult(List<string> airports, List<string> airlines, List<string> flights, string searchTerm)
     {
-        System.Console.WriteLine($"\nEnter search term or type 'done' to finish:\n");
+        var termFound = false;
 
-        while (true)
+        if (string.IsNullOrEmpty(searchTerm))
         {
-            var searchTerm = System.Console.ReadLine();
+            System.Console.WriteLine(" Error: search term cannot be null or empty!");
+            continue;
+        }
 
-            var termFound = false;
+        if (searchTerm == "done")
+        {
+            System.Console.WriteLine();
+            break;
+        }
 
-            if (string.IsNullOrEmpty(searchTerm))
-            {
-                System.Console.WriteLine(" Error: search term cannot be null or empty!");
-                continue;
-            }
+        if (BinarySearch(airports, searchTerm) >= 0)
+        {
+            termFound = true;
+            System.Console.WriteLine($" {searchTerm} is Airport name.");
+        }
 
-            if (searchTerm == "done")
-            {
-                System.Console.WriteLine();
-                break;
-            }
+        if (BinarySearch(airlines, searchTerm) >= 0)
+        {
+            termFound = true;
+            System.Console.WriteLine($" {searchTerm} is Airline name.");
+        }
 
-            if (BinarySearch(airports, searchTerm) >= 0)
-            {
-                termFound = true;
-                System.Console.WriteLine($" {searchTerm} is Airport name.");
-            }
+        if (BinarySearch(flights, searchTerm) >= 0)
+        {
+            termFound = true;
+            System.Console.WriteLine($" {searchTerm} is Flight name.");
+        }
 
-            if (BinarySearch(airlines, searchTerm) >= 0)
-            {
-                termFound = true;
-                System.Console.WriteLine($" {searchTerm} is Airline name.");
-            }
-
-            if (BinarySearch(flights, searchTerm) >= 0)
-            {
-                termFound = true;
-                System.Console.WriteLine($" {searchTerm} is Flight name.");
-            }
-
-            if (!termFound)
-            {
-                System.Console.WriteLine($" {searchTerm} was not found.");
-            }
+        if (!termFound)
+        {
+            System.Console.WriteLine($" {searchTerm} was not found.");
         }
     }
 }
