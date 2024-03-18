@@ -1,6 +1,7 @@
 ﻿namespace Airlines.Console;
-public static class Data
+public static class DataManipulation
 {
+
     public static List<string> AddData(string item, List<string> data)
     {
         data.Add(item);

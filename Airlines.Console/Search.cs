@@ -34,20 +34,13 @@ public static class Search
         return -1;
     }
 
-    public static string PrintSearchResult(List<string> airports, List<string> airlines, List<string> flights, string searchTerm)
+    public static void PrintSearchResult(List<string> airports, List<string> airlines, List<string> flights, string searchTerm)
     {
         var termFound = false;
 
         if (string.IsNullOrEmpty(searchTerm))
         {
             System.Console.WriteLine(" Error: search term cannot be null or empty!");
-            continue;
-        }
-
-        if (searchTerm == "done")
-        {
-            System.Console.WriteLine();
-            break;
         }
 
         if (BinarySearch(airports, searchTerm) >= 0)

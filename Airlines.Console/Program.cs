@@ -3,6 +3,7 @@ using static Airlines.Console.Validation;
 using static Airlines.Console.Search;
 using static Airlines.Console.Sort;
 using static Airlines.Console.DataManipulation;
+using System;
 
 namespace Airlines;
 
@@ -10,6 +11,10 @@ public class Program
 {
     public static void Main()
     {
+        var data = new Airport();
+        data.Airlines.Add("asd");
+        System.Console.WriteLine(data.Airlines[0]);
+
         var airports = new List<string>();
         var airlines = new List<string>();
         var flights = new List<string>();
