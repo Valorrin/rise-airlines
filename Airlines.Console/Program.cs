@@ -1,5 +1,4 @@
-﻿
-using Airlines.Console;
+﻿using Airlines.Console;
 
 namespace Airlines;
 
@@ -19,9 +18,9 @@ public class Program
         PrintData("Airline", airlines);
         PrintData("Flight", flights);
 
-        _ = airports.SortAirports();
-        _ = airlines.SortAirlines();
-        _ = flights.SortFlights();
+        _ = airports.SortAirports(true);
+        _ = airlines.SortAirlines(false);
+        _ = flights.SortFlights(false);
 
         PrintData("Airport", airports);
         PrintData("Airline", airlines);
@@ -34,21 +33,21 @@ public class Program
     {
         var newData = currentData;
 
-        Console.WriteLine($"Enter {type} name, or type 'done' to finish:\n");
+        System.Console.WriteLine($"Enter {type} name, or type 'done' to finish:\n");
 
         while (true)
         {
-            var input = Console.ReadLine();
+            var input = System.Console.ReadLine();
 
             if (string.IsNullOrEmpty(input))
             {
-                Console.WriteLine(" Error: The name cannot be null or empty!");
+                System.Console.WriteLine(" Error: The name cannot be null or empty!");
                 continue;
             }
 
             if (input == "done")
             {
-                Console.WriteLine();
+                System.Console.WriteLine();
                 break;
             }
 
@@ -83,13 +82,13 @@ public class Program
     {
         if (string.IsNullOrEmpty(value))
         {
-            Console.WriteLine(" Error: Name cannot be null or empty!");
+            System.Console.WriteLine(" Error: Name cannot be null or empty!");
             return false;
         }
 
         if (LinearSearch(values, value) >= 0)
         {
-            Console.WriteLine($" Error: The name already exist!");
+            System.Console.WriteLine($" Error: The name already exist!");
             return false;
         }
 
@@ -105,13 +104,13 @@ public class Program
 
         if (airport.Length != 3)
         {
-            Console.WriteLine($" Error: Airport name '{airport}' must be exactly 3 characters long!");
+            System.Console.WriteLine($" Error: Airport name '{airport}' must be exactly 3 characters long!");
             return false;
         }
 
         if (!airport.All(char.IsLetter))
         {
-            Console.WriteLine($" Error: Airport name '{airport}' must contain only alphabetic characters!");
+            System.Console.WriteLine($" Error: Airport name '{airport}' must contain only alphabetic characters!");
             return false;
         }
 
@@ -127,7 +126,7 @@ public class Program
 
         if (airline.Length >= 6)
         {
-            Console.WriteLine($" Error: Airline name '{airline}' must be less than 6 characters long!");
+            System.Console.WriteLine($" Error: Airline name '{airline}' must be less than 6 characters long!");
             return false;
         }
 
@@ -143,7 +142,7 @@ public class Program
 
         if (!flight.All(char.IsLetterOrDigit))
         {
-            Console.WriteLine($" Error: Flight code '{flight}' must contain only alphabetic or numeric characters!");
+            System.Console.WriteLine($" Error: Flight code '{flight}' must contain only alphabetic or numeric characters!");
             return false;
         }
 
@@ -163,23 +162,23 @@ public class Program
             }
         }
 
-        Console.WriteLine($" {item} was added successfully!");
+        System.Console.WriteLine($" {item} was added successfully!");
 
         return data;
     }
 
     public static void PrintData(string type, string[] data)
     {
-        Console.Write($" {type}s: ");
+        System.Console.Write($" {type}s: ");
 
         for (var i = 0; i < data.Length; i++)
         {
             if (data[i] != null)
             {
-                Console.Write($" {data[i]} ");
+                System.Console.Write($" {data[i]} ");
             }
         }
-        Console.WriteLine();
+        System.Console.WriteLine();
     }
 
     public static int LinearSearch(string[] array, string target)
@@ -217,47 +216,47 @@ public class Program
 
     public static void Search(string[] airports, string[] airlines, string[] flights)
     {
-        Console.WriteLine($"\nEnter search term or type 'done' to finish:\n");
+        System.Console.WriteLine($"\nEnter search term or type 'done' to finish:\n");
 
         while (true)
         {
-            var searchTerm = Console.ReadLine();
+            var searchTerm = System.Console.ReadLine();
 
             var termFound = false;
 
             if (string.IsNullOrEmpty(searchTerm))
             {
-                Console.WriteLine(" Error: search term cannot be null or empty!");
+                System.Console.WriteLine(" Error: search term cannot be null or empty!");
                 continue;
             }
 
             if (searchTerm == "done")
             {
-                Console.WriteLine();
+                System.Console.WriteLine();
                 break;
             }
 
             if (BinarySearch(airports, searchTerm) >= 0)
             {
                 termFound = true;
-                Console.WriteLine($" {searchTerm} is Airport name.");
+                System.Console.WriteLine($" {searchTerm} is Airport name.");
             }
 
             if (BinarySearch(airlines, searchTerm) >= 0)
             {
                 termFound = true;
-                Console.WriteLine($" {searchTerm} is Airline name.");
+                System.Console.WriteLine($" {searchTerm} is Airline name.");
             }
 
             if (BinarySearch(flights, searchTerm) >= 0)
             {
                 termFound = true;
-                Console.WriteLine($" {searchTerm} is Flight name.");
+                System.Console.WriteLine($" {searchTerm} is Flight name.");
             }
 
             if (!termFound)
             {
-                Console.WriteLine($" {searchTerm} was not found.");
+                System.Console.WriteLine($" {searchTerm} was not found.");
             }
         }
     }

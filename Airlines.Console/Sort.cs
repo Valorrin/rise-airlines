@@ -1,7 +1,8 @@
-﻿namespace Airlines.Console;
+﻿
+namespace Airlines.Console;
 public static class Sort
 {
-    public static string[] SortAirports(this string[] airports)
+    public static string[] SortAirports(this string[] airports, bool ascending = true)
     {
         var n = airports.Length;
         string temp;
@@ -19,10 +20,15 @@ public static class Sort
             }
         }
 
+        if (!ascending)
+        {
+            _ = airports.Reverse();
+        }
+
         return airports;
     }
 
-    public static string[] SortAirlines(this string[] airlines)
+    public static string[] SortAirlines(this string[] airlines, bool ascending = true)
     {
         var n = airlines.Length;
 
@@ -44,10 +50,15 @@ public static class Sort
             }
         }
 
+        if (!ascending)
+        {
+            _ = airlines.Reverse();
+        }
+
         return airlines;
     }
 
-    public static string[] SortFlights(this string[] flights)
+    public static string[] SortFlights(this string[] flights, bool ascending = true)
     {
         var n = flights.Length;
 
@@ -67,6 +78,11 @@ public static class Sort
             {
                 (flights[minIndex], flights[i]) = (flights[i], flights[minIndex]);
             }
+        }
+
+        if (!ascending)
+        {
+            _ = flights.Reverse();
         }
 
         return flights;
