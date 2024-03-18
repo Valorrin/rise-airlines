@@ -11,17 +11,13 @@ public class Program
 {
     public static void Main()
     {
-        var data = new Airport();
-        data.Airlines.Add("asd");
-        System.Console.WriteLine(data.Airlines[0]);
-
         var airports = new List<string>();
         var airlines = new List<string>();
         var flights = new List<string>();
 
-        airports = ReadInput("Airport", airports);
-        airlines = ReadInput("Airline", airlines);
-        flights = ReadInput("Flight", flights);
+        airports = ReadAirportInput(airports);
+        airlines = ReadAirlineInput(airlines);
+        flights = ReadFlightInput(flights);
 
         PrintData("Airport", airports);
         PrintData("Airline", airlines);
@@ -36,11 +32,9 @@ public class Program
         PrintData("Flight", flights);
     }
 
-    public static List<string> ReadInput(string type, List<string> currentData)
+    public static List<string> ReadAirportInput(List<string> data)
     {
-        var newData = currentData;
-
-        System.Console.WriteLine($"Enter {type} name, or type 'done' to finish:\n");
+        System.Console.WriteLine($"Enter airport name, or type 'done' to finish:\n");
 
         while (true)
         {
@@ -58,31 +52,70 @@ public class Program
                 break;
             }
 
-            if (type == "Airport")
+            if (ValidateAirport(input, data))
             {
-                if (ValidateAirport(input, newData))
-                {
-                    newData = AddData(input, newData);
-                }
-            }
-            else if (type == "Airline")
-            {
-                if (ValidateAirline(input, newData))
-                {
-                    newData = AddData(input, newData);
-                }
-            }
-            else if (type == "Flight")
-            {
-
-                if (ValidateFlight(input, newData))
-                {
-                    newData = AddData(input, newData);
-                }
+                data = AddData(input, data);
             }
         }
 
-        return newData;
+        return data;
+    }
+    public static List<string> ReadAirlineInput(List<string> data)
+    {
+        System.Console.WriteLine($"Enter airline name, or type 'done' to finish:\n");
+
+        while (true)
+        {
+            var input = System.Console.ReadLine();
+
+            if (string.IsNullOrEmpty(input))
+            {
+                System.Console.WriteLine(" Error: The name cannot be null or empty!");
+                continue;
+            }
+
+            if (input == "done")
+            {
+                System.Console.WriteLine();
+                break;
+            }
+
+            if (ValidateAirline(input, data))
+            {
+                data = AddData(input, data);
+            }
+        }
+
+        return data;
+    }
+
+    public static List<string> ReadFlightInput(List<string> data)
+    {
+        System.Console.WriteLine($"Enter flight name, or type 'done' to finish:\n");
+
+        while (true)
+        {
+            var input = System.Console.ReadLine();
+
+            if (string.IsNullOrEmpty(input))
+            {
+                System.Console.WriteLine(" Error: The name cannot be null or empty!");
+                continue;
+            }
+
+            if (input == "done")
+            {
+                System.Console.WriteLine();
+                break;
+            }
+
+            if (ValidateAirport(input, data))
+            {
+                data = AddData(input, data);
+            }
+        }
+
+        return data;
     }
 
     public static void ReadCommands()
