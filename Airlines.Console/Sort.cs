@@ -2,27 +2,27 @@
 namespace Airlines.Console;
 public static class Sort
 {
-    public static void SortAirports(this List<string> airports, bool ascending = true)
+    public static void SortAirports(this AirportManager manager, bool ascending = true)
     {
-        var n = airports.Count;
+        var n = manager.Airports.Count;
         string temp;
 
         for (var j = 0; j < n - 1; j++)
         {
             for (var i = j + 1; i < n; i++)
             {
-                if (string.Compare(airports[j], airports[i]) > 0)
+                if (string.Compare(manager.Airports[j], manager.Airports[i]) > 0)
                 {
-                    temp = airports[j];
-                    airports[j] = airports[i];
-                    airports[i] = temp;
+                    temp = manager.Airports[j];
+                    manager.Airports[j] = manager.Airports[i];
+                    manager.Airports[i] = temp;
                 }
             }
         }
 
         if (!ascending)
         {
-            airports.Reverse();
+            manager.Airports.Reverse();
         }
     }
 

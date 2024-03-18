@@ -20,28 +20,6 @@ public static class Validation
         return true;
     }
 
-    public static bool ValidateAirport(string airport, List<string> airports)
-    {
-        if (!Validate(airport, airports))
-        {
-            return false;
-        }
-
-        if (airport.Length != 3)
-        {
-            System.Console.WriteLine($" Error: Airport name '{airport}' must be exactly 3 characters long!");
-            return false;
-        }
-
-        if (!airport.All(char.IsLetter))
-        {
-            System.Console.WriteLine($" Error: Airport name '{airport}' must contain only alphabetic characters!");
-            return false;
-        }
-
-        return true;
-    }
-
     public static bool ValidateAirline(string airline, List<string> airlines)
     {
         if (!Validate(airline, airlines))

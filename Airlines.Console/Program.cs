@@ -11,15 +11,16 @@ public class Program
 {
     public static void Main()
     {
-        var airports = new List<string>();
+
+        var airports = new AirportManager();
         var airlines = new List<string>();
         var flights = new List<string>();
 
-        airports = ReadAirportInput(airports);
+        ReadAirportInput(airports);
         airlines = ReadAirlineInput(airlines);
         flights = ReadFlightInput(flights);
 
-        PrintData("Airport", airports);
+        airports.Print();
         PrintData("Airline", airlines);
         PrintData("Flight", flights);
 
@@ -27,12 +28,21 @@ public class Program
         airlines.SortAirlines(false);
         flights.SortFlights(false);
 
-        PrintData("Airport", airports);
+        airports.Print();
         PrintData("Airline", airlines);
         PrintData("Flight", flights);
     }
 
-    public static List<string> ReadAirportInput(List<string> data)
+    public static string ReadInput()
+    {
+        System.Console.WriteLine($"Enter name:");
+
+        var input = System.Console.ReadLine();
+
+        return input;
+    }
+
+    public static void ReadAirportInput(AirportManager manager)
     {
         System.Console.WriteLine($"Enter airport name, or type 'done' to finish:\n");
 
@@ -52,13 +62,8 @@ public class Program
                 break;
             }
 
-            if (ValidateAirport(input, data))
-            {
-                data = AddData(input, data);
-            }
+            manager.Add(input);
         }
-
-        return data;
     }
     public static List<string> ReadAirlineInput(List<string> data)
     {
@@ -88,7 +93,6 @@ public class Program
 
         return data;
     }
-
     public static List<string> ReadFlightInput(List<string> data)
     {
         System.Console.WriteLine($"Enter flight name, or type 'done' to finish:\n");
@@ -109,7 +113,7 @@ public class Program
                 break;
             }
 
-            if (ValidateAirport(input, data))
+            if (ValidateFlight(input, data))
             {
                 data = AddData(input, data);
             }
