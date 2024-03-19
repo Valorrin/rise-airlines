@@ -68,4 +68,18 @@ public class FlightManagerTests
         Assert.Contains("BBB", output);
         Assert.Contains("CCC", output);
     }
+
+    [Theory]
+    [InlineData("ABC123", true)]
+    [InlineData("DEFDEF", true)]
+    [InlineData("123456", true)]
+    [InlineData("GHI#789", false)]
+    public void Validate_FlightName(string name, bool expectedResult)
+    {
+        var flightManager = new FlightManager();
+
+        var result = flightManager.Validate(name);
+
+        Assert.Equal(expectedResult, result);
+    }
 }

@@ -31,7 +31,7 @@ public class AirportManager
         }
     }
 
-    private bool Validate(string name)
+    public bool Validate(string name)
     {
         if (LinearSearch(Airports, name) >= 0)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
@@ -82,5 +83,20 @@ public class AirlineManagerTests
         Assert.Contains("AAA", output);
         Assert.Contains("BBB", output);
         Assert.Contains("CCC", output);
+    }
+
+    [Theory]
+    [InlineData("TestAirline", true)]  // Test case where the name is valid
+    [InlineData("Airline", false)]     // Test case where the name already exists
+    [InlineData("LongAirlineName", false)]  // Test case where the name is too long
+    [InlineData("", false)]            // Test case where the name is empty
+    [InlineData("Short", true)]        // Test case where the name is short
+    public void Validate_AirlineName(string name, bool expectedResult)
+    {
+        var airlineManager = new AirlineManager();
+
+        var result = airlineManager.Validate(name);
+
+        Assert.Equal(expectedResult, result);
     }
 }

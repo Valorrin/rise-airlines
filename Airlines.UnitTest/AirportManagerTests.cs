@@ -79,4 +79,19 @@ public class AirportManagerTests
         Assert.Contains("BBB", output);
         Assert.Contains("CCC", output);
     }
+
+    [Theory]
+    [InlineData("AAA", true)]           // Valid airport name
+    [InlineData("CCCC", false)]         // Airport name with length greater than 3
+    [InlineData("12$", false)]          // Airport name with non-alphabetic characters
+    [InlineData("", false)]             // Empty airport name
+    [InlineData("A", false)]            // Airport name with length less than 3
+    public void Validate_AirportName(string name, bool expectedResult)
+    {
+        var airportManager = new AirportManager();
+
+        var result = airportManager.Validate(name);
+
+        Assert.Equal(expectedResult, result);
+    }
 }

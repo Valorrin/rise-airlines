@@ -32,7 +32,7 @@ public class FlightManager
         }
     }
 
-    private bool Validate(string name)
+    public bool Validate(string name)
     {
         if (LinearSearch(Flights, name) >= 0)
         {
