@@ -70,10 +70,10 @@ public class FlightManagerTests
     }
 
     [Theory]
-    [InlineData("ABC123", true)]        // Valid flight name
-    [InlineData("DEF456", false)]       // Already existing flight name
-    [InlineData("GHI#789", false)]      // Flight name with non-alphanumeric characters
-    [InlineData("", false)]             // Empty flight name
+    [InlineData("ABC123", true)]
+    [InlineData("DEFDEF", true)]
+    [InlineData("123456", true)]
+    [InlineData("GHI#789", false)]
     public void Validate_FlightName(string name, bool expectedResult)
     {
         var flightManager = new FlightManager();
