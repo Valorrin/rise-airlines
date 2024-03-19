@@ -58,6 +58,24 @@ public class AirlineManager
         }
     }
 
+    public void Search(string searchTerm)
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+        {
+            System.Console.WriteLine(" Error: search term cannot be null or empty!");
+        }
+
+        if (BinarySearch(Airlines, searchTerm) >= 0)
+        {
+            System.Console.WriteLine($" {searchTerm} is Airport name.");
+        }
+
+        else
+        {
+            System.Console.WriteLine($" {searchTerm} was not found.");
+        }
+    }
+
     public void Print()
     {
         System.Console.Write($" Airlines: ");
