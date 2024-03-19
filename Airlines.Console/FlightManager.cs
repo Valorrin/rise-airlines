@@ -8,30 +8,6 @@ public class FlightManager
 
     public FlightManager() => Flights = [];
 
-    public void ReadInput()
-    {
-        System.Console.WriteLine($"Enter flight name, or type 'done' to finish:\n");
-
-        while (true)
-        {
-            var input = System.Console.ReadLine();
-
-            if (string.IsNullOrEmpty(input))
-            {
-                System.Console.WriteLine(" Error: The name cannot be null or empty!");
-                continue;
-            }
-
-            if (input == "done")
-            {
-                System.Console.WriteLine();
-                break;
-            }
-
-            Add(input);
-        }
-    }
-
     public bool Validate(string name)
     {
         if (LinearSearch(Flights, name) >= 0)
@@ -70,12 +46,5 @@ public class FlightManager
         {
             System.Console.WriteLine($" {searchTerm} is Flight name.");
         }
-    }
-
-    public void Print()
-    {
-        System.Console.Write($" Flights: ");
-        System.Console.WriteLine(string.Join(", ", Flights));
-
     }
 }

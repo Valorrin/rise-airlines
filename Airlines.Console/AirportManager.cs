@@ -7,30 +7,6 @@ public class AirportManager
 
     public AirportManager() => Airports = [];
 
-    public void ReadInput()
-    {
-        System.Console.WriteLine($"Enter airport name, or type 'done' to finish:\n");
-
-        while (true)
-        {
-            var input = System.Console.ReadLine();
-
-            if (string.IsNullOrEmpty(input))
-            {
-                System.Console.WriteLine(" Error: The name cannot be null or empty!");
-                continue;
-            }
-
-            if (input == "done")
-            {
-                System.Console.WriteLine();
-                break;
-            }
-
-            Add(input);
-        }
-    }
-
     public bool Validate(string name)
     {
         if (LinearSearch(Airports, name) >= 0)
@@ -75,12 +51,5 @@ public class AirportManager
         {
             System.Console.WriteLine($" {searchTerm} is Airport name.");
         }
-    }
-
-    public void Print()
-    {
-        System.Console.Write($" Airports: ");
-        System.Console.WriteLine(string.Join(", ", Airports));
-
     }
 }

@@ -11,21 +11,103 @@ public class Program
         var airlines = new AirlineManager();
         var flights = new FlightManager();
 
-        airports.ReadInput();
-        airlines.ReadInput();
-        flights.ReadInput();
+        ReadInput(airports);
+        ReadInput(airlines);
+        ReadInput(flights);
 
-        airports.Print();
-        airlines.Print();
-        flights.Print();
-
-        airports.Sort();
-        airlines.Sort();
-        flights.Sort();
+        Print(airports);
+        Print(airlines);
+        Print(flights);
 
         ReadCommands(airports, airlines, flights);
     }
 
+    public static void ReadInput(AirlineManager manager)
+    {
+        System.Console.WriteLine($"Enter airline name, or type 'done' to finish:\n");
+
+        while (true)
+        {
+            var input = System.Console.ReadLine();
+
+            if (string.IsNullOrEmpty(input))
+            {
+                System.Console.WriteLine(" Error: The name cannot be null or empty!");
+                continue;
+            }
+
+            if (input == "done")
+            {
+                System.Console.WriteLine();
+                break;
+            }
+
+            manager.Add(input);
+        }
+    }
+    public static void ReadInput(AirportManager manager)
+    {
+        System.Console.WriteLine($"Enter airport name, or type 'done' to finish:\n");
+
+        while (true)
+        {
+            var input = System.Console.ReadLine();
+
+            if (string.IsNullOrEmpty(input))
+            {
+                System.Console.WriteLine(" Error: The name cannot be null or empty!");
+                continue;
+            }
+
+            if (input == "done")
+            {
+                System.Console.WriteLine();
+                break;
+            }
+
+            manager.Add(input);
+        }
+    }
+    public static void ReadInput(FlightManager manager)
+    {
+        System.Console.WriteLine($"Enter flight name, or type 'done' to finish:\n");
+
+        while (true)
+        {
+            var input = System.Console.ReadLine();
+
+            if (string.IsNullOrEmpty(input))
+            {
+                System.Console.WriteLine(" Error: The name cannot be null or empty!");
+                continue;
+            }
+
+            if (input == "done")
+            {
+                System.Console.WriteLine();
+                break;
+            }
+
+            manager.Add(input);
+        }
+    }
+    public static void Print(AirlineManager manager)
+    {
+        System.Console.Write($" Airlines: ");
+        System.Console.WriteLine(string.Join(", ", manager.Airlines));
+    }
+    public static void Print(AirportManager manager)
+    {
+        System.Console.Write($" Airports: ");
+        System.Console.WriteLine(string.Join(", ", manager.Airports));
+
+    }
+    public static void Print(FlightManager manager)
+    {
+        System.Console.Write($" Flights: ");
+        System.Console.WriteLine(string.Join(", ", manager.Flights));
+
+    }
     public static void ReadCommands(AirportManager airports, AirlineManager airlines, FlightManager flights)
     {
         System.Console.WriteLine($"Enter command:\n");
@@ -74,7 +156,7 @@ public class Program
                         airports.Sort();
                     }
 
-                    airports.Print();
+                    Print(airports);
                 }
                 else if (inputData == "airlines")
                 {
@@ -87,7 +169,7 @@ public class Program
                         airlines.Sort();
                     }
 
-                    airlines.Print();
+                    Print(airlines);
                 }
                 else if (inputData == "flights")
                 {
@@ -100,7 +182,7 @@ public class Program
                         flights.Sort();
                     }
 
-                    flights.Print();
+                    Print(flights);
                 }
             }
 
