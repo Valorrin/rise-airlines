@@ -15,9 +15,9 @@ public class Program
         var airlines = new AirlineManager();
         var flights = new FlightManager();
 
-        ReadAirportInput(airports);
-        ReadAirlineInput(airlines);
-        ReadFlightInput(flights);
+        airports.ReadInput();
+        airlines.ReadInput();
+        flights.ReadInput();
 
         airports.Print();
         airlines.Print();
@@ -30,85 +30,6 @@ public class Program
         airports.Print();
         airlines.Print();
         flights.Print();
-    }
-
-    public static string ReadInput()
-    {
-        System.Console.WriteLine($"Enter name:");
-
-        var input = System.Console.ReadLine();
-
-        return input;
-    }
-
-    public static void ReadAirportInput(AirportManager manager)
-    {
-        System.Console.WriteLine($"Enter airport name, or type 'done' to finish:\n");
-
-        while (true)
-        {
-            var input = System.Console.ReadLine();
-
-            if (string.IsNullOrEmpty(input))
-            {
-                System.Console.WriteLine(" Error: The name cannot be null or empty!");
-                continue;
-            }
-
-            if (input == "done")
-            {
-                System.Console.WriteLine();
-                break;
-            }
-
-            manager.Add(input);
-        }
-    }
-    public static void ReadAirlineInput(AirlineManager manager)
-    {
-        System.Console.WriteLine($"Enter airline name, or type 'done' to finish:\n");
-
-        while (true)
-        {
-            var input = System.Console.ReadLine();
-
-            if (string.IsNullOrEmpty(input))
-            {
-                System.Console.WriteLine(" Error: The name cannot be null or empty!");
-                continue;
-            }
-
-            if (input == "done")
-            {
-                System.Console.WriteLine();
-                break;
-            }
-
-            manager.Add(input);
-        }
-    }
-    public static void ReadFlightInput(FlightManager manager)
-    {
-        System.Console.WriteLine($"Enter flight name, or type 'done' to finish:\n");
-
-        while (true)
-        {
-            var input = System.Console.ReadLine();
-
-            if (string.IsNullOrEmpty(input))
-            {
-                System.Console.WriteLine(" Error: The name cannot be null or empty!");
-                continue;
-            }
-
-            if (input == "done")
-            {
-                System.Console.WriteLine();
-                break;
-            }
-
-            manager.Add(input);
-        }
     }
 
     public static void ReadCommands()
