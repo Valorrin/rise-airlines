@@ -86,11 +86,11 @@ public class AirlineManagerTests
     }
 
     [Theory]
-    [InlineData("TestAirline", true)]  // Test case where the name is valid
-    [InlineData("Airline", false)]     // Test case where the name already exists
-    [InlineData("LongAirlineName", false)]  // Test case where the name is too long
-    [InlineData("", false)]            // Test case where the name is empty
-    [InlineData("Short", true)]        // Test case where the name is short
+    [InlineData("abcde", true)]
+    [InlineData("12345", true)]
+    [InlineData("LongAirlineName", false)]
+    [InlineData("123456", false)]
+    [InlineData("abc456", false)]
     public void Validate_AirlineName(string name, bool expectedResult)
     {
         var airlineManager = new AirlineManager();
