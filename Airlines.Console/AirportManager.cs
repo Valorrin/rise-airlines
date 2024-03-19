@@ -3,7 +3,7 @@
 namespace Airlines.Console;
 public class AirportManager
 {
-    public List<string> Airports { get; private set; }
+    public List<string> Airports { get; set; }
 
     public AirportManager() => Airports = [];
 
