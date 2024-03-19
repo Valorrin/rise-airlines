@@ -47,6 +47,9 @@ public class AirportManager
             Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
+        var airportsCopy = Airports.ToList();
+        airportsCopy.Sort();
+
         if (BinarySearch(Airports, searchTerm) >= 0)
         {
             Console.WriteLine($" {searchTerm} is Airport name.");

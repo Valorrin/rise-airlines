@@ -41,6 +41,9 @@ public class FlightManager
             Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
+        var flightsCopy = Flights.ToList();
+        flightsCopy.Sort();
+
         if (BinarySearch(Flights, searchTerm) >= 0)
         {
             Console.WriteLine($" {searchTerm} is Flight name.");

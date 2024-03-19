@@ -1,4 +1,5 @@
-﻿
+﻿using Airlines.Business;
+
 namespace Airlines.Console.Tests;
 
 public class AirportManagerTests
@@ -72,7 +73,7 @@ public class AirportManagerTests
         var writer = new StringWriter();
         System.Console.SetOut(writer);
 
-        airportManager.Print();
+        Printer.Print(airportManager);
         var output = writer.ToString().Trim();
 
         Assert.Contains("AAA", output);
@@ -81,11 +82,11 @@ public class AirportManagerTests
     }
 
     [Theory]
-    [InlineData("AAA", true)]           // Valid airport name
-    [InlineData("CCCC", false)]         // Airport name with length greater than 3
-    [InlineData("12$", false)]          // Airport name with non-alphabetic characters
-    [InlineData("", false)]             // Empty airport name
-    [InlineData("A", false)]            // Airport name with length less than 3
+    [InlineData("AAA", true)]
+    [InlineData("CCCC", false)]
+    [InlineData("12$", false)]
+    [InlineData("", false)]
+    [InlineData("A", false)]
     public void Validate_AirportName(string name, bool expectedResult)
     {
         var airportManager = new AirportManager();

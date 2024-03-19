@@ -86,9 +86,6 @@ public class InputReader
             }
 
             ProcessCommand(input, airports, airlines, flights);
-            Printer.Print(airports);
-            Printer.Print(airlines);
-            Printer.Print(flights);
         }
     }
 }
