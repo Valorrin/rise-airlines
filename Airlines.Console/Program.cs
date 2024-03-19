@@ -53,7 +53,7 @@ public class Program
                 flights.Search(searchTerm);
             }
 
-            if (command == "sort" && splittedInput.Length >= 2)
+            else if (command == "sort" && splittedInput.Length >= 2)
             {
                 var inputData = splittedInput[1];
                 var order = "";
@@ -102,6 +102,11 @@ public class Program
 
                     flights.Print();
                 }
+            }
+
+            else
+            {
+                System.Console.WriteLine(" Inavlid command!");
             }
         }
     }
