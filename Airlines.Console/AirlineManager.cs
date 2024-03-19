@@ -65,14 +65,12 @@ public class AirlineManager
             System.Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
-        if (BinarySearch(Airlines, searchTerm) >= 0)
+        var airlinesCopy = Airlines.ToList();
+        airlinesCopy.Sort();
+
+        if (BinarySearch(airlinesCopy, searchTerm) >= 0)
         {
             System.Console.WriteLine($" {searchTerm} is Airline name.");
-        }
-
-        else
-        {
-            System.Console.WriteLine("Not Airline name.");
         }
     }
 

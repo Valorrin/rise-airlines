@@ -75,11 +75,6 @@ public class AirportManager
         {
             System.Console.WriteLine($" {searchTerm} is Airport name.");
         }
-
-        else
-        {
-            System.Console.WriteLine("Not Airport name.");
-        }
     }
 
     public void Print()

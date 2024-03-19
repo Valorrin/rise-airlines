@@ -70,10 +70,6 @@ public class FlightManager
         {
             System.Console.WriteLine($" {searchTerm} is Flight name.");
         }
-        else
-        {
-            System.Console.WriteLine("Not Flight name.");
-        }
     }
 
     public void Print()
