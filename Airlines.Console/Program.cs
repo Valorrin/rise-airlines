@@ -1,7 +1,6 @@
 ﻿using Airlines.Console;
-using static Airlines.Console.Validation;
 using static Airlines.Console.Search;
-using static Airlines.Console.Sort;
+using static Airlines.Console.Sorts;
 using static Airlines.Console.DataManipulation;
 using System;
 
@@ -13,24 +12,24 @@ public class Program
     {
 
         var airports = new AirportManager();
-        var airlines = new List<string>();
-        var flights = new List<string>();
+        var airlines = new AirlineManager();
+        var flights = new FlightManager();
 
         ReadAirportInput(airports);
-        airlines = ReadAirlineInput(airlines);
-        flights = ReadFlightInput(flights);
+        ReadAirlineInput(airlines);
+        ReadFlightInput(flights);
 
         airports.Print();
-        PrintData("Airline", airlines);
-        PrintData("Flight", flights);
+        airlines.Print();
+        airlines.Print();
 
-        airports.SortAirports(true);
-        airlines.SortAirlines(false);
-        flights.SortFlights(false);
+        airports.Sort(true);
+        airlines.Sort(false);
+        flights.Sort(false);
 
         airports.Print();
-        PrintData("Airline", airlines);
-        PrintData("Flight", flights);
+        airlines.Print();
+        flights.Print();
     }
 
     public static string ReadInput()
@@ -65,7 +64,7 @@ public class Program
             manager.Add(input);
         }
     }
-    public static List<string> ReadAirlineInput(List<string> data)
+    public static void ReadAirlineInput(AirlineManager manager)
     {
         System.Console.WriteLine($"Enter airline name, or type 'done' to finish:\n");
 
@@ -85,15 +84,10 @@ public class Program
                 break;
             }
 
-            if (ValidateAirline(input, data))
-            {
-                data = AddData(input, data);
-            }
+            manager.Add(input);
         }
-
-        return data;
     }
-    public static List<string> ReadFlightInput(List<string> data)
+    public static void ReadFlightInput(FlightManager manager)
     {
         System.Console.WriteLine($"Enter flight name, or type 'done' to finish:\n");
 
@@ -113,13 +107,8 @@ public class Program
                 break;
             }
 
-            if (ValidateFlight(input, data))
-            {
-                data = AddData(input, data);
-            }
+            manager.Add(input);
         }
-
-        return data;
     }
 
     public static void ReadCommands()

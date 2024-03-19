@@ -1,8 +1,8 @@
 ﻿
 namespace Airlines.Console;
-public static class Sort
+public static class Sorts
 {
-    public static void SortAirports(this AirportManager manager, bool ascending = true)
+    public static void Sort(this AirportManager manager, bool ascending = true)
     {
         var n = manager.Airports.Count;
         string temp;
@@ -26,9 +26,9 @@ public static class Sort
         }
     }
 
-    public static void SortAirlines(this List<string> airlines, bool ascending = true)
+    public static void Sort(this AirlineManager manager, bool ascending = true)
     {
-        var n = airlines.Count;
+        var n = manager.Airlines.Count;
 
         for (var i = 0; i < n - 1; i++)
         {
@@ -36,7 +36,7 @@ public static class Sort
 
             for (var j = i + 1; j < n; j++)
             {
-                if (string.Compare(airlines[j], airlines[minIndex]) < 0)
+                if (string.Compare(manager.Airlines[j], manager.Airlines[minIndex]) < 0)
                 {
                     minIndex = j;
                 }
@@ -44,19 +44,19 @@ public static class Sort
 
             if (minIndex != i)
             {
-                (airlines[minIndex], airlines[i]) = (airlines[i], airlines[minIndex]);
+                (manager.Airlines[minIndex], manager.Airlines[i]) = (manager.Airlines[i], manager.Airlines[minIndex]);
             }
         }
 
         if (!ascending)
         {
-            airlines.Reverse();
+            manager.Airlines.Reverse();
         }
     }
 
-    public static void SortFlights(this List<string> flights, bool ascending = true)
+    public static void Sort(this FlightManager manager, bool ascending = true)
     {
-        var n = flights.Count;
+        var n = manager.Flights.Count;
 
         for (var i = 0; i < n - 1; i++)
         {
@@ -64,7 +64,7 @@ public static class Sort
 
             for (var j = i + 1; j < n; j++)
             {
-                if (string.Compare(flights[j], flights[minIndex]) < 0)
+                if (string.Compare(manager.Flights[j], manager.Flights[minIndex]) < 0)
                 {
                     minIndex = j;
                 }
@@ -72,13 +72,13 @@ public static class Sort
 
             if (minIndex != i)
             {
-                (flights[minIndex], flights[i]) = (flights[i], flights[minIndex]);
+                (manager.Flights[minIndex], manager.Flights[i]) = (manager.Flights[i], manager.Flights[minIndex]);
             }
         }
 
         if (!ascending)
         {
-            flights.Reverse();
+            manager.Flights.Reverse();
         }
     }
 }
