@@ -7,7 +7,6 @@ public class Program
 {
     public static void Main()
     {
-
         var airports = new AirportManager();
         var airlines = new AirlineManager();
         var flights = new FlightManager();
