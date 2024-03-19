@@ -13,4 +13,8 @@
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Airlines.Business\Airlines.Business.csproj" />
+	</ItemGroup>
+
 </Project>

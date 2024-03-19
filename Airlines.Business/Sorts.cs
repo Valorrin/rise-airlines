@@ -1,5 +1,5 @@
 ﻿
-namespace Airlines.Console;
+namespace Airlines.Business;
 public static class Sorts
 {
     public static void Sort(this AirportManager manager)

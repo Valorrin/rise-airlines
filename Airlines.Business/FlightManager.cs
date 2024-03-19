@@ -1,7 +1,6 @@
-﻿
-using static Airlines.Console.Search;
+﻿using static Airlines.Business.Search;
 
-namespace Airlines.Console;
+namespace Airlines.Business;
 public class FlightManager
 {
     public List<string> Flights { get; private set; }
@@ -12,13 +11,13 @@ public class FlightManager
     {
         if (LinearSearch(Flights, name) >= 0)
         {
-            System.Console.WriteLine($" Error: Flight with the same name already exists.");
+            Console.WriteLine($" Error: Flight with the same name already exists.");
             return false;
         }
 
         if (!name.All(char.IsLetterOrDigit))
         {
-            System.Console.WriteLine($" Error: Flight name '{name}' must contain only alphabetic or numeric characters!");
+            Console.WriteLine($" Error: Flight name '{name}' must contain only alphabetic or numeric characters!");
             return false;
         }
 
@@ -31,7 +30,7 @@ public class FlightManager
         if (Validate(name))
         {
             Flights.Add(name);
-            System.Console.WriteLine($"Flight '{name}' added successfully.");
+            Console.WriteLine($"Flight '{name}' added successfully.");
         }
     }
 
@@ -39,12 +38,12 @@ public class FlightManager
     {
         if (string.IsNullOrEmpty(searchTerm))
         {
-            System.Console.WriteLine(" Error: search term cannot be null or empty!");
+            Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
         if (BinarySearch(Flights, searchTerm) >= 0)
         {
-            System.Console.WriteLine($" {searchTerm} is Flight name.");
+            Console.WriteLine($" {searchTerm} is Flight name.");
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using static Airlines.Console.Search;
+﻿using static Airlines.Business.Search;
 
-namespace Airlines.Console;
+namespace Airlines.Business;
 public class AirlineManager
 {
     public List<string> Airlines { get; set; }
@@ -11,13 +11,13 @@ public class AirlineManager
     {
         if (LinearSearch(Airlines, name) >= 0)
         {
-            System.Console.WriteLine($" Error: Airline with the same name already exists.");
+            Console.WriteLine($" Error: Airline with the same name already exists.");
             return false;
         }
 
         if (name.Length >= 6)
         {
-            System.Console.WriteLine($" Error: Airline name '{name}' must be less than 6 characters long!");
+            Console.WriteLine($" Error: Airline name '{name}' must be less than 6 characters long!");
             return false;
         }
 
@@ -30,7 +30,7 @@ public class AirlineManager
         if (Validate(name))
         {
             Airlines.Add(name);
-            System.Console.WriteLine($"Airline '{name}' added successfully.");
+            Console.WriteLine($"Airline '{name}' added successfully.");
         }
     }
 
@@ -38,7 +38,7 @@ public class AirlineManager
     {
         if (string.IsNullOrEmpty(searchTerm))
         {
-            System.Console.WriteLine(" Error: search term cannot be null or empty!");
+            Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
         var airlinesCopy = Airlines.ToList();
@@ -46,7 +46,7 @@ public class AirlineManager
 
         if (BinarySearch(airlinesCopy, searchTerm) >= 0)
         {
-            System.Console.WriteLine($" {searchTerm} is Airline name.");
+            Console.WriteLine($" {searchTerm} is Airline name.");
         }
     }
 }
