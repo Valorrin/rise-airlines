@@ -1,8 +1,5 @@
 ﻿using Airlines.Console;
-using static Airlines.Console.Search;
 using static Airlines.Console.Sorts;
-using static Airlines.Console.DataManipulation;
-using System;
 
 namespace Airlines;
 
@@ -21,35 +18,91 @@ public class Program
 
         airports.Print();
         airlines.Print();
-        airlines.Print();
+        flights.Print();
 
         airports.Sort();
-        airlines.SortDesc();
+        airlines.Sort();
         flights.Sort();
 
-        airports.Print();
-        airlines.Print();
-        flights.Print();
+        ReadCommands(airports, airlines, flights);
     }
 
-    public static void ReadCommands()
+    public static void ReadCommands(AirportManager airports, AirlineManager airlines, FlightManager flights)
     {
         System.Console.WriteLine($"Enter command:\n");
 
         while (true)
         {
-            var command = System.Console.ReadLine();
+            var input = System.Console.ReadLine();
 
-            if (string.IsNullOrEmpty(command))
+            if (string.IsNullOrEmpty(input))
             {
-                System.Console.WriteLine(" Error: The command cannot be null or empty!");
+                System.Console.WriteLine(" Error: The input cannot be null or empty!");
                 continue;
             }
 
-            string searchTerm = "aaa";
+            var splittedInput = input.Split().ToArray();
+            var command = splittedInput[0];
+
 
             if (command == "search")
-            {            
+            {
+                var searchTerm = splittedInput[1];
+
+                airports.Search(searchTerm);
+                airlines.Search(searchTerm);
+                flights.Search(searchTerm);
+            }
+
+            if (command == "sort" && splittedInput.Length >= 2)
+            {
+                var inputData = splittedInput[1];
+                var order = "";
+
+                if (splittedInput.Length == 3)
+                {
+                    order = splittedInput[2];
+                }
+
+                if (inputData == "airports")
+                {
+                    if (order == "descending")
+                    {
+                        airports.SortDesc();
+                    }
+                    else
+                    {
+                        airports.Sort();
+                    }
+
+                    airports.Print();
+                }
+                else if (inputData == "airlines")
+                {
+                    if (order == "descending")
+                    {
+                        airlines.SortDesc();
+                    }
+                    else
+                    {
+                        airlines.Sort();
+                    }
+
+                    airlines.Print();
+                }
+                else if (inputData == "flights")
+                {
+                    if (order == "descending")
+                    {
+                        flights.SortDesc();
+                    }
+                    else
+                    {
+                        flights.Sort();
+                    }
+
+                    flights.Print();
+                }
             }
         }
     }

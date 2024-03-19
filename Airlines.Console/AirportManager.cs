@@ -64,6 +64,24 @@ public class AirportManager
         }
     }
 
+    public void Search(string searchTerm)
+    {
+        if (string.IsNullOrEmpty(searchTerm))
+        {
+            System.Console.WriteLine(" Error: search term cannot be null or empty!");
+        }
+
+        if (BinarySearch(Airports, searchTerm) >= 0)
+        {
+            System.Console.WriteLine($" {searchTerm} is Airport name.");
+        }
+
+        else
+        {
+            System.Console.WriteLine("Not Airport name.");
+        }
+    }
+
     public void Print()
     {
         System.Console.Write($" Airports: ");

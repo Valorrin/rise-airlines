@@ -68,12 +68,11 @@ public class FlightManager
 
         if (BinarySearch(Flights, searchTerm) >= 0)
         {
-            System.Console.WriteLine($" {searchTerm} is Airport name.");
+            System.Console.WriteLine($" {searchTerm} is Flight name.");
         }
-
         else
         {
-            System.Console.WriteLine($" {searchTerm} was not found.");
+            System.Console.WriteLine("Not Flight name.");
         }
     }
 
