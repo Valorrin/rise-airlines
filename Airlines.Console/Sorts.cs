@@ -2,7 +2,7 @@
 namespace Airlines.Console;
 public static class Sorts
 {
-    public static void Sort(this AirportManager manager, bool ascending = true)
+    public static void Sort(this AirportManager manager)
     {
         var n = manager.Airports.Count;
         string temp;
@@ -19,14 +19,9 @@ public static class Sorts
                 }
             }
         }
-
-        if (!ascending)
-        {
-            manager.Airports.Reverse();
-        }
     }
 
-    public static void Sort(this AirlineManager manager, bool ascending = true)
+    public static void Sort(this AirlineManager manager)
     {
         var n = manager.Airlines.Count;
 
@@ -47,14 +42,9 @@ public static class Sorts
                 (manager.Airlines[minIndex], manager.Airlines[i]) = (manager.Airlines[i], manager.Airlines[minIndex]);
             }
         }
-
-        if (!ascending)
-        {
-            manager.Airlines.Reverse();
-        }
     }
 
-    public static void Sort(this FlightManager manager, bool ascending = true)
+    public static void Sort(this FlightManager manager)
     {
         var n = manager.Flights.Count;
 
@@ -75,10 +65,24 @@ public static class Sorts
                 (manager.Flights[minIndex], manager.Flights[i]) = (manager.Flights[i], manager.Flights[minIndex]);
             }
         }
+    }
 
-        if (!ascending)
-        {
-            manager.Flights.Reverse();
-        }
+    public static void SortDesc(this AirportManager manager)
+    {
+        Sort(manager);
+        manager.Airports.Reverse();
+    }
+
+    public static void SortDesc(this AirlineManager manager)
+    {
+        Sort(manager);
+        manager.Airlines.Reverse();
+    }
+
+    public static void SortDesc(this FlightManager manager)
+    {
+        Sort(manager);
+        manager.Flights.Reverse();
+
     }
 }

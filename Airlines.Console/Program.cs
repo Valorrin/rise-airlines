@@ -23,9 +23,9 @@ public class Program
         airlines.Print();
         airlines.Print();
 
-        airports.Sort(true);
-        airlines.Sort(false);
-        flights.Sort(false);
+        airports.Sort();
+        airlines.SortDesc();
+        flights.Sort();
 
         airports.Print();
         airlines.Print();
