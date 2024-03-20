@@ -1,4 +1,5 @@
 ﻿using Airlines.Business;
+using System.IO;
 using static Airlines.Business.CommandProcess;
 
 namespace Airlines.Console;
@@ -96,5 +97,27 @@ public class InputReader
 
             ProcessCommand(input, airports, airlines, flights);
         }
+    }
+
+    public static List<string> ReadDataFromFile(string filePath)
+    {
+        var data = new List<string>();
+
+        using (var reader = new StreamReader(filePath))
+        {
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+
+                if (line != null)
+                {
+                    data.Add(line);
+                }
+
+                System.Console.WriteLine($"Line readed!");
+            }
+        }
+
+        return data;
     }
 }
