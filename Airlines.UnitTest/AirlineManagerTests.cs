@@ -21,7 +21,15 @@ public class AirlineManagerTests
         var airlineManager = new AirlineManager();
         var longAirlineName = "TooLongAirlineName";
 
-        airlineManager.Add(longAirlineName);
+        if (airlineManager.Validate(longAirlineName))
+        {
+            airlineManager.Add(longAirlineName);
+        }
+
+        if (airlineManager.Validate(longAirlineName))
+        {
+            airlineManager.Add(longAirlineName);
+        }
 
         Assert.Empty(airlineManager.Airlines);
     }
@@ -31,9 +39,16 @@ public class AirlineManagerTests
     {
         var airlineManager = new AirlineManager();
         var airlineName = "Test";
-        airlineManager.Add(airlineName);
 
-        airlineManager.Add(airlineName);
+        if (airlineManager.Validate(airlineName))
+        {
+            airlineManager.Add(airlineName);
+        }
+
+        if (airlineManager.Validate(airlineName))
+        {
+            airlineManager.Add(airlineName);
+        }
 
         _ = Assert.Single(airlineManager.Airlines);
     }

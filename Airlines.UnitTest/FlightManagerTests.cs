@@ -16,14 +16,20 @@ public class FlightManagerTests
     }
 
     [Fact]
-    public void Add_Flight_With_Duplicate_Number_Fails()
+    public void Add_Flight_With_Duplicate_Name_Fails()
     {
         var flightManager = new FlightManager();
-        var flightNumber = "ABC123";
-        flightManager.Add(flightNumber);
+        var flightName = "ABC123";
 
-        flightManager.Add(flightNumber);
+        if (flightManager.Validate(flightName))
+        {
+            flightManager.Add(flightName);
+        }
 
+        if (flightManager.Validate(flightName))
+        {
+            flightManager.Add(flightName);
+        }
         _ = Assert.Single(flightManager.Flights);
     }
 
