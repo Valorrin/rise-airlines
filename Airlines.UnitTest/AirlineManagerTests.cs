@@ -1,8 +1,4 @@
-﻿using Moq;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using Xunit;
+﻿using Airlines.Business;
 
 namespace Airlines.Console.Tests;
 
@@ -66,25 +62,6 @@ public class AirlineManagerTests
         }
     }
 
-    [Fact]
-    public void Print_Airlines()
-    {
-        var airlineManager = new AirlineManager();
-        airlineManager.Add("AAA");
-        airlineManager.Add("BBB");
-        airlineManager.Add("CCC");
-
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
-
-        airlineManager.Print();
-        var output = writer.ToString().Trim();
-
-        Assert.Contains("AAA", output);
-        Assert.Contains("BBB", output);
-        Assert.Contains("CCC", output);
-    }
-
     [Theory]
     [InlineData("abcde", true)]
     [InlineData("12345", true)]
@@ -98,5 +75,24 @@ public class AirlineManagerTests
         var result = airlineManager.Validate(name);
 
         Assert.Equal(expectedResult, result);
+    }
+
+    [Fact]
+    public void Print_Airlines()
+    {
+        var airlineManager = new AirlineManager();
+        airlineManager.Add("AAA");
+        airlineManager.Add("BBB");
+        airlineManager.Add("CCC");
+
+        var writer = new StringWriter();
+        System.Console.SetOut(writer);
+
+        Printer.Print(airlineManager);
+        var output = writer.ToString().Trim();
+
+        Assert.Contains("AAA", output);
+        Assert.Contains("BBB", output);
+        Assert.Contains("CCC", output);
     }
 }

@@ -1,4 +1,5 @@
-﻿
+﻿using Airlines.Business;
+
 namespace Airlines.Console.Tests;
 
 public class FlightManagerTests
@@ -27,12 +28,12 @@ public class FlightManagerTests
     }
 
     [Theory]
-    [InlineData("ABC123", true)]
+    [InlineData("ABC12", true)]
     [InlineData("NonexistentFlight", false)]
     public void Search_Flight(string searchTerm, bool expectedResult)
     {
         var flightManager = new FlightManager();
-        flightManager.Add("ABC123");
+        flightManager.Add("ABC12");
 
         var writer = new StringWriter();
         System.Console.SetOut(writer);
@@ -61,7 +62,7 @@ public class FlightManagerTests
         var writer = new StringWriter();
         System.Console.SetOut(writer);
 
-        flightManager.Print();
+        Printer.Print(flightManager);
         var output = writer.ToString().Trim();
 
         Assert.Contains("AAA", output);

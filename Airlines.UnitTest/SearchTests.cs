@@ -1,5 +1,4 @@
-﻿
-using Airlines.Console;
+﻿using Airlines.Business;
 
 namespace Airlines.UnitTests;
 public class SearchTests
