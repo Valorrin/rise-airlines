@@ -1,4 +1,4 @@
-﻿namespace Airlines.Console;
+﻿namespace Airlines.Business;
 public static class Search
 {
     public static int LinearSearch(List<string> data, string target)
