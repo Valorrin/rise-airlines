@@ -24,7 +24,10 @@ public class InputReader
                 break;
             }
 
-            manager.Add(input);
+            if (manager.Validate(input))
+            {
+                manager.Add(input);
+            }
         }
     }
     public static void ReadInput(AirportManager manager)
@@ -47,7 +50,10 @@ public class InputReader
                 break;
             }
 
-            manager.Add(input);
+            if (manager.Validate(input))
+            {
+                manager.Add(input);
+            }
         }
     }
     public static void ReadInput(FlightManager manager)
@@ -70,7 +76,10 @@ public class InputReader
                 break;
             }
 
-            manager.Add(input);
+            if (manager.Validate(input))
+            {
+                manager.Add(input);
+            }
         }
     }
     public static string ReadCommands(AirportManager airports, AirlineManager airlines, FlightManager flights)

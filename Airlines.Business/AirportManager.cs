@@ -3,7 +3,7 @@
 namespace Airlines.Business;
 public class AirportManager
 {
-    public List<string> Airports { get; set; }
+    public List<string> Airports { get; private set; }
 
     public AirportManager() => Airports = [];
 
@@ -33,11 +33,8 @@ public class AirportManager
 
     public void Add(string name)
     {
-        if (Validate(name))
-        {
-            Airports.Add(name);
-            Console.WriteLine($"Airport '{name}' added successfully.");
-        }
+        Airports.Add(name);
+        Console.WriteLine($"Airport '{name}' added successfully.");
     }
 
     public void Search(string searchTerm)
@@ -50,7 +47,7 @@ public class AirportManager
         var airportsCopy = Airports.ToList();
         airportsCopy.Sort();
 
-        if (BinarySearch(Airports, searchTerm) >= 0)
+        if (BinarySearch(airportsCopy, searchTerm) >= 0)
         {
             Console.WriteLine($" {searchTerm} is Airport name.");
         }
