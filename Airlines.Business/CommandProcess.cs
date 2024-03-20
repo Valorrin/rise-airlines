@@ -23,47 +23,44 @@ public class CommandProcess
             var target = commandParts[1];
             var sortOrder = commandParts.ElementAtOrDefault(2);
 
-            if (target == "airports")
+            switch (target)
             {
-                if (sortOrder == "descending")
-                {
-                    airports.SortDesc();
-                }
-                else
-                {
-                    airports.Sort();
-                }
+                case "airports":
+                    if (sortOrder == "descending")
+                    {
+                        airports.SortDesc();
+                    }
+                    else
+                    {
+                        airports.Sort();
+                    }
+                    break;
 
-                return;
-            }
-            else if (target == "airlines")
-            {
-                if (sortOrder == "descending")
-                {
-                    airlines.SortDesc();
-                }
-                else
-                {
-                    airlines.Sort();
-                }
+                case "airlines":
+                    if (sortOrder == "descending")
+                    {
+                        airlines.SortDesc();
+                    }
+                    else
+                    {
+                        airlines.Sort();
+                    }
+                    break;
 
-                return;
-            }
-            else if (target == "flights")
-            {
-                if (sortOrder == "descending")
-                {
-                    flights.SortDesc();
-                }
-                else
-                {
-                    flights.Sort();
-                }
-
-                return;
+                case "flights":
+                    if (sortOrder == "descending")
+                    {
+                        flights.SortDesc();
+                    }
+                    else
+                    {
+                        flights.Sort();
+                    }
+                    break;
+                default:
+                    Console.WriteLine(" Invalid command!");
+                    break;
             }
         }
-
-        Console.WriteLine(" Invalid command!");
     }
 }
