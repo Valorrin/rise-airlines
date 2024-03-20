@@ -27,11 +27,8 @@ public class FlightManager
 
     public void Add(string name)
     {
-        if (Validate(name))
-        {
-            Flights.Add(name);
-            Console.WriteLine($"Flight '{name}' added successfully.");
-        }
+        Flights.Add(name);
+        Console.WriteLine($"Flight '{name}' added successfully.");
     }
 
     public void Search(string searchTerm)
@@ -44,7 +41,7 @@ public class FlightManager
         var flightsCopy = Flights.ToList();
         flightsCopy.Sort();
 
-        if (BinarySearch(Flights, searchTerm) >= 0)
+        if (BinarySearch(flightsCopy, searchTerm) >= 0)
         {
             Console.WriteLine($" {searchTerm} is Flight name.");
         }

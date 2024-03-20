@@ -16,24 +16,39 @@ public class AirportManagerTests
     }
 
     [Fact]
-    public void Add_Airport_With_Long_Code_Fails()
+    public void Add_Airport_With_Long_Name_Fails()
     {
         var airportManager = new AirportManager();
-        var longAirportCode = "TooLongAirportCode";
+        var longAirportName = "TooLongAirportCode";
 
-        airportManager.Add(longAirportCode);
+        if (airportManager.Validate(longAirportName))
+        {
+            airportManager.Add(longAirportName);
+        }
+
+        if (airportManager.Validate(longAirportName))
+        {
+            airportManager.Add(longAirportName);
+        }
 
         Assert.Empty(airportManager.Airports);
     }
 
     [Fact]
-    public void Add_Airport_With_Duplicate_Code_Fails()
+    public void Add_Airport_With_Duplicate_Name_Fails()
     {
         var airportManager = new AirportManager();
-        var airportCode = "ABC";
-        airportManager.Add(airportCode);
+        var airportName = "ABC";
 
-        airportManager.Add(airportCode);
+        if (airportManager.Validate(airportName))
+        {
+            airportManager.Add(airportName);
+        }
+
+        if (airportManager.Validate(airportName))
+        {
+            airportManager.Add(airportName);
+        }
 
         _ = Assert.Single(airportManager.Airports);
     }
