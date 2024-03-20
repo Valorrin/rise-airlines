@@ -3,7 +3,7 @@
 namespace Airlines.Business;
 public class AirlineManager
 {
-    public List<string> Airlines { get; set; }
+    public List<string> Airlines { get; private set; }
 
     public AirlineManager() => Airlines = [];
 
@@ -27,11 +27,8 @@ public class AirlineManager
 
     public void Add(string name)
     {
-        if (Validate(name))
-        {
-            Airlines.Add(name);
-            Console.WriteLine($"Airline '{name}' added successfully.");
-        }
+        Airlines.Add(name);
+        Console.WriteLine($"Airline '{name}' added successfully.");
     }
 
     public void Search(string searchTerm)
