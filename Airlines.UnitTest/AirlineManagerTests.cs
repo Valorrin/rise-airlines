@@ -91,5 +91,23 @@ namespace Airlines.Console.Tests
 
             Assert.False(result);
         }
+
+        [Fact]
+        public void Add_UniqueIds_AddsAirline()
+        {
+            var airlineManager = new AirlineManager();
+            var airlineData = new List<string> { "A1, Airline1", "B2, Airline2", "C3, Airline3" };
+            airlineManager.Add(airlineData);
+            Assert.Equal(3, airlineManager.Airlines.Count);
+        }
+
+        [Fact]
+        public void Add_DuplicateIds_DoesNotAddAirline()
+        {
+            var airlineManager = new AirlineManager();
+            airlineManager.Add(["A1, Airline1", "A1, Airline2"]);
+            airlineManager.Add(["A1, Airline3"]);
+            _ = Assert.Single(airlineManager.Airlines);
+        }
     }
 }

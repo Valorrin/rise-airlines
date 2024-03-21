@@ -45,7 +45,7 @@ namespace Airlines.Console.Tests
             airportManager.Add(airport); // Adding the same airport once
             airportManager.Add(airport); // Adding the same airport again
 
-            Assert.Single(airportManager.Airports); // Only one airport should be added
+            _ = Assert.Single(airportManager.Airports); // Only one airport should be added
         }
 
         [Fact]
@@ -150,6 +150,41 @@ namespace Airlines.Console.Tests
             var output = writer.ToString().Trim();
             Assert.Contains("Test Airport 1", output);
             Assert.Contains("Test Airport 2", output);
+        }
+
+        [Fact]
+        public void IsIdUnique_NewId_ReturnsTrue()
+        {
+            var airportManager = new AirportManager();
+            var result = airportManager.IsIdUnique("A1");
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void IsIdUnique_ExistingId_ReturnsFalse()
+        {
+            var airportManager = new AirportManager();
+            airportManager.Airports.Add("A1", new Airport());
+            var result = airportManager.IsIdUnique("A1");
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Add_UniqueIds_AddsAirport()
+        {
+            var airportManager = new AirportManager();
+            var airportData = new List<string> { "A1, Airport1, City1, Country1", "B2, Airport2, City2, Country2", "C3, Airport3, City3, Country3" };
+            airportManager.Add(airportData);
+            Assert.Equal(3, airportManager.Airports.Count);
+        }
+
+        [Fact]
+        public void Add_DuplicateIds_DoesNotAddAirport()
+        {
+            var airportManager = new AirportManager();
+            airportManager.Add(["A1, Airport1, City1, Country1", "A1, Airport2, City2, Country2"]);
+            airportManager.Add(["A1, Airport3, City3, Country3"]);
+            _ = Assert.Single(airportManager.Airports);
         }
     }
 }

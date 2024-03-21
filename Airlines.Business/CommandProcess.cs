@@ -74,21 +74,12 @@ public class CommandProcess
         }
         else if (action == "list" && commandParts.Length >= 2)
         {
-            commandParts = SplitBeforeLastElement(input: commandParts[1]);
+            commandParts = StringHelper.SplitBeforeLastElement(input: commandParts[1]);
             var inputData = commandParts[0];
             var from = commandParts[1];
 
             airportManager.ListData(inputData, from);
         }
-    }
-    private static string[] SplitBeforeLastElement(string input)
-    {
-        var lastIndex = input.LastIndexOf(' ');
-
-        var firstPart = input.Substring(0, lastIndex);
-        var lastPart = input.Substring(lastIndex + 1);
-
-        return [firstPart, lastPart];
     }
 }
 

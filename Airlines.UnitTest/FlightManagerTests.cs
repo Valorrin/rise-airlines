@@ -97,7 +97,7 @@ namespace Airlines.Console.Tests
             var writer = new StringWriter();
             System.Console.SetOut(writer);
 
-            flightManager.Validate(invalidName);
+            _ = flightManager.Validate(invalidName);
 
             var output = writer.ToString().Trim();
             Assert.Contains("Flight name 'GHI#789' must contain only alphabetic or numeric characters!", output);
