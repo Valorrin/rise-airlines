@@ -5,7 +5,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0057:Use range operator", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.CommandProcess.SplitBeforeLastElement(System.String)~System.String[]")]
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Sorts.SortDesc(Airlines.Business.AirlineManager)")]
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Sorts.SortDesc(Airlines.Business.AirportManager)")]
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.CommandProcess.ProcessCommand(System.String,Airlines.Business.AirportManager,Airlines.Business.AirlineManager,Airlines.Business.FlightManager)")]
+[assembly: SuppressMessage("Style", "IDE0057:Use range operator", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.StringHelper.SplitBeforeLastElement(System.String)~System.String[]")]
