@@ -26,10 +26,9 @@ public class AirportManager
 
     public void Add(List<string> airportData)
     {
-        var newAirport = new Airport();
-
         foreach (var airport in airportData)
         {
+            var newAirport = new Airport();
             var airportParts = airport.Split(", ");
             newAirport.Id = airportParts[0];
             newAirport.Name = airportParts[1];

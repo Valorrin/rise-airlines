@@ -9,7 +9,7 @@ public class Airline
         get => _id;
         set
         {
-            if (IsValidId(value))
+            if (!IsValidId(value))
             {
                 throw new ArgumentException("Id cannot be null or empty.");
             }
@@ -63,12 +63,12 @@ public class Airline
 
         foreach (var c in str)
         {
-            if (!char.IsLetter(c) && c != ' ')
+            if (char.IsLetter(c) || c == ' ')
             {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

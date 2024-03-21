@@ -27,10 +27,9 @@ public class AirlineManager
 
     public void Add(List<string> airlineData)
     {
-        var newAirline = new Airline();
-
         foreach (var airport in airlineData)
         {
+            var newAirline = new Airline();
             var airportParts = airport.Split(", ");
             newAirline.Id = airportParts[0];
             newAirline.Name = airportParts[1];

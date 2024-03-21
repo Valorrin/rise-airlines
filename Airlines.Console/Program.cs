@@ -21,6 +21,7 @@ public class Program
         var airlineData = ReadFromFile(airlineFilePath);
 
         airportManager.Add(airportData);
+        airlineManager.Add(airlineData);
 
         ReadInput(flightManager);
 
