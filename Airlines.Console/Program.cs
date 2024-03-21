@@ -1,8 +1,8 @@
 ﻿using Airlines.Business;
-using System;
-using System.Runtime.InteropServices;
 using static Airlines.Console.InputReader;
 using static Airlines.Console.Printer;
+
+#pragma warning disable CS8604 // Possible null reference argument.
 
 namespace Airlines;
 public class Program

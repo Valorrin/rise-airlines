@@ -32,14 +32,14 @@ public class AirportManager
             return;
 
         if (!AirportsByCity.ContainsKey(airport.City))
-            AirportsByCity[airport.City] = new HashSet<Airport>();
-        AirportsByCity[airport.City].Add(airport);
+            AirportsByCity[airport.City] = [];
+        _ = AirportsByCity[airport.City].Add(airport);
 
         if (!AirportsByCountry.ContainsKey(airport.Country))
-            AirportsByCountry[airport.Country] = new HashSet<Airport>();
-        AirportsByCountry[airport.Country].Add(airport);
+            AirportsByCountry[airport.Country] = [];
+        _ = AirportsByCountry[airport.Country].Add(airport);
 
-        AirportNames.Add(airport.Name);
+        _ = AirportNames.Add(airport.Name);
         Airports.Add(airport.Id, airport);
 
         Console.WriteLine($"Airport '{airport.Name}' added successfully.");
@@ -70,8 +70,7 @@ public class AirportManager
             Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
-        var airportNames = Airports.Values.Select(airline => airline.Name).ToList();
-        airportNames = airportNames.OrderBy(name => name).ToList();
+        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList(); ;
 
         if (BinarySearch(airportNames, searchTerm) >= 0)
         {
