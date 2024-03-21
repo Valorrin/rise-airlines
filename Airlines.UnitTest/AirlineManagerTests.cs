@@ -1,113 +1,95 @@
 ﻿using Airlines.Business;
+using Xunit;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-namespace Airlines.Console.Tests;
-
-public class AirlineManagerTests
+namespace Airlines.Console.Tests
 {
-    [Fact]
-    public void Add_Airline_Successfully()
+    public class AirlineManagerTests
     {
-        var airlineManager = new AirlineManager();
-        var airlineName = "Test";
-
-        airlineManager.Add(airlineName);
-
-        Assert.Contains(airlineName, airlineManager.Airlines);
-    }
-
-    [Fact]
-    public void Add_Airline_With_Long_Name_Fails()
-    {
-        var airlineManager = new AirlineManager();
-        var longAirlineName = "TooLongAirlineName";
-
-        if (airlineManager.Validate(longAirlineName))
+        [Fact]
+        public void Add_Airline_Successfully()
         {
-            airlineManager.Add(longAirlineName);
+            var airlineManager = new AirlineManager();
+            var airline = new Airline
+            {
+                Id = "ABC",
+                Name = "Test Airline"
+            };
+
+            airlineManager.Add(airline);
+
+            Assert.Contains(airline.Id, airlineManager.Airlines.Keys);
+            Assert.Contains(airline, airlineManager.Airlines.Values);
         }
 
-        if (airlineManager.Validate(longAirlineName))
+        [Fact]
+        public void Add_Duplicate_Airline_Fails()
         {
-            airlineManager.Add(longAirlineName);
+            var airlineManager = new AirlineManager();
+            var airline = new Airline
+            {
+                Id = "ABC",
+                Name = "Test Airline"
+            };
+
+            airlineManager.Add(airline);
+
+            _ = Assert.Throws<ArgumentException>(() => airlineManager.Add(airline));
+
+            _ = Assert.Single(airlineManager.Airlines);
         }
 
-        Assert.Empty(airlineManager.Airlines);
-    }
-
-    [Fact]
-    public void Add_Airline_With_Duplicate_Name_Fails()
-    {
-        var airlineManager = new AirlineManager();
-        var airlineName = "Test";
-
-        if (airlineManager.Validate(airlineName))
+        [Theory]
+        [InlineData("Test Airline", true)]
+        [InlineData("Nonexistent Airline", false)]
+        public void Search_Airline_By_Name(string airlineName, bool expectedResult)
         {
-            airlineManager.Add(airlineName);
+            var airlineManager = new AirlineManager();
+            var airline = new Airline
+            {
+                Id = "ABC",
+                Name = "Test Airline"
+            };
+            airlineManager.Add(airline);
+
+            var writer = new StringWriter();
+            System.Console.SetOut(writer);
+
+            airlineManager.Search(airlineName);
+
+            var output = writer.ToString().Trim();
+            Assert.Equal(expectedResult, output.Contains(airlineName));
         }
 
-        if (airlineManager.Validate(airlineName))
+        [Fact]
+        public void IsIdUnique_Returns_True_When_Id_Is_Unique()
         {
-            airlineManager.Add(airlineName);
+            var airlineManager = new AirlineManager();
+            var id = "ABC";
+
+            var result = airlineManager.IsIdUnique(id);
+
+            Assert.True(result);
         }
 
-        _ = Assert.Single(airlineManager.Airlines);
-    }
-
-    [Theory]
-    [InlineData("Test", true)]
-    [InlineData("NonexistentAirline", false)]
-    public void Search_Airline(string searchTerm, bool expectedResult)
-    {
-        var airlineManager = new AirlineManager();
-        airlineManager.Add("Test");
-
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
-
-        airlineManager.Search(searchTerm);
-        var output = writer.ToString().Trim();
-
-        if (expectedResult)
+        [Fact]
+        public void IsIdUnique_Returns_False_When_Id_Is_Not_Unique()
         {
-            Assert.Contains(searchTerm, output);
+            var airlineManager = new AirlineManager();
+            var airline = new Airline
+            {
+                Id = "ABC",
+                Name = "Test Airline"
+            };
+            airlineManager.Add(airline);
+            var id = "ABC";
+
+            var result = airlineManager.IsIdUnique(id);
+
+            Assert.False(result);
         }
-        else
-        {
-            Assert.DoesNotContain(searchTerm, output);
-        }
-    }
-
-    [Theory]
-    [InlineData("abcde", true)]
-    [InlineData("12345", true)]
-    [InlineData("LongAirlineName", false)]
-    [InlineData("123456", false)]
-    [InlineData("abc456", false)]
-    public void Validate_AirlineName(string name, bool expectedResult)
-    {
-        var airlineManager = new AirlineManager();
-
-        var result = airlineManager.Validate(name);
-
-        Assert.Equal(expectedResult, result);
-    }
-
-    [Fact]
-    public void Print_Airlines()
-    {
-        var airlineManager = new AirlineManager();
-        airlineManager.Add("AAA");
-        airlineManager.Add("BBB");
-        airlineManager.Add("CCC");
-
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
-
-        Printer.Print(airlineManager);
-        var output = writer.ToString().Trim();
-
-        Assert.Contains("AAA", output);
-        Assert.Contains("BBB", output);
-        Assert.Contains("CCC", output);
     }
 }

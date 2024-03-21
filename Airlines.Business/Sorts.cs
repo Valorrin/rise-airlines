@@ -4,7 +4,7 @@ public static class Sorts
 {
     public static void Sort(this AirportManager manager)
     {
-        var airportNames = manager.Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList(); ;
+        var airportNames = manager.Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
 
     }
 

@@ -1,113 +1,155 @@
 ﻿using Airlines.Business;
+using Xunit;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-namespace Airlines.Console.Tests;
-
-public class AirportManagerTests
+namespace Airlines.Console.Tests
 {
-    [Fact]
-    public void Add_Airport_Successfully()
+    public class AirportManagerTests
     {
-        var airportManager = new AirportManager();
-        var airportCode = "ABC";
-
-        airportManager.Add(airportCode);
-
-        Assert.Contains(airportCode, airportManager.Airports);
-    }
-
-    [Fact]
-    public void Add_Airport_With_Long_Name_Fails()
-    {
-        var airportManager = new AirportManager();
-        var longAirportName = "TooLongAirportCode";
-
-        if (airportManager.Validate(longAirportName))
+        [Fact]
+        public void Add_Airport_Successfully()
         {
-            airportManager.Add(longAirportName);
+            var airportManager = new AirportManager();
+            var airport = new Airport
+            {
+                Id = "ABC",
+                Name = "Test Airport",
+                City = "Test City",
+                Country = "Test Country"
+            };
+
+            airportManager.Add(airport);
+
+            Assert.Contains(airport.Id, airportManager.Airports.Keys);
+            Assert.Contains(airport, airportManager.Airports.Values);
+            Assert.Contains(airport, airportManager.AirportsByCity["Test City"]);
+            Assert.Contains(airport, airportManager.AirportsByCountry["Test Country"]);
+            Assert.Contains(airport.Name, airportManager.AirportNames);
         }
 
-        if (airportManager.Validate(longAirportName))
+        [Fact]
+        public void Add_Duplicate_Airport_Fails()
         {
-            airportManager.Add(longAirportName);
+            var airportManager = new AirportManager();
+            var airport = new Airport
+            {
+                Id = "ABC",
+                Name = "Test Airport",
+                City = "Test City",
+                Country = "Test Country"
+            };
+
+            airportManager.Add(airport); // Adding the same airport once
+            airportManager.Add(airport); // Adding the same airport again
+
+            Assert.Single(airportManager.Airports); // Only one airport should be added
         }
 
-        Assert.Empty(airportManager.Airports);
-    }
-
-    [Fact]
-    public void Add_Airport_With_Duplicate_Name_Fails()
-    {
-        var airportManager = new AirportManager();
-        var airportName = "ABC";
-
-        if (airportManager.Validate(airportName))
+        [Fact]
+        public void Search_Airport_By_Name()
         {
-            airportManager.Add(airportName);
+            var airportManager = new AirportManager();
+            var airport = new Airport
+            {
+                Id = "ABC",
+                Name = "Test Airport",
+                City = "Test City",
+                Country = "Test Country"
+            };
+            airportManager.Add(airport);
+
+            var writer = new StringWriter();
+            System.Console.SetOut(writer);
+
+            airportManager.Search("Test Airport");
+
+            var output = writer.ToString().Trim();
+            Assert.Contains("Test Airport", output);
         }
 
-        if (airportManager.Validate(airportName))
+        [Theory]
+        [InlineData("Test Airport", true)]
+        [InlineData("Nonexistent Airport", false)]
+        public void Check_Airport_Existence(string airportName, bool expectedResult)
         {
-            airportManager.Add(airportName);
+            var airportManager = new AirportManager();
+            var airport = new Airport
+            {
+                Id = "ABC",
+                Name = "Test Airport",
+                City = "Test City",
+                Country = "Test Country"
+            };
+            airportManager.Add(airport);
+
+            var result = airportManager.Exist(airportName);
+
+            Assert.Equal(expectedResult, result);
         }
 
-        _ = Assert.Single(airportManager.Airports);
-    }
-
-    [Theory]
-    [InlineData("ABC", true)]
-    [InlineData("NonexistentAirport", false)]
-    public void Search_Airport(string searchTerm, bool expectedResult)
-    {
-        var airportManager = new AirportManager();
-        airportManager.Add("ABC");
-
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
-
-        airportManager.Search(searchTerm);
-        var output = writer.ToString().Trim();
-
-        if (expectedResult)
+        [Fact]
+        public void List_Airports_By_City()
         {
-            Assert.Contains(searchTerm, output);
+            var airportManager = new AirportManager();
+            var airport1 = new Airport
+            {
+                Id = "ABC",
+                Name = "Test Airport 1",
+                City = "Test City",
+                Country = "Test Country"
+            };
+            var airport2 = new Airport
+            {
+                Id = "DEF",
+                Name = "Test Airport 2",
+                City = "Test City",
+                Country = "Test Country"
+            };
+            airportManager.Add(airport1);
+            airportManager.Add(airport2);
+
+            var writer = new StringWriter();
+            System.Console.SetOut(writer);
+
+            airportManager.ListData("Test City", "City");
+
+            var output = writer.ToString().Trim();
+            Assert.Contains("Test Airport 1", output);
+            Assert.Contains("Test Airport 2", output);
         }
-        else
+
+        [Fact]
+        public void List_Airports_By_Country()
         {
-            Assert.DoesNotContain(searchTerm, output);
+            var airportManager = new AirportManager();
+            var airport1 = new Airport
+            {
+                Id = "ABC",
+                Name = "Test Airport 1",
+                City = "Test City",
+                Country = "Test Country"
+            };
+            var airport2 = new Airport
+            {
+                Id = "DEF",
+                Name = "Test Airport 2",
+                City = "Test City",
+                Country = "Test Country"
+            };
+            airportManager.Add(airport1);
+            airportManager.Add(airport2);
+
+            var writer = new StringWriter();
+            System.Console.SetOut(writer);
+
+            airportManager.ListData("Test Country", "Country");
+
+            var output = writer.ToString().Trim();
+            Assert.Contains("Test Airport 1", output);
+            Assert.Contains("Test Airport 2", output);
         }
-    }
-
-    [Fact]
-    public void Print_Airports()
-    {
-        var airportManager = new AirportManager();
-        airportManager.Add("AAA");
-        airportManager.Add("BBB");
-        airportManager.Add("CCC");
-
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
-
-        Printer.Print(airportManager);
-        var output = writer.ToString().Trim();
-
-        Assert.Contains("AAA", output);
-        Assert.Contains("BBB", output);
-        Assert.Contains("CCC", output);
-    }
-
-    [Theory]
-    [InlineData("AAA", true)]
-    [InlineData("CCCC", false)]
-    [InlineData("12$", false)]
-    [InlineData("", false)]
-    [InlineData("A", false)]
-    public void Validate_AirportName(string name, bool expectedResult)
-    {
-        var airportManager = new AirportManager();
-
-        var result = airportManager.Validate(name);
-
-        Assert.Equal(expectedResult, result);
     }
 }
