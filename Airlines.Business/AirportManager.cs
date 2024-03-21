@@ -3,38 +3,44 @@
 namespace Airlines.Business;
 public class AirportManager
 {
-    public List<string> Airports { get; private set; }
+    public Dictionary<string, Airport> Airports { get; private set; }
 
     public AirportManager() => Airports = [];
 
-    public bool Validate(string name)
+    public bool IsIdUnique(string id)
     {
-        if (LinearSearch(Airports, name) >= 0)
+        if (Airports.ContainsKey(id))
         {
-            Console.WriteLine($" Error: Airport with the same name already exists.");
-            return false;
-        }
-
-        if (name.Length != 3)
-        {
-            Console.WriteLine($" Error: Airport name '{name}' must be exactly 3 characters long!");
-            return false;
-        }
-
-        if (!name.All(char.IsLetter))
-        {
-            Console.WriteLine($" Error: Airport name '{name}' must contain only alphabetic characters!");
+            Console.WriteLine(" Error: An airport with the same ID already exists.");
             return false;
         }
 
         return true;
+    }
+    public void Add(Airport airport)
+    {
+        Airports.Add(airport.Id, airport);
 
+        Console.WriteLine($"Airport '{airport.Name}' added successfully.");
     }
 
-    public void Add(string name)
+    public void Add(List<string> airportData)
     {
-        Airports.Add(name);
-        Console.WriteLine($"Airport '{name}' added successfully.");
+        var newAirport = new Airport();
+
+        foreach (var airport in airportData)
+        {
+            var airportParts = airport.Split(", ");
+            newAirport.Id = airportParts[0];
+            newAirport.Name = airportParts[1];
+            newAirport.City = airportParts[2];
+            newAirport.Country = airportParts[3];
+
+            if (IsIdUnique(newAirport.Id))
+            {
+                Add(newAirport);
+            }
+        }
     }
 
     public void Search(string searchTerm)
@@ -44,10 +50,10 @@ public class AirportManager
             Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
-        var airportsCopy = Airports.ToList();
-        airportsCopy.Sort();
+        var airportNames = Airports.Values.Select(airline => airline.Name).ToList();
+        airportNames = airportNames.OrderBy(name => name).ToList();
 
-        if (BinarySearch(airportsCopy, searchTerm) >= 0)
+        if (BinarySearch(airportNames, searchTerm) >= 0)
         {
             Console.WriteLine($" {searchTerm} is Airport name.");
         }

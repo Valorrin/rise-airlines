@@ -1,5 +1,6 @@
 ﻿using Airlines.Business;
 using System;
+using System.Runtime.InteropServices;
 using static Airlines.Console.InputReader;
 using static Airlines.Console.Printer;
 
@@ -19,13 +20,8 @@ public class Program
         var airportData = ReadFromFile(airportFilePath);
         var airlineData = ReadFromFile(airlineFilePath);
 
-        foreach (var item in airportData)
-        {
-            System.Console.WriteLine(item);
-        }
+        airportManager.Add(airportData);
 
-        ReadInput(airportManager);
-        ReadInput(airlineManager);
         ReadInput(flightManager);
 
         Print(airportManager);

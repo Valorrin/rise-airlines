@@ -12,7 +12,7 @@ public class Airport
         get => _id;
         set
         {
-            if (IsValidId(value))
+            if (!IsValidId(value))
             {
                 throw new ArgumentException("Id cannot be null or empty.");
             }
@@ -88,14 +88,18 @@ public class Airport
     private static bool IsValidString(string str)
     {
         if (string.IsNullOrEmpty(str))
+        {
             return false;
+        }
 
         foreach (var c in str)
         {
-            if (!char.IsLetter(c) && c != ' ')
-                return false;
+            if (char.IsLetter(c) || c == ' ')
+            {
+                return true;
+            }
         }
 
-        return true;
+        return false;
     }
 }
