@@ -99,7 +99,7 @@ public class InputReader
         }
     }
 
-    public static List<string> ReadDataFromFile(string filePath)
+    public static List<string> ReadFromFile(string filePath)
     {
         var data = new List<string>();
 
