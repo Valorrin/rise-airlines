@@ -8,9 +8,9 @@ public class Program
 {
     public static void Main()
     {
-        var airports = new AirportManager();
-        var airlines = new AirlineManager();
-        var flights = new FlightManager();
+        var airportManager = new AirportManager();
+        var airlineManager = new AirlineManager();
+        var flightManager = new FlightManager();
 
         var currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         var airportFilePath = Path.Combine(currentDirectory, @"..\..\..\Data\airports.csv");
@@ -24,14 +24,14 @@ public class Program
             System.Console.WriteLine(item);
         }
 
-        ReadInput(airports);
-        ReadInput(airlines);
-        ReadInput(flights);
+        ReadInput(airportManager);
+        ReadInput(airlineManager);
+        ReadInput(flightManager);
 
-        Print(airports);
-        Print(airlines);
-        Print(flights);
+        Print(airportManager);
+        Print(airlineManager);
+        Print(flightManager);
 
-        _ = ReadCommands(airports, airlines, flights);
+        _ = ReadCommands(airportManager, airlineManager, flightManager);
     }
 }

@@ -1,8 +1,9 @@
-﻿
+﻿using System.Linq;
+
 namespace Airlines.Business;
 public class CommandProcess
 {
-    public static void ProcessCommand(string command, AirportManager airports, AirlineManager airlines, FlightManager flights)
+    public static void ProcessCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
     {
         var commandParts = command.Split().ToArray();
         var action = commandParts[0];
@@ -12,9 +13,10 @@ public class CommandProcess
             var searchTerm = commandParts.ElementAtOrDefault(1);
             if (searchTerm != null)
             {
-                airports.Search(searchTerm);
-                airlines.Search(searchTerm);
-                flights.Search(searchTerm);
+                //var matchingAirports = airportManager.Airports.Where(airport => airport.Contains(searchTerm)).ToList();
+                airportManager.Search(searchTerm);
+                airlineManager.Search(searchTerm);
+                flightManager.Search(searchTerm);
                 return;
             }
         }
@@ -28,33 +30,33 @@ public class CommandProcess
                 case "airports":
                     if (sortOrder == "descending")
                     {
-                        airports.SortDesc();
+                        airportManager.SortDesc();
                     }
                     else
                     {
-                        airports.Sort();
+                        airlineManager.Sort();
                     }
                     break;
 
                 case "airlines":
                     if (sortOrder == "descending")
                     {
-                        airlines.SortDesc();
+                        airlineManager.SortDesc();
                     }
                     else
                     {
-                        airlines.Sort();
+                        airlineManager.Sort();
                     }
                     break;
 
                 case "flights":
                     if (sortOrder == "descending")
                     {
-                        flights.SortDesc();
+                        flightManager.SortDesc();
                     }
                     else
                     {
-                        flights.Sort();
+                        flightManager.Sort();
                     }
                     break;
                 default:
