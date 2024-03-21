@@ -64,5 +64,37 @@ public class CommandProcess
                     break;
             }
         }
+        else if (action == "exist" && commandParts.Length >= 2)
+        {
+            var airlineName = commandParts.ElementAtOrDefault(1);
+
+            var result = airportManager.Exist(airlineName);
+
+            Console.WriteLine(result);
+        }
+        else if (action == "list" && commandParts.Length >= 2)
+        {
+            commandParts = SplitBeforeLastElement(commandParts[1]);
+            var inputData = commandParts[0];
+            var from = commandParts[1];
+
+            airportManager.ListData(inputData, from);
+        }
+    }
+    private static string[] SplitBeforeLastElement(string input)
+    {
+        var lastIndex = input.LastIndexOf(' ');
+        if (lastIndex != -1)
+        {
+            var firstPart = input.Substring(0, lastIndex);
+            var lastPart = input.Substring(lastIndex + 1);
+
+            return [firstPart, lastPart];
+        }
+        else
+        {
+            Console.WriteLine("String cannot be split before the last element.");
+            return null;
+        }
     }
 }
