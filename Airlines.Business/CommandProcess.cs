@@ -1,5 +1,4 @@
-﻿using System.Linq;
-
+﻿
 namespace Airlines.Business;
 public class CommandProcess
 {
@@ -82,5 +81,3 @@ public class CommandProcess
         }
     }
 }
-
-#pragma warning disable CS8604 // Possible null reference argument.
