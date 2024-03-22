@@ -42,8 +42,6 @@ public class AirportManager
 
         _ = AirportNames.Add(airport.Name);
         Airports.Add(airport.Id, airport);
-
-        Console.WriteLine($"Airport '{airport.Name}' added successfully.");
     }
 
     public void Add(List<string> airportData)

@@ -1,5 +1,4 @@
 ﻿
-
 namespace Airlines.Business;
 public class StringHelper
 {

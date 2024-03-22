@@ -1,7 +1,4 @@
-﻿using Airlines.Business;
-using static Airlines.Business.CommandProcess;
-
-namespace Airlines.Console;
+﻿namespace Airlines.Console;
 public class InputReader
 {
     public static string ReadFromConsole()

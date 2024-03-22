@@ -1,5 +1,4 @@
-﻿
-namespace Airlines.Business;
+﻿namespace Airlines.Business;
 public static class Sorts
 {
     public static List<string> SortByName(this AirportManager manager)

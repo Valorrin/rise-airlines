@@ -1,5 +1,4 @@
-﻿
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Airlines.Console;
 public class FilePathHelper

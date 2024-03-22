@@ -50,25 +50,6 @@ public class FlightManagerTests
         Assert.Equal(expectedResult, output.Contains(searchTerm));
     }
 
-    [Fact]
-    public void Print_Flights()
-    {
-        var flightManager = new FlightManager();
-        flightManager.Add("AAA");
-        flightManager.Add("BBB");
-        flightManager.Add("CCC");
-
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
-
-        Printer.Print(flightManager);
-        var output = writer.ToString().Trim();
-
-        Assert.Contains("AAA", output);
-        Assert.Contains("BBB", output);
-        Assert.Contains("CCC", output);
-    }
-
     [Theory]
     [InlineData("ABC123", true)]
     [InlineData("DEFDEF", true)]

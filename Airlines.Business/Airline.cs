@@ -1,14 +1,12 @@
-﻿
-namespace Airlines.Business;
+﻿namespace Airlines.Business;
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 public class Airline
 {
-    private string _id;
-    private string _name;
+    private string? _id;
+    private string? _name;
     public string Id
     {
-        get => _id;
+        get => _id!;
         set
         {
             if (!IsValidId(value))
@@ -21,7 +19,7 @@ public class Airline
     }
     public string Name
     {
-        get => _name;
+        get => _name!;
         set
         {
             if (!IsValidName(value))
