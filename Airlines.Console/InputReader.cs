@@ -4,9 +4,9 @@ using static Airlines.Business.CommandProcess;
 namespace Airlines.Console;
 public class InputReader
 {
-    public static void ReadFromConsole(FlightManager manager)
+    public static string ReadFromConsole()
     {
-        System.Console.WriteLine($"Enter flight name, or type 'done' to finish:\n");
+        System.Console.WriteLine($"Enter flight name:\n");
 
         while (true)
         {
@@ -14,20 +14,11 @@ public class InputReader
 
             if (string.IsNullOrEmpty(input))
             {
-                System.Console.WriteLine(" Error: The name cannot be null or empty!");
+                System.Console.WriteLine(" Error: The input cannot be null or empty!");
                 continue;
             }
 
-            if (input == "done")
-            {
-                System.Console.WriteLine();
-                break;
-            }
-
-            if (manager.Validate(input))
-            {
-                manager.Add(input);
-            }
+            return input;
         }
     }
 

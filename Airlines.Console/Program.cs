@@ -22,7 +22,12 @@ public class Program
         airportManager.Add(airportData);
         airlineManager.Add(airlineData);
 
-        ReadFromConsole(flightManager);
+        var flight = ReadFromConsole();
+
+        if (flightManager.Validate(flight))
+        {
+            flightManager.Add(flight);
+        }
 
         PrintAll(airportManager, airlineManager, flightManager);
 
