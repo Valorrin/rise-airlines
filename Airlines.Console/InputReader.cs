@@ -1,5 +1,4 @@
 ﻿using Airlines.Business;
-using System.IO;
 using static Airlines.Business.CommandProcess;
 
 namespace Airlines.Console;

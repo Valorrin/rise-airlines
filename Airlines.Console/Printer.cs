@@ -25,6 +25,5 @@ public class Printer
     {
         System.Console.Write($" Flights: ");
         System.Console.WriteLine(string.Join(", ", manager.Flights));
-
     }
 }

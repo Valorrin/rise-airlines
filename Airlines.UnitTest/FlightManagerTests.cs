@@ -1,106 +1,100 @@
 ﻿using Airlines.Business;
-using Xunit;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
-namespace Airlines.Console.Tests
+namespace Airlines.Console.Tests;
+
+public class FlightManagerTests
 {
-    public class FlightManagerTests
+    [Fact]
+    public void Add_Flight_Successfully()
     {
-        [Fact]
-        public void Add_Flight_Successfully()
-        {
-            var flightManager = new FlightManager();
-            var flightNumber = "ABC123";
+        var flightManager = new FlightManager();
+        var flightNumber = "ABC123";
 
+        flightManager.Add(flightNumber);
+
+        Assert.Contains(flightNumber, flightManager.Flights);
+    }
+
+    [Fact]
+    public void Add_Flight_With_Duplicate_Name_Fails()
+    {
+        var flightManager = new FlightManager();
+        var flightNumber = "ABC123";
+
+        if (flightManager.Validate(flightNumber))
+        {
             flightManager.Add(flightNumber);
-
-            Assert.Contains(flightNumber, flightManager.Flights);
         }
-
-        [Fact]
-        public void Add_Flight_With_Duplicate_Name_Fails()
+        if (flightManager.Validate(flightNumber))
         {
-            var flightManager = new FlightManager();
-            var flightNumber = "ABC123";
-
-            if (flightManager.Validate(flightNumber))
-            {
-                flightManager.Add(flightNumber);
-            }
-            if (flightManager.Validate(flightNumber))
-            {
-                flightManager.Add(flightNumber);
-            }
-
-            _ = Assert.Single(flightManager.Flights);
+            flightManager.Add(flightNumber);
         }
 
-        [Theory]
-        [InlineData("ABC12", true)]
-        [InlineData("NonexistentFlight", false)]
-        public void Search_Flight(string searchTerm, bool expectedResult)
-        {
-            var flightManager = new FlightManager();
-            flightManager.Add("ABC12");
+        _ = Assert.Single(flightManager.Flights);
+    }
 
-            var writer = new StringWriter();
-            System.Console.SetOut(writer);
+    [Theory]
+    [InlineData("ABC12", true)]
+    [InlineData("NonexistentFlight", false)]
+    public void Search_Flight(string searchTerm, bool expectedResult)
+    {
+        var flightManager = new FlightManager();
+        flightManager.Add("ABC12");
 
-            flightManager.Search(searchTerm);
-            var output = writer.ToString().Trim();
+        var writer = new StringWriter();
+        System.Console.SetOut(writer);
 
-            Assert.Equal(expectedResult, output.Contains(searchTerm));
-        }
+        flightManager.Search(searchTerm);
+        var output = writer.ToString().Trim();
 
-        [Fact]
-        public void Print_Flights()
-        {
-            var flightManager = new FlightManager();
-            flightManager.Add("AAA");
-            flightManager.Add("BBB");
-            flightManager.Add("CCC");
+        Assert.Equal(expectedResult, output.Contains(searchTerm));
+    }
 
-            var writer = new StringWriter();
-            System.Console.SetOut(writer);
+    [Fact]
+    public void Print_Flights()
+    {
+        var flightManager = new FlightManager();
+        flightManager.Add("AAA");
+        flightManager.Add("BBB");
+        flightManager.Add("CCC");
 
-            Printer.Print(flightManager);
-            var output = writer.ToString().Trim();
+        var writer = new StringWriter();
+        System.Console.SetOut(writer);
 
-            Assert.Contains("AAA", output);
-            Assert.Contains("BBB", output);
-            Assert.Contains("CCC", output);
-        }
+        Printer.Print(flightManager);
+        var output = writer.ToString().Trim();
 
-        [Theory]
-        [InlineData("ABC123", true)]
-        [InlineData("DEFDEF", true)]
-        [InlineData("123456", true)]
-        [InlineData("GHI#789", false)]
-        public void Validate_FlightName(string name, bool expectedResult)
-        {
-            var flightManager = new FlightManager();
+        Assert.Contains("AAA", output);
+        Assert.Contains("BBB", output);
+        Assert.Contains("CCC", output);
+    }
 
-            var result = flightManager.Validate(name);
+    [Theory]
+    [InlineData("ABC123", true)]
+    [InlineData("DEFDEF", true)]
+    [InlineData("123456", true)]
+    [InlineData("GHI#789", false)]
+    public void Validate_FlightName(string name, bool expectedResult)
+    {
+        var flightManager = new FlightManager();
 
-            Assert.Equal(expectedResult, result);
-        }
+        var result = flightManager.Validate(name);
 
-        [Fact]
-        public void Validate_FlightName_With_Invalid_Characters()
-        {
-            var flightManager = new FlightManager();
-            var invalidName = "GHI#789";
+        Assert.Equal(expectedResult, result);
+    }
 
-            var writer = new StringWriter();
-            System.Console.SetOut(writer);
+    [Fact]
+    public void Validate_FlightName_With_Invalid_Characters()
+    {
+        var flightManager = new FlightManager();
+        var invalidName = "GHI#789";
 
-            _ = flightManager.Validate(invalidName);
+        var writer = new StringWriter();
+        System.Console.SetOut(writer);
 
-            var output = writer.ToString().Trim();
-            Assert.Contains("Flight name 'GHI#789' must contain only alphabetic or numeric characters!", output);
-        }
+        _ = flightManager.Validate(invalidName);
+
+        var output = writer.ToString().Trim();
+        Assert.Contains("Flight name 'GHI#789' must contain only alphabetic or numeric characters!", output);
     }
 }

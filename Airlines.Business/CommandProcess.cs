@@ -29,22 +29,26 @@ public class CommandProcess
                 case "airports":
                     if (sortOrder == "descending")
                     {
-                        airportManager.SortDesc();
+                        var names = airportManager.SortDescByName();
+                        Console.WriteLine(string.Join(", ", names));
                     }
                     else
                     {
-                        airlineManager.Sort();
+                        var names = airportManager.SortByName();
+                        Console.WriteLine(string.Join(", ", names));
                     }
                     break;
 
                 case "airlines":
                     if (sortOrder == "descending")
                     {
-                        airlineManager.SortDesc();
+                        var names = airlineManager.SortDescByName();
+                        Console.WriteLine(string.Join(", ", names));
                     }
                     else
                     {
-                        airlineManager.Sort();
+                        var names = airlineManager.SortByName();
+                        Console.WriteLine(string.Join(", ", names));
                     }
                     break;
 
@@ -52,10 +56,12 @@ public class CommandProcess
                     if (sortOrder == "descending")
                     {
                         flightManager.SortDesc();
+                        Console.WriteLine(string.Join(", ", flightManager.Flights));
                     }
                     else
                     {
                         flightManager.Sort();
+                        Console.WriteLine(string.Join(", ", flightManager.Flights));
                     }
                     break;
                 default:
@@ -73,7 +79,7 @@ public class CommandProcess
         }
         else if (action == "list" && commandParts.Length >= 2)
         {
-            commandParts = StringHelper.SplitBeforeLastElement(input: commandParts[1]);
+            commandParts = StringHelper.SplitBeforeLastElement(commandParts[1]);
             var inputData = commandParts[0];
             var from = commandParts[1];
 
