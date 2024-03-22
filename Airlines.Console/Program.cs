@@ -1,8 +1,8 @@
 ﻿using Airlines.Business;
 using static Airlines.Console.InputReader;
 using static Airlines.Console.Printer;
-
-#pragma warning disable CS8604 // Possible null reference argument.
+using static Airlines.Console.FilePathHelper;
+using static Airlines.Business.CommandProcess;
 
 namespace Airlines;
 public class Program
@@ -13,9 +13,8 @@ public class Program
         var airlineManager = new AirlineManager();
         var flightManager = new FlightManager();
 
-        var currentDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        var airportFilePath = Path.Combine(currentDirectory, @"..\..\..\Data\airports.csv");
-        var airlineFilePath = Path.Combine(currentDirectory, @"..\..\..\Data\airlines.csv");
+        var airportFilePath = GetFilePath("airports.csv");
+        var airlineFilePath = GetFilePath("airlines.csv");
 
         var airportData = ReadFromFile(airportFilePath);
         var airlineData = ReadFromFile(airlineFilePath);
@@ -23,12 +22,11 @@ public class Program
         airportManager.Add(airportData);
         airlineManager.Add(airlineData);
 
-        ReadInput(flightManager);
+        ReadFromConsole(flightManager);
 
-        Print(airportManager);
-        Print(airlineManager);
-        Print(flightManager);
+        PrintAll(airportManager, airlineManager, flightManager);
 
-        _ = ReadCommands(airportManager, airlineManager, flightManager);
+        var command = ReadCommands();
+        ExecuteCommand(command, airportManager, airlineManager, flightManager);
     }
 }

@@ -2,7 +2,7 @@
 namespace Airlines.Business;
 public class CommandProcess
 {
-    public static void ProcessCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
+    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
     {
         var commandParts = command.Split(' ', 2).ToArray();
         var action = commandParts[0];

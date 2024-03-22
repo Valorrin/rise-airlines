@@ -26,4 +26,10 @@ public class Printer
         System.Console.Write($" Flights: ");
         System.Console.WriteLine(string.Join(", ", manager.Flights));
     }
+    public static void PrintAll(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
+    {
+        Print(airportManager);
+        Print(airlineManager);
+        Print(flightManager);
+    }
 }
