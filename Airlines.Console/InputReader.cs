@@ -4,7 +4,7 @@ using static Airlines.Business.CommandProcess;
 namespace Airlines.Console;
 public class InputReader
 {
-    public static void ReadInput(FlightManager manager)
+    public static void ReadFromConsole(FlightManager manager)
     {
         System.Console.WriteLine($"Enter flight name, or type 'done' to finish:\n");
 
@@ -30,21 +30,6 @@ public class InputReader
             }
         }
     }
-    public static string ReadCommands(AirportManager airports, AirlineManager airlines, FlightManager flights)
-    {
-        System.Console.WriteLine($"Enter command:\n");
-        while (true)
-        {
-            var input = System.Console.ReadLine();
-            if (string.IsNullOrEmpty(input))
-            {
-                System.Console.WriteLine(" Error: The input cannot be null or empty!");
-                continue;
-            }
-
-            ProcessCommand(input, airports, airlines, flights);
-        }
-    }
 
     public static List<string> ReadFromFile(string filePath)
     {
@@ -64,5 +49,23 @@ public class InputReader
         }
 
         return data;
+    }
+
+    public static string ReadCommands()
+    {
+        System.Console.WriteLine($"Enter command:\n");
+
+        while (true)
+        {
+            var input = System.Console.ReadLine();
+
+            if (string.IsNullOrEmpty(input))
+            {
+                System.Console.WriteLine(" Error: The input cannot be null or empty!");
+                continue;
+            }
+
+            return input;
+        }
     }
 }
