@@ -13,7 +13,7 @@ public class Flight
         get => _id!;
         set
         {
-            if (!IsValidId(value))
+            if (!IsValidFlightId(value))
             {
                 throw new ArgumentException("Id cannot be null or empty.");
             }
@@ -27,7 +27,7 @@ public class Flight
         get => _departureAirport!;
         set
         {
-            if (!IsValidId(value))
+            if (!IsValidAirportId(value))
             {
                 throw new ArgumentException("Id cannot be null or empty.");
             }
@@ -41,7 +41,7 @@ public class Flight
         get => _arrivalAirport!;
         set
         {
-            if (!IsValidId(value))
+            if (!IsValidAirportId(value))
             {
                 throw new ArgumentException("Id cannot be null or empty.");
             }
@@ -50,7 +50,7 @@ public class Flight
         }
     }
 
-    private static bool IsValidId(string id)
+    private static bool IsValidAirportId(string id)
     {
         if (string.IsNullOrEmpty(id))
         {
@@ -58,6 +58,24 @@ public class Flight
         }
 
         if (id.Length is < 2 or > 4)
+        {
+            return false;
+        }
+
+        foreach (var c in id)
+        {
+            if (!char.IsLetterOrDigit(c))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool IsValidFlightId(string id)
+    {
+        if (string.IsNullOrEmpty(id))
         {
             return false;
         }
