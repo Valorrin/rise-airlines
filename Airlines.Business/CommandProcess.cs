@@ -14,10 +14,7 @@ public class CommandProcess
             {
                 airportManager.Search(searchTerm);
                 airlineManager.Search(searchTerm);
-                if (flightManager.Search(searchTerm))
-                {
-                    Console.WriteLine($" {searchTerm} is Flight name.");
-                }
+                flightManager.Search(searchTerm);
                 return;
             }
         }
