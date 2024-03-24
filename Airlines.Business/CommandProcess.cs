@@ -2,7 +2,7 @@
 namespace Airlines.Business;
 public class CommandProcess
 {
-    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
+    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, RouteManager routeManager)
     {
         var commandParts = command.Split(' ', 2).ToArray();
         var action = commandParts[0];
@@ -14,7 +14,10 @@ public class CommandProcess
             {
                 airportManager.Search(searchTerm);
                 airlineManager.Search(searchTerm);
-                flightManager.Search(searchTerm);
+                if (flightManager.Search(searchTerm))
+                {
+                    Console.WriteLine($" {searchTerm} is Flight name.");
+                }
                 return;
             }
         }
@@ -84,6 +87,52 @@ public class CommandProcess
             var from = commandParts[1];
 
             airportManager.ListData(inputData, from);
+        }
+        else if (action == "route" && commandParts.Length >= 2)
+        {
+            var commandPartsSplit = commandParts[1].Split().ToArray();
+            var commandTarget = commandPartsSplit[0];
+
+            if (commandTarget == "new")
+            {
+                routeManager.Routes.Clear();
+            }
+            else if (commandTarget == "add" && commandPartsSplit.Length == 2)
+            {
+                var flightId = commandPartsSplit[1];
+
+                if (!flightManager.Search(flightId))
+                {
+                    Console.WriteLine($"Flight with id: {flightId} does not exists!");
+                }
+                else
+                {
+                    var flight = flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
+
+                    if (routeManager.Validate(flight!))
+                    {
+                        routeManager.AddFlight(flight!);
+                    }
+                }
+            }
+            else if (commandTarget == "remove")
+            {
+                routeManager.RemoveFlight();
+            }
+            else if (commandTarget == "print")
+            {
+                Console.Write($"Route: \n");
+                foreach (var flight in routeManager.Routes)
+                {
+                    Console.WriteLine($" Flight id: {flight.Id}");
+                    Console.WriteLine($" Departure Airport id: {flight.DepartureAirport}");
+                    Console.WriteLine($" Arrival Airport id: {flight.ArrivalAirport}\n");
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine(" Inavalid command!");
         }
     }
 }

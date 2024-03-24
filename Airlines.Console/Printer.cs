@@ -35,15 +35,4 @@ public class Printer
         Print(airlineManager);
         Print(flightManager);
     }
-
-    public static void PrintRoute(RouteManager manager)
-    {
-        System.Console.Write($"Routes: \n");
-        foreach (var flight in manager.Routes)
-        {
-            System.Console.WriteLine($" Flight id: {flight.Id}");
-            System.Console.WriteLine($" Departure Airport id: {flight.DepartureAirport}");
-            System.Console.WriteLine($" Arrival Airport id: {flight.ArrivalAirport}\n");
-        }
-    }
 }

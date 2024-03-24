@@ -12,6 +12,7 @@ public class Program
         var airportManager = new AirportManager();
         var airlineManager = new AirlineManager();
         var flightManager = new FlightManager();
+        var routeManager = new RouteManager();
 
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");
@@ -27,7 +28,10 @@ public class Program
 
         PrintAll(airportManager, airlineManager, flightManager);
 
-        var command = ReadCommands();
-        ExecuteCommand(command, airportManager, airlineManager, flightManager);
+        while (true)
+        {
+            var command = ReadCommands();
+            ExecuteCommand(command, airportManager, airlineManager, flightManager, routeManager);
+        }
     }
 }

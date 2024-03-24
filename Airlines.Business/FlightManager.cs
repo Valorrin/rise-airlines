@@ -23,18 +23,16 @@ public class FlightManager
         }
     }
 
-    public void Search(string searchTerm)
+    public bool Search(string searchTerm)
     {
         if (string.IsNullOrEmpty(searchTerm))
         {
             Console.WriteLine(" Error: search term cannot be null or empty!");
+            return false;
         }
 
         var flightIds = Flights.Select(flight => flight.Id).ToList().OrderBy(name => name).ToList(); ;
 
-        if (BinarySearch(flightIds, searchTerm) >= 0)
-        {
-            Console.WriteLine($" {searchTerm} is Flight name.");
-        }
+        return BinarySearch(flightIds, searchTerm) >= 0;
     }
 }
