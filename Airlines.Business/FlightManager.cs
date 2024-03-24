@@ -3,11 +3,11 @@
 namespace Airlines.Business;
 public class FlightManager
 {
-    public LinkedList<Flight> Flights { get; private set; }
+    public List<Flight> Flights { get; private set; }
 
     public FlightManager() => Flights = [];
 
-    public void Add(Flight flight) => Flights.AddLast(flight);
+    public void Add(Flight flight) => Flights.Add(flight);
 
     public void Add(List<string> flightData)
     {
@@ -23,16 +23,18 @@ public class FlightManager
         }
     }
 
-    public bool Search(string searchTerm)
+    public void Search(string searchTerm)
     {
         if (string.IsNullOrEmpty(searchTerm))
         {
             Console.WriteLine(" Error: search term cannot be null or empty!");
-            return false;
         }
 
         var flightIds = Flights.Select(flight => flight.Id).ToList().OrderBy(name => name).ToList(); ;
 
-        return BinarySearch(flightIds, searchTerm) >= 0;
+        if (BinarySearch(flightIds, searchTerm) >= 0)
+        {
+            Console.WriteLine($" {searchTerm} is Flight name.");
+        }
     }
 }
