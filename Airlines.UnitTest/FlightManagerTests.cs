@@ -19,17 +19,17 @@ public class FlightManagerTests
     public void Add_Flight_With_Duplicate_Name_Fails()
     {
         var flightManager = new FlightManager();
-        var flightName = "ABC123";
+        var flightNumber = "ABC123";
 
-        if (flightManager.Validate(flightName))
+        if (flightManager.Validate(flightNumber))
         {
-            flightManager.Add(flightName);
+            flightManager.Add(flightNumber);
+        }
+        if (flightManager.Validate(flightNumber))
+        {
+            flightManager.Add(flightNumber);
         }
 
-        if (flightManager.Validate(flightName))
-        {
-            flightManager.Add(flightName);
-        }
         _ = Assert.Single(flightManager.Flights);
     }
 
@@ -47,33 +47,7 @@ public class FlightManagerTests
         flightManager.Search(searchTerm);
         var output = writer.ToString().Trim();
 
-        if (expectedResult)
-        {
-            Assert.Contains(searchTerm, output);
-        }
-        else
-        {
-            Assert.DoesNotContain(searchTerm, output);
-        }
-    }
-
-    [Fact]
-    public void Print_Flights()
-    {
-        var flightManager = new FlightManager();
-        flightManager.Add("AAA");
-        flightManager.Add("BBB");
-        flightManager.Add("CCC");
-
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
-
-        Printer.Print(flightManager);
-        var output = writer.ToString().Trim();
-
-        Assert.Contains("AAA", output);
-        Assert.Contains("BBB", output);
-        Assert.Contains("CCC", output);
+        Assert.Equal(expectedResult, output.Contains(searchTerm));
     }
 
     [Theory]
@@ -88,5 +62,20 @@ public class FlightManagerTests
         var result = flightManager.Validate(name);
 
         Assert.Equal(expectedResult, result);
+    }
+
+    [Fact]
+    public void Validate_FlightName_With_Invalid_Characters()
+    {
+        var flightManager = new FlightManager();
+        var invalidName = "GHI#789";
+
+        var writer = new StringWriter();
+        System.Console.SetOut(writer);
+
+        _ = flightManager.Validate(invalidName);
+
+        var output = writer.ToString().Trim();
+        Assert.Contains("Flight name 'GHI#789' must contain only alphabetic or numeric characters!", output);
     }
 }

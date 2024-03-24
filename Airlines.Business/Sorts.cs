@@ -1,47 +1,18 @@
-﻿
-namespace Airlines.Business;
+﻿namespace Airlines.Business;
 public static class Sorts
 {
-    public static void Sort(this AirportManager manager)
+    public static List<string> SortByName(this AirportManager manager)
     {
-        var n = manager.Airports.Count;
-        string temp;
+        var airportNames = manager.Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
 
-        for (var j = 0; j < n - 1; j++)
-        {
-            for (var i = j + 1; i < n; i++)
-            {
-                if (string.Compare(manager.Airports[j], manager.Airports[i]) > 0)
-                {
-                    temp = manager.Airports[j];
-                    manager.Airports[j] = manager.Airports[i];
-                    manager.Airports[i] = temp;
-                }
-            }
-        }
+        return airportNames;
     }
 
-    public static void Sort(this AirlineManager manager)
+    public static List<string> SortByName(this AirlineManager manager)
     {
-        var n = manager.Airlines.Count;
+        var airlineNames = manager.Airlines.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
 
-        for (var i = 0; i < n - 1; i++)
-        {
-            var minIndex = i;
-
-            for (var j = i + 1; j < n; j++)
-            {
-                if (string.Compare(manager.Airlines[j], manager.Airlines[minIndex]) < 0)
-                {
-                    minIndex = j;
-                }
-            }
-
-            if (minIndex != i)
-            {
-                (manager.Airlines[minIndex], manager.Airlines[i]) = (manager.Airlines[i], manager.Airlines[minIndex]);
-            }
-        }
+        return airlineNames;
     }
 
     public static void Sort(this FlightManager manager)
@@ -67,16 +38,18 @@ public static class Sorts
         }
     }
 
-    public static void SortDesc(this AirportManager manager)
+    public static List<string> SortDescByName(this AirportManager manager)
     {
-        Sort(manager);
-        manager.Airports.Reverse();
+        var airportNames = manager.Airports.Values.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
+
+        return airportNames;
     }
 
-    public static void SortDesc(this AirlineManager manager)
+    public static List<string> SortDescByName(this AirlineManager manager)
     {
-        Sort(manager);
-        manager.Airlines.Reverse();
+        var airlineNames = manager.Airlines.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
+
+        return airlineNames;
     }
 
     public static void SortDesc(this FlightManager manager)

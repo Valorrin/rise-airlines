@@ -1,25 +1,37 @@
 ﻿using Airlines.Business;
 using static Airlines.Console.InputReader;
 using static Airlines.Console.Printer;
+using static Airlines.Console.FilePathHelper;
+using static Airlines.Business.CommandProcess;
 
 namespace Airlines;
-
 public class Program
 {
     public static void Main()
     {
-        var airports = new AirportManager();
-        var airlines = new AirlineManager();
-        var flights = new FlightManager();
+        var airportManager = new AirportManager();
+        var airlineManager = new AirlineManager();
+        var flightManager = new FlightManager();
 
-        ReadInput(airports);
-        ReadInput(airlines);
-        ReadInput(flights);
+        var airportFilePath = GetFilePath("airports.csv");
+        var airlineFilePath = GetFilePath("airlines.csv");
 
-        Print(airports);
-        Print(airlines);
-        Print(flights);
+        var airportData = ReadFromFile(airportFilePath);
+        var airlineData = ReadFromFile(airlineFilePath);
 
-        _ = ReadCommands(airports, airlines, flights);
+        airportManager.Add(airportData);
+        airlineManager.Add(airlineData);
+
+        var flight = ReadFromConsole();
+
+        if (flightManager.Validate(flight))
+        {
+            flightManager.Add(flight);
+        }
+
+        PrintAll(airportManager, airlineManager, flightManager);
+
+        var command = ReadCommands();
+        ExecuteCommand(command, airportManager, airlineManager, flightManager);
     }
 }
