@@ -25,4 +25,6 @@ public class RouteManager
         Console.WriteLine(" ERROR: The DepartureAirport of the new flight doesn't matches the ArrivalAirport of the last flight in the route!");
         return false;
     }
+
+    public bool IsEmpty() => Routes.Count == 0;
 }

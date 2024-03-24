@@ -26,7 +26,7 @@ public class Printer
         System.Console.Write($"Flights: \n");
         foreach (var flight in manager.Flights)
         {
-            System.Console.WriteLine($" Flight id: {flight.Id}");
+            System.Console.WriteLine($" Flight ID: {flight.Id}");
         }
     }
     public static void PrintAll(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)

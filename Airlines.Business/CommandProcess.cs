@@ -90,43 +90,52 @@ public class CommandProcess
         }
         else if (action == "route" && commandParts.Length >= 2)
         {
-            var commandPartsSplit = commandParts[1].Split().ToArray();
-            var commandTarget = commandPartsSplit[0];
+            var commandArguments = commandParts[1].Split().ToArray();
+            var commandAction = commandArguments[0];
 
-            if (commandTarget == "new")
+            if (commandAction == "new")
             {
                 routeManager.Routes.Clear();
             }
-            else if (commandTarget == "add" && commandPartsSplit.Length == 2)
+            else if (commandAction == "add" && commandArguments.Length == 2)
             {
-                var flightId = commandPartsSplit[1];
+                var flightId = commandArguments[1];
 
-                if (!flightManager.Search(flightId))
+                var flightToAdd = flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
+
+                if (flightToAdd != null && routeManager.Validate(flightToAdd))
                 {
-                    Console.WriteLine($"Flight with id: {flightId} does not exists!");
+                    routeManager.AddFlight(flightToAdd);
+                    Console.WriteLine($" Flight with ID '{flightId}' added to the route.");
                 }
                 else
                 {
-                    var flight = flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
-
-                    if (routeManager.Validate(flight!))
-                    {
-                        routeManager.AddFlight(flight!);
-                    }
+                    Console.WriteLine($" Error: Flight does not exist.");
                 }
             }
-            else if (commandTarget == "remove")
+            else if (commandAction == "remove")
             {
-                routeManager.RemoveFlight();
-            }
-            else if (commandTarget == "print")
-            {
-                Console.Write($"Route: \n");
-                foreach (var flight in routeManager.Routes)
+                if (!routeManager.IsEmpty())
                 {
-                    Console.WriteLine($" Flight id: {flight.Id}");
-                    Console.WriteLine($" Departure Airport id: {flight.DepartureAirport}");
-                    Console.WriteLine($" Arrival Airport id: {flight.ArrivalAirport}\n");
+                    routeManager.RemoveFlight();
+                    Console.WriteLine("Last flight removed from the route.");
+                }
+            }
+            else if (commandAction == "print")
+            {
+                if (!routeManager.IsEmpty())
+                {
+                    Console.WriteLine("Route:");
+                    foreach (var flight in routeManager.Routes)
+                    {
+                        Console.WriteLine($"  Flight ID: {flight.Id}");
+                        Console.WriteLine($"  Departure Airport ID: {flight.DepartureAirport}");
+                        Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}\n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(" Route is empty.");
                 }
             }
         }
