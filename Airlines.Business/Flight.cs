@@ -1,7 +1,4 @@
-﻿
-using System.Security.Cryptography;
-
-namespace Airlines.Business;
+﻿namespace Airlines.Business;
 public class Flight
 {
     private string? _id;

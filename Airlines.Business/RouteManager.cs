@@ -1,5 +1,4 @@
-﻿
-namespace Airlines.Business;
+﻿namespace Airlines.Business;
 public class RouteManager
 {
     public LinkedList<Flight> Routes { get; set; }
