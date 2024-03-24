@@ -27,8 +27,6 @@ public class Printer
         foreach (var flight in manager.Flights)
         {
             System.Console.WriteLine($" Flight id: {flight.Id}");
-            System.Console.WriteLine($" Departure Airport id: {flight.DepartureAirport}");
-            System.Console.WriteLine($" Arrival Airport id: {flight.ArrivalAirport}\n");
         }
     }
     public static void PrintAll(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
@@ -36,5 +34,16 @@ public class Printer
         Print(airportManager);
         Print(airlineManager);
         Print(flightManager);
+    }
+
+    public static void PrintRoute(RouteManager manager)
+    {
+        System.Console.Write($"Routes: \n");
+        foreach (var flight in manager.Routes)
+        {
+            System.Console.WriteLine($" Flight id: {flight.Id}");
+            System.Console.WriteLine($" Departure Airport id: {flight.DepartureAirport}");
+            System.Console.WriteLine($" Arrival Airport id: {flight.ArrivalAirport}\n");
+        }
     }
 }
