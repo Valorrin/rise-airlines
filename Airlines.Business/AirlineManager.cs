@@ -3,32 +3,42 @@
 namespace Airlines.Business;
 public class AirlineManager
 {
-    public List<string> Airlines { get; private set; }
+    public Dictionary<string, Airline> Airlines { get; private set; }
 
     public AirlineManager() => Airlines = [];
 
-    public bool Validate(string name)
+    public bool IsIdUnique(string id)
     {
-        if (LinearSearch(Airlines, name) >= 0)
+        if (Airlines.ContainsKey(id))
         {
-            Console.WriteLine($" Error: Airline with the same name already exists.");
-            return false;
-        }
-
-        if (name.Length >= 6)
-        {
-            Console.WriteLine($" Error: Airline name '{name}' must be less than 6 characters long!");
+            Console.WriteLine(" Error: An airline with the same ID already exists.");
             return false;
         }
 
         return true;
-
     }
 
-    public void Add(string name)
+    public void Add(Airline airline)
     {
-        Airlines.Add(name);
-        Console.WriteLine($"Airline '{name}' added successfully.");
+        Airlines.Add(airline.Id, airline);
+
+        Console.WriteLine($"Airline '{airline.Name}' added successfully.");
+    }
+
+    public void Add(List<string> airlineData)
+    {
+        foreach (var airport in airlineData)
+        {
+            var newAirline = new Airline();
+            var airportParts = airport.Split(", ");
+            newAirline.Id = airportParts[0];
+            newAirline.Name = airportParts[1];
+
+            if (IsIdUnique(newAirline.Id))
+            {
+                Add(newAirline);
+            }
+        }
     }
 
     public void Search(string searchTerm)
@@ -38,10 +48,9 @@ public class AirlineManager
             Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
-        var airlinesCopy = Airlines.ToList();
-        airlinesCopy.Sort();
+        var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
 
-        if (BinarySearch(airlinesCopy, searchTerm) >= 0)
+        if (BinarySearch(airlineNames, searchTerm) >= 0)
         {
             Console.WriteLine($" {searchTerm} is Airline name.");
         }

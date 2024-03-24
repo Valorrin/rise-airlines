@@ -3,21 +3,33 @@
 namespace Airlines.Console;
 public class Printer
 {
-    public static void Print(AirlineManager manager)
-    {
-        System.Console.Write($" Airlines: ");
-        System.Console.WriteLine(string.Join(", ", manager.Airlines));
-    }
     public static void Print(AirportManager manager)
     {
-        System.Console.Write($" Airports: ");
-        System.Console.WriteLine(string.Join(", ", manager.Airports));
-
+        System.Console.Write($"Airports:\n");
+        foreach (var airport in manager.Airports.Values)
+        {
+            System.Console.WriteLine($" Airport name: {airport.Name}");
+            System.Console.WriteLine($" Airport city: {airport.City}");
+            System.Console.WriteLine($" Airport country: {airport.Country}\n");
+        }
+    }
+    public static void Print(AirlineManager manager)
+    {
+        System.Console.Write($"Airlines:\n");
+        foreach (var airline in manager.Airlines.Values)
+        {
+            System.Console.WriteLine($" Airline name: {airline.Name}");
+        }
     }
     public static void Print(FlightManager manager)
     {
         System.Console.Write($" Flights: ");
         System.Console.WriteLine(string.Join(", ", manager.Flights));
-
+    }
+    public static void PrintAll(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
+    {
+        Print(airportManager);
+        Print(airlineManager);
+        Print(flightManager);
     }
 }

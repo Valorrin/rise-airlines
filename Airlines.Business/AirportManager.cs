@@ -3,38 +3,63 @@
 namespace Airlines.Business;
 public class AirportManager
 {
-    public List<string> Airports { get; private set; }
+    public Dictionary<string, Airport> Airports { get; private set; }
+    public Dictionary<string, HashSet<Airport>> AirportsByCity { get; private set; }
+    public Dictionary<string, HashSet<Airport>> AirportsByCountry { get; private set; }
+    public HashSet<string> AirportNames { get; private set; }
 
-    public AirportManager() => Airports = [];
-
-    public bool Validate(string name)
+    public AirportManager()
     {
-        if (LinearSearch(Airports, name) >= 0)
-        {
-            Console.WriteLine($" Error: Airport with the same name already exists.");
-            return false;
-        }
+        Airports = [];
+        AirportsByCity = [];
+        AirportsByCountry = [];
+        AirportNames = [];
+    }
 
-        if (name.Length != 3)
+    public bool IsIdUnique(string id)
+    {
+        if (Airports.ContainsKey(id))
         {
-            Console.WriteLine($" Error: Airport name '{name}' must be exactly 3 characters long!");
-            return false;
-        }
-
-        if (!name.All(char.IsLetter))
-        {
-            Console.WriteLine($" Error: Airport name '{name}' must contain only alphabetic characters!");
+            Console.WriteLine(" Error: An airport with the same ID already exists.");
             return false;
         }
 
         return true;
-
     }
 
-    public void Add(string name)
+    public void Add(Airport airport)
     {
-        Airports.Add(name);
-        Console.WriteLine($"Airport '{name}' added successfully.");
+        if (!IsIdUnique(airport.Id))
+            return;
+
+        if (!AirportsByCity.ContainsKey(airport.City))
+            AirportsByCity[airport.City] = [];
+        _ = AirportsByCity[airport.City].Add(airport);
+
+        if (!AirportsByCountry.ContainsKey(airport.Country))
+            AirportsByCountry[airport.Country] = [];
+        _ = AirportsByCountry[airport.Country].Add(airport);
+
+        _ = AirportNames.Add(airport.Name);
+        Airports.Add(airport.Id, airport);
+    }
+
+    public void Add(List<string> airportData)
+    {
+        foreach (var airport in airportData)
+        {
+            var newAirport = new Airport();
+            var airportParts = airport.Split(", ");
+            newAirport.Id = airportParts[0];
+            newAirport.Name = airportParts[1];
+            newAirport.City = airportParts[2];
+            newAirport.Country = airportParts[3];
+
+            if (IsIdUnique(newAirport.Id))
+            {
+                Add(newAirport);
+            }
+        }
     }
 
     public void Search(string searchTerm)
@@ -44,12 +69,35 @@ public class AirportManager
             Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
-        var airportsCopy = Airports.ToList();
-        airportsCopy.Sort();
+        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList(); ;
 
-        if (BinarySearch(airportsCopy, searchTerm) >= 0)
+        if (BinarySearch(airportNames, searchTerm) >= 0)
         {
             Console.WriteLine($" {searchTerm} is Airport name.");
+        }
+    }
+
+    public bool Exist(string name) => AirportNames.Contains(name);
+
+    public void ListData(string name, string airportsFrom)
+    {
+        if (airportsFrom == "City")
+        {
+            var names = AirportsByCity[name];
+
+            foreach (var airport in names)
+            {
+                Console.WriteLine(airport.Name);
+            }
+        }
+        else if (airportsFrom == "Country")
+        {
+            var names = AirportsByCountry[name];
+
+            foreach (var airport in names)
+            {
+                Console.WriteLine(airport.Name);
+            }
         }
     }
 }
