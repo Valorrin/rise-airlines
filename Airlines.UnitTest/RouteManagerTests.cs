@@ -1,5 +1,4 @@
-﻿
-using Airlines.Business;
+﻿using Airlines.Business;
 
 namespace Airlines.UnitTests;
 public class RouteManagerTests

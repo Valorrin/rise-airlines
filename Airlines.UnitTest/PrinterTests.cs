@@ -1,8 +1,5 @@
-﻿
-
-using Airlines.Business;
+﻿using Airlines.Business;
 using Airlines.Console;
-using Moq;
 
 namespace Airlines.UnitTests;
 public class PrinterTests
