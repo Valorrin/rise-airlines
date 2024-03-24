@@ -86,17 +86,17 @@ public class PrinterTests
 
         var result = writer.ToString();
         Assert.Contains("Airports:", result);
-        Assert.Contains("Airport name: Airport1", result);
-        Assert.Contains("Airport city: City1", result);
-        Assert.Contains("Airport country: Country1", result);
-        Assert.Contains("Airport name: Airport2", result);
-        Assert.Contains("Airport city: City2", result);
-        Assert.Contains("Airport country: Country2", result);
+        Assert.Contains(" Airport name: Airport1", result);
+        Assert.Contains(" Airport city: City1", result);
+        Assert.Contains(" Airport country: Country1", result);
+        Assert.Contains(" Airport name: Airport2", result);
+        Assert.Contains(" Airport city: City2", result);
+        Assert.Contains(" Airport country: Country2", result);
         Assert.Contains("Airlines:", result);
-        Assert.Contains("Airline name: Airline1", result);
-        Assert.Contains("Airline name: Airline2", result);
+        Assert.Contains(" Airline name: Airline1", result);
+        Assert.Contains(" Airline name: Airline2", result);
         Assert.Contains("Flights:", result);
-        Assert.Contains("Flight ID: Air1", result);
-        Assert.Contains("Flight ID: Air2", result);
+        Assert.Contains(" Flight ID: Air1", result);
+        Assert.Contains(" Flight ID: Air2", result);
     }
 }
