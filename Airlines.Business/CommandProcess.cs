@@ -55,13 +55,13 @@ public class CommandProcess
                 case "flights":
                     if (sortOrder == "descending")
                     {
-                        flightManager.SortDesc();
-                        Console.WriteLine(string.Join(", ", flightManager.Flights));
+                        var ids = flightManager.SortDescById();
+                        Console.WriteLine(string.Join(", ", ids));
                     }
                     else
                     {
-                        flightManager.Sort();
-                        Console.WriteLine(string.Join(", ", flightManager.Flights));
+                        var ids = flightManager.SortById();
+                        Console.WriteLine(string.Join(", ", ids));
                     }
                     break;
                 default:

@@ -3,32 +3,24 @@
 namespace Airlines.Business;
 public class FlightManager
 {
-    public List<string> Flights { get; private set; }
+    public LinkedList<Flight> Flights { get; private set; }
 
     public FlightManager() => Flights = [];
 
-    public bool Validate(string name)
+    public void Add(Flight flight) => Flights.AddLast(flight);
+
+    public void Add(List<string> flightData)
     {
-        if (LinearSearch(Flights, name) >= 0)
+        foreach (var flight in flightData)
         {
-            Console.WriteLine($" Error: Flight with the same name already exists.");
-            return false;
+            var newFlight = new Flight();
+            var flightParts = flight.Split(", ");
+            newFlight.Id = flightParts[0];
+            newFlight.DepartureAirport = flightParts[1];
+            newFlight.ArrivalAirport = flightParts[2];
+
+            Add(newFlight);
         }
-
-        if (!name.All(char.IsLetterOrDigit))
-        {
-            Console.WriteLine($" Error: Flight name '{name}' must contain only alphabetic or numeric characters!");
-            return false;
-        }
-
-        return true;
-
-    }
-
-    public void Add(string name)
-    {
-        Flights.Add(name);
-        Console.WriteLine($"Flight '{name}' added successfully.");
     }
 
     public void Search(string searchTerm)
@@ -38,10 +30,9 @@ public class FlightManager
             Console.WriteLine(" Error: search term cannot be null or empty!");
         }
 
-        var flightsCopy = Flights.ToList();
-        flightsCopy.Sort();
+        var flightIds = Flights.Select(flight => flight.Id).ToList().OrderBy(name => name).ToList(); ;
 
-        if (BinarySearch(flightsCopy, searchTerm) >= 0)
+        if (BinarySearch(flightIds, searchTerm) >= 0)
         {
             Console.WriteLine($" {searchTerm} is Flight name.");
         }

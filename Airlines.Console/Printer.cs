@@ -18,13 +18,18 @@ public class Printer
         System.Console.Write($"Airlines:\n");
         foreach (var airline in manager.Airlines.Values)
         {
-            System.Console.WriteLine($" Airline name: {airline.Name}");
+            System.Console.WriteLine($" Airline name: {airline.Name}\n");
         }
     }
     public static void Print(FlightManager manager)
     {
-        System.Console.Write($" Flights: ");
-        System.Console.WriteLine(string.Join(", ", manager.Flights));
+        System.Console.Write($"Flights: \n");
+        foreach (var flight in manager.Flights)
+        {
+            System.Console.WriteLine($" Flight id: {flight.Id}");
+            System.Console.WriteLine($" Departure Airport id: {flight.DepartureAirport}");
+            System.Console.WriteLine($" Arrival Airport id: {flight.ArrivalAirport}\n");
+        }
     }
     public static void PrintAll(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
     {

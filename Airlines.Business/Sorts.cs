@@ -15,27 +15,11 @@ public static class Sorts
         return airlineNames;
     }
 
-    public static void Sort(this FlightManager manager)
+    public static List<string> SortById(this FlightManager manager)
     {
-        var n = manager.Flights.Count;
+        var flightIds = manager.Flights.Select(flight => flight.Id).ToList().OrderBy(name => name).ToList();
 
-        for (var i = 0; i < n - 1; i++)
-        {
-            var minIndex = i;
-
-            for (var j = i + 1; j < n; j++)
-            {
-                if (string.Compare(manager.Flights[j], manager.Flights[minIndex]) < 0)
-                {
-                    minIndex = j;
-                }
-            }
-
-            if (minIndex != i)
-            {
-                (manager.Flights[minIndex], manager.Flights[i]) = (manager.Flights[i], manager.Flights[minIndex]);
-            }
-        }
+        return flightIds;
     }
 
     public static List<string> SortDescByName(this AirportManager manager)
@@ -47,15 +31,15 @@ public static class Sorts
 
     public static List<string> SortDescByName(this AirlineManager manager)
     {
-        var airlineNames = manager.Airlines.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
+        var airlineNames = manager.Airlines.Values.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
 
         return airlineNames;
     }
 
-    public static void SortDesc(this FlightManager manager)
+    public static List<string> SortDescById(this FlightManager manager)
     {
-        Sort(manager);
-        manager.Flights.Reverse();
+        var flightIds = manager.Flights.Select(flight => flight.Id).ToList().OrderByDescending(name => name).ToList();
 
+        return flightIds;
     }
 }

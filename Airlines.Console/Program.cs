@@ -15,19 +15,15 @@ public class Program
 
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");
+        var flightFilePath = GetFilePath("flights.csv");
 
         var airportData = ReadFromFile(airportFilePath);
         var airlineData = ReadFromFile(airlineFilePath);
+        var flightData = ReadFromFile(flightFilePath);
 
         airportManager.Add(airportData);
         airlineManager.Add(airlineData);
-
-        var flight = ReadFromConsole();
-
-        if (flightManager.Validate(flight))
-        {
-            flightManager.Add(flight);
-        }
+        flightManager.Add(flightData);
 
         PrintAll(airportManager, airlineManager, flightManager);
 
