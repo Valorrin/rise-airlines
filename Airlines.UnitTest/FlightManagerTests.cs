@@ -22,7 +22,7 @@ public class FlightManagerTests
         var writer = new StringWriter();
         System.Console.SetOut(writer);
 
-        flightManager.Search(null);
+        flightManager.Search(null!);
 
         var result = writer.ToString();
         Assert.Contains(" Error: search term cannot be null or empty!", result);
