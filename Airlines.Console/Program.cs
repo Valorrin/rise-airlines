@@ -13,11 +13,12 @@ public class Program
         var airlineManager = new AirlineManager();
         var flightManager = new FlightManager();
         var routeManager = new RouteManager();
+        var aircraftManager = new AircraftManager();
 
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");
         var flightFilePath = GetFilePath("flights.csv");
-        var aircraftFilePath = GetFilePath("flights.csv");
+        var aircraftFilePath = GetFilePath("aircrafts.csv");
 
         var airportData = ReadFromFile(airportFilePath);
         var airlineData = ReadFromFile(airlineFilePath);
@@ -27,8 +28,9 @@ public class Program
         airportManager.Add(airportData);
         airlineManager.Add(airlineData);
         flightManager.Add(flightData);
+        aircraftManager.Add(aircraftData);
 
-        PrintAll(airportManager, airlineManager, flightManager);
+        PrintAll(airportManager, airlineManager, flightManager, aircraftManager);
 
         while (true)
         {

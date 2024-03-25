@@ -17,50 +17,41 @@ public class AircraftManager
     public void Add(CargoAircraft cargoAircraft) => CargoAircrafts.Add(cargoAircraft);
     public void Add(PassengerAircraft passengerAircraft) => PassengerAircrafts.Add(passengerAircraft);
     public void Add(PrivateAircraft privateAircraft) => PrivateAircrafts.Add(privateAircraft);
-
-    public void Add(List<Aircraft> aircrafts)
+    public void Add(List<string> aircraftData)
     {
-        foreach (var aircraft in aircrafts)
+        foreach (var aircraft in aircraftData)
         {
             Add(aircraft);
         }
     }
-
-    public static List<Aircraft> CreateAircraft(List<string> aircraftData)
+    public void Add(string aircraftData)
     {
-        var aircraftList = new List<Aircraft>();
+        var aircraftDataParts = aircraftData.Split(", ").ToArray();
+        var model = aircraftDataParts[0];
+        var cargoWeight = aircraftDataParts[1];
+        var cargoVolume = aircraftDataParts[2];
+        var seats = aircraftDataParts[3];
 
-        foreach (var aircraft in aircraftData)
+        if (seats == "-")
         {
-            var aircraftParts = aircraft.Split(", ");
-            var model = aircraftParts[0];
-            var cargoWeight = aircraftParts[1];
-            var cargoVolume = aircraftParts[2];
-            var seats = aircraftParts[3];
+            var cargoWeightToDouble = double.Parse(cargoWeight);
+            var cargoVolumeToDouble = double.Parse(cargoVolume);
 
-            if (seats == "|")
-            {
-                var cargoWeightToDouble = double.Parse(cargoWeight);
-                var cargoVolumeToDouble = double.Parse(cargoVolume);
-
-                aircraftList.Add(new CargoAircraft(model, cargoWeightToDouble, cargoVolumeToDouble));
-            }
-            else if (cargoWeight == "|" && cargoVolume == "|")
-            {
-                var seatsToInt = int.Parse(seats);
-
-                aircraftList.Add(new PrivateAircraft(model, seatsToInt));
-            }
-            else
-            {
-                var cargoWeightToDouble = double.Parse(cargoWeight);
-                var cargoVolumeToDouble = double.Parse(cargoVolume);
-                var seatsToInt = int.Parse(seats);
-
-                aircraftList.Add(new PassengerAircraft(model, cargoWeightToDouble, cargoVolumeToDouble, seatsToInt));
-            }
+            Add(new CargoAircraft(model, cargoWeightToDouble, cargoVolumeToDouble));
         }
+        else if (cargoWeight == "-" && cargoVolume == "-")
+        {
+            var seatsToInt = int.Parse(seats);
 
-        return aircraftList;
+            Add(new PrivateAircraft(model, seatsToInt));
+        }
+        else
+        {
+            var cargoWeightToDouble = double.Parse(cargoWeight);
+            var cargoVolumeToDouble = double.Parse(cargoVolume);
+            var seatsToInt = int.Parse(seats);
+
+            Add(new PassengerAircraft(model, cargoWeightToDouble, cargoVolumeToDouble, seatsToInt));
+        }
     }
 }
