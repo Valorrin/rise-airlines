@@ -1,8 +1,5 @@
-﻿
-
-using Airlines.Business;
+﻿using Airlines.Business;
 using Airlines.Console;
-using Moq;
 
 namespace Airlines.UnitTests;
 public class PrinterTests
@@ -50,7 +47,8 @@ public class PrinterTests
     public void Print_FlightManager_PrintsFlights()
     {
         var flightManager = new FlightManager();
-        flightManager.Flights.AddRange(["Flight1", "Flight2"]);
+        flightManager.Flights.Add(new Flight { Id = "Air1" });
+        flightManager.Flights.Add(new Flight { Id = "Air2" });
 
         var writer = new StringWriter();
         System.Console.SetOut(writer);
@@ -58,7 +56,9 @@ public class PrinterTests
         Printer.Print(flightManager);
 
         var result = writer.ToString();
-        Assert.Contains("Flights: Flight1, Flight2", result);
+        Assert.Contains("Flights:", result);
+        Assert.Contains("Flight ID: Air1", result);
+        Assert.Contains("Flight ID: Air2", result);
     }
 
     [Fact]
@@ -73,7 +73,8 @@ public class PrinterTests
         airlineManager.Airlines.Add("223", new Airline { Name = "Airline2" });
 
         var flightManager = new FlightManager();
-        flightManager.Flights.AddRange(["Flight1", "Flight2"]);
+        flightManager.Flights.Add(new Flight { Id = "Air1" });
+        flightManager.Flights.Add(new Flight { Id = "Air2" });
 
         var writer = new StringWriter();
         System.Console.SetOut(writer);
@@ -82,15 +83,17 @@ public class PrinterTests
 
         var result = writer.ToString();
         Assert.Contains("Airports:", result);
-        Assert.Contains("Airport name: Airport1", result);
-        Assert.Contains("Airport city: City1", result);
-        Assert.Contains("Airport country: Country1", result);
-        Assert.Contains("Airport name: Airport2", result);
-        Assert.Contains("Airport city: City2", result);
-        Assert.Contains("Airport country: Country2", result);
+        Assert.Contains(" Airport name: Airport1", result);
+        Assert.Contains(" Airport city: City1", result);
+        Assert.Contains(" Airport country: Country1", result);
+        Assert.Contains(" Airport name: Airport2", result);
+        Assert.Contains(" Airport city: City2", result);
+        Assert.Contains(" Airport country: Country2", result);
         Assert.Contains("Airlines:", result);
-        Assert.Contains("Airline name: Airline1", result);
-        Assert.Contains("Airline name: Airline2", result);
-        Assert.Contains("Flights: Flight1, Flight2", result);
+        Assert.Contains(" Airline name: Airline1", result);
+        Assert.Contains(" Airline name: Airline2", result);
+        Assert.Contains("Flights:", result);
+        Assert.Contains(" Flight ID: Air1", result);
+        Assert.Contains(" Flight ID: Air2", result);
     }
 }

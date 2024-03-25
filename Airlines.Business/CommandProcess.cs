@@ -1,8 +1,7 @@
-﻿
-namespace Airlines.Business;
+﻿namespace Airlines.Business;
 public class CommandProcess
 {
-    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
+    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, RouteManager routeManager)
     {
         var commandParts = command.Split(' ', 2).ToArray();
         var action = commandParts[0];
@@ -55,13 +54,13 @@ public class CommandProcess
                 case "flights":
                     if (sortOrder == "descending")
                     {
-                        flightManager.SortDesc();
-                        Console.WriteLine(string.Join(", ", flightManager.Flights));
+                        var ids = flightManager.SortDescById();
+                        Console.WriteLine(string.Join(", ", ids));
                     }
                     else
                     {
-                        flightManager.Sort();
-                        Console.WriteLine(string.Join(", ", flightManager.Flights));
+                        var ids = flightManager.SortById();
+                        Console.WriteLine(string.Join(", ", ids));
                     }
                     break;
                 default:
@@ -84,6 +83,61 @@ public class CommandProcess
             var from = commandParts[1];
 
             airportManager.ListData(inputData, from);
+        }
+        else if (action == "route" && commandParts.Length >= 2)
+        {
+            var commandArguments = commandParts[1].Split().ToArray();
+            var commandAction = commandArguments[0];
+
+            if (commandAction == "new")
+            {
+                routeManager.Routes.Clear();
+            }
+            else if (commandAction == "add" && commandArguments.Length == 2)
+            {
+                var flightId = commandArguments[1];
+
+                var flightToAdd = flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
+
+                if (flightToAdd != null && routeManager.Validate(flightToAdd))
+                {
+                    routeManager.AddFlight(flightToAdd);
+                    Console.WriteLine($" Flight with ID '{flightId}' added to the route.");
+                }
+                else
+                {
+                    Console.WriteLine($" Error: Flight does not exist.");
+                }
+            }
+            else if (commandAction == "remove")
+            {
+                if (!routeManager.IsEmpty())
+                {
+                    routeManager.RemoveFlight();
+                    Console.WriteLine("Last flight removed from the route.");
+                }
+            }
+            else if (commandAction == "print")
+            {
+                if (!routeManager.IsEmpty())
+                {
+                    Console.WriteLine("Route:");
+                    foreach (var flight in routeManager.Routes)
+                    {
+                        Console.WriteLine($"  Flight ID: {flight.Id}");
+                        Console.WriteLine($"  Departure Airport ID: {flight.DepartureAirport}");
+                        Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}\n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(" Route is empty.");
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine(" Inavalid command!");
         }
     }
 }
