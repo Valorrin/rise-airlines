@@ -1,5 +1,4 @@
-﻿
-namespace Airlines.Business;
+﻿namespace Airlines.Business.Models;
 public class Aircraft
 {
     public string Model { get; set; }

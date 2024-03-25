@@ -1,5 +1,4 @@
-﻿
-namespace Airlines.Business;
+﻿namespace Airlines.Business.Models;
 public class CargoAircraft : Aircraft
 {
     public double CargoWeight { get; set; }

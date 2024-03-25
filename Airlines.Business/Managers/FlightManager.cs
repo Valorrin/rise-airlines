@@ -1,6 +1,7 @@
-﻿using static Airlines.Business.Search;
+﻿using Airlines.Business.Models;
+using static Airlines.Business.Utilities.Search;
 
-namespace Airlines.Business;
+namespace Airlines.Business.Managers;
 public class FlightManager
 {
     public List<Flight> Flights { get; private set; }
@@ -27,15 +28,11 @@ public class FlightManager
     public void Search(string searchTerm)
     {
         if (string.IsNullOrEmpty(searchTerm))
-        {
             Console.WriteLine(" Error: search term cannot be null or empty!");
-        }
 
         var flightIds = Flights.Select(flight => flight.Id).ToList().OrderBy(name => name).ToList(); ;
 
         if (BinarySearch(flightIds, searchTerm) >= 0)
-        {
             Console.WriteLine($" {searchTerm} is Flight name.");
-        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Airlines.Business;
+﻿using Airlines.Business.Managers;
+
+namespace Airlines.Business.Utilities;
 public class CommandProcess
 {
     public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, RouteManager routeManager)
@@ -90,9 +92,7 @@ public class CommandProcess
             var commandAction = commandArguments[0];
 
             if (commandAction == "new")
-            {
                 routeManager.Routes.Clear();
-            }
             else if (commandAction == "add" && commandArguments.Length == 2)
             {
                 var flightId = commandArguments[1];
@@ -105,20 +105,15 @@ public class CommandProcess
                     Console.WriteLine($" Flight with ID '{flightId}' added to the route.");
                 }
                 else
-                {
                     Console.WriteLine($" Error: Flight does not exist.");
-                }
             }
             else if (commandAction == "remove")
-            {
                 if (!routeManager.IsEmpty())
                 {
                     routeManager.RemoveFlight();
                     Console.WriteLine("Last flight removed from the route.");
                 }
-            }
             else if (commandAction == "print")
-            {
                 if (!routeManager.IsEmpty())
                 {
                     Console.WriteLine("Route:");
@@ -131,14 +126,9 @@ public class CommandProcess
                     }
                 }
                 else
-                {
                     Console.WriteLine(" Route is empty.");
-                }
-            }
         }
         else
-        {
             Console.WriteLine(" Inavalid command!");
-        }
     }
 }

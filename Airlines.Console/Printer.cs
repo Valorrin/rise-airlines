@@ -1,4 +1,4 @@
-﻿using Airlines.Business;
+﻿using Airlines.Business.Managers;
 
 namespace Airlines.Console;
 public class Printer

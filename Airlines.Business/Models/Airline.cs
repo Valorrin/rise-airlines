@@ -1,4 +1,4 @@
-﻿namespace Airlines.Business;
+﻿namespace Airlines.Business.Models;
 
 public class Airline
 {
@@ -10,9 +10,7 @@ public class Airline
         set
         {
             if (!IsValidId(value))
-            {
                 throw new ArgumentException("Id cannot be null or empty.");
-            }
 
             _id = value;
         }
@@ -23,9 +21,7 @@ public class Airline
         set
         {
             if (!IsValidName(value))
-            {
                 throw new ArgumentException("Name can only contain alphabet and space characters.");
-            }
 
             _name = value;
         }
@@ -34,22 +30,14 @@ public class Airline
     private static bool IsValidId(string id)
     {
         if (string.IsNullOrEmpty(id))
-        {
             return false;
-        }
 
         if (id.Length is < 2 or > 4)
-        {
             return false;
-        }
 
         foreach (var c in id)
-        {
             if (!char.IsLetterOrDigit(c))
-            {
                 return false;
-            }
-        }
 
         return true;
     }
@@ -57,17 +45,11 @@ public class Airline
     private static bool IsValidName(string str)
     {
         if (string.IsNullOrEmpty(str))
-        {
             return false;
-        }
 
         foreach (var c in str)
-        {
             if (char.IsLetter(c) || c == ' ')
-            {
                 return true;
-            }
-        }
 
         return false;
     }

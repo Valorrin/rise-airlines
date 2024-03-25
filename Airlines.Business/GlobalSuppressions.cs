@@ -4,6 +4,7 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 using System.Diagnostics.CodeAnalysis;
-
-[assembly: SuppressMessage("Style", "IDE0057:Use range operator", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.StringHelper.SplitBeforeLastElement(System.String)~System.String[]")]
-[assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.CommandProcess.ExecuteCommand(System.String,Airlines.Business.AirportManager,Airlines.Business.AirlineManager,Airlines.Business.FlightManager,Airlines.Business.RouteManager)")]
+[assembly: SuppressMessage("Style", "IDE0057:Use range operator", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Utilities.StringHelper.SplitBeforeLastElement(System.String)~System.String[]")]
+[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Models.Aircraft.#ctor(System.String)")]
+[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Models.PassengerAircraft.#ctor(System.String,System.Double,System.Int32)")]
+[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Models.PrivateAircraft.#ctor(System.String,System.Int32)")]
