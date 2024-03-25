@@ -41,7 +41,7 @@ public class InputReader
 
     public static string ReadCommands()
     {
-        System.Console.WriteLine($"Enter command:\n");
+        System.Console.WriteLine($"\nEnter command:\n");
 
         while (true)
         {

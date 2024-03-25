@@ -18,12 +18,7 @@ public class AirlineManager
         return true;
     }
 
-    public void Add(Airline airline)
-    {
-        Airlines.Add(airline.Id, airline);
-
-        Console.WriteLine($"Airline '{airline.Name}' added successfully.");
-    }
+    public void Add(Airline airline) => Airlines.Add(airline.Id, airline);
 
     public void Add(List<string> airlineData)
     {

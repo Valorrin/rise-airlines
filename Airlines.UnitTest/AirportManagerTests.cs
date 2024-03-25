@@ -37,10 +37,10 @@ public class AirportManagerTests
             Country = "Test Country"
         };
 
-        airportManager.Add(airport); // Adding the same airport once
-        airportManager.Add(airport); // Adding the same airport again
+        airportManager.Add(airport);
+        airportManager.Add(airport);
 
-        _ = Assert.Single(airportManager.Airports); // Only one airport should be added
+        _ = Assert.Single(airportManager.Airports);
     }
 
     [Fact]
