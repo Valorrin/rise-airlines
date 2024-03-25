@@ -17,10 +17,12 @@ public class Program
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");
         var flightFilePath = GetFilePath("flights.csv");
+        var aircraftFilePath = GetFilePath("flights.csv");
 
         var airportData = ReadFromFile(airportFilePath);
         var airlineData = ReadFromFile(airlineFilePath);
         var flightData = ReadFromFile(flightFilePath);
+        var aircraftData = ReadFromFile(aircraftFilePath);
 
         airportManager.Add(airportData);
         airlineManager.Add(airlineData);

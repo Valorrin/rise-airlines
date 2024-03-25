@@ -18,6 +18,7 @@ public class FlightManager
             newFlight.Id = flightParts[0];
             newFlight.DepartureAirport = flightParts[1];
             newFlight.ArrivalAirport = flightParts[2];
+            newFlight.AircraftModel = flightParts[3];
 
             Add(newFlight);
         }

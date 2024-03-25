@@ -126,7 +126,8 @@ public class CommandProcess
                     {
                         Console.WriteLine($"  Flight ID: {flight.Id}");
                         Console.WriteLine($"  Departure Airport ID: {flight.DepartureAirport}");
-                        Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}\n");
+                        Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}");
+                        Console.WriteLine($"  Aircraft Model: {flight.AircraftModel}\n");
                     }
                 }
                 else

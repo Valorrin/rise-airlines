@@ -47,6 +47,8 @@ public class Flight
         }
     }
 
+    public string? AircraftModel { get; set; }
+
     private static bool IsValidAirportId(string id)
     {
         if (string.IsNullOrEmpty(id))
