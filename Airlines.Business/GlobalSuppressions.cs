@@ -6,5 +6,6 @@
 using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0057:Use range operator", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Utilities.StringHelper.SplitBeforeLastElement(System.String)~System.String[]")]
 [assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Models.Aircraft.#ctor(System.String)")]
-[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Models.PassengerAircraft.#ctor(System.String,System.Double,System.Int32)")]
 [assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Models.PrivateAircraft.#ctor(System.String,System.Int32)")]
+[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Models.PassengerAircraft.#ctor(System.String,System.Double,System.Double,System.Int32)")]
+[assembly: SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Managers.AircraftManager.CreateAircraft(System.String,System.Double,System.Double,System.Int32)~Airlines.Business.Models.Aircraft")]

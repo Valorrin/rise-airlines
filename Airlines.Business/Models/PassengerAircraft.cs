@@ -1,12 +1,14 @@
 ﻿namespace Airlines.Business.Models;
 public class PassengerAircraft : Aircraft
 {
-    public double CargoCapacity { get; set; }
+    public double CargoWeight { get; set; }
+    public double CargoVolume { get; set; }
     public int Seats { get; set; }
 
-    public PassengerAircraft(string model, double cargoCapacity, int seats) : base(model)
+    public PassengerAircraft(string model, double cargoWeight, double cargoVolume, int seats) : base(model)
     {
-        CargoCapacity = cargoCapacity;
+        CargoWeight = cargoWeight;
+        CargoVolume = cargoVolume;
         Seats = seats;
     }
 }
