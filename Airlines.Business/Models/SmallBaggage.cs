@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Airlines.Business.Models;
-internal class SmallBaggage
+﻿namespace Airlines.Business.Models;
+public class SmallBaggage : Baggage
 {
+    public override bool Validate() => Weight <= 15 && Volume <= 0.045;
 }
