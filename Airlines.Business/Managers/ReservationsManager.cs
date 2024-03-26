@@ -7,10 +7,13 @@ public class ReservationsManager
     public List<CargoReservation> CargoReservations { get; set; }
     public List<TicketReservation> TicketReservations { get; set; }
 
-    public void AddCargoReservation(CargoReservation reservation) => CargoReservations.Add(reservation);
-    public void AddTicketReservation(TicketReservation reservation) => TicketReservations.Add(reservation);
+    public ReservationsManager()
+    {
+        CargoReservations = [];
+        TicketReservations = [];
+    }
 
-    public bool ValidateCargo(CargoReservation reservation, CargoAircraft aircraft)
+    public bool ValidateCargoReservation(CargoReservation reservation, CargoAircraft aircraft)
     {
         if (reservation.CargoWeight > aircraft.CargoWeight)
         {
@@ -26,8 +29,7 @@ public class ReservationsManager
         Console.WriteLine("Cargo validataion aproved");
         return true;
     }
-
-    public bool ValidateTicket(TicketReservation reservation, PassengerAircraft aircraft)
+    public bool ValidateTicketReservation(TicketReservation reservation, PassengerAircraft aircraft)
     {
         if (reservation.Seats > aircraft.Seats)
         {
@@ -48,4 +50,7 @@ public class ReservationsManager
 
         return true;
     }
+
+    public void Add(CargoReservation reservation) => CargoReservations.Add(reservation);
+    public void Add(TicketReservation reservation) => TicketReservations.Add(reservation);
 }
