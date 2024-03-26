@@ -1,4 +1,5 @@
-﻿using Airlines.Business;
+﻿using Airlines.Business.Managers;
+using Airlines.Business.Models;
 using Airlines.Console;
 
 namespace Airlines.UnitTests;
@@ -78,8 +79,6 @@ public class PrinterTests
 
         var writer = new StringWriter();
         System.Console.SetOut(writer);
-
-        Printer.PrintAll(airportManager, airlineManager, flightManager);
 
         var result = writer.ToString();
         Assert.Contains("Airports:", result);

@@ -1,5 +1,4 @@
 ﻿using Airlines.Business.Models;
-using System.Runtime.Intrinsics.X86;
 
 namespace Airlines.Business.Managers;
 public class ReservationsManager

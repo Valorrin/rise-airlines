@@ -36,7 +36,6 @@ public class FlightManager
             Console.WriteLine($" {searchTerm} is Flight name.");
     }
 
-
     public string GetAircraftModel(string flightId)
     {
         var aircraftModel = Flights.Where(f => f.Id == flightId).Select(f => f.AircraftModel).FirstOrDefault();
