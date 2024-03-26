@@ -35,4 +35,11 @@ public class FlightManager
         if (BinarySearch(flightIds, searchTerm) >= 0)
             Console.WriteLine($" {searchTerm} is Flight name.");
     }
+
+
+    public string GetFlightModel(string id)
+    {
+        var flightId = Flights.Where(f => f.Id == id).Select(f => f.AircraftModel).FirstOrDefault();
+        return flightId ?? throw new Exception("Flight not found");
+    }
 }

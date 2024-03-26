@@ -1,4 +1,5 @@
 ﻿using Airlines.Business.Managers;
+using Airlines.Business.Models;
 
 namespace Airlines.Business.Utilities;
 public class CommandProcess
@@ -113,22 +114,41 @@ public class CommandProcess
                     routeManager.RemoveFlight();
                     Console.WriteLine("Last flight removed from the route.");
                 }
-            else if (commandAction == "print")
-                if (!routeManager.IsEmpty())
+            if (!routeManager.IsEmpty())
+            {
+                foreach (var flight in routeManager.Routes)
                 {
-                    Console.WriteLine("Route:");
-                    foreach (var flight in routeManager.Routes)
-                    {
-                        Console.WriteLine($"  Flight ID: {flight.Id}");
-                        Console.WriteLine($"  Departure Airport ID: {flight.DepartureAirport}");
-                        Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}");
-                        Console.WriteLine($"  Aircraft Model: {flight.AircraftModel}\n");
-                    }
+                    Console.WriteLine($"  Flight ID: {flight.Id}");
+                    Console.WriteLine($"  Departure Airport ID: {flight.DepartureAirport}");
+                    Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}");
+                    Console.WriteLine($"  Aircraft Model: {flight.AircraftModel}\n");
                 }
-                else
-                    Console.WriteLine(" Route is empty.");
+            }
+            else
+                Console.WriteLine(" Route is empty.");
         }
-        else
-            Console.WriteLine(" Inavalid command!");
+        else if (action == "reserve" && commandParts.Length >= 2)
+        {
+            var commandArguments = commandParts[1].Split().ToArray();
+            var commandAction = commandArguments[0];
+
+            if (commandAction == "cargo")
+            {
+                var flightId = commandArguments[1];
+                var cargoWeight = double.Parse(commandArguments[2]);
+                var cargoVolume = double.Parse(commandArguments[3]);
+
+                var cargoReservation = new CargoReservation
+                {
+                    FlightId = flightId,
+                    CargoWeight = cargoWeight,
+                    CargoVolume = cargoVolume
+                };
+
+                var aircraftModel = flightManager.GetFlightModel(flightId);
+            }
+            else
+                Console.WriteLine(" Inavalid command!");
+        }
     }
 }
