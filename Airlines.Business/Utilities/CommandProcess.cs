@@ -4,7 +4,8 @@ using Airlines.Business.Models;
 namespace Airlines.Business.Utilities;
 public class CommandProcess
 {
-    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, RouteManager routeManager)
+    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager,
+        RouteManager routeManager, AircraftManager aircraftManager, ReservationsManager reservationsManager)
     {
         var commandParts = command.Split(' ', 2).ToArray();
         var action = commandParts[0];
@@ -146,6 +147,12 @@ public class CommandProcess
                 };
 
                 var aircraftModel = flightManager.GetFlightModel(flightId);
+                var aircraft = aircraftManager.GetCargoAircraft(aircraftModel);
+
+                if (ReservationsManager.ValidateCargoReservation(cargoReservation, aircraft!))
+                {
+                    reservationsManager.Add(cargoReservation);
+                }
             }
             else
                 Console.WriteLine(" Inavalid command!");

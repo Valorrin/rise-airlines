@@ -13,8 +13,13 @@ public class ReservationsManager
         TicketReservations = [];
     }
 
-    public bool ValidateCargoReservation(CargoReservation reservation, CargoAircraft aircraft)
+    public static bool ValidateCargoReservation(CargoReservation reservation, CargoAircraft aircraft)
     {
+        if (reservation == null || aircraft == null)
+        {
+            Console.WriteLine("Reservation or aircraft is null");
+            return false;
+        }
         if (reservation.CargoWeight > aircraft.CargoWeight)
         {
             Console.WriteLine("cargo weight exceeds aircraft cargo capacity");
@@ -29,8 +34,13 @@ public class ReservationsManager
         Console.WriteLine("Cargo validataion aproved");
         return true;
     }
-    public bool ValidateTicketReservation(TicketReservation reservation, PassengerAircraft aircraft)
+    public static bool ValidateTicketReservation(TicketReservation reservation, PassengerAircraft aircraft)
     {
+        if (reservation == null || aircraft == null)
+        {
+            Console.WriteLine("Reservation or aircraft is null");
+            return false;
+        }
         if (reservation.Seats > aircraft.Seats)
         {
             Console.WriteLine("not enough seats");

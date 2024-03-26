@@ -54,4 +54,22 @@ public class AircraftManager
             Add(new PassengerAircraft(model, cargoWeightToDouble, cargoVolumeToDouble, seatsToInt));
         }
     }
+
+    public CargoAircraft? GetCargoAircraft(string model)
+    {
+        var cargoAircraft = CargoAircrafts.FirstOrDefault(a => a.Model == model);
+        return cargoAircraft ?? null;
+    }
+
+    public PassengerAircraft? GetPassengerAircraft(string model)
+    {
+        var passengerAircraft = PassengerAircrafts.FirstOrDefault(a => a.Model == model);
+        return passengerAircraft ?? null;
+    }
+
+    public PrivateAircraft? GetPrivateAircraft(string model)
+    {
+        var privateAircraft = PrivateAircrafts.FirstOrDefault(a => a.Model == model);
+        return privateAircraft ?? null;
+    }
 }
