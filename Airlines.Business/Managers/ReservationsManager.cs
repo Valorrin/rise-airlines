@@ -4,6 +4,12 @@ using System.Runtime.Intrinsics.X86;
 namespace Airlines.Business.Managers;
 public class ReservationsManager
 {
+    private const int _smallBaggageMaximumWeight = 15;
+    private const double _smallBaggageMaximumVolume = 0.045;
+
+    private const int _largeBaggageMaximumWeight = 30;
+    private const double _largeBaggageMaximumVolume = 0.090;
+
     public List<CargoReservation> CargoReservations { get; set; }
     public List<TicketReservation> TicketReservations { get; set; }
 
@@ -46,13 +52,13 @@ public class ReservationsManager
             Console.WriteLine("not enough seats");
             return false;
         }
-        if (((reservation.SmallBaggageCount * 15) + (reservation.LargeBaggageCount * 30)) > aircraft.CargoWeight)
+        if (((reservation.SmallBaggageCount * _smallBaggageMaximumWeight) + (reservation.LargeBaggageCount * _largeBaggageMaximumWeight)) > aircraft.CargoWeight)
         {
             Console.WriteLine("cargo weight exceeds aircraft cargo capacity");
             return false;
         }
 
-        if (((reservation.SmallBaggageCount * 0.045) + (reservation.LargeBaggageCount * 0.090)) > aircraft.CargoVolume)
+        if (((reservation.SmallBaggageCount * _smallBaggageMaximumVolume) + (reservation.LargeBaggageCount * _largeBaggageMaximumVolume)) > aircraft.CargoVolume)
         {
             Console.WriteLine("cargo volume exceeds aircraft cargo capacity");
             return false;
