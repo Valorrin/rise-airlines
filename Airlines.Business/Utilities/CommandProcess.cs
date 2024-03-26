@@ -132,10 +132,10 @@ public class CommandProcess
         {
             var commandArguments = commandParts[1].Split().ToArray();
             var commandAction = commandArguments[0];
+            var flightId = commandArguments[1];
 
             if (commandAction == "cargo")
             {
-                var flightId = commandArguments[1];
                 var cargoWeight = double.Parse(commandArguments[2]);
                 var cargoVolume = double.Parse(commandArguments[3]);
 
@@ -146,12 +146,34 @@ public class CommandProcess
                     CargoVolume = cargoVolume
                 };
 
-                var aircraftModel = flightManager.GetFlightModel(flightId);
+                var aircraftModel = flightManager.GetAircraftModel(flightId);
                 var aircraft = aircraftManager.GetCargoAircraft(aircraftModel);
 
                 if (ReservationsManager.ValidateCargoReservation(cargoReservation, aircraft!))
                 {
                     reservationsManager.Add(cargoReservation);
+                }
+            }
+            else if (commandAction == "ticket")
+            {
+                var seats = int.Parse(commandArguments[2]);
+                var smallBaggaeCount = int.Parse(commandArguments[3]);
+                var largeBaggaeCount = int.Parse(commandArguments[3]);
+
+                var ticketReservation = new TicketReservation
+                {
+                    FlightId = flightId,
+                    Seats = seats,
+                    SmallBaggageCount = smallBaggaeCount,
+                    LargeBaggageCount = largeBaggaeCount
+                };
+
+                var aircraftModel = flightManager.GetAircraftModel(flightId);
+                var aircraft = aircraftManager.GetPassengerAircraft(aircraftModel);
+
+                if (ReservationsManager.ValidateTicketReservation(ticketReservation, aircraft!))
+                {
+                    reservationsManager.Add(ticketReservation);
                 }
             }
             else

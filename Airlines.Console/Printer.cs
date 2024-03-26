@@ -27,6 +27,7 @@ public class Printer
         foreach (var flight in manager.Flights)
         {
             System.Console.WriteLine($" Flight ID: {flight.Id}");
+            System.Console.WriteLine($" Aircraft Model: {flight.AircraftModel}");
         }
     }
     public static void Print(AircraftManager manager)
