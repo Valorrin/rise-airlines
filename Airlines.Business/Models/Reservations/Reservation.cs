@@ -1,4 +1,4 @@
-﻿namespace Airlines.Business.Models;
+﻿namespace Airlines.Business.Models.Reservations;
 public abstract class Reservation
 {
     public string? FlightId { get; set; }

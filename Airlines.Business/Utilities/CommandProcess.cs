@@ -1,5 +1,5 @@
 ﻿using Airlines.Business.Managers;
-using Airlines.Business.Models;
+using Airlines.Business.Models.Reservations;
 
 namespace Airlines.Business.Utilities;
 public class CommandProcess
