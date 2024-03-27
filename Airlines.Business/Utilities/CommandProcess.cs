@@ -132,7 +132,6 @@ public class CommandProcess
                     }
                 }
             }
-
         }
         else if (action == "reserve" && commandParts.Length >= 2)
         {
