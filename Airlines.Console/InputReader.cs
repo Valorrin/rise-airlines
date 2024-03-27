@@ -37,7 +37,7 @@ public class InputReader
         }
 
         return data;
-    }
+    } // I use "using" here.
 
     public static string ReadCommands()
     {
