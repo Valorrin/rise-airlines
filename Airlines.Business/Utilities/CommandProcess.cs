@@ -1,7 +1,11 @@
-﻿namespace Airlines.Business;
+﻿using Airlines.Business.Managers;
+using Airlines.Business.Models;
+
+namespace Airlines.Business.Utilities;
 public class CommandProcess
 {
-    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, RouteManager routeManager)
+    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager,
+        RouteManager routeManager, AircraftManager aircraftManager, ReservationsManager reservationsManager)
     {
         var commandParts = command.Split(' ', 2).ToArray();
         var action = commandParts[0];
@@ -90,9 +94,7 @@ public class CommandProcess
             var commandAction = commandArguments[0];
 
             if (commandAction == "new")
-            {
                 routeManager.Routes.Clear();
-            }
             else if (commandAction == "add" && commandArguments.Length == 2)
             {
                 var flightId = commandArguments[1];
@@ -105,39 +107,66 @@ public class CommandProcess
                     Console.WriteLine($" Flight with ID '{flightId}' added to the route.");
                 }
                 else
-                {
                     Console.WriteLine($" Error: Flight does not exist.");
-                }
             }
             else if (commandAction == "remove")
-            {
                 if (!routeManager.IsEmpty())
                 {
                     routeManager.RemoveFlight();
                     Console.WriteLine("Last flight removed from the route.");
                 }
-            }
-            else if (commandAction == "print")
+            if (!routeManager.IsEmpty())
             {
-                if (!routeManager.IsEmpty())
+                foreach (var flight in routeManager.Routes)
                 {
-                    Console.WriteLine("Route:");
-                    foreach (var flight in routeManager.Routes)
-                    {
-                        Console.WriteLine($"  Flight ID: {flight.Id}");
-                        Console.WriteLine($"  Departure Airport ID: {flight.DepartureAirport}");
-                        Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}\n");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(" Route is empty.");
+                    Console.WriteLine($"  Flight ID: {flight.Id}");
+                    Console.WriteLine($"  Departure Airport ID: {flight.DepartureAirport}");
+                    Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}");
+                    Console.WriteLine($"  Aircraft Model: {flight.AircraftModel}\n");
                 }
             }
+            else
+                Console.WriteLine(" Route is empty.");
         }
-        else
+        else if (action == "reserve" && commandParts.Length >= 2)
         {
-            Console.WriteLine(" Inavalid command!");
+            var commandArguments = commandParts[1].Split().ToArray();
+            var commandAction = commandArguments[0];
+            var flightId = commandArguments[1];
+
+            if (commandAction == "cargo")
+            {
+                var cargoWeight = double.Parse(commandArguments[2]);
+                var cargoVolume = double.Parse(commandArguments[3]);
+
+                var cargoReservation = new CargoReservation(flightId, cargoWeight, cargoVolume);
+
+                var aircraftModel = flightManager.GetAircraftModel(flightId);
+                var aircraft = aircraftManager.GetCargoAircraft(aircraftModel);
+
+                if (ReservationsManager.ValidateCargoReservation(cargoReservation, aircraft!))
+                {
+                    reservationsManager.Add(cargoReservation);
+                }
+            }
+            else if (commandAction == "ticket")
+            {
+                var seats = int.Parse(commandArguments[2]);
+                var smallBaggaeCount = int.Parse(commandArguments[3]);
+                var largeBaggaeCount = int.Parse(commandArguments[3]);
+
+                var ticketReservation = new TicketReservation(flightId, seats, smallBaggaeCount, largeBaggaeCount);
+
+                var aircraftModel = flightManager.GetAircraftModel(flightId);
+                var aircraft = aircraftManager.GetPassengerAircraft(aircraftModel);
+
+                if (ReservationsManager.ValidateTicketReservation(ticketReservation, aircraft!))
+                {
+                    reservationsManager.Add(ticketReservation);
+                }
+            }
+            else
+                Console.WriteLine(" Inavalid command!");
         }
     }
 }

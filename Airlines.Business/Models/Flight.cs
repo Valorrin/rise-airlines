@@ -1,4 +1,4 @@
-﻿namespace Airlines.Business;
+﻿namespace Airlines.Business.Models;
 public class Flight
 {
     private string? _id;
@@ -11,9 +11,7 @@ public class Flight
         set
         {
             if (!IsValidFlightId(value))
-            {
                 throw new ArgumentException("Id cannot be null or empty.");
-            }
 
             _id = value;
         }
@@ -25,9 +23,7 @@ public class Flight
         set
         {
             if (!IsValidAirportId(value))
-            {
                 throw new ArgumentException("Id cannot be null or empty.");
-            }
 
             _departureAirport = value;
         }
@@ -39,33 +35,25 @@ public class Flight
         set
         {
             if (!IsValidAirportId(value))
-            {
                 throw new ArgumentException("Id cannot be null or empty.");
-            }
 
             _arrivalAirport = value;
         }
     }
 
+    public string? AircraftModel { get; set; }
+
     private static bool IsValidAirportId(string id)
     {
         if (string.IsNullOrEmpty(id))
-        {
             return false;
-        }
 
         if (id.Length is < 2 or > 4)
-        {
             return false;
-        }
 
         foreach (var c in id)
-        {
             if (!char.IsLetterOrDigit(c))
-            {
                 return false;
-            }
-        }
 
         return true;
     }
@@ -73,17 +61,11 @@ public class Flight
     private static bool IsValidFlightId(string id)
     {
         if (string.IsNullOrEmpty(id))
-        {
             return false;
-        }
 
         foreach (var c in id)
-        {
             if (!char.IsLetterOrDigit(c))
-            {
                 return false;
-            }
-        }
 
         return true;
     }

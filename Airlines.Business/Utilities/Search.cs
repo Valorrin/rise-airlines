@@ -1,15 +1,11 @@
-﻿namespace Airlines.Business;
+﻿namespace Airlines.Business.Utilities;
 public static class Search
 {
     public static int LinearSearch(List<string> data, string target)
     {
         for (var i = 0; i < data.Count; i++)
-        {
             if (data[i] == target)
-            {
                 return i;
-            }
-        }
         return -1;
     }
 

@@ -1,4 +1,6 @@
-﻿using Airlines.Business;
+﻿using Airlines.Business.Managers;
+using Airlines.Business.Models;
+using Airlines.Business.Utilities;
 
 namespace Airlines.Console.Tests;
 

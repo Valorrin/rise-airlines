@@ -1,4 +1,4 @@
-﻿using Airlines.Business;
+﻿using Airlines.Business.Utilities;
 
 namespace Airlines.UnitTests;
 public class StringHelperTests
