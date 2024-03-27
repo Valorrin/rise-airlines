@@ -17,4 +17,6 @@ public class CheckAirportExistenceCommand : ICommand
         var result = _airportManager.Exist(_airlineName);
         Console.WriteLine(result);
     }
+
+    public static CheckAirportExistenceCommand CreateCheckAirportExistenceCommand(AirportManager airportManager, string airlineName) => new(airportManager, airlineName);
 }

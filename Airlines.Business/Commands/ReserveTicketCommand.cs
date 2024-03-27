@@ -12,7 +12,7 @@ public class ReserveTicketCommand : ICommand
     private readonly int _smallBaggageCount;
     private readonly int _largeBaggageCount;
 
-    public ReserveTicketCommand(FlightManager flightManager, AircraftManager aircraftManager, ReservationsManager reservationsManager, string flightId, int seats, int smallBaggageCount, int largeBaggageCount)
+    private ReserveTicketCommand(FlightManager flightManager, AircraftManager aircraftManager, ReservationsManager reservationsManager, string flightId, int seats, int smallBaggageCount, int largeBaggageCount)
     {
         _flightManager = flightManager;
         _aircraftManager = aircraftManager;
@@ -35,4 +35,8 @@ public class ReserveTicketCommand : ICommand
             _reservationsManager.Add(ticketReservation);
         }
     }
+
+    public static ReserveTicketCommand CreateTicketCargoCommand(FlightManager flightManager, AircraftManager aircraftManager, ReservationsManager reservationsManager, string flightId, int seats, int smallBaggageCount, int largeBaggageCount)
+        => new(flightManager, aircraftManager, reservationsManager, flightId, seats, smallBaggageCount, largeBaggageCount);
+
 }

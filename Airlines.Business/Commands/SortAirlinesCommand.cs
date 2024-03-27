@@ -27,4 +27,7 @@ public class SortAirlinesCommand : ICommand
             Console.WriteLine(string.Join(", ", names));
         }
     }
+
+    public static SortAirlinesCommand CreateSortAirlinesCommand(AirlineManager airlineManager, string sortOrder) => new(airlineManager, sortOrder);
+
 }

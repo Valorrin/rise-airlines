@@ -26,4 +26,6 @@ public class SortAirportsCommand : ICommand
             Console.WriteLine(string.Join(", ", names));
         }
     }
+
+    public static SortAirportsCommand CreateSortAirportsCommand(AirportManager airportManager, string sortOrder) => new(airportManager, sortOrder);
 }
