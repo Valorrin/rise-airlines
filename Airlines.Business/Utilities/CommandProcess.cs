@@ -1,4 +1,5 @@
-﻿using Airlines.Business.Managers;
+﻿using Airlines.Business.Commands.SearchCommands;
+using Airlines.Business.Managers;
 using Airlines.Business.Models.Reservations;
 
 namespace Airlines.Business.Utilities;
@@ -15,11 +16,11 @@ public class CommandProcess
             var searchTerm = commandParts.ElementAtOrDefault(1);
             if (searchTerm != null)
             {
-                airportManager.Search(searchTerm);
-                airlineManager.Search(searchTerm);
-                flightManager.Search(searchTerm);
-                return;
+                var searchCommand = SearchCommand.CreateSearchCommand(airportManager, airlineManager, flightManager, searchTerm);
+
+                searchCommand.Execute();
             }
+
         }
         else if (action == "sort" && commandParts.Length >= 2)
         {

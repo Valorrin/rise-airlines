@@ -1,7 +1,7 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
 
-namespace Airlines.Console.Tests;
+namespace Airlines.UnitTests.ManagerTests;
 
 public class FlightManagerTests
 {

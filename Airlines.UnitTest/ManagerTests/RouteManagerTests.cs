@@ -1,7 +1,7 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
 
-namespace Airlines.UnitTests;
+namespace Airlines.UnitTests.ManagerTests;
 public class RouteManagerTests
 {
     [Fact]

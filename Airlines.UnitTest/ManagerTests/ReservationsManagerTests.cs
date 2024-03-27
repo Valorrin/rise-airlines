@@ -2,7 +2,7 @@
 using Airlines.Business.Models.Aircrafts;
 using Airlines.Business.Models.Reservations;
 
-namespace Airlines.Tests.Business.Managers;
+namespace Airlines.UnitTests.ManagerTests;
 
 public class ReservationsManagerTests
 {
