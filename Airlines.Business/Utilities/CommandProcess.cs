@@ -115,18 +115,24 @@ public class CommandProcess
                     routeManager.RemoveFlight();
                     Console.WriteLine("Last flight removed from the route.");
                 }
-            if (!routeManager.IsEmpty())
+            if (commandAction == "print")
             {
-                foreach (var flight in routeManager.Routes)
+                if (routeManager.Routes == null)
                 {
-                    Console.WriteLine($"  Flight ID: {flight.Id}");
-                    Console.WriteLine($"  Departure Airport ID: {flight.DepartureAirport}");
-                    Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}");
-                    Console.WriteLine($"  Aircraft Model: {flight.AircraftModel}\n");
+                    Console.WriteLine(" Route is empty.");
+                }
+                else
+                {
+                    foreach (var flight in routeManager.Routes)
+                    {
+                        Console.WriteLine($"  Flight ID: {flight.Id}");
+                        Console.WriteLine($"  Departure Airport ID: {flight.DepartureAirport}");
+                        Console.WriteLine($"  Arrival Airport ID: {flight.ArrivalAirport}");
+                        Console.WriteLine($"  Aircraft Model: {flight.AircraftModel}\n");
+                    }
                 }
             }
-            else
-                Console.WriteLine(" Route is empty.");
+
         }
         else if (action == "reserve" && commandParts.Length >= 2)
         {
@@ -165,8 +171,10 @@ public class CommandProcess
                     reservationsManager.Add(ticketReservation);
                 }
             }
-            else
-                Console.WriteLine(" Inavalid command!");
+        }
+        else
+        {
+            Console.WriteLine(" Inavalid command!");
         }
     }
 }

@@ -1,0 +1,30 @@
+﻿using Airlines.Business.Managers;
+using Airlines.Business.Utilities;
+
+namespace Airlines.Business.Commands;
+
+public class SortAirlinesCommand : ICommand
+{
+    private readonly AirlineManager _airlineManager;
+    private readonly string _sortOrder;
+
+    public SortAirlinesCommand(AirlineManager airlineManager, string sortOrder)
+    {
+        _airlineManager = airlineManager;
+        _sortOrder = sortOrder;
+    }
+
+    public void Execute()
+    {
+        if (_sortOrder == "descending")
+        {
+            var names = _airlineManager.SortDescByName();
+            Console.WriteLine(string.Join(", ", names));
+        }
+        else
+        {
+            var names = _airlineManager.SortByName();
+            Console.WriteLine(string.Join(", ", names));
+        }
+    }
+}
