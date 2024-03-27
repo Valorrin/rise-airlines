@@ -1,6 +1,6 @@
 ﻿using Airlines.Business.Managers;
 
-namespace Airlines.Business.Commands;
+namespace Airlines.Business.Commands.SearchCommands;
 public class SearchCommand : ICommand
 {
     private readonly AirportManager _airportManager;

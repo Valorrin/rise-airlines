@@ -1,4 +1,6 @@
-﻿namespace Airlines.Business.Models;
+﻿using Airlines.Business.Models.Aircrafts;
+
+namespace Airlines.Business.Models;
 public class PrivateAircraft : Aircraft
 {
     public int Seats { get; set; }

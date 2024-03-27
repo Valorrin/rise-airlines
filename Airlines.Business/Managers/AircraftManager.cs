@@ -1,4 +1,4 @@
-﻿using Airlines.Business.Models;
+﻿using Airlines.Business.Models.Aircrafts;
 
 namespace Airlines.Business.Managers;
 public class AircraftManager

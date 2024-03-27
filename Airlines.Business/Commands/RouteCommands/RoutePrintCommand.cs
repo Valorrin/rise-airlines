@@ -1,6 +1,6 @@
 ﻿using Airlines.Business.Managers;
 
-namespace Airlines.Business.Commands;
+namespace Airlines.Business.Commands.RouteCommands;
 public class PrintRouteCommand : ICommand
 {
     private readonly RouteManager _routeManager;
@@ -10,11 +10,8 @@ public class PrintRouteCommand : ICommand
     public void Execute()
     {
         if (_routeManager.Routes == null)
-        {
             Console.WriteLine("Route is empty.");
-        }
         else
-        {
             foreach (var flight in _routeManager.Routes)
             {
                 Console.WriteLine($"Flight ID: {flight.Id}");
@@ -22,7 +19,6 @@ public class PrintRouteCommand : ICommand
                 Console.WriteLine($"Arrival Airport ID: {flight.ArrivalAirport}");
                 Console.WriteLine($"Aircraft Model: {flight.AircraftModel}\n");
             }
-        }
     }
 
     public static PrintRouteCommand CreatePrintRouteCommand(RouteManager routeManager) => new(routeManager);

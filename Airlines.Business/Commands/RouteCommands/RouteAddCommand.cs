@@ -1,6 +1,6 @@
 ﻿using Airlines.Business.Managers;
 
-namespace Airlines.Business.Commands;
+namespace Airlines.Business.Commands.RouteCommands;
 public class RouteAddCommand : ICommand
 {
     private readonly RouteManager _routeManager;
@@ -24,9 +24,7 @@ public class RouteAddCommand : ICommand
             Console.WriteLine($"Flight with ID '{_flightId}' added to the route.");
         }
         else
-        {
             Console.WriteLine($"Error: Flight '{_flightId}' does not exist or cannot be added.");
-        }
     }
 
     public static RouteAddCommand CreateRouteAddCommand(RouteManager routeManager, FlightManager flightManager, string flightId) => new(routeManager, flightManager, flightId);

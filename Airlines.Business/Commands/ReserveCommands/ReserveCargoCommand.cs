@@ -1,7 +1,7 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
 
-namespace Airlines.Business.Commands;
+namespace Airlines.Business.Commands.ReserveCommands;
 public class ReserveCargoCommand : ICommand
 {
     private readonly FlightManager _flightManager;
@@ -11,7 +11,7 @@ public class ReserveCargoCommand : ICommand
     private readonly double _cargoWeight;
     private readonly double _cargoVolume;
 
-    public ReserveCargoCommand(FlightManager flightManager, AircraftManager aircraftManager, ReservationsManager reservationsManager, string flightId, double cargoWeight, double cargoVolume)
+    private ReserveCargoCommand(FlightManager flightManager, AircraftManager aircraftManager, ReservationsManager reservationsManager, string flightId, double cargoWeight, double cargoVolume)
     {
         _flightManager = flightManager;
         _aircraftManager = aircraftManager;
@@ -29,9 +29,7 @@ public class ReserveCargoCommand : ICommand
         var aircraft = _aircraftManager.GetCargoAircraft(aircraftModel);
 
         if (ReservationsManager.ValidateCargoReservation(cargoReservation, aircraft!))
-        {
             _reservationsManager.Add(cargoReservation);
-        }
     }
 
     public static ReserveCargoCommand CreateReserveCargoCommand(FlightManager flightManager, AircraftManager aircraftManager, ReservationsManager reservationsManager, string flightId, double cargoWeight, double cargoVolume) => new(flightManager, aircraftManager, reservationsManager, flightId, cargoWeight, cargoVolume);

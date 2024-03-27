@@ -1,7 +1,7 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
 
-namespace Airlines.Business.Commands;
+namespace Airlines.Business.Commands.ReserveCommands;
 public class ReserveTicketCommand : ICommand
 {
     private readonly FlightManager _flightManager;
@@ -31,9 +31,7 @@ public class ReserveTicketCommand : ICommand
         var aircraft = _aircraftManager.GetPassengerAircraft(aircraftModel);
 
         if (ReservationsManager.ValidateTicketReservation(ticketReservation, aircraft!))
-        {
             _reservationsManager.Add(ticketReservation);
-        }
     }
 
     public static ReserveTicketCommand CreateTicketCargoCommand(FlightManager flightManager, AircraftManager aircraftManager, ReservationsManager reservationsManager, string flightId, int seats, int smallBaggageCount, int largeBaggageCount)

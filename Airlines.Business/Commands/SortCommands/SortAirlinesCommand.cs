@@ -1,7 +1,7 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Utilities;
 
-namespace Airlines.Business.Commands;
+namespace Airlines.Business.Commands.SortCommands;
 
 public class SortAirlinesCommand : ICommand
 {
@@ -29,5 +29,4 @@ public class SortAirlinesCommand : ICommand
     }
 
     public static SortAirlinesCommand CreateSortAirlinesCommand(AirlineManager airlineManager, string sortOrder) => new(airlineManager, sortOrder);
-
 }

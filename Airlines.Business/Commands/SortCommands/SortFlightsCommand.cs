@@ -1,7 +1,7 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Utilities;
 
-namespace Airlines.Business.Commands;
+namespace Airlines.Business.Commands.SortCommands;
 public class SortFlightsCommand : ICommand
 {
     private readonly FlightManager _flightManager;

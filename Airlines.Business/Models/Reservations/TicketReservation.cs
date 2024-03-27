@@ -1,4 +1,4 @@
-﻿namespace Airlines.Business.Models;
+﻿namespace Airlines.Business.Models.Reservations;
 public class TicketReservation : Reservation
 {
     public int Seats { get; set; }
