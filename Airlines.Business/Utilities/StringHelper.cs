@@ -1,4 +1,4 @@
-﻿namespace Airlines.Business;
+﻿namespace Airlines.Business.Utilities;
 public class StringHelper
 {
     public static string[] SplitBeforeLastElement(string input)

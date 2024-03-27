@@ -1,4 +1,5 @@
-﻿using Airlines.Business;
+﻿using Airlines.Business.Managers;
+using Airlines.Business.Models;
 using Airlines.Console;
 
 namespace Airlines.UnitTests;
@@ -62,6 +63,34 @@ public class PrinterTests
     }
 
     [Fact]
+    public void Print_PrintsAircrafts()
+    {
+        var manager = new AircraftManager();
+        manager.CargoAircrafts.Add(new CargoAircraft("Cargo1", 1000, 2000));
+        manager.CargoAircrafts.Add(new CargoAircraft("Cargo2", 1500, 2500));
+
+        manager.PassengerAircrafts.Add(new PassengerAircraft("Passenger1", 500, 1000, 200));
+        manager.PassengerAircrafts.Add(new PassengerAircraft("Passenger2", 600, 1200, 250));
+
+        manager.PrivateAircrafts.Add(new PrivateAircraft("Private1", 4));
+        manager.PrivateAircrafts.Add(new PrivateAircraft("Private2", 6));
+
+        var writer = new StringWriter();
+        System.Console.SetOut(writer);
+
+        Printer.Print(manager);
+
+        var result = writer.ToString();
+        Assert.Contains("Aircrafts:", result);
+        Assert.Contains(" Cargo Aircraft: Cargo1", result);
+        Assert.Contains(" Cargo Aircraft: Cargo2", result);
+        Assert.Contains(" Passenger Aircraft: Passenger1", result);
+        Assert.Contains(" Passenger Aircraft: Passenger2", result);
+        Assert.Contains(" Private Aircraft: Private1", result);
+        Assert.Contains(" Private Aircraft: Private2", result);
+    }
+
+    [Fact]
     public void PrintAll_PrintsAllManagers()
     {
         var airportManager = new AirportManager();
@@ -76,10 +105,20 @@ public class PrinterTests
         flightManager.Flights.Add(new Flight { Id = "Air1" });
         flightManager.Flights.Add(new Flight { Id = "Air2" });
 
+        var aircraftManager = new AircraftManager();
+        aircraftManager.CargoAircrafts.Add(new CargoAircraft("Cargo1", 1000, 2000));
+        aircraftManager.CargoAircrafts.Add(new CargoAircraft("Cargo2", 1500, 2500));
+
+        aircraftManager.PassengerAircrafts.Add(new PassengerAircraft("Passenger1", 500, 1000, 200));
+        aircraftManager.PassengerAircrafts.Add(new PassengerAircraft("Passenger2", 600, 1200, 250));
+
+        aircraftManager.PrivateAircrafts.Add(new PrivateAircraft("Private1", 4));
+        aircraftManager.PrivateAircrafts.Add(new PrivateAircraft("Private2", 6));
+
         var writer = new StringWriter();
         System.Console.SetOut(writer);
 
-        Printer.PrintAll(airportManager, airlineManager, flightManager);
+        Printer.PrintAll(airportManager, airlineManager, flightManager, aircraftManager);
 
         var result = writer.ToString();
         Assert.Contains("Airports:", result);
@@ -95,5 +134,12 @@ public class PrinterTests
         Assert.Contains("Flights:", result);
         Assert.Contains(" Flight ID: Air1", result);
         Assert.Contains(" Flight ID: Air2", result);
+        Assert.Contains("Aircrafts:", result);
+        Assert.Contains(" Cargo Aircraft: Cargo1", result);
+        Assert.Contains(" Cargo Aircraft: Cargo2", result);
+        Assert.Contains(" Passenger Aircraft: Passenger1", result);
+        Assert.Contains(" Passenger Aircraft: Passenger2", result);
+        Assert.Contains(" Private Aircraft: Private1", result);
+        Assert.Contains(" Private Aircraft: Private2", result);
     }
 }

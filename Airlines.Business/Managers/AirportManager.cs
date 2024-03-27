@@ -1,6 +1,7 @@
-﻿using static Airlines.Business.Search;
+﻿using Airlines.Business.Models;
+using static Airlines.Business.Utilities.Search;
 
-namespace Airlines.Business;
+namespace Airlines.Business.Managers;
 public class AirportManager
 {
     public Dictionary<string, Airport> Airports { get; private set; }
@@ -56,25 +57,19 @@ public class AirportManager
             newAirport.Country = airportParts[3];
 
             if (IsIdUnique(newAirport.Id))
-            {
                 Add(newAirport);
-            }
         }
     }
 
     public void Search(string searchTerm)
     {
         if (string.IsNullOrEmpty(searchTerm))
-        {
             Console.WriteLine(" Error: search term cannot be null or empty!");
-        }
 
         var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList(); ;
 
         if (BinarySearch(airportNames, searchTerm) >= 0)
-        {
             Console.WriteLine($" {searchTerm} is Airport name.");
-        }
     }
 
     public bool Exist(string name) => AirportNames.Contains(name);
@@ -86,18 +81,14 @@ public class AirportManager
             var names = AirportsByCity[name];
 
             foreach (var airport in names)
-            {
                 Console.WriteLine(airport.Name);
-            }
         }
         else if (airportsFrom == "Country")
         {
             var names = AirportsByCountry[name];
 
             foreach (var airport in names)
-            {
                 Console.WriteLine(airport.Name);
-            }
         }
     }
 }
