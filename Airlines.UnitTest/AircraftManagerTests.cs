@@ -38,9 +38,9 @@ public class AircraftManagerTests
         var manager = new AircraftManager();
         var aircraftData = new List<string> { "Cargo1, 1000, 2000, -", "Passenger1, 500, 1000, 200", "Private1, -, -, 4" };
         manager.Add(aircraftData);
-        Assert.Single(manager.CargoAircrafts);
-        Assert.Single(manager.PassengerAircrafts);
-        Assert.Single(manager.PrivateAircrafts);
+        _ = Assert.Single(manager.CargoAircrafts);
+        _ = Assert.Single(manager.PassengerAircrafts);
+        _ = Assert.Single(manager.PrivateAircrafts);
     }
 
     [Fact]

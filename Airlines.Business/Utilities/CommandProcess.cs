@@ -139,12 +139,7 @@ public class CommandProcess
                 var cargoWeight = double.Parse(commandArguments[2]);
                 var cargoVolume = double.Parse(commandArguments[3]);
 
-                var cargoReservation = new CargoReservation
-                {
-                    FlightId = flightId,
-                    CargoWeight = cargoWeight,
-                    CargoVolume = cargoVolume
-                };
+                var cargoReservation = new CargoReservation(flightId, cargoWeight, cargoVolume);
 
                 var aircraftModel = flightManager.GetAircraftModel(flightId);
                 var aircraft = aircraftManager.GetCargoAircraft(aircraftModel);
@@ -160,13 +155,7 @@ public class CommandProcess
                 var smallBaggaeCount = int.Parse(commandArguments[3]);
                 var largeBaggaeCount = int.Parse(commandArguments[3]);
 
-                var ticketReservation = new TicketReservation
-                {
-                    FlightId = flightId,
-                    Seats = seats,
-                    SmallBaggageCount = smallBaggaeCount,
-                    LargeBaggageCount = largeBaggaeCount
-                };
+                var ticketReservation = new TicketReservation(flightId, seats, smallBaggaeCount, largeBaggaeCount);
 
                 var aircraftModel = flightManager.GetAircraftModel(flightId);
                 var aircraft = aircraftManager.GetPassengerAircraft(aircraftModel);
