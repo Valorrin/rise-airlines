@@ -1,9 +1,9 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
 using Airlines.Business.Models.Aircrafts;
-using Airlines.Console;
+using Airlines.Console.Utilities;
 
-namespace Airlines.UnitTests;
+namespace Airlines.UnitTests.UtilityTests;
 public class PrinterTests
 {
     [Fact]

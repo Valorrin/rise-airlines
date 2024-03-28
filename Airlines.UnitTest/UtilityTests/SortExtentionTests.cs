@@ -2,7 +2,7 @@
 using Airlines.Business.Models;
 using Airlines.Business.Utilities;
 
-namespace Airlines.Console.Tests;
+namespace Airlines.UnitTests.UtilityTests;
 
 public class SortExtensionsTests
 {

@@ -1,6 +1,6 @@
-﻿using static Airlines.Console.InputReader;
+﻿using static Airlines.Console.Utilities.InputReader;
 
-namespace Airlines.UnitTests;
+namespace Airlines.UnitTests.UtilityTests;
 public class InputReaderTests
 {
     [Fact]
@@ -37,7 +37,7 @@ public class InputReaderTests
         var inputStream = new StringReader(expectedInput);
         System.Console.SetIn(inputStream);
 
-        var actualInput = ReadCommands();
+        var actualInput = ReadCommandInput();
 
         Assert.Equal(expectedInput, actualInput);
     }

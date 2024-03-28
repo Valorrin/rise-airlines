@@ -1,6 +1,6 @@
 ﻿using Airlines.Business.Managers;
 
-namespace Airlines.Console;
+namespace Airlines.Console.Utilities;
 public class Printer
 {
     public static void Print(AirportManager manager)
@@ -17,9 +17,7 @@ public class Printer
     {
         System.Console.Write($"Airlines:\n");
         foreach (var airline in manager.Airlines.Values)
-        {
             System.Console.WriteLine($" Airline name: {airline.Name}\n");
-        }
     }
     public static void Print(FlightManager manager)
     {
@@ -34,17 +32,11 @@ public class Printer
     {
         System.Console.Write($"\nAircrafts: \n");
         foreach (var aircraft in manager.CargoAircrafts)
-        {
             System.Console.WriteLine($" Cargo Aircraft: {aircraft.Model}");
-        }
         foreach (var aircraft in manager.PassengerAircrafts)
-        {
             System.Console.WriteLine($" Passenger Aircraft: {aircraft.Model}");
-        }
         foreach (var aircraft in manager.PrivateAircrafts)
-        {
             System.Console.WriteLine($" Private Aircraft: {aircraft.Model}");
-        }
     }
     public static void PrintAll(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, AircraftManager aircraftManager)
     {

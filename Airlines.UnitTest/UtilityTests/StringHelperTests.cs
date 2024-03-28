@@ -1,6 +1,6 @@
 ﻿using Airlines.Business.Utilities;
 
-namespace Airlines.UnitTests;
+namespace Airlines.UnitTests.UtilityTests;
 public class StringHelperTests
 {
     [Fact]

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Airlines.Console;
+namespace Airlines.Console.Utilities;
 public class FilePathHelper
 {
     public static string GetFilePath(string fileName)

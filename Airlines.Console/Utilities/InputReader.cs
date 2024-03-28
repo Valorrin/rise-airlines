@@ -1,4 +1,4 @@
-﻿namespace Airlines.Console;
+﻿namespace Airlines.Console.Utilities;
 public class InputReader
 {
     public static string ReadFromConsole()
@@ -24,17 +24,13 @@ public class InputReader
         var data = new List<string>();
 
         using (var reader = new StreamReader(filePath))
-        {
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
 
                 if (line != null)
-                {
                     data.Add(line);
-                }
             }
-        }
 
         return data;
     }
