@@ -7,16 +7,7 @@ public class RouteRemoveCommand : ICommand
 
     private RouteRemoveCommand(RouteManager routeManager) => _routeManager = routeManager;
 
-    public void Execute()
-    {
-        if (!_routeManager.IsEmpty())
-        {
-            _routeManager.RemoveFlight();
-            Console.WriteLine("Last flight removed from the route.");
-        }
-        else
-            Console.WriteLine("Route is already empty.");
-    }
+    public void Execute() => _routeManager.RemoveFlight();
 
     public static RouteRemoveCommand CreateRouteRemoveCommand(RouteManager routeManager) => new(routeManager);
 

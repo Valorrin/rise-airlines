@@ -1,32 +1,21 @@
 ﻿using Airlines.Business.Managers;
+using Airlines.Business.Models;
 
 namespace Airlines.Business.Commands.RouteCommands;
 public class RouteAddCommand : ICommand
 {
     private readonly RouteManager _routeManager;
-    private readonly FlightManager _flightManager;
-    private readonly string _flightId;
+    private readonly Flight _flight;
 
-    private RouteAddCommand(RouteManager routeManager, FlightManager flightManager, string flightId)
+
+    private RouteAddCommand(RouteManager routeManager, Flight flight)
     {
         _routeManager = routeManager;
-        _flightManager = flightManager;
-        _flightId = flightId;
+        _flight = flight;
     }
 
-    public void Execute()
-    {
-        var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == _flightId);
+    public void Execute() => _routeManager.AddFlight(_flight);
 
-        if (flightToAdd != null && _routeManager.Validate(flightToAdd))
-        {
-            _routeManager.AddFlight(flightToAdd);
-            Console.WriteLine($"Flight with ID '{_flightId}' added to the route.");
-        }
-        else
-            Console.WriteLine($"Error: Flight '{_flightId}' does not exist or cannot be added.");
-    }
-
-    public static RouteAddCommand CreateRouteAddCommand(RouteManager routeManager, FlightManager flightManager, string flightId) => new(routeManager, flightManager, flightId);
+    public static RouteAddCommand CreateRouteAddCommand(RouteManager routeManager, Flight flight) => new(routeManager, flight);
 
 }
