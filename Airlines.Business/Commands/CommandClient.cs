@@ -5,11 +5,15 @@ using Airlines.Business.Commands.SearchCommands;
 using Airlines.Business.Commands.SortCommands;
 using Airlines.Business.Managers;
 using Airlines.Business.Models.Reservations;
+using Airlines.Business.Utilities;
 
-namespace Airlines.Business.Utilities;
-public class CommandProcess
+namespace Airlines.Business.Commands;
+public class CommandClient
 {
-    public static void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager,
+    private readonly CommandInvoker _invoker;
+    public CommandClient(CommandInvoker invoker) => _invoker = invoker;
+
+    public void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager,
         RouteManager routeManager, AircraftManager aircraftManager, ReservationsManager reservationsManager)
     {
         var commandParts = command.Split(' ', 2).ToArray();
@@ -32,12 +36,11 @@ public class CommandProcess
             var sortOrder = commandParts.ElementAtOrDefault(1);
 
             if (sortOrder != null)
-            {
                 switch (target)
                 {
                     case "airports":
                         var sortAirportsCommand = SortAirportsCommand.CreateSortAirportsCommand(airportManager, sortOrder);
-                        sortAirportsCommand.Execute();
+                        _invoker.ExecuteCommand(sortAirportsCommand);
                         break;
 
                     case "airlines":
@@ -54,7 +57,6 @@ public class CommandProcess
                         Console.WriteLine(" Invalid command!");
                         break;
                 }
-            }
         }
         else if (action == "exist" && commandParts.Length >= 2)
         {
@@ -105,7 +107,6 @@ public class CommandProcess
                     Console.WriteLine($" Error: Flight does not exist.");
             }
             else if (commandAction == "remove")
-            {
                 if (!routeManager.IsEmpty())
                 {
                     var routeRemoveCommand = RouteRemoveCommand.CreateRouteRemoveCommand(routeManager);
@@ -113,7 +114,6 @@ public class CommandProcess
 
                     Console.WriteLine("Last flight removed from the route.");
                 }
-            }
             if (commandAction == "print")
             {
                 var routePrintCommand = RoutePrintCommand.CreateRoutePrintCommand(routeManager);
@@ -125,9 +125,7 @@ public class CommandProcess
             var commandArguments = commandParts[1].Split().ToArray();
 
             if (commandArguments.Length < 4)
-            {
                 throw new Exception();
-            }
 
             var commandAction = commandArguments[0];
             var flightId = commandArguments[1];
@@ -167,8 +165,6 @@ public class CommandProcess
             }
         }
         else
-        {
             Console.WriteLine(" Inavalid command!");
-        }
     }
 }
