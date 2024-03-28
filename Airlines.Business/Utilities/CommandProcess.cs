@@ -15,10 +15,10 @@ public class CommandProcess
         if (action == "search")
         {
             var searchTerm = commandParts.ElementAtOrDefault(1);
+
             if (searchTerm != null)
             {
                 var searchCommand = SearchCommand.CreateSearchCommand(airportManager, airlineManager, flightManager, searchTerm);
-
                 searchCommand.Execute();
             }
         }
@@ -55,11 +55,13 @@ public class CommandProcess
         }
         else if (action == "exist" && commandParts.Length >= 2)
         {
-            var airlineName = commandParts[1];
+            var airlineName = commandParts.ElementAtOrDefault(1);
 
-            var result = airportManager.Exist(airlineName);
-
-            Console.WriteLine(result);
+            if (airlineName != null)
+            {
+                var existCommand = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(airportManager, airlineName);
+                existCommand.Execute();
+            }
         }
         else if (action == "list" && commandParts.Length >= 2)
         {
