@@ -10,7 +10,7 @@ public class Flight
         get => _id!;
         set
         {
-            if (!IsValidFlightId(value))
+            if (IsValidFlightId(value))
                 _id = value;
         }
     }
@@ -20,7 +20,7 @@ public class Flight
         get => _departureAirport!;
         set
         {
-            if (!IsValidAirportId(value))
+            if (IsValidAirportId(value))
                 _departureAirport = value;
         }
     }
@@ -30,7 +30,7 @@ public class Flight
         get => _arrivalAirport!;
         set
         {
-            if (!IsValidAirportId(value))
+            if (IsValidAirportId(value))
                 _arrivalAirport = value;
         }
     }

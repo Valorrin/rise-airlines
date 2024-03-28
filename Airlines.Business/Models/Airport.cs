@@ -12,7 +12,7 @@ public class Airport
         get => _id!;
         set
         {
-            if (!IsValidId(value))
+            if (IsValidId(value))
                 _id = value;
         }
     }
@@ -21,7 +21,7 @@ public class Airport
         get => _name!;
         set
         {
-            if (!IsValidString(value))
+            if (IsValidString(value))
                 _name = value;
         }
     }
@@ -31,7 +31,7 @@ public class Airport
         get => _city!;
         set
         {
-            if (!IsValidString(value))
+            if (IsValidString(value))
                 _city = value;
         }
     }
@@ -41,7 +41,7 @@ public class Airport
         get => _country!;
         set
         {
-            if (!IsValidString(value))
+            if (IsValidString(value))
                 _country = value;
         }
     }

@@ -1,4 +1,6 @@
 ﻿using Airlines.Business.Models;
+using System.Diagnostics.Metrics;
+using System.Xml.Linq;
 using static Airlines.Business.Utilities.Search;
 
 namespace Airlines.Business.Managers;
@@ -45,19 +47,21 @@ public class AirportManager
         Airports.Add(airport.Id, airport);
     }
 
-    public void Add(List<string> airportData)
+    public void Add(IList<string> airportData)
     {
         foreach (var airport in airportData)
         {
-            var newAirport = new Airport();
             var airportParts = airport.Split(", ");
-            newAirport.Id = airportParts[0];
-            newAirport.Name = airportParts[1];
-            newAirport.City = airportParts[2];
-            newAirport.Country = airportParts[3];
 
-            if (IsIdUnique(newAirport.Id))
-                Add(newAirport);
+            var newAirport = new Airport
+            {
+                Id = airportParts[0],
+                Name = airportParts[1],
+                City = airportParts[2],
+                Country = airportParts[3]
+            };
+
+            Add(newAirport);
         }
     }
 

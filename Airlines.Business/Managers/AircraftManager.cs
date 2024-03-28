@@ -17,7 +17,7 @@ public class AircraftManager
     public void Add(CargoAircraft cargoAircraft) => CargoAircrafts.Add(cargoAircraft);
     public void Add(PassengerAircraft passengerAircraft) => PassengerAircrafts.Add(passengerAircraft);
     public void Add(PrivateAircraft privateAircraft) => PrivateAircrafts.Add(privateAircraft);
-    public void Add(List<string> aircraftData)
+    public void Add(IList<string> aircraftData)
     {
         foreach (var aircraft in aircraftData)
         {

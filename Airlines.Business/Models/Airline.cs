@@ -9,7 +9,7 @@ public class Airline
         get => _id!;
         set
         {
-            if (!IsValidId(value))
+            if (IsValidId(value))
                 _id = value;
         }
     }
@@ -18,7 +18,7 @@ public class Airline
         get => _name!;
         set
         {
-            if (!IsValidName(value))
+            if (IsValidName(value))
                 _name = value;
         }
     }
