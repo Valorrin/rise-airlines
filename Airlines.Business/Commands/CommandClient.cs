@@ -11,10 +11,31 @@ namespace Airlines.Business.Commands;
 public class CommandClient
 {
     private readonly CommandInvoker _invoker;
-    public CommandClient(CommandInvoker invoker) => _invoker = invoker;
+    private readonly AirportManager _airportManager;
+    private readonly AirlineManager _airlineManager;
+    private readonly FlightManager _flightManager;
+    private readonly RouteManager _routeManager;
+    private readonly AircraftManager _aircraftManager;
+    private readonly ReservationsManager _reservationsManager;
 
-    public void ExecuteCommand(string command, AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager,
-        RouteManager routeManager, AircraftManager aircraftManager, ReservationsManager reservationsManager)
+    public CommandClient(CommandInvoker invoker,
+                             AirportManager airportManager,
+                             AirlineManager airlineManager,
+                             FlightManager flightManager,
+                             RouteManager routeManager,
+                             AircraftManager aircraftManager,
+                             ReservationsManager reservationsManager)
+    {
+        _invoker = invoker;
+        _airportManager = airportManager;
+        _airlineManager = airlineManager;
+        _flightManager = flightManager;
+        _routeManager = routeManager;
+        _aircraftManager = aircraftManager;
+        _reservationsManager = reservationsManager;
+    }
+
+    public void ProcessCommand(string command)
     {
         var commandParts = command.Split(' ', 2).ToArray();
         var action = commandParts[0];
@@ -25,8 +46,8 @@ public class CommandClient
 
             if (searchTerm != null)
             {
-                var searchCommand = SearchCommand.CreateSearchCommand(airportManager, airlineManager, flightManager, searchTerm);
-                searchCommand.Execute();
+                var searchCommand = SearchCommand.CreateSearchCommand(_airportManager, _airlineManager, _flightManager, searchTerm);
+                _invoker.ExecuteCommand(searchCommand);
             }
         }
         else if (action == "sort" && commandParts.Length >= 2)
@@ -39,18 +60,18 @@ public class CommandClient
                 switch (target)
                 {
                     case "airports":
-                        var sortAirportsCommand = SortAirportsCommand.CreateSortAirportsCommand(airportManager, sortOrder);
+                        var sortAirportsCommand = SortAirportsCommand.CreateSortAirportsCommand(_airportManager, sortOrder);
                         _invoker.ExecuteCommand(sortAirportsCommand);
                         break;
 
                     case "airlines":
-                        var sortAirlinesCommand = SortAirlinesCommand.CreateSortAirlinesCommand(airlineManager, sortOrder);
-                        sortAirlinesCommand.Execute();
+                        var sortAirlinesCommand = SortAirlinesCommand.CreateSortAirlinesCommand(_airlineManager, sortOrder);
+                        _invoker.ExecuteCommand(sortAirlinesCommand);
                         break;
 
                     case "flights":
-                        var sortFlightsCommand = SortFlightsCommand.CreateSortFlightsCommand(flightManager, sortOrder);
-                        sortFlightsCommand.Execute();
+                        var sortFlightsCommand = SortFlightsCommand.CreateSortFlightsCommand(_flightManager, sortOrder);
+                        _invoker.ExecuteCommand(sortFlightsCommand);
                         break;
 
                     default:
@@ -64,8 +85,8 @@ public class CommandClient
 
             if (airlineName != null)
             {
-                var existCommand = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(airportManager, airlineName);
-                existCommand.Execute();
+                var existCommand = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(_airportManager, airlineName);
+                _invoker.ExecuteCommand(existCommand);
             }
         }
         else if (action == "list" && commandParts.Length >= 2)
@@ -76,8 +97,8 @@ public class CommandClient
 
             if (inputData != null && from != null)
             {
-                var listCommand = ListDataCommand.CreateListDataCommand(airportManager, inputData, from);
-                listCommand.Execute();
+                var listCommand = ListDataCommand.CreateListDataCommand(_airportManager, inputData, from);
+                _invoker.ExecuteCommand(listCommand);
             }
         }
         else if (action == "route" && commandParts.Length >= 2)
@@ -87,19 +108,19 @@ public class CommandClient
 
             if (commandAction == "new")
             {
-                var routeNewCommand = RouteNewCommand.CreateRouteNewCommand(routeManager);
-                routeNewCommand.Execute();
+                var routeNewCommand = RouteNewCommand.CreateRouteNewCommand(_routeManager);
+                _invoker.ExecuteCommand(routeNewCommand);
             }
             else if (commandAction == "add" && commandArguments.Length == 2)
             {
                 var flightId = commandArguments.ElementAtOrDefault(1);
 
-                var flightToAdd = flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
+                var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
 
-                if (flightToAdd != null && routeManager.Validate(flightToAdd))
+                if (flightToAdd != null && _routeManager.Validate(flightToAdd))
                 {
-                    var routeAddCommand = RouteAddCommand.CreateRouteAddCommand(routeManager, flightToAdd);
-                    routeAddCommand.Execute();
+                    var routeAddCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd);
+                    _invoker.ExecuteCommand(routeAddCommand);
 
                     Console.WriteLine($" Flight with ID '{flightId}' added to the route.");
                 }
@@ -107,17 +128,17 @@ public class CommandClient
                     Console.WriteLine($" Error: Flight does not exist.");
             }
             else if (commandAction == "remove")
-                if (!routeManager.IsEmpty())
+                if (!_routeManager.IsEmpty())
                 {
-                    var routeRemoveCommand = RouteRemoveCommand.CreateRouteRemoveCommand(routeManager);
-                    routeRemoveCommand.Execute();
+                    var routeRemoveCommand = RouteRemoveCommand.CreateRouteRemoveCommand(_routeManager);
+                    _invoker.ExecuteCommand(routeRemoveCommand);
 
                     Console.WriteLine("Last flight removed from the route.");
                 }
             if (commandAction == "print")
             {
-                var routePrintCommand = RoutePrintCommand.CreateRoutePrintCommand(routeManager);
-                routePrintCommand.Execute();
+                var routePrintCommand = RoutePrintCommand.CreateRoutePrintCommand(_routeManager);
+                _invoker.ExecuteCommand(routePrintCommand);
             }
         }
         else if (action == "reserve" && commandParts.Length >= 2)
@@ -137,13 +158,13 @@ public class CommandClient
 
                 var cargoReservation = new CargoReservation(flightId, cargoWeight, cargoVolume);
 
-                var aircraftModel = flightManager.GetAircraftModel(flightId);
-                var aircraft = aircraftManager.GetCargoAircraft(aircraftModel);
+                var aircraftModel = _flightManager.GetAircraftModel(flightId);
+                var aircraft = _aircraftManager.GetCargoAircraft(aircraftModel);
 
                 if (aircraft != null && ReservationsManager.ValidateCargoReservation(cargoReservation, aircraft))
                 {
-                    var reserveCargoCommand = ReserveCargoCommand.CreateReserveCargoCommand(reservationsManager, cargoReservation);
-                    reserveCargoCommand.Execute();
+                    var reserveCargoCommand = ReserveCargoCommand.CreateReserveCargoCommand(_reservationsManager, cargoReservation);
+                    _invoker.ExecuteCommand(reserveCargoCommand);
                 }
             }
             else if (commandAction == "ticket")
@@ -154,13 +175,13 @@ public class CommandClient
 
                 var ticketReservation = new TicketReservation(flightId, seats, smallBaggaeCount, largeBaggaeCount);
 
-                var aircraftModel = flightManager.GetAircraftModel(flightId);
-                var aircraft = aircraftManager.GetPassengerAircraft(aircraftModel);
+                var aircraftModel = _flightManager.GetAircraftModel(flightId);
+                var aircraft = _aircraftManager.GetPassengerAircraft(aircraftModel);
 
                 if (ReservationsManager.ValidateTicketReservation(ticketReservation, aircraft!))
                 {
-                    var reserveTicketCommand = ReserveTicketCommand.CreateTicketCommand(reservationsManager, ticketReservation);
-                    reserveTicketCommand.Execute();
+                    var reserveTicketCommand = ReserveTicketCommand.CreateTicketCommand(_reservationsManager, ticketReservation);
+                    _invoker.ExecuteCommand(reserveTicketCommand);
                 }
             }
         }

@@ -3,6 +3,7 @@ using static Airlines.Console.Printer;
 using static Airlines.Console.FilePathHelper;
 using static Airlines.Business.Commands.CommandClient;
 using Airlines.Business.Managers;
+using Airlines.Business.Commands;
 
 namespace Airlines;
 public class Program
@@ -33,10 +34,13 @@ public class Program
 
         PrintAll(airportManager, airlineManager, flightManager, aircraftManager);
 
+        var commandInvoker = new CommandInvoker();
+        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, aircraftManager, reservationManager);
+
         while (true)
         {
-            var command = ReadCommands();
-            ExecuteCommand(command, airportManager, airlineManager, flightManager, routeManager, aircraftManager, reservationManager);
+            var command = ReadCommandInput();
+            commandClient.ProcessCommand(command);
         }
     }
 }

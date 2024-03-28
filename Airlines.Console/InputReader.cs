@@ -39,7 +39,7 @@ public class InputReader
         return data;
     }
 
-    public static string ReadCommands()
+    public static string ReadCommandInput()
     {
         System.Console.WriteLine($"\nEnter command:\n");
 
