@@ -1,6 +1,4 @@
 ﻿using Airlines.Business.Models;
-using System.Diagnostics.Metrics;
-using System.Xml.Linq;
 using static Airlines.Business.Utilities.Search;
 
 namespace Airlines.Business.Managers;

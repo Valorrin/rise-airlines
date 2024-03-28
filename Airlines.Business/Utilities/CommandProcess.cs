@@ -1,4 +1,5 @@
 ﻿using Airlines.Business.Commands.ListingCommands;
+using Airlines.Business.Commands.ReserveCommands;
 using Airlines.Business.Commands.RouteCommands;
 using Airlines.Business.Commands.SearchCommands;
 using Airlines.Business.Commands.SortCommands;
@@ -122,8 +123,14 @@ public class CommandProcess
         else if (action == "reserve" && commandParts.Length >= 2)
         {
             var commandArguments = commandParts[1].Split().ToArray();
-            var commandAction = commandArguments.ElementAtOrDefault(0);
-            var flightId = commandArguments.ElementAtOrDefault(1);
+
+            if (commandArguments.Length < 4)
+            {
+                throw new Exception();
+            }
+
+            var commandAction = commandArguments[0];
+            var flightId = commandArguments[1];
 
             if (commandAction == "cargo" && commandArguments.Length >= 4)
             {
@@ -135,9 +142,10 @@ public class CommandProcess
                 var aircraftModel = flightManager.GetAircraftModel(flightId);
                 var aircraft = aircraftManager.GetCargoAircraft(aircraftModel);
 
-                if (ReservationsManager.ValidateCargoReservation(cargoReservation, aircraft!))
+                if (aircraft != null && ReservationsManager.ValidateCargoReservation(cargoReservation, aircraft))
                 {
-                    reservationsManager.Add(cargoReservation);
+                    var reserveCargoCommand = ReserveCargoCommand.CreateReserveCargoCommand(reservationsManager, cargoReservation);
+                    reserveCargoCommand.Execute();
                 }
             }
             else if (commandAction == "ticket")
@@ -153,7 +161,8 @@ public class CommandProcess
 
                 if (ReservationsManager.ValidateTicketReservation(ticketReservation, aircraft!))
                 {
-                    reservationsManager.Add(ticketReservation);
+                    var reserveTicketCommand = ReserveTicketCommand.CreateTicketCommand(reservationsManager, ticketReservation);
+                    reserveTicketCommand.Execute();
                 }
             }
         }
