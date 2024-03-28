@@ -1,4 +1,5 @@
 ﻿using Airlines.Business.Commands.SearchCommands;
+using Airlines.Business.Commands.SortCommands;
 using Airlines.Business.Managers;
 using Airlines.Business.Models.Reservations;
 
@@ -20,7 +21,6 @@ public class CommandProcess
 
                 searchCommand.Execute();
             }
-
         }
         else if (action == "sort" && commandParts.Length >= 2)
         {
@@ -28,49 +28,29 @@ public class CommandProcess
             var target = commandParts[0];
             var sortOrder = commandParts.ElementAtOrDefault(1);
 
-            switch (target)
+            if (sortOrder != null)
             {
-                case "airports":
-                    if (sortOrder == "descending")
-                    {
-                        var names = airportManager.SortDescByName();
-                        Console.WriteLine(string.Join(", ", names));
-                    }
-                    else
-                    {
-                        var names = airportManager.SortByName();
-                        Console.WriteLine(string.Join(", ", names));
-                    }
-                    break;
+                switch (target)
+                {
+                    case "airports":
+                        var sortAirportsCommand = SortAirportsCommand.CreateSortAirportsCommand(airportManager, sortOrder);
+                        sortAirportsCommand.Execute();
+                        break;
 
-                case "airlines":
-                    if (sortOrder == "descending")
-                    {
-                        var names = airlineManager.SortDescByName();
-                        Console.WriteLine(string.Join(", ", names));
-                    }
-                    else
-                    {
-                        var names = airlineManager.SortByName();
-                        Console.WriteLine(string.Join(", ", names));
-                    }
-                    break;
+                    case "airlines":
+                        var sortAirlinesCommand = SortAirlinesCommand.CreateSortAirlinesCommand(airlineManager, sortOrder);
+                        sortAirlinesCommand.Execute();
+                        break;
 
-                case "flights":
-                    if (sortOrder == "descending")
-                    {
-                        var ids = flightManager.SortDescById();
-                        Console.WriteLine(string.Join(", ", ids));
-                    }
-                    else
-                    {
-                        var ids = flightManager.SortById();
-                        Console.WriteLine(string.Join(", ", ids));
-                    }
-                    break;
-                default:
-                    Console.WriteLine(" Invalid command!");
-                    break;
+                    case "flights":
+                        var sortFlightsCommand = SortFlightsCommand.CreateSortFlightsCommand(flightManager, sortOrder);
+                        sortFlightsCommand.Execute();
+                        break;
+
+                    default:
+                        Console.WriteLine(" Invalid command!");
+                        break;
+                }
             }
         }
         else if (action == "exist" && commandParts.Length >= 2)

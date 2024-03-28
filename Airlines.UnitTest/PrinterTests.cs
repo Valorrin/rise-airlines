@@ -1,5 +1,6 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
+using Airlines.Business.Models.Aircrafts;
 using Airlines.Console;
 
 namespace Airlines.UnitTests;
