@@ -5,7 +5,9 @@ public class RouteNewCommand : ICommand
 {
     private readonly RouteManager _routeManager;
 
-    public RouteNewCommand(RouteManager routeManager) => _routeManager = routeManager;
+    private RouteNewCommand(RouteManager routeManager) => _routeManager = routeManager;
 
     public void Execute() => _routeManager.Routes.Clear();
+
+    public static RouteNewCommand CreateRouteNewCommand(RouteManager routeManager) => new(routeManager);
 }
