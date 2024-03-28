@@ -13,9 +13,7 @@ public class Airport
         set
         {
             if (!IsValidId(value))
-                throw new ArgumentException("Id cannot be null or empty.");
-
-            _id = value;
+                _id = value;
         }
     }
     public string Name
@@ -24,9 +22,7 @@ public class Airport
         set
         {
             if (!IsValidString(value))
-                throw new ArgumentException("Name can only contain alphabet and space characters.");
-
-            _name = value;
+                _name = value;
         }
     }
 
@@ -36,9 +32,7 @@ public class Airport
         set
         {
             if (!IsValidString(value))
-                throw new ArgumentException("City can only contain alphabet and space characters.");
-
-            _city = value;
+                _city = value;
         }
     }
 
@@ -48,9 +42,7 @@ public class Airport
         set
         {
             if (!IsValidString(value))
-                throw new ArgumentException("Country can only contain alphabet and space characters.");
-
-            _country = value;
+                _country = value;
         }
     }
 

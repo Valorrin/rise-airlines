@@ -10,16 +10,19 @@ public class FlightManager
 
     public void Add(Flight flight) => Flights.Add(flight);
 
-    public void Add(List<string> flightData)
+    public void Add(IList<string> flightData)
     {
         foreach (var flight in flightData)
         {
-            var newFlight = new Flight();
             var flightParts = flight.Split(", ");
-            newFlight.Id = flightParts[0];
-            newFlight.DepartureAirport = flightParts[1];
-            newFlight.ArrivalAirport = flightParts[2];
-            newFlight.AircraftModel = flightParts[3];
+
+            var newFlight = new Flight
+            {
+                Id = flightParts[0],
+                DepartureAirport = flightParts[1],
+                ArrivalAirport = flightParts[2],
+                AircraftModel = flightParts[3]
+            };
 
             Add(newFlight);
         }

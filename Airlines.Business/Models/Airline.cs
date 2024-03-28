@@ -10,9 +10,7 @@ public class Airline
         set
         {
             if (!IsValidId(value))
-                throw new ArgumentException("Id cannot be null or empty.");
-
-            _id = value;
+                _id = value;
         }
     }
     public string Name
@@ -21,9 +19,7 @@ public class Airline
         set
         {
             if (!IsValidName(value))
-                throw new ArgumentException("Name can only contain alphabet and space characters.");
-
-            _name = value;
+                _name = value;
         }
     }
 

@@ -11,9 +11,7 @@ public class Flight
         set
         {
             if (!IsValidFlightId(value))
-                throw new ArgumentException("Id cannot be null or empty.");
-
-            _id = value;
+                _id = value;
         }
     }
 
@@ -23,9 +21,7 @@ public class Flight
         set
         {
             if (!IsValidAirportId(value))
-                throw new ArgumentException("Id cannot be null or empty.");
-
-            _departureAirport = value;
+                _departureAirport = value;
         }
     }
 
@@ -35,9 +31,7 @@ public class Flight
         set
         {
             if (!IsValidAirportId(value))
-                throw new ArgumentException("Id cannot be null or empty.");
-
-            _arrivalAirport = value;
+                _arrivalAirport = value;
         }
     }
 

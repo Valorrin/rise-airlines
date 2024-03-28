@@ -21,7 +21,7 @@ public class AirlineManager
 
     public void Add(Airline airline) => Airlines.Add(airline.Id, airline);
 
-    public void Add(List<string> airlineData)
+    public void Add(IList<string> airlineData)
     {
         foreach (var airport in airlineData)
         {

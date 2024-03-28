@@ -122,10 +122,10 @@ public class CommandProcess
         else if (action == "reserve" && commandParts.Length >= 2)
         {
             var commandArguments = commandParts[1].Split().ToArray();
-            var commandAction = commandArguments[0];
-            var flightId = commandArguments[1];
+            var commandAction = commandArguments.ElementAtOrDefault(0);
+            var flightId = commandArguments.ElementAtOrDefault(1);
 
-            if (commandAction == "cargo")
+            if (commandAction == "cargo" && commandArguments.Length >= 4)
             {
                 var cargoWeight = double.Parse(commandArguments[2]);
                 var cargoVolume = double.Parse(commandArguments[3]);
