@@ -1,4 +1,5 @@
-﻿using Airlines.Business.Commands.SearchCommands;
+﻿using Airlines.Business.Commands.ListingCommands;
+using Airlines.Business.Commands.SearchCommands;
 using Airlines.Business.Commands.SortCommands;
 using Airlines.Business.Managers;
 using Airlines.Business.Models.Reservations;
@@ -69,7 +70,10 @@ public class CommandProcess
             var inputData = commandParts.ElementAtOrDefault(0);
             var from = commandParts.ElementAtOrDefault(1);
 
-            airportManager.ListData(inputData, from);
+            if (inputData != null && from != null)
+            {
+                var listCommand = ListDataCommand.CreateListDataCommand(airportManager, inputData, from);
+            }
         }
         else if (action == "route" && commandParts.Length >= 2)
         {
@@ -77,7 +81,9 @@ public class CommandProcess
             var commandAction = commandArguments[0];
 
             if (commandAction == "new")
+            {
                 routeManager.Routes.Clear();
+            }
             else if (commandAction == "add" && commandArguments.Length == 2)
             {
                 var flightId = commandArguments[1];
