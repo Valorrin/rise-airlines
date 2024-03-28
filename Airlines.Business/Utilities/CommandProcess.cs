@@ -66,8 +66,8 @@ public class CommandProcess
         else if (action == "list" && commandParts.Length >= 2)
         {
             commandParts = StringHelper.SplitBeforeLastElement(commandParts[1]);
-            var inputData = commandParts[0];
-            var from = commandParts[1];
+            var inputData = commandParts.ElementAtOrDefault(0);
+            var from = commandParts.ElementAtOrDefault(1);
 
             airportManager.ListData(inputData, from);
         }
