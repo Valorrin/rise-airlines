@@ -28,5 +28,4 @@ public class SortFlightsCommand : ICommand
     }
 
     public static SortFlightsCommand CreateSortFlightsCommand(FlightManager flightManager, string sortOrder) => new(flightManager, sortOrder);
-
 }
