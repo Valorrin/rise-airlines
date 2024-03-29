@@ -47,115 +47,98 @@ public class CommandClient
         if (action == "search")
         {
             var searchTerm = commandParts.ElementAtOrDefault(1);
+            var searchCommand = SearchCommand.CreateSearchCommand(_airportManager, _airlineManager, _flightManager, searchTerm);
 
-            if (searchTerm != null)
+            if (batchMode)
             {
-                var searchCommand = SearchCommand.CreateSearchCommand(_airportManager, _airlineManager, _flightManager, searchTerm);
-
-                if (batchMode)
-                {
-                    _batchManager.AddCommand(searchCommand);
-                }
-                else
-                {
-                    _invoker.ExecuteCommand(searchCommand);
-                }
+                _batchManager.AddCommand(searchCommand);
+            }
+            else
+            {
+                _invoker.ExecuteCommand(searchCommand);
             }
         }
-        else if (action == "sort" && commandParts.Length >= 2)
+        else if (action == "sort")
         {
             commandParts = commandParts[1].Split().ToArray();
             var target = commandParts[0];
-            var sortOrder = commandParts.ElementAtOrDefault(1);
+            var sortOrder = commandParts[1];
 
-            if (sortOrder != null)
-                switch (target)
-                {
-                    case "airports":
-                        var sortAirportsCommand = SortAirportsCommand.CreateSortAirportsCommand(_airportManager, sortOrder);
-
-                        if (batchMode)
-                        {
-                            _batchManager.AddCommand(sortAirportsCommand);
-                        }
-                        else
-                        {
-                            _invoker.ExecuteCommand(sortAirportsCommand);
-                        }
-                        break;
-
-                    case "airlines":
-                        var sortAirlinesCommand = SortAirlinesCommand.CreateSortAirlinesCommand(_airlineManager, sortOrder);
-
-                        if (batchMode)
-                        {
-                            _batchManager.AddCommand(sortAirlinesCommand);
-                        }
-                        else
-                        {
-                            _invoker.ExecuteCommand(sortAirlinesCommand);
-                        }
-                        break;
-
-                    case "flights":
-                        var sortFlightsCommand = SortFlightsCommand.CreateSortFlightsCommand(_flightManager, sortOrder);
-
-                        if (batchMode)
-                        {
-                            _batchManager.AddCommand(sortFlightsCommand);
-                        }
-                        else
-                        {
-                            _invoker.ExecuteCommand(sortFlightsCommand);
-                        }
-                        break;
-
-                    default:
-                        Console.WriteLine(" Invalid command!");
-                        break;
-                }
-        }
-        else if (action == "exist" && commandParts.Length >= 2)
-        {
-            var airportName = commandParts.ElementAtOrDefault(1);
-
-            if (airportName != null)
+            if (target == "airports")
             {
-                var existCommand = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(_airportManager, airportName);
+                var sortAirportsCommand = SortAirportsCommand.CreateSortAirportsCommand(_airportManager, sortOrder);
 
                 if (batchMode)
                 {
-                    _batchManager.AddCommand(existCommand);
+                    _batchManager.AddCommand(sortAirportsCommand);
                 }
                 else
                 {
-                    _invoker.ExecuteCommand(existCommand);
+                    _invoker.ExecuteCommand(sortAirportsCommand);
+                }
+            }
+            else if (target == "airlines")
+            {
+                var sortAirlinesCommand = SortAirlinesCommand.CreateSortAirlinesCommand(_airlineManager, sortOrder);
+
+                if (batchMode)
+                {
+                    _batchManager.AddCommand(sortAirlinesCommand);
+                }
+                else
+                {
+                    _invoker.ExecuteCommand(sortAirlinesCommand);
+                }
+            }
+            else if (target == "flights")
+            {
+                var sortFlightsCommand = SortFlightsCommand.CreateSortFlightsCommand(_flightManager, sortOrder);
+
+                if (batchMode)
+                {
+                    _batchManager.AddCommand(sortFlightsCommand);
+                }
+                else
+                {
+                    _invoker.ExecuteCommand(sortFlightsCommand);
                 }
             }
         }
-        else if (action == "list" && commandParts.Length >= 2)
+        else if (action == "exist")
+        {
+            var airportName = commandParts[1];
+
+            var existCommand = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(_airportManager, airportName);
+
+            if (batchMode)
+            {
+                _batchManager.AddCommand(existCommand);
+            }
+            else
+            {
+                _invoker.ExecuteCommand(existCommand);
+            }
+        }
+        else if (action == "list")
         {
             commandParts = StringHelper.SplitBeforeLastElement(commandParts[1]);
-            var inputData = commandParts.ElementAtOrDefault(0);
-            var from = commandParts.ElementAtOrDefault(1);
+            var inputData = commandParts[0];
+            var from = commandParts[1];
 
-            if (inputData != null && from != null)
+            var listCommand = ListDataCommand.CreateListDataCommand(_airportManager, inputData, from);
+            if (batchMode)
             {
-                var listCommand = ListDataCommand.CreateListDataCommand(_airportManager, inputData, from);
-                if (batchMode)
-                {
-                    _batchManager.AddCommand(listCommand);
-                }
-                else
-                {
-                    _invoker.ExecuteCommand(listCommand);
-                }
+                _batchManager.AddCommand(listCommand);
+            }
+            else
+            {
+                _invoker.ExecuteCommand(listCommand);
             }
         }
-        else if (action == "route" && commandParts.Length >= 2)
+        else if (action == "route")
         {
             var commandArguments = commandParts[1].Split().ToArray();
-            var commandAction = commandArguments.ElementAtOrDefault(0);
+            var commandAction = commandArguments[0];
 
             if (commandAction == "new")
             {
@@ -169,9 +152,9 @@ public class CommandClient
                     _invoker.ExecuteCommand(routeNewCommand);
                 }
             }
-            else if (commandAction == "add" && commandArguments.Length == 2)
+            else if (commandAction == "add")
             {
-                var flightId = commandArguments.ElementAtOrDefault(1);
+                var flightId = commandArguments[1];
 
                 var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
 
@@ -220,7 +203,7 @@ public class CommandClient
                 }
             }
         }
-        else if (action == "reserve" && commandParts.Length >= 2)
+        else if (action == "reserve")
         {
             var commandArguments = commandParts[1].Split().ToArray();
 
@@ -278,7 +261,7 @@ public class CommandClient
                 }
             }
         }
-        else if (action == "batch" && commandParts.Length >= 2)
+        else if (action == "batch")
         {
             var commandArguments = commandParts[1].Split().ToArray();
             var commandAction = commandArguments.ElementAtOrDefault(0);
@@ -286,6 +269,7 @@ public class CommandClient
             if (commandAction == "start")
             {
                 var batchStartCommand = BatchStartCommand.CreateBatchStartCommand(_batchManager);
+
                 if (batchMode)
                 {
                     _batchManager.AddCommand(batchStartCommand);
@@ -311,6 +295,7 @@ public class CommandClient
             else if (commandAction == "cancel")
             {
                 var batchCancelCommand = BatchCancelCommand.CreateBatchCancelCommand(_batchManager);
+
                 if (batchMode)
                 {
                     _batchManager.AddCommand(batchCancelCommand);
@@ -321,7 +306,5 @@ public class CommandClient
                 }
             }
         }
-        else
-            Console.WriteLine(" Inavalid command!");
     }
 }

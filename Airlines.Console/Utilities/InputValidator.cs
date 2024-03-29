@@ -295,7 +295,7 @@ public class InputValidator
                 break;
 
             case "sort":
-                if (!validCommands["search"].Contains(firstArgument))
+                if (!validCommands["sort"].Contains(firstArgument))
                 {
                     return false;
                 }
