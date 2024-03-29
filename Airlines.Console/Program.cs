@@ -3,6 +3,7 @@ using static Airlines.Console.Utilities.Printer;
 using static Airlines.Console.Utilities.FilePathHelper;
 using Airlines.Business.Managers;
 using Airlines.Business.Commands;
+using Airlines.Console.Utilities;
 
 namespace Airlines;
 public class Program
@@ -16,6 +17,7 @@ public class Program
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationsManager();
         var batchManager = new BatchManager();
+        var inputValidator = new InputValidator(airportManager, airlineManager, flightManager);
 
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");
@@ -27,9 +29,10 @@ public class Program
         var flightData = ReadFromFile(flightFilePath);
         var aircraftData = ReadFromFile(aircraftFilePath);
 
-        airportManager.Add(airportData);
-        airlineManager.Add(airlineData);
-        flightManager.Add(flightData);
+        if (inputValidator.ValidateAirportData(airportData)) airportManager.Add(airportData);
+        if (inputValidator.ValidateAirlineData(airlineData)) airlineManager.Add(airlineData);
+        if (inputValidator.ValidateFlightData(flightData)) flightManager.Add(flightData);
+
         aircraftManager.Add(aircraftData);
 
         PrintAll(airportManager, airlineManager, flightManager, aircraftManager);

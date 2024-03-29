@@ -4,13 +4,13 @@ using Airlines.Business.Models;
 using System.Xml.Linq;
 
 namespace Airlines.Console.Utilities;
-public class Validator
+public class InputValidator
 {
     private readonly AirportManager _airportManager;
     private readonly AirlineManager _airlineManager;
     private readonly FlightManager _flightManager;
 
-    public Validator(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
+    public InputValidator(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
     {
         _airportManager = airportManager;
         _airlineManager = airlineManager;
@@ -87,6 +87,21 @@ public class Validator
 
         return true;
     }
+    public bool ValidateAirportData(IList<string> data)
+    {
+
+        foreach (var line in data)
+        {
+            var isValid = ValidateAirportData(line);
+
+            if (!isValid)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public bool ValidateAirlineData(string data)
     {
@@ -124,6 +139,21 @@ public class Validator
         foreach (var c in name)
         {
             if (!char.IsLetter(c) || c == ' ')
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public bool ValidateAirlineData(IList<string> data)
+    {
+
+        foreach (var line in data)
+        {
+            var isValid = ValidateAirlineData(line);
+
+            if (!isValid)
             {
                 return false;
             }
@@ -184,6 +214,21 @@ public class Validator
         foreach (var c in arrivalAirportId)
         {
             if (!char.IsLetterOrDigit(c))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public bool ValidateFlightData(IList<string> data)
+    {
+
+        foreach (var line in data)
+        {
+            var isValid = ValidateFlightData(line);
+
+            if (!isValid)
             {
                 return false;
             }

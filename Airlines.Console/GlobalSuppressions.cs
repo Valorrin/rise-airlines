@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Console.Utilities.Validator.#ctor(Airlines.Business.Managers.AirportManager,Airlines.Business.Managers.AirlineManager,Airlines.Business.Managers.FlightManager)")]
+[assembly: SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Console.Utilities.InputValidator.#ctor(Airlines.Business.Managers.AirportManager,Airlines.Business.Managers.AirlineManager,Airlines.Business.Managers.FlightManager)")]

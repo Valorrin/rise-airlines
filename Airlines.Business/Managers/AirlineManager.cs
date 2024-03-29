@@ -8,24 +8,7 @@ public class AirlineManager
 
     public AirlineManager() => Airlines = [];
 
-    public bool IsIdUnique(string id)
-    {
-        if (Airlines.ContainsKey(id))
-        {
-            Console.WriteLine(" Error: An airline with the same ID already exists.");
-            return false;
-        }
-
-        return true;
-    }
-
-    public void Add(Airline airline)
-    {
-        if (!IsIdUnique(airline.Id))
-            return;
-
-        Airlines.Add(airline.Id, airline);
-    }
+    public void Add(Airline airline) => Airlines.Add(airline.Id, airline);
 
     public void Add(IList<string> airlineData)
     {

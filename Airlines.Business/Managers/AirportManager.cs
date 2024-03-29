@@ -17,22 +17,8 @@ public class AirportManager
         AirportNames = [];
     }
 
-    public bool IsIdUnique(string id)
-    {
-        if (Airports.ContainsKey(id))
-        {
-            Console.WriteLine(" Error: An airport with the same ID already exists.");
-            return false;
-        }
-
-        return true;
-    }
-
     public void Add(Airport airport)
     {
-        if (!IsIdUnique(airport.Id))
-            return;
-
         if (!AirportsByCity.ContainsKey(airport.City))
             AirportsByCity[airport.City] = [];
         _ = AirportsByCity[airport.City].Add(airport);
