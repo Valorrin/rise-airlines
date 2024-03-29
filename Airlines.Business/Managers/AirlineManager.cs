@@ -19,19 +19,27 @@ public class AirlineManager
         return true;
     }
 
-    public void Add(Airline airline) => Airlines.Add(airline.Id, airline);
+    public void Add(Airline airline)
+    {
+        if (!IsIdUnique(airline.Id))
+            return;
 
-    public void Add(List<string> airlineData)
+        Airlines.Add(airline.Id, airline);
+    }
+
+    public void Add(IList<string> airlineData)
     {
         foreach (var airport in airlineData)
         {
-            var newAirline = new Airline();
             var airportParts = airport.Split(", ");
-            newAirline.Id = airportParts[0];
-            newAirline.Name = airportParts[1];
 
-            if (IsIdUnique(newAirline.Id))
-                Add(newAirline);
+            var newAirline = new Airline
+            {
+                Id = airportParts[0],
+                Name = airportParts[1]
+            };
+
+            Add(newAirline);
         }
     }
 

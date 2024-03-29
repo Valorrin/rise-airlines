@@ -1,4 +1,5 @@
-﻿using Airlines.Business.Models;
+﻿using Airlines.Business.Models.Aircrafts;
+using Airlines.Business.Models.Reservations;
 
 namespace Airlines.Business.Managers;
 public class ReservationsManager

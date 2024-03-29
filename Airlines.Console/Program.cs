@@ -1,8 +1,8 @@
-﻿using static Airlines.Console.InputReader;
-using static Airlines.Console.Printer;
-using static Airlines.Console.FilePathHelper;
-using static Airlines.Business.Utilities.CommandProcess;
+﻿using static Airlines.Console.Utilities.InputReader;
+using static Airlines.Console.Utilities.Printer;
+using static Airlines.Console.Utilities.FilePathHelper;
 using Airlines.Business.Managers;
+using Airlines.Business.Commands;
 
 namespace Airlines;
 public class Program
@@ -15,6 +15,7 @@ public class Program
         var routeManager = new RouteManager();
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationsManager();
+        var batchManager = new BatchManager();
 
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");
@@ -33,10 +34,14 @@ public class Program
 
         PrintAll(airportManager, airlineManager, flightManager, aircraftManager);
 
+        var commandInvoker = new CommandInvoker();
+        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, aircraftManager, reservationManager, batchManager);
+
         while (true)
         {
-            var command = ReadCommands();
-            ExecuteCommand(command, airportManager, airlineManager, flightManager, routeManager, aircraftManager, reservationManager);
+            var command = ReadCommandInput();
+            var batchMode = batchManager.BatchMode;
+            commandClient.ProcessCommand(command, batchMode);
         }
     }
 }

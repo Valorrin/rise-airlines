@@ -10,10 +10,8 @@ public class Flight
         get => _id!;
         set
         {
-            if (!IsValidFlightId(value))
-                throw new ArgumentException("Id cannot be null or empty.");
-
-            _id = value;
+            if (IsValidFlightId(value))
+                _id = value;
         }
     }
 
@@ -22,10 +20,8 @@ public class Flight
         get => _departureAirport!;
         set
         {
-            if (!IsValidAirportId(value))
-                throw new ArgumentException("Id cannot be null or empty.");
-
-            _departureAirport = value;
+            if (IsValidAirportId(value))
+                _departureAirport = value;
         }
     }
 
@@ -34,10 +30,8 @@ public class Flight
         get => _arrivalAirport!;
         set
         {
-            if (!IsValidAirportId(value))
-                throw new ArgumentException("Id cannot be null or empty.");
-
-            _arrivalAirport = value;
+            if (IsValidAirportId(value))
+                _arrivalAirport = value;
         }
     }
 

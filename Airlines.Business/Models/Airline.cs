@@ -9,10 +9,8 @@ public class Airline
         get => _id!;
         set
         {
-            if (!IsValidId(value))
-                throw new ArgumentException("Id cannot be null or empty.");
-
-            _id = value;
+            if (IsValidId(value))
+                _id = value;
         }
     }
     public string Name
@@ -20,10 +18,8 @@ public class Airline
         get => _name!;
         set
         {
-            if (!IsValidName(value))
-                throw new ArgumentException("Name can only contain alphabet and space characters.");
-
-            _name = value;
+            if (IsValidName(value))
+                _name = value;
         }
     }
 
