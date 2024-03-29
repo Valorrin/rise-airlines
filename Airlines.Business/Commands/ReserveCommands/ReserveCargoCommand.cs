@@ -18,5 +18,4 @@ public class ReserveCargoCommand : ICommand
     public void Execute() => _reservationsManager.Add(_cargoReservation);
 
     public static ReserveCargoCommand CreateReserveCargoCommand(ReservationsManager reservationsManager, CargoReservation cargoReservation) => new(reservationsManager, cargoReservation);
-
 }

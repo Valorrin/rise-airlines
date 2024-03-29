@@ -1,5 +1,4 @@
-﻿
-using Airlines.Business.Commands.SortCommands;
+﻿using Airlines.Business.Commands.SortCommands;
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
 

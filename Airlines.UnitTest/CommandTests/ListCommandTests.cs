@@ -1,7 +1,6 @@
 ﻿using Airlines.Business.Commands.ListingCommands;
 using Airlines.Business.Managers;
 
-
 namespace Airlines.UnitTests.CommandTests;
 public class ListCommandTests
 {

@@ -10,5 +10,4 @@ public class RouteRemoveCommand : ICommand
     public void Execute() => _routeManager.RemoveFlight();
 
     public static RouteRemoveCommand CreateRouteRemoveCommand(RouteManager routeManager) => new(routeManager);
-
 }

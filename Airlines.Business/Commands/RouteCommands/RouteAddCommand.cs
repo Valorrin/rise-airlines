@@ -17,5 +17,4 @@ public class RouteAddCommand : ICommand
     public void Execute() => _routeManager.AddFlight(_flight);
 
     public static RouteAddCommand CreateRouteAddCommand(RouteManager routeManager, Flight flight) => new(routeManager, flight);
-
 }

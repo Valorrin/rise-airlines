@@ -10,5 +10,4 @@ public class RoutePrintCommand : ICommand
     public void Execute() => _routeManager.Print();
 
     public static RoutePrintCommand CreateRoutePrintCommand(RouteManager routeManager) => new(routeManager);
-
 }
