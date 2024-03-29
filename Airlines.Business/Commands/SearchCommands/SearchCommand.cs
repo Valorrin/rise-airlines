@@ -8,7 +8,7 @@ public class SearchCommand : ICommand
     private readonly FlightManager _flightManager;
     private readonly string _searchTerm;
 
-    public SearchCommand(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, string searchTerm)
+    private SearchCommand(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, string searchTerm)
     {
         _airportManager = airportManager;
         _airlineManager = airlineManager;
