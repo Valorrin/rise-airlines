@@ -236,4 +236,32 @@ public class InputValidator
 
         return true;
     }
+
+    public bool ValidateAircraftData(string data)
+    {
+        var dataParts = data.Split(", ").ToArray();
+        var name = dataParts[0];
+
+        if (string.IsNullOrEmpty(name))
+        {
+            return false;
+        }
+
+        return true;
+    }
+    public bool ValidateAircraftData(IList<string> data)
+    {
+
+        foreach (var line in data)
+        {
+            var isValid = ValidateAircraftData(line);
+
+            if (!isValid)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

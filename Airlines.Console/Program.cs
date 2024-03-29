@@ -21,6 +21,9 @@ public class Program
         var inputValidator = new InputValidator(airportManager, airlineManager, flightManager);
         var printer = new Printer(airportManager, airlineManager, flightManager, aircraftManager);
 
+        var commandInvoker = new CommandInvoker();
+        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, aircraftManager, reservationManager, batchManager);
+
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");
         var flightFilePath = GetFilePath("flights.csv");
@@ -34,13 +37,9 @@ public class Program
         if (inputValidator.ValidateAirportData(airportData)) airportManager.Add(airportData);
         if (inputValidator.ValidateAirlineData(airlineData)) airlineManager.Add(airlineData);
         if (inputValidator.ValidateFlightData(flightData)) flightManager.Add(flightData);
-
-        aircraftManager.Add(aircraftData);
+        if (inputValidator.ValidateAircraftData(aircraftData)) aircraftManager.Add(aircraftData);
 
         printer.PrintAll();
-
-        var commandInvoker = new CommandInvoker();
-        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, aircraftManager, reservationManager, batchManager);
 
         while (true)
         {
