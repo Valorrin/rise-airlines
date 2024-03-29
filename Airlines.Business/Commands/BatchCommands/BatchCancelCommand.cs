@@ -1,5 +1,4 @@
-﻿using Airlines.Business.Commands.ListingCommands;
-using Airlines.Business.Managers;
+﻿using Airlines.Business.Managers;
 
 namespace Airlines.Business.Commands.BatchCommands;
 public class BatchCancelCommand : ICommand

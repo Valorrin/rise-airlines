@@ -3,28 +3,28 @@
 namespace Airlines.Business.Managers;
 public class BatchManager
 {
-    private readonly Queue<ICommand> _commands;
 
     public bool BatchMode { get; private set; }
+    public Queue<ICommand> Commands { get; private set; }
 
     public BatchManager()
     {
-        _commands = new Queue<ICommand>();
+        Commands = new Queue<ICommand>();
         BatchMode = false;
     }
 
-    public void AddCommand(ICommand command) => _commands.Enqueue(command);
+    public void AddCommand(ICommand command) => Commands.Enqueue(command);
 
     public void ExecuteBatch(CommandInvoker invoker)
     {
-        while (_commands.Count > 0)
+        while (Commands.Count > 0)
         {
-            var command = _commands.Dequeue();
+            var command = Commands.Dequeue();
             invoker.ExecuteCommand(command);
         }
     }
 
-    public void CancelBatch() => _commands.Clear();
+    public void CancelBatch() => Commands.Clear();
 
     public void BatchModeOn() => BatchMode = true;
 

@@ -1,7 +1,6 @@
 ﻿using static Airlines.Console.Utilities.InputReader;
 using static Airlines.Console.Utilities.Printer;
 using static Airlines.Console.Utilities.FilePathHelper;
-using static Airlines.Business.Commands.CommandClient;
 using Airlines.Business.Managers;
 using Airlines.Business.Commands;
 

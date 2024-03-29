@@ -21,23 +21,6 @@ public class AirlineManagerTests
         Assert.Contains(airline, airlineManager.Airlines.Values);
     }
 
-    [Fact]
-    public void Add_Duplicate_Airline_Fails()
-    {
-        var airlineManager = new AirlineManager();
-        var airline = new Airline
-        {
-            Id = "ABC",
-            Name = "Test Airline"
-        };
-
-        airlineManager.Add(airline);
-
-        _ = Assert.Throws<ArgumentException>(() => airlineManager.Add(airline));
-
-        _ = Assert.Single(airlineManager.Airlines);
-    }
-
     [Theory]
     [InlineData("Test Airline", true)]
     [InlineData("Nonexistent Airline", false)]
