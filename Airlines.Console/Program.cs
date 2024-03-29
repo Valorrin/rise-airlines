@@ -43,9 +43,10 @@ public class Program
 
         while (true)
         {
-            var command = ReadCommandInput();
+            var commandInput = ReadCommandInput();
             var batchMode = batchManager.BatchMode;
-            commandClient.ProcessCommand(command, batchMode);
+
+            if (inputValidator.ValidateCommandInputData(commandInput)) commandClient.ProcessCommand(commandInput, batchMode);
         }
     }
 }

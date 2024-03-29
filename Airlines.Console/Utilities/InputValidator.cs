@@ -1,6 +1,7 @@
 ﻿
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
+using Airlines.Business.Utilities;
 using System.Xml.Linq;
 
 namespace Airlines.Console.Utilities;
@@ -260,6 +261,81 @@ public class InputValidator
             {
                 return false;
             }
+        }
+
+        return true;
+    }
+
+    public bool ValidateCommandInputData(string data)
+    {
+        var commandParts = data.Split(' ', 2).ToArray();
+        var action = commandParts[0];
+        var validCommands = new Dictionary<string, HashSet<string>>
+        {
+            { "search", [] },
+            { "sort", ["airports", "airlines", "flights"] },
+            { "exist", [] },
+            { "list", [] },
+            { "route", ["new", "add", "remove", "print"] },
+            { "reserve", ["cargo", "ticket"] },
+            { "batch", ["start", "run", "cancel"] }
+        };
+
+        if (!validCommands.ContainsKey(action) || commandParts.Length < 2)
+        {
+            return false;
+        }
+
+        var commandArguments = commandParts[1].Split().ToArray();
+        var firstArgument = commandArguments[0];
+
+        switch (action)
+        {
+            case "search":
+                break;
+
+            case "sort":
+                if (!validCommands["search"].Contains(firstArgument))
+                {
+                    return false;
+                }
+                break;
+
+            case "exist":
+                break;
+
+            case "list":
+                commandArguments = StringHelper.SplitBeforeLastElement(commandParts[1]);
+                if (commandArguments.Length != 2)
+                {
+                    return false;
+                }
+                break;
+
+            case "route":
+                if (!validCommands["route"].Contains(firstArgument))
+                {
+                    return false;
+                }
+                break;
+
+            case "reserve":
+                if (!validCommands["reserve"].Contains(firstArgument))
+                {
+                    return false;
+                }
+                break;
+
+            case "batch":
+                if (!validCommands["batch"].Contains(firstArgument) && commandArguments.Length != 2)
+                {
+                    return false;
+                }
+                break;
+
+            default:
+                System.Console.WriteLine($"Invalid command: {action}");
+                return false;
         }
 
         return true;

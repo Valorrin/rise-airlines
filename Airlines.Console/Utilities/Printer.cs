@@ -53,7 +53,7 @@ public class Printer
     }
     public void PrintAll()
     {
-        PrintAircrafts();
+        PrintAirports();
         PrintAirlines();
         PrintFlights();
         PrintAircrafts();

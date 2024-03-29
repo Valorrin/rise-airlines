@@ -117,11 +117,11 @@ public class CommandClient
         }
         else if (action == "exist" && commandParts.Length >= 2)
         {
-            var airlineName = commandParts.ElementAtOrDefault(1);
+            var airportName = commandParts.ElementAtOrDefault(1);
 
-            if (airlineName != null)
+            if (airportName != null)
             {
-                var existCommand = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(_airportManager, airlineName);
+                var existCommand = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(_airportManager, airportName);
 
                 if (batchMode)
                 {
