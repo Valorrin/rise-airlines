@@ -63,7 +63,7 @@ public class InputValidator
 
         foreach (var c in name)
         {
-            if (!char.IsLetter(c) || c == ' ')
+            if (!char.IsLetter(c) && c != ' ')
             {
                 return false;
             }
@@ -71,7 +71,7 @@ public class InputValidator
 
         foreach (var c in city)
         {
-            if (!char.IsLetter(c) || c == ' ')
+            if (!char.IsLetter(c) && c != ' ')
             {
                 return false;
             }
@@ -79,7 +79,7 @@ public class InputValidator
 
         foreach (var c in country)
         {
-            if (!char.IsLetter(c) || c == ' ')
+            if (!char.IsLetter(c) && c != ' ')
             {
                 return false;
             }
@@ -138,7 +138,7 @@ public class InputValidator
         }
         foreach (var c in name)
         {
-            if (!char.IsLetter(c) || c == ' ')
+            if (!char.IsLetter(c) && c != ' ')
             {
                 return false;
             }
