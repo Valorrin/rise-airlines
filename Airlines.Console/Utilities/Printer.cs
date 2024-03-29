@@ -3,46 +3,59 @@
 namespace Airlines.Console.Utilities;
 public class Printer
 {
-    public static void Print(AirportManager manager)
+    private readonly AirportManager _airportManager;
+    private readonly AirlineManager _airlineManager;
+    private readonly FlightManager _flightManager;
+    private readonly AircraftManager _aircraftManager;
+
+    public Printer(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, AircraftManager aircraftManager)
+    {
+        _airportManager = airportManager;
+        _airlineManager = airlineManager;
+        _flightManager = flightManager;
+        _aircraftManager = aircraftManager;
+    }
+
+    public void PrintAirports()
     {
         System.Console.Write($"Airports:\n");
-        foreach (var airport in manager.Airports.Values)
+        foreach (var airport in _airportManager.Airports.Values)
         {
             System.Console.WriteLine($" Airport name: {airport.Name}");
             System.Console.WriteLine($" Airport city: {airport.City}");
             System.Console.WriteLine($" Airport country: {airport.Country}\n");
         }
     }
-    public static void Print(AirlineManager manager)
+    public void PrintAirlines()
     {
         System.Console.Write($"Airlines:\n");
-        foreach (var airline in manager.Airlines.Values)
+        foreach (var airline in _airlineManager.Airlines.Values)
             System.Console.WriteLine($" Airline name: {airline.Name}\n");
     }
-    public static void Print(FlightManager manager)
+    public void PrintFlights()
     {
         System.Console.Write($"Flights: \n");
-        foreach (var flight in manager.Flights)
+        foreach (var flight in _flightManager.Flights)
         {
             System.Console.WriteLine($" Flight ID: {flight.Id}");
             System.Console.WriteLine($" Aircraft Model: {flight.AircraftModel}");
         }
     }
-    public static void Print(AircraftManager manager)
+    public void PrintAircrafts()
     {
         System.Console.Write($"\nAircrafts: \n");
-        foreach (var aircraft in manager.CargoAircrafts)
+        foreach (var aircraft in _aircraftManager.CargoAircrafts)
             System.Console.WriteLine($" Cargo Aircraft: {aircraft.Model}");
-        foreach (var aircraft in manager.PassengerAircrafts)
+        foreach (var aircraft in _aircraftManager.PassengerAircrafts)
             System.Console.WriteLine($" Passenger Aircraft: {aircraft.Model}");
-        foreach (var aircraft in manager.PrivateAircrafts)
+        foreach (var aircraft in _aircraftManager.PrivateAircrafts)
             System.Console.WriteLine($" Private Aircraft: {aircraft.Model}");
     }
-    public static void PrintAll(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager, AircraftManager aircraftManager)
+    public void PrintAll()
     {
-        Print(airportManager);
-        Print(airlineManager);
-        Print(flightManager);
-        Print(aircraftManager);
+        PrintAircrafts();
+        PrintAirlines();
+        PrintFlights();
+        PrintAircrafts();
     }
 }
