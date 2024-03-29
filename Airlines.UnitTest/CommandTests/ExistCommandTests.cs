@@ -1,10 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Airlines.Business.Commands.SearchCommands;
+using Airlines.Business.Managers;
 
 namespace Airlines.UnitTests.CommandTests;
-internal class ExistCommandTests
+public class ExistCommandTests
 {
+    [Fact]
+    public void CreateCheckAirportExistenceCommand_ReturnsInstance()
+    {
+        var airportManager = new AirportManager();
+        var airlineName = "TestAirline";
+
+        var command = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(airportManager, airlineName);
+
+        Assert.NotNull(command);
+        _ = Assert.IsType<CheckAirportExistenceCommand>(command);
+    }
 }
