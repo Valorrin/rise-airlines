@@ -1,5 +1,4 @@
 ﻿using static Airlines.Console.Utilities.InputReader;
-using static Airlines.Console.Utilities.Printer;
 using static Airlines.Console.Utilities.FilePathHelper;
 using Airlines.Business.Managers;
 using Airlines.Business.Commands;
@@ -18,11 +17,11 @@ public class Program
         var reservationManager = new ReservationsManager();
         var batchManager = new BatchManager();
 
-        var inputValidator = new InputValidator(airportManager, airlineManager, flightManager);
+        var inputValidator = new InputValidator(airportManager, airlineManager, flightManager, aircraftManager, routeManager);
         var printer = new Printer(airportManager, airlineManager, flightManager, aircraftManager);
 
         var commandInvoker = new CommandInvoker();
-        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, aircraftManager, reservationManager, batchManager);
+        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager);
 
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");

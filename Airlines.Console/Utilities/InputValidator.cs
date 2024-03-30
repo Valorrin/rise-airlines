@@ -1,8 +1,7 @@
-﻿
-using Airlines.Business.Managers;
-using Airlines.Business.Models;
+﻿using Airlines.Business.Managers;
+using Airlines.Business.Models.Aircrafts;
+using Airlines.Business.Models.Reservations;
 using Airlines.Business.Utilities;
-using System.Xml.Linq;
 
 namespace Airlines.Console.Utilities;
 public class InputValidator
@@ -10,12 +9,23 @@ public class InputValidator
     private readonly AirportManager _airportManager;
     private readonly AirlineManager _airlineManager;
     private readonly FlightManager _flightManager;
+    private readonly AircraftManager _aircraftManager;
+    private readonly RouteManager _routeManager;
 
-    public InputValidator(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
+    public const int SmallBaggageMaximumWeight = 15;
+    public const double SmallBaggageMaximumVolume = 0.045;
+
+    public const int LargeBaggageMaximumWeight = 30;
+    public const double LargeBaggageMaximumVolume = 0.090;
+
+    public InputValidator(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager,
+        AircraftManager aircraftManager, RouteManager routeManager)
     {
         _airportManager = airportManager;
         _airlineManager = airlineManager;
         _flightManager = flightManager;
+        _aircraftManager = aircraftManager;
+        _routeManager = routeManager;
     }
 
     public bool ValidateAirportData(string data)
@@ -317,12 +327,52 @@ public class InputValidator
                 {
                     return false;
                 }
+                if (firstArgument == "remove")
+                {
+                    if (_routeManager.IsEmpty())
+                    {
+                        System.Console.WriteLine("Error: No flights in route.");
+                        return false;
+                    }
+                }
                 break;
 
             case "reserve":
                 if (!validCommands["reserve"].Contains(firstArgument))
                 {
                     return false;
+                }
+                if (firstArgument == "cargo")
+                {
+                    var flightId = commandArguments[1];
+                    var cargoWeight = double.Parse(commandArguments[2]);
+                    var cargoVolume = double.Parse(commandArguments[3]);
+
+                    var cargoReservation = new CargoReservation(flightId, cargoWeight, cargoVolume);
+                    var aircraftModel = _flightManager.GetAircraftModel(flightId);
+                    var aircraft = _aircraftManager.GetCargoAircraft(aircraftModel);
+
+                    if (aircraft == null || !ValidateCargoReservation(cargoReservation, aircraft))
+                    {
+                        return false;
+                    }
+                }
+                else if (firstArgument == "ticket")
+                {
+                    var flightId = commandArguments[1];
+                    var seats = int.Parse(commandArguments[2]);
+                    var smallBaggageCount = int.Parse(commandArguments[3]);
+                    var largeBaggageCount = int.Parse(commandArguments[4]);
+
+                    var ticketReservation = new TicketReservation(flightId, seats, smallBaggageCount, largeBaggageCount);
+
+                    var aircraftModel = _flightManager.GetAircraftModel(flightId);
+                    var aircraft = _aircraftManager.GetPassengerAircraft(aircraftModel);
+
+                    if (aircraft == null || !ValidateTicketReservation(ticketReservation, aircraft))
+                    {
+                        return false;
+                    }
                 }
                 break;
 
@@ -336,6 +386,54 @@ public class InputValidator
             default:
                 System.Console.WriteLine($"Invalid command: {action}");
                 return false;
+        }
+
+        return true;
+    }
+
+    private bool ValidateCargoReservation(CargoReservation reservation, CargoAircraft aircraft)
+    {
+        if (reservation == null || aircraft == null)
+        {
+            System.Console.WriteLine("Reservation or aircraft is null");
+            return false;
+        }
+        if (reservation.CargoWeight > aircraft.CargoWeight)
+        {
+            System.Console.WriteLine("cargo weight exceeds aircraft cargo capacity");
+            return false;
+        }
+        if (reservation.CargoVolume > aircraft.CargoVolume)
+        {
+            System.Console.WriteLine("cargo volume exceeds aircraft cargo capacity");
+            return false;
+        }
+
+        System.Console.WriteLine("Cargo validataion aproved");
+        return true;
+    }
+    private bool ValidateTicketReservation(TicketReservation reservation, PassengerAircraft aircraft)
+    {
+        if (reservation == null || aircraft == null)
+        {
+            System.Console.WriteLine("Reservation or aircraft is null");
+            return false;
+        }
+        if (reservation.Seats > aircraft.Seats)
+        {
+            System.Console.WriteLine("not enough seats");
+            return false;
+        }
+        if (((reservation.SmallBaggageCount * SmallBaggageMaximumWeight) + (reservation.LargeBaggageCount * LargeBaggageMaximumWeight)) > aircraft.CargoWeight)
+        {
+            System.Console.WriteLine("cargo weight exceeds aircraft cargo capacity");
+            return false;
+        }
+
+        if (((reservation.SmallBaggageCount * SmallBaggageMaximumVolume) + (reservation.LargeBaggageCount * LargeBaggageMaximumVolume)) > aircraft.CargoVolume)
+        {
+            System.Console.WriteLine("cargo volume exceeds aircraft cargo capacity");
+            return false;
         }
 
         return true;

@@ -8,7 +8,7 @@ public class SortAirlinesCommand : ICommand
     private readonly AirlineManager _airlineManager;
     private readonly string _sortOrder;
 
-    public SortAirlinesCommand(AirlineManager airlineManager, string sortOrder)
+    public SortAirlinesCommand(AirlineManager airlineManager, string sortOrder = "ascending")
     {
         _airlineManager = airlineManager;
         _sortOrder = sortOrder;
