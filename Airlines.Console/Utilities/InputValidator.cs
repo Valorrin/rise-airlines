@@ -101,6 +101,12 @@ public class InputValidator
     }
     public bool ValidateAirportData(IList<string> data)
     {
+        var ids = data.Select(line => line.Split(", ", 2)[0]);
+
+        if (ids.Distinct().Count() != data.Count)
+        {
+            return false;
+        }
 
         foreach (var line in data)
         {
@@ -160,6 +166,12 @@ public class InputValidator
     }
     public bool ValidateAirlineData(IList<string> data)
     {
+        var ids = data.Select(line => line.Split(", ", 2)[0]);
+
+        if (ids.Distinct().Count() != data.Count)
+        {
+            return false;
+        }
 
         foreach (var line in data)
         {
@@ -235,9 +247,16 @@ public class InputValidator
     }
     public bool ValidateFlightData(IList<string> data)
     {
+        var ids = data.Select(line => line.Split(", ", 2)[0]);
+
+        if (ids.Distinct().Count() != data.Count)
+        {
+            return false;
+        }
 
         foreach (var line in data)
         {
+
             var isValid = ValidateFlightData(line);
 
             if (!isValid)
