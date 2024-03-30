@@ -51,9 +51,6 @@ public class AirportManager
 
     public void Search(string searchTerm)
     {
-        if (string.IsNullOrEmpty(searchTerm))
-            Console.WriteLine(" Error: search term cannot be null or empty!");
-
         var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList(); ;
 
         if (BinarySearch(airportNames, searchTerm) >= 0)

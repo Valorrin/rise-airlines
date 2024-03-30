@@ -28,9 +28,6 @@ public class AirlineManager
 
     public void Search(string searchTerm)
     {
-        if (string.IsNullOrEmpty(searchTerm))
-            Console.WriteLine(" Error: search term cannot be null or empty!");
-
         var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
 
         if (BinarySearch(airlineNames, searchTerm) >= 0)

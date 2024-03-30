@@ -74,7 +74,7 @@ public class CommandClient
         else if (action == "route")
         {
             var commandAction = commandArguments[0];
-            var flightId = commandArguments.ElementAtOrDefault(1);
+            var flightId = commandArguments[1];
             var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
 
             ProcessRouteCommand(commandAction, flightToAdd!, batchMode);
@@ -177,12 +177,7 @@ public class CommandClient
                 break;
 
             case "add":
-                if (flightToAdd != null && _routeManager.Validate(flightToAdd))
-                {
-                    routeCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd);
-                }
-                else
-                    Console.WriteLine($" Error: Flight does not exist.");
+                routeCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd);
                 break;
 
             case "remove":

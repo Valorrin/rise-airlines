@@ -1,4 +1,5 @@
 ﻿using Airlines.Business.Managers;
+using Airlines.Business.Models;
 using Airlines.Business.Models.Aircrafts;
 using Airlines.Business.Models.Reservations;
 using Airlines.Business.Utilities;
@@ -293,6 +294,7 @@ public class InputValidator
 
         if (!validCommands.ContainsKey(action) || commandParts.Length < 2)
         {
+            System.Console.WriteLine("Invalid command");
             return false;
         }
 
@@ -327,9 +329,21 @@ public class InputValidator
                 {
                     return false;
                 }
-                if (firstArgument == "remove")
+
+                if (firstArgument == "add")
                 {
-                    if (_routeManager.IsEmpty())
+                    var flightId = commandArguments.ElementAtOrDefault(1);
+                    var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
+
+                    if (flightToAdd == null || !ValidateRouteFlight(flightToAdd))
+                    {
+                        System.Console.WriteLine($" Error: Flight does not exist.");
+                        return false;
+                    }
+                }
+                else if (firstArgument == "remove")
+                {
+                    if (_routeManager.Routes.Count == 0)
                     {
                         System.Console.WriteLine("Error: No flights in route.");
                         return false;
@@ -437,5 +451,17 @@ public class InputValidator
         }
 
         return true;
+    }
+
+    private bool ValidateRouteFlight(Flight flight)
+    {
+        if (_routeManager.Routes.Count == 0)
+            return true;
+
+        if (_routeManager.Routes.Last!.Value.ArrivalAirport == flight.DepartureAirport)
+            return true;
+
+        System.Console.WriteLine(" ERROR: The DepartureAirport of the new flight doesn't matches the ArrivalAirport of the last flight in the route!");
+        return false;
     }
 }
