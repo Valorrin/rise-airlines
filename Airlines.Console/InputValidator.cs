@@ -4,7 +4,7 @@ using Airlines.Business.Models.Aircrafts;
 using Airlines.Business.Models.Reservations;
 using Airlines.Business.Utilities;
 
-namespace Airlines.Console.Utilities;
+namespace Airlines.Console;
 public class InputValidator
 {
     private readonly AirportManager _airportManager;
@@ -37,22 +37,8 @@ public class InputValidator
         var city = dataParts[2];
         var country = dataParts[3];
 
-        if (string.IsNullOrEmpty(id))
-        {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(city) || string.IsNullOrEmpty(country))
             return false;
-        }
-        if (string.IsNullOrEmpty(name))
-        {
-            return false;
-        }
-        if (string.IsNullOrEmpty(city))
-        {
-            return false;
-        }
-        if (string.IsNullOrEmpty(country))
-        {
-            return false;
-        }
 
         if (_airportManager.Airports.ContainsKey(id))
         {
@@ -61,41 +47,13 @@ public class InputValidator
         }
 
         if (id.Length is < 2 or > 4)
-        {
             return false;
-        }
 
-        foreach (var c in id)
-        {
-            if (!char.IsLetterOrDigit(c))
-            {
-                return false;
-            }
-        }
+        if (!ContainsOnlyLettersOrDigits(id))
+            return false;
 
-        foreach (var c in name)
-        {
-            if (!char.IsLetter(c) && c != ' ')
-            {
-                return false;
-            }
-        }
-
-        foreach (var c in city)
-        {
-            if (!char.IsLetter(c) && c != ' ')
-            {
-                return false;
-            }
-        }
-
-        foreach (var c in country)
-        {
-            if (!char.IsLetter(c) && c != ' ')
-            {
-                return false;
-            }
-        }
+        if (!ContainsOnlyLettersAndSpaces(name) || !ContainsOnlyLettersAndSpaces(city) || !ContainsOnlyLettersAndSpaces(country))
+            return false;
 
         return true;
     }
@@ -104,18 +62,14 @@ public class InputValidator
         var ids = data.Select(line => line.Split(", ", 2)[0]);
 
         if (ids.Distinct().Count() != data.Count)
-        {
             return false;
-        }
 
         foreach (var line in data)
         {
             var isValid = ValidateAirportData(line);
 
             if (!isValid)
-            {
                 return false;
-            }
         }
 
         return true;
@@ -127,14 +81,8 @@ public class InputValidator
         var id = dataParts[0];
         var name = dataParts[1];
 
-        if (string.IsNullOrEmpty(id))
-        {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name))
             return false;
-        }
-        if (string.IsNullOrEmpty(name))
-        {
-            return false;
-        }
 
         if (_airlineManager.Airlines.ContainsKey(id))
         {
@@ -143,24 +91,13 @@ public class InputValidator
         }
 
         if (id.Length is < 2 or > 4)
-        {
             return false;
-        }
 
-        foreach (var c in id)
-        {
-            if (!char.IsLetterOrDigit(c))
-            {
-                return false;
-            }
-        }
-        foreach (var c in name)
-        {
-            if (!char.IsLetter(c) && c != ' ')
-            {
-                return false;
-            }
-        }
+        if (!ContainsOnlyLettersOrDigits(id))
+            return false;
+
+        if (!ContainsOnlyLettersAndSpaces(name))
+            return false;
 
         return true;
     }
@@ -169,18 +106,14 @@ public class InputValidator
         var ids = data.Select(line => line.Split(", ", 2)[0]);
 
         if (ids.Distinct().Count() != data.Count)
-        {
             return false;
-        }
 
         foreach (var line in data)
         {
             var isValid = ValidateAirlineData(line);
 
             if (!isValid)
-            {
                 return false;
-            }
         }
 
         return true;
@@ -193,18 +126,8 @@ public class InputValidator
         var departureAirportId = dataParts[1];
         var arrivalAirportId = dataParts[2];
 
-        if (string.IsNullOrEmpty(id))
-        {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(departureAirportId) || string.IsNullOrEmpty(arrivalAirportId))
             return false;
-        }
-        if (string.IsNullOrEmpty(departureAirportId))
-        {
-            return false;
-        }
-        if (string.IsNullOrEmpty(arrivalAirportId))
-        {
-            return false;
-        }
 
         if (_flightManager.Flights.Any(x => x.Id == id))
         {
@@ -213,35 +136,12 @@ public class InputValidator
         }
 
         if (departureAirportId.Length is < 2 or > 4)
-        {
             return false;
-        }
         if (arrivalAirportId.Length is < 2 or > 4)
-        {
             return false;
-        }
 
-        foreach (var c in id)
-        {
-            if (!char.IsLetterOrDigit(c))
-            {
-                return false;
-            }
-        }
-        foreach (var c in departureAirportId)
-        {
-            if (!char.IsLetterOrDigit(c))
-            {
-                return false;
-            }
-        }
-        foreach (var c in arrivalAirportId)
-        {
-            if (!char.IsLetterOrDigit(c))
-            {
-                return false;
-            }
-        }
+        if (!ContainsOnlyLettersOrDigits(id) || !ContainsOnlyLettersOrDigits(departureAirportId) || !ContainsOnlyLettersOrDigits(arrivalAirportId))
+            return false;
 
         return true;
     }
@@ -250,9 +150,7 @@ public class InputValidator
         var ids = data.Select(line => line.Split(", ", 2)[0]);
 
         if (ids.Distinct().Count() != data.Count)
-        {
             return false;
-        }
 
         foreach (var line in data)
         {
@@ -260,9 +158,7 @@ public class InputValidator
             var isValid = ValidateFlightData(line);
 
             if (!isValid)
-            {
                 return false;
-            }
         }
 
         return true;
@@ -274,23 +170,18 @@ public class InputValidator
         var name = dataParts[0];
 
         if (string.IsNullOrEmpty(name))
-        {
             return false;
-        }
 
         return true;
     }
     public bool ValidateAircraftData(IList<string> data)
     {
-
         foreach (var line in data)
         {
             var isValid = ValidateAircraftData(line);
 
             if (!isValid)
-            {
                 return false;
-            }
         }
 
         return true;
@@ -327,9 +218,7 @@ public class InputValidator
 
             case "sort":
                 if (!validCommands["sort"].Contains(firstArgument))
-                {
                     return false;
-                }
                 break;
 
             case "exist":
@@ -338,16 +227,12 @@ public class InputValidator
             case "list":
                 commandArguments = StringHelper.SplitBeforeLastElement(commandParts[1]);
                 if (commandArguments.Length != 2)
-                {
                     return false;
-                }
                 break;
 
             case "route":
                 if (!validCommands["route"].Contains(firstArgument))
-                {
                     return false;
-                }
 
                 if (firstArgument == "add")
                 {
@@ -361,20 +246,16 @@ public class InputValidator
                     }
                 }
                 else if (firstArgument == "remove")
-                {
                     if (_routeManager.Routes.Count == 0)
                     {
                         System.Console.WriteLine("Error: No flights in route.");
                         return false;
                     }
-                }
                 break;
 
             case "reserve":
                 if (!validCommands["reserve"].Contains(firstArgument))
-                {
                     return false;
-                }
                 if (firstArgument == "cargo")
                 {
                     var flightId = commandArguments[1];
@@ -386,9 +267,7 @@ public class InputValidator
                     var aircraft = _aircraftManager.GetCargoAircraft(aircraftModel);
 
                     if (aircraft == null || !ValidateCargoReservation(cargoReservation, aircraft))
-                    {
                         return false;
-                    }
                 }
                 else if (firstArgument == "ticket")
                 {
@@ -403,17 +282,13 @@ public class InputValidator
                     var aircraft = _aircraftManager.GetPassengerAircraft(aircraftModel);
 
                     if (aircraft == null || !ValidateTicketReservation(ticketReservation, aircraft))
-                    {
                         return false;
-                    }
                 }
                 break;
 
             case "batch":
                 if (!validCommands["batch"].Contains(firstArgument) && commandArguments.Length != 2)
-                {
                     return false;
-                }
                 break;
 
             default:
@@ -457,13 +332,13 @@ public class InputValidator
             System.Console.WriteLine("not enough seats");
             return false;
         }
-        if (((reservation.SmallBaggageCount * SmallBaggageMaximumWeight) + (reservation.LargeBaggageCount * LargeBaggageMaximumWeight)) > aircraft.CargoWeight)
+        if (reservation.SmallBaggageCount * SmallBaggageMaximumWeight + reservation.LargeBaggageCount * LargeBaggageMaximumWeight > aircraft.CargoWeight)
         {
             System.Console.WriteLine("cargo weight exceeds aircraft cargo capacity");
             return false;
         }
 
-        if (((reservation.SmallBaggageCount * SmallBaggageMaximumVolume) + (reservation.LargeBaggageCount * LargeBaggageMaximumVolume)) > aircraft.CargoVolume)
+        if (reservation.SmallBaggageCount * SmallBaggageMaximumVolume + reservation.LargeBaggageCount * LargeBaggageMaximumVolume > aircraft.CargoVolume)
         {
             System.Console.WriteLine("cargo volume exceeds aircraft cargo capacity");
             return false;
@@ -482,5 +357,21 @@ public class InputValidator
 
         System.Console.WriteLine(" ERROR: The DepartureAirport of the new flight doesn't matches the ArrivalAirport of the last flight in the route!");
         return false;
+    }
+    private bool ContainsOnlyLettersAndSpaces(string value)
+    {
+        foreach (var c in value)
+            if (!char.IsLetter(c) && c != ' ')
+                return false;
+        return true;
+    }
+    private bool ContainsOnlyLettersOrDigits(string value)
+    {
+
+        foreach (var c in value)
+            if (!char.IsLetterOrDigit(c))
+                return false;
+
+        return true;
     }
 }
