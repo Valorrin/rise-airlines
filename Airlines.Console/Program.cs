@@ -34,10 +34,15 @@ public class Program
         var flightData = ReadFromFile(flightFilePath);
         var aircraftData = ReadFromFile(aircraftFilePath);
 
-        if (inputValidator.ValidateAirportData(airportData)) airportManager.Add(airportData);
-        if (inputValidator.ValidateAirlineData(airlineData)) airlineManager.Add(airlineData);
-        if (inputValidator.ValidateFlightData(flightData)) flightManager.Add(flightData);
-        if (inputValidator.ValidateAircraftData(aircraftData)) aircraftManager.Add(aircraftData);
+        inputValidator.ValidateAirportData(airportData);
+        inputValidator.ValidateAirlineData(airlineData);
+        inputValidator.ValidateFlightData(flightData);
+        inputValidator.ValidateAircraftData(aircraftData);
+
+        airportManager.Add(airportData);
+        airlineManager.Add(airlineData);
+        flightManager.Add(flightData);
+        aircraftManager.Add(aircraftData);
 
         printer.PrintAll();
 

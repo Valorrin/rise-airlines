@@ -3,6 +3,7 @@ using Airlines.Business.Models;
 using Airlines.Business.Models.Aircrafts;
 using Airlines.Business.Models.Reservations;
 using Airlines.Business.Utilities;
+using Airlines.Console.Exceptions;
 
 namespace Airlines.Console;
 public class InputValidator
@@ -29,7 +30,7 @@ public class InputValidator
         _routeManager = routeManager;
     }
 
-    public bool ValidateAirportData(string data)
+    public void ValidateAirportData(string data)
     {
         var dataParts = data.Split(", ").ToArray();
         var id = dataParts[0];
@@ -38,88 +39,103 @@ public class InputValidator
         var country = dataParts[3];
 
         if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name) || string.IsNullOrEmpty(city) || string.IsNullOrEmpty(country))
-            return false;
+        {
+            throw new InvalidInputException("Airport data cannot be empty.");
+        }
 
         if (_airportManager.Airports.ContainsKey(id))
         {
-            System.Console.WriteLine(" Error: An airport with the same ID already exists.");
-            return false;
+            throw new DuplicateIdException("An airport with the same ID already exists.");
         }
 
         if (id.Length is < 2 or > 4)
-            return false;
+        {
+            throw new InvalidIdLengthException("Airport ID must be between 2 and 4 characters.");
+        }
 
         if (!ContainsOnlyLettersOrDigits(id))
-            return false;
+        {
+            throw new InvalidIdCharactersException("Airport ID contains invalid characters. Only letters and digits are allowed.");
+        }
 
-        if (!ContainsOnlyLettersAndSpaces(name) || !ContainsOnlyLettersAndSpaces(city) || !ContainsOnlyLettersAndSpaces(country))
-            return false;
+        if (!ContainsOnlyLettersAndSpaces(name))
+        {
+            throw new InvalidAirportNameException("Airport name contains invalid characters. Only letters and spaces are allowed.");
+        }
 
-        return true;
+        if (!ContainsOnlyLettersAndSpaces(city))
+        {
+            throw new InvalidAirportCityException("Airport city contains invalid characters. Only letters and spaces are allowed.");
+        }
+
+        if (!ContainsOnlyLettersAndSpaces(country))
+        {
+            throw new InvalidAirportCountryException("Airport country contains invalid characters. Only letters and spaces are allowed.");
+        }
     }
-    public bool ValidateAirportData(IList<string> data)
+    public void ValidateAirportData(IList<string> data)
     {
         var ids = data.Select(line => line.Split(", ", 2)[0]);
 
         if (ids.Distinct().Count() != data.Count)
-            return false;
+        {
+            throw new DuplicateIdException("Airport IDs must be unique. Duplicate IDs are not allowed.");
+        }
 
         foreach (var line in data)
         {
-            var isValid = ValidateAirportData(line);
+            ValidateAirportData(line);
 
-            if (!isValid)
-                return false;
         }
-
-        return true;
     }
 
-    public bool ValidateAirlineData(string data)
+    public void ValidateAirlineData(string data)
     {
         var dataParts = data.Split(", ").ToArray();
         var id = dataParts[0];
         var name = dataParts[1];
 
         if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(name))
-            return false;
+        {
+            throw new InvalidInputException("Both ID and name are required for an airline.");
+        }
 
         if (_airlineManager.Airlines.ContainsKey(id))
         {
-            System.Console.WriteLine(" Error: An airline with the same ID already exists.");
-            return false;
+            throw new DuplicateIdException("An airline with the same ID already exists.");
         }
 
         if (id.Length is < 2 or > 4)
-            return false;
+        {
+            throw new InvalidIdLengthException("Airline ID must be between 2 and 4 characters.");
+        }
 
         if (!ContainsOnlyLettersOrDigits(id))
-            return false;
+        {
+            throw new InvalidIdCharactersException("Airline ID can only contain letters and digits.");
+        }
 
         if (!ContainsOnlyLettersAndSpaces(name))
-            return false;
-
-        return true;
+        {
+            throw new InvalidAirlineNameException("Airline name can only contain letters and spaces.");
+        }
     }
-    public bool ValidateAirlineData(IList<string> data)
+    public void ValidateAirlineData(IList<string> data)
     {
         var ids = data.Select(line => line.Split(", ", 2)[0]);
 
         if (ids.Distinct().Count() != data.Count)
-            return false;
+        {
+            throw new DuplicateIdException("Airline IDs must be unique. Duplicate IDs are not allowed.");
+        }
 
         foreach (var line in data)
         {
-            var isValid = ValidateAirlineData(line);
-
-            if (!isValid)
-                return false;
+            ValidateAirlineData(line);
         }
-
-        return true;
     }
 
-    public bool ValidateFlightData(string data)
+    public void ValidateFlightData(string data)
     {
         var dataParts = data.Split(", ").ToArray();
         var id = dataParts[0];
@@ -127,64 +143,66 @@ public class InputValidator
         var arrivalAirportId = dataParts[2];
 
         if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(departureAirportId) || string.IsNullOrEmpty(arrivalAirportId))
-            return false;
+        {
+            throw new InvalidInputException("Flight data cannot be empty.");
+        }
 
         if (_flightManager.Flights.Any(x => x.Id == id))
         {
-            System.Console.WriteLine(" Error: A flight with the same ID already exists.");
-            return false;
+            throw new DuplicateIdException("A flight with the same ID already exists.");
         }
 
         if (departureAirportId.Length is < 2 or > 4)
-            return false;
+        {
+            throw new InvalidIdLengthException("Departure airport ID length must be between 2 and 4 characters.");
+        }
+
         if (arrivalAirportId.Length is < 2 or > 4)
-            return false;
+        {
+            throw new InvalidIdLengthException("Arrival airport ID length must be between 2 and 4 characters.");
+        }
 
-        if (!ContainsOnlyLettersOrDigits(id) || !ContainsOnlyLettersOrDigits(departureAirportId) || !ContainsOnlyLettersOrDigits(arrivalAirportId))
-            return false;
+        if (!ContainsOnlyLettersOrDigits(id))
+        {
+            throw new InvalidIdCharactersException("Flight ID contains invalid characters. Only letters and digits are allowed.");
+        }
 
-        return true;
+        if (!ContainsOnlyLettersOrDigits(departureAirportId) || !ContainsOnlyLettersOrDigits(arrivalAirportId))
+        {
+            throw new InvalidIdCharactersException("Airport ID contains invalid characters. Only letters and digits are allowed.");
+        }
     }
-    public bool ValidateFlightData(IList<string> data)
+    public void ValidateFlightData(IList<string> data)
     {
         var ids = data.Select(line => line.Split(", ", 2)[0]);
 
         if (ids.Distinct().Count() != data.Count)
-            return false;
+        {
+            throw new DuplicateIdException("Flight IDs must be unique. Duplicate IDs are not allowed.");
+        }
 
         foreach (var line in data)
         {
-
-            var isValid = ValidateFlightData(line);
-
-            if (!isValid)
-                return false;
+            ValidateFlightData(line);
         }
-
-        return true;
     }
 
-    public bool ValidateAircraftData(string data)
+    public void ValidateAircraftData(string data)
     {
         var dataParts = data.Split(", ").ToArray();
         var name = dataParts[0];
 
         if (string.IsNullOrEmpty(name))
-            return false;
-
-        return true;
+        {
+            throw new InvalidInputException("Aircraft name cannot be empty.");
+        }
     }
-    public bool ValidateAircraftData(IList<string> data)
+    public void ValidateAircraftData(IList<string> data)
     {
         foreach (var line in data)
         {
-            var isValid = ValidateAircraftData(line);
-
-            if (!isValid)
-                return false;
+            ValidateAircraftData(line);
         }
-
-        return true;
     }
 
     public bool ValidateCommandInputData(string data)
@@ -332,13 +350,13 @@ public class InputValidator
             System.Console.WriteLine("not enough seats");
             return false;
         }
-        if (reservation.SmallBaggageCount * SmallBaggageMaximumWeight + reservation.LargeBaggageCount * LargeBaggageMaximumWeight > aircraft.CargoWeight)
+        if ((reservation.SmallBaggageCount * SmallBaggageMaximumWeight) + (reservation.LargeBaggageCount * LargeBaggageMaximumWeight) > aircraft.CargoWeight)
         {
             System.Console.WriteLine("cargo weight exceeds aircraft cargo capacity");
             return false;
         }
 
-        if (reservation.SmallBaggageCount * SmallBaggageMaximumVolume + reservation.LargeBaggageCount * LargeBaggageMaximumVolume > aircraft.CargoVolume)
+        if ((reservation.SmallBaggageCount * SmallBaggageMaximumVolume) + (reservation.LargeBaggageCount * LargeBaggageMaximumVolume) > aircraft.CargoVolume)
         {
             System.Console.WriteLine("cargo volume exceeds aircraft cargo capacity");
             return false;
