@@ -9,7 +9,7 @@ public class RouteCommandsTests
     public void Execute_AddsFlightToRouteManager()
     {
         var routeManager = new RouteManager();
-        var flight = new Flight();
+        var flight = new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" };
         var command = RouteAddCommand.CreateRouteAddCommand(routeManager, flight);
 
         command.Execute();
@@ -21,7 +21,7 @@ public class RouteCommandsTests
     public void CreateRouteAddCommand_ReturnsInstanceOfRouteAddCommand()
     {
         var routeManager = new RouteManager();
-        var flight = new Flight();
+        var flight = new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" };
 
         var command = RouteAddCommand.CreateRouteAddCommand(routeManager, flight);
 
@@ -33,7 +33,7 @@ public class RouteCommandsTests
     public void Execute_ClearsRoutes()
     {
         var routeManager = new RouteManager();
-        _ = routeManager.Routes.AddLast(new Flight());
+        _ = routeManager.Routes.AddLast(new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
 
         var command = RouteNewCommand.CreateRouteNewCommand(routeManager);
 
@@ -57,8 +57,8 @@ public class RouteCommandsTests
     public void Execute_PrintsRoutes()
     {
         var routeManager = new RouteManager();
-        routeManager.AddFlight(new Flight { Id = "F1" });
-        routeManager.AddFlight(new Flight { Id = "F2" });
+        routeManager.AddFlight(new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
+        routeManager.AddFlight(new Flight { Id = "F2", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
 
         var command = RoutePrintCommand.CreateRoutePrintCommand(routeManager);
 
@@ -87,8 +87,8 @@ public class RouteCommandsTests
     public void Execute_RemovesFlight()
     {
         var routeManager = new RouteManager();
-        routeManager.AddFlight(new Flight { Id = "F1" });
-        routeManager.AddFlight(new Flight { Id = "F2" });
+        routeManager.AddFlight(new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
+        routeManager.AddFlight(new Flight { Id = "F2", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
 
         var command = RouteRemoveCommand.CreateRouteRemoveCommand(routeManager);
 

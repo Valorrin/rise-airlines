@@ -34,10 +34,19 @@ public class Program
         var flightData = ReadFromFile(flightFilePath);
         var aircraftData = ReadFromFile(aircraftFilePath);
 
-        inputValidator.ValidateAirportData(airportData);
-        inputValidator.ValidateAirlineData(airlineData);
-        inputValidator.ValidateFlightData(flightData);
-        inputValidator.ValidateAircraftData(aircraftData);
+        try
+        {
+            inputValidator.ValidateAirportData(airportData);
+            inputValidator.ValidateAirlineData(airlineData);
+            inputValidator.ValidateFlightData(flightData);
+            inputValidator.ValidateAircraftData(aircraftData);
+        }
+        catch (Exception ex)
+        {
+            System.Console.WriteLine($" Error: {ex.Message}");
+            System.Console.WriteLine("Please ensure that the provided data files contain valid information.");
+            return;
+        }
 
         airportManager.Add(airportData);
         airlineManager.Add(airlineData);
@@ -50,6 +59,16 @@ public class Program
         {
             var commandInput = ReadCommandInput();
             var batchMode = batchManager.BatchMode;
+
+            try
+            {
+                inputValidator.ValidateCommandInputData(commandInput);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($" Error: {ex.Message}");
+                continue;
+            }
 
             inputValidator.ValidateCommandInputData(commandInput);
 

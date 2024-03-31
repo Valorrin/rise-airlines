@@ -330,7 +330,7 @@ public class InputValidator
         {
             throw new AircraftNotFoundException("No cargo aircraft available");
         }
-        if (reservation == null )
+        if (reservation == null)
         {
             throw new InvalidCargoReservationException("Cargo reservation is null.");
         }
