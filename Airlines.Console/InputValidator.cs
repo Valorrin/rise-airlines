@@ -205,7 +205,7 @@ public class InputValidator
         }
     }
 
-    public bool ValidateCommandInputData(string data)
+    public void ValidateCommandInputData(string data)
     {
         var commandParts = data.Split(' ', 2).ToArray();
         var action = commandParts[0];
@@ -222,8 +222,7 @@ public class InputValidator
 
         if (!validCommands.ContainsKey(action) || commandParts.Length < 2)
         {
-            System.Console.WriteLine("Invalid command");
-            return false;
+            throw new InvalidCommandException("The entered command is invalid.");
         }
 
         var commandArguments = commandParts[1].Split().ToArray();
@@ -236,7 +235,9 @@ public class InputValidator
 
             case "sort":
                 if (!validCommands["sort"].Contains(firstArgument))
-                    return false;
+                {
+                    throw new InvalidCommandArgumentException("Invalid sort option. Please use 'airlines', 'flights', or 'airports'.");
+                }
                 break;
 
             case "exist":
@@ -245,35 +246,39 @@ public class InputValidator
             case "list":
                 commandArguments = StringHelper.SplitBeforeLastElement(commandParts[1]);
                 if (commandArguments.Length != 2)
-                    return false;
+                {
+                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments. Please provide exactly two arguments for this command.");
+                }
                 break;
 
             case "route":
                 if (!validCommands["route"].Contains(firstArgument))
-                    return false;
+                {
+                    throw new InvalidCommandArgumentException("Invalid route command. Please use one of the following commands: 'new', 'add', 'remove', 'print'.");
+                }
 
                 if (firstArgument == "add")
                 {
                     var flightId = commandArguments.ElementAtOrDefault(1);
                     var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
 
-                    if (flightToAdd == null || !ValidateRouteFlight(flightToAdd))
-                    {
-                        System.Console.WriteLine($" Error: Flight does not exist.");
-                        return false;
-                    }
+                    ValidateRouteFlight(flightToAdd!);
+
+                    break;
                 }
                 else if (firstArgument == "remove")
                     if (_routeManager.Routes.Count == 0)
                     {
-                        System.Console.WriteLine("Error: No flights in route.");
-                        return false;
+                        throw new EmptyRouteException("No flights to remove.");
                     }
                 break;
 
             case "reserve":
                 if (!validCommands["reserve"].Contains(firstArgument))
-                    return false;
+                {
+                    throw new InvalidNumberOfArgumentsException("Invalid reserve command. Please use 'ticket' or 'cargo'.");
+
+                }
                 if (firstArgument == "cargo")
                 {
                     var flightId = commandArguments[1];
@@ -284,8 +289,7 @@ public class InputValidator
                     var aircraftModel = _flightManager.GetAircraftModel(flightId);
                     var aircraft = _aircraftManager.GetCargoAircraft(aircraftModel);
 
-                    if (aircraft == null || !ValidateCargoReservation(cargoReservation, aircraft))
-                        return false;
+                    ValidateCargoReservation(cargoReservation, aircraft!);
                 }
                 else if (firstArgument == "ticket")
                 {
@@ -299,82 +303,87 @@ public class InputValidator
                     var aircraftModel = _flightManager.GetAircraftModel(flightId);
                     var aircraft = _aircraftManager.GetPassengerAircraft(aircraftModel);
 
-                    if (aircraft == null || !ValidateTicketReservation(ticketReservation, aircraft))
-                        return false;
+                    ValidateTicketReservation(ticketReservation, aircraft!);
                 }
                 break;
 
             case "batch":
-                if (!validCommands["batch"].Contains(firstArgument) && commandArguments.Length != 2)
-                    return false;
+                if (!validCommands["batch"].Contains(firstArgument))
+                {
+                    throw new InvalidCommandArgumentException($"Invalid command argument. Batch command must be 'start', 'run', or 'cancel'.");
+                }
+
+                if (commandArguments.Length != 2)
+                {
+                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments. Please provide exactly two arguments for this batch command.");
+                }
                 break;
 
             default:
-                System.Console.WriteLine($"Invalid command: {action}");
-                return false;
+                throw new InvalidCommandException($"Invalid command: {action}");
         }
-
-        return true;
     }
 
-    private bool ValidateCargoReservation(CargoReservation reservation, CargoAircraft aircraft)
+    private void ValidateCargoReservation(CargoReservation reservation, CargoAircraft aircraft)
     {
-        if (reservation == null || aircraft == null)
+        if (aircraft == null)
         {
-            System.Console.WriteLine("Reservation or aircraft is null");
-            return false;
+            throw new AircraftNotFoundException("No cargo aircraft available");
+        }
+        if (reservation == null )
+        {
+            throw new InvalidCargoReservationException("Cargo reservation is null.");
         }
         if (reservation.CargoWeight > aircraft.CargoWeight)
         {
-            System.Console.WriteLine("cargo weight exceeds aircraft cargo capacity");
-            return false;
+            throw new InvalidCargoReservationException("Cargo weight exceeds aircraft cargo capacity.");
         }
         if (reservation.CargoVolume > aircraft.CargoVolume)
         {
-            System.Console.WriteLine("cargo volume exceeds aircraft cargo capacity");
-            return false;
+            throw new InvalidCargoReservationException("Cargo volume exceeds aircraft cargo capacity.");
         }
-
-        System.Console.WriteLine("Cargo validataion aproved");
-        return true;
     }
-    private bool ValidateTicketReservation(TicketReservation reservation, PassengerAircraft aircraft)
+    private void ValidateTicketReservation(TicketReservation reservation, PassengerAircraft aircraft)
     {
-        if (reservation == null || aircraft == null)
+        if (aircraft == null)
         {
-            System.Console.WriteLine("Reservation or aircraft is null");
-            return false;
+            throw new AircraftNotFoundException("No passanger aircraft available");
+        }
+        if (reservation == null)
+        {
+            throw new InvalidTicketReservationException("Ticket reservation cannot be null.");
         }
         if (reservation.Seats > aircraft.Seats)
         {
-            System.Console.WriteLine("not enough seats");
-            return false;
+            throw new InvalidTicketReservationException("Number of seats exceeds the aircraft's capacity.");
         }
         if ((reservation.SmallBaggageCount * SmallBaggageMaximumWeight) + (reservation.LargeBaggageCount * LargeBaggageMaximumWeight) > aircraft.CargoWeight)
         {
-            System.Console.WriteLine("cargo weight exceeds aircraft cargo capacity");
-            return false;
+            throw new InvalidTicketReservationException("Baggage weight exceeds the aircraft's cargo capacity.");
         }
 
         if ((reservation.SmallBaggageCount * SmallBaggageMaximumVolume) + (reservation.LargeBaggageCount * LargeBaggageMaximumVolume) > aircraft.CargoVolume)
         {
-            System.Console.WriteLine("cargo volume exceeds aircraft cargo capacity");
-            return false;
+            throw new InvalidTicketReservationException("Baggage volume exceeds the aircraft's cargo volume capacity.");
         }
-
-        return true;
     }
 
-    private bool ValidateRouteFlight(Flight flight)
+    private void ValidateRouteFlight(Flight flight)
     {
-        if (_routeManager.Routes.Count == 0)
-            return true;
+        if (flight == null)
+        {
+            throw new FlightNotFoundException("Flight does not exist.");
+        }
 
-        if (_routeManager.Routes.Last!.Value.ArrivalAirport == flight.DepartureAirport)
-            return true;
+        if (_routeManager.Routes.Count > 0)
+        {
+            throw new InvalidRouteException("The Route is not empty");
+        }
 
-        System.Console.WriteLine(" ERROR: The DepartureAirport of the new flight doesn't matches the ArrivalAirport of the last flight in the route!");
-        return false;
+        if (_routeManager.Routes.Last!.Value.ArrivalAirport != flight.DepartureAirport)
+        {
+            throw new InvalidRouteException("The DepartureAirport of the new flight does not match the ArrivalAirport of the last flight in the route.");
+        }
     }
     private bool ContainsOnlyLettersAndSpaces(string value)
     {

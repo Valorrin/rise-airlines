@@ -51,7 +51,9 @@ public class Program
             var commandInput = ReadCommandInput();
             var batchMode = batchManager.BatchMode;
 
-            if (inputValidator.ValidateCommandInputData(commandInput)) commandClient.ProcessCommand(commandInput, batchMode);
+            inputValidator.ValidateCommandInputData(commandInput);
+
+            commandClient.ProcessCommand(commandInput, batchMode);
         }
     }
 }
