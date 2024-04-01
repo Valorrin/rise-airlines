@@ -59,7 +59,7 @@ public class ValidateFlightDataTests
     public void ValidateFlightData_DuplicateId_ThrowsDuplicateIdException()
     {
         var data = "1, DEP, ARR ";
-        _flightManager.Flights.Add(new Flight() { Id = "1", DepartureAirport = "DEP", ArrivalAirport = "ARR"});
+        _flightManager.Flights.Add(new Flight() { Id = "1", DepartureAirport = "DEP", ArrivalAirport = "ARR" });
 
         _ = Assert.Throws<DuplicateIdException>(() => _inputValidator.ValidateFlightData(data));
     }
