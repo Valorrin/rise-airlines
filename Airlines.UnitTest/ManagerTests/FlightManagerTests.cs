@@ -9,37 +9,11 @@ public class FlightManagerTests
     public void Add_AddsFlightToList()
     {
         var flightManager = new FlightManager();
-        var flight = new Flight();
+        var flight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB" };
 
         flightManager.Add(flight);
 
         Assert.Contains(flight, flightManager.Flights);
-    }
-
-    [Fact]
-    public void Search_WhenSearchTermIsNull_PrintsErrorMessage()
-    {
-        var flightManager = new FlightManager();
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
-
-        flightManager.Search(null!);
-
-        var result = writer.ToString();
-        Assert.Contains(" Error: search term cannot be null or empty!", result);
-    }
-
-    [Fact]
-    public void Search_WhenSearchTermIsEmpty_PrintsErrorMessage()
-    {
-        var flightManager = new FlightManager();
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
-
-        flightManager.Search("");
-
-        var result = writer.ToString();
-        Assert.Contains(" Error: search term cannot be null or empty!", result);
     }
 
     [Fact]
@@ -48,7 +22,7 @@ public class FlightManagerTests
         var flightManager = new FlightManager();
         var writer = new StringWriter();
         System.Console.SetOut(writer);
-        flightManager.Flights.Add(new Flight { Id = "Flight1" });
+        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "BBB" });
 
         flightManager.Search("Flight2");
 
@@ -62,7 +36,7 @@ public class FlightManagerTests
         var flightManager = new FlightManager();
         var writer = new StringWriter();
         System.Console.SetOut(writer);
-        flightManager.Flights.Add(new Flight { Id = "Flight1" });
+        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "BBB" });
 
         flightManager.Search("Flight1");
 

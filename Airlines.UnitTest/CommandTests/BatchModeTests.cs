@@ -15,7 +15,7 @@ public class BatchModeTests
         var routeManager = new RouteManager();
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationsManager();
-        var commandClient = new CommandClient(invoker, airportManager, airlineManager, flightManager, routeManager, aircraftManager, reservationManager, batchManager);
+        var commandClient = new CommandClient(invoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager);
 
         commandClient.ProcessCommand("search searchTerm", batchMode: true);
 

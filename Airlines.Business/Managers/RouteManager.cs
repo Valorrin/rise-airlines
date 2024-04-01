@@ -11,20 +11,6 @@ public class RouteManager
 
     public void RemoveFlight() => Routes.RemoveLast();
 
-    public bool Validate(Flight flight)
-    {
-        if (Routes.Count == 0)
-            return true;
-
-        if (Routes.Last!.Value.ArrivalAirport == flight.DepartureAirport)
-            return true;
-
-        Console.WriteLine(" ERROR: The DepartureAirport of the new flight doesn't matches the ArrivalAirport of the last flight in the route!");
-        return false;
-    }
-
-    public bool IsEmpty() => Routes.Count == 0;
-
     public void Print()
     {
         foreach (var flight in Routes)
