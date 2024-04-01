@@ -96,6 +96,11 @@ public class InputValidator
 
     public void ValidateAirlineData(string data)
     {
+        if (string.IsNullOrEmpty(data))
+        {
+            throw new InvalidInputException("Airline data cannot be empty.");
+        }
+
         var dataParts = data.Split(", ").ToArray();
         var id = dataParts[0];
         var name = dataParts[1];
