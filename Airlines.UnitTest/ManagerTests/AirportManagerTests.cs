@@ -27,24 +27,6 @@ public class AirportManagerTests
     }
 
     [Fact]
-    public void Add_Duplicate_Airport_Fails()
-    {
-        var airportManager = new AirportManager();
-        var airport = new Airport
-        {
-            Id = "ABC",
-            Name = "Test Airport",
-            City = "Test City",
-            Country = "Test Country"
-        };
-
-        airportManager.Add(airport);
-        airportManager.Add(airport);
-
-        _ = Assert.Single(airportManager.Airports);
-    }
-
-    [Fact]
     public void Search_Airport_By_Name()
     {
         var airportManager = new AirportManager();
@@ -146,40 +128,5 @@ public class AirportManagerTests
         var output = writer.ToString().Trim();
         Assert.Contains("Test Airport 1", output);
         Assert.Contains("Test Airport 2", output);
-    }
-
-    [Fact]
-    public void IsIdUnique_NewId_ReturnsTrue()
-    {
-        var airportManager = new AirportManager();
-        var result = airportManager.IsIdUnique("A1");
-        Assert.True(result);
-    }
-
-    [Fact]
-    public void IsIdUnique_ExistingId_ReturnsFalse()
-    {
-        var airportManager = new AirportManager();
-        airportManager.Airports.Add("A1", new Airport());
-        var result = airportManager.IsIdUnique("A1");
-        Assert.False(result);
-    }
-
-    [Fact]
-    public void Add_UniqueIds_AddsAirport()
-    {
-        var airportManager = new AirportManager();
-        var airportData = new List<string> { "A1, Airport1, City1, Country1", "B2, Airport2, City2, Country2", "C3, Airport3, City3, Country3" };
-        airportManager.Add(airportData);
-        Assert.Equal(3, airportManager.Airports.Count);
-    }
-
-    [Fact]
-    public void Add_DuplicateIds_DoesNotAddAirport()
-    {
-        var airportManager = new AirportManager();
-        airportManager.Add(["A1, Airport1, City1, Country1", "A1, Airport2, City2, Country2"]);
-        airportManager.Add(["A1, Airport3, City3, Country3"]);
-        _ = Assert.Single(airportManager.Airports);
     }
 }

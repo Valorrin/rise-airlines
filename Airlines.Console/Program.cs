@@ -1,8 +1,9 @@
 ﻿using static Airlines.Console.Utilities.InputReader;
-using static Airlines.Console.Utilities.Printer;
 using static Airlines.Console.Utilities.FilePathHelper;
 using Airlines.Business.Managers;
 using Airlines.Business.Commands;
+using Airlines.Console.Utilities;
+using Airlines.Console;
 
 namespace Airlines;
 public class Program
@@ -17,6 +18,12 @@ public class Program
         var reservationManager = new ReservationsManager();
         var batchManager = new BatchManager();
 
+        var inputValidator = new InputValidator(airportManager, airlineManager, flightManager, aircraftManager, routeManager);
+        var printer = new Printer(airportManager, airlineManager, flightManager, aircraftManager);
+
+        var commandInvoker = new CommandInvoker();
+        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager);
+
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");
         var flightFilePath = GetFilePath("flights.csv");
@@ -27,21 +34,43 @@ public class Program
         var flightData = ReadFromFile(flightFilePath);
         var aircraftData = ReadFromFile(aircraftFilePath);
 
+        try
+        {
+            inputValidator.ValidateAirportData(airportData);
+            inputValidator.ValidateAirlineData(airlineData);
+            inputValidator.ValidateFlightData(flightData);
+            inputValidator.ValidateAircraftData(aircraftData);
+        }
+        catch (Exception ex)
+        {
+            System.Console.WriteLine($" Error: {ex.Message}");
+            System.Console.WriteLine("Please ensure that the provided data files contain valid information.");
+            return;
+        }
+
         airportManager.Add(airportData);
         airlineManager.Add(airlineData);
         flightManager.Add(flightData);
         aircraftManager.Add(aircraftData);
 
-        PrintAll(airportManager, airlineManager, flightManager, aircraftManager);
-
-        var commandInvoker = new CommandInvoker();
-        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, aircraftManager, reservationManager, batchManager);
+        printer.PrintAll();
 
         while (true)
         {
-            var command = ReadCommandInput();
+            var commandInput = ReadCommandInput();
             var batchMode = batchManager.BatchMode;
-            commandClient.ProcessCommand(command, batchMode);
+
+            try
+            {
+                inputValidator.ValidateCommandInputData(commandInput);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine($" Error: {ex.Message}");
+                continue;
+            }
+
+            commandClient.ProcessCommand(commandInput, batchMode);
         }
     }
 }

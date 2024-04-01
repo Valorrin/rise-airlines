@@ -2,51 +2,6 @@
 
 public class Airline
 {
-    private string? _id;
-    private string? _name;
-    public string Id
-    {
-        get => _id!;
-        set
-        {
-            if (IsValidId(value))
-                _id = value;
-        }
-    }
-    public string Name
-    {
-        get => _name!;
-        set
-        {
-            if (IsValidName(value))
-                _name = value;
-        }
-    }
-
-    private static bool IsValidId(string id)
-    {
-        if (string.IsNullOrEmpty(id))
-            return false;
-
-        if (id.Length is < 2 or > 4)
-            return false;
-
-        foreach (var c in id)
-            if (!char.IsLetterOrDigit(c))
-                return false;
-
-        return true;
-    }
-
-    private static bool IsValidName(string str)
-    {
-        if (string.IsNullOrEmpty(str))
-            return false;
-
-        foreach (var c in str)
-            if (char.IsLetter(c) || c == ' ')
-                return true;
-
-        return false;
-    }
+    public required string Id { get; set; }
+    public required string Name { get; set; }
 }

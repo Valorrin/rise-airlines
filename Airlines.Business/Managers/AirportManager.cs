@@ -17,22 +17,8 @@ public class AirportManager
         AirportNames = [];
     }
 
-    public bool IsIdUnique(string id)
-    {
-        if (Airports.ContainsKey(id))
-        {
-            Console.WriteLine(" Error: An airport with the same ID already exists.");
-            return false;
-        }
-
-        return true;
-    }
-
     public void Add(Airport airport)
     {
-        if (!IsIdUnique(airport.Id))
-            return;
-
         if (!AirportsByCity.ContainsKey(airport.City))
             AirportsByCity[airport.City] = [];
         _ = AirportsByCity[airport.City].Add(airport);
@@ -65,9 +51,6 @@ public class AirportManager
 
     public void Search(string searchTerm)
     {
-        if (string.IsNullOrEmpty(searchTerm))
-            Console.WriteLine(" Error: search term cannot be null or empty!");
-
         var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList(); ;
 
         if (BinarySearch(airportNames, searchTerm) >= 0)
