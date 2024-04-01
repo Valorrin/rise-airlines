@@ -17,11 +17,11 @@ public class FlightTreeNode
     public void AddChild(FlightTreeNode child) => Children.Add(child);
 }
 
-public class FlightTree
+public class FlightRouteTree
 {
     public FlightTreeNode Root { get; }
 
-    public FlightTree(string startAirport) => Root = new FlightTreeNode(startAirport);
+    public FlightRouteTree(string startAirport) => Root = new FlightTreeNode(startAirport);
 
     public void AddFlight(Flight flight) => AddFlightRecursive(Root, flight);
 
