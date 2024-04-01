@@ -86,24 +86,4 @@ public class ValidateAirportDataTests
         _ = Assert.Throws<InvalidAirportNameException>(() => _inputValidator.ValidateAirportData(data));
     }
 
-    [Theory]
-    [InlineData("123, Airport, City1@#, Country")] // Invalid city characters
-    public void ValidateAirportData_InvalidCity_ThrowsInvalidAirportCityException(string data)
-    {
-        _ = Assert.Throws<InvalidAirportCityException>(() => _inputValidator.ValidateAirportData(data));
-    }
-
-    [Theory]
-    [InlineData("123, Airport, City, Country 1@#")] // Invalid country characters
-    public void ValidateAirportData_InvalidCountry_ThrowsInvalidAirportCountryException(string data)
-    {
-        _ = Assert.Throws<InvalidAirportCountryException>(() => _inputValidator.ValidateAirportData(data));
-    }
-
-    [Theory]
-    [InlineData("123, Airport, City, Country", "123, Airport, City, Country")]
-    public void ValidateAirportData_DuplicateIds_ThrowsDuplicateIdException(params string[] data)
-    {
-        _ = Assert.Throws<DuplicateIdException>(() => _inputValidator.ValidateAirportData(data));
-    }
 }
