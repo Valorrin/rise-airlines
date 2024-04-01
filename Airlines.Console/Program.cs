@@ -70,8 +70,6 @@ public class Program
                 continue;
             }
 
-            inputValidator.ValidateCommandInputData(commandInput);
-
             commandClient.ProcessCommand(commandInput, batchMode);
         }
     }

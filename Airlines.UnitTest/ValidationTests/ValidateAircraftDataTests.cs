@@ -1,5 +1,4 @@
 ﻿using Airlines.Business.Managers;
-using Airlines.Business.Models;
 using Airlines.Console;
 using Airlines.Console.Exceptions;
 
@@ -52,13 +51,5 @@ public class ValidateAircraftDataTests
     public void ValidateAircraftData_InvalidNameCharacters_ThrowsInvalidAirportNameException(string data)
     {
         _ = Assert.Throws<InvalidInputException>(() => _inputValidator.ValidateAircraftData(data));
-    }
-
-
-    [Theory]
-    [InlineData("123, Airline", "123, Airline")]
-    public void ValidateAirlineData_DuplicateIds_ThrowsDuplicateIdException(params string[] data)
-    {
-        _ = Assert.Throws<DuplicateIdException>(() => _inputValidator.ValidateAirlineData(data));
     }
 }

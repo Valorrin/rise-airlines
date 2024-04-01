@@ -39,6 +39,6 @@ public class FlightManager
     public string GetAircraftModel(string flightId)
     {
         var aircraftModel = Flights.Where(f => f.Id == flightId).Select(f => f.AircraftModel).FirstOrDefault();
-        return aircraftModel ?? throw new Exception("Flight not found");
+        return aircraftModel!;
     }
 }

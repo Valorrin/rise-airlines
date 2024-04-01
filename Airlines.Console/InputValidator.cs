@@ -259,6 +259,11 @@ public class InputValidator
                 break;
 
             case "list":
+                if (commandParts[1].Split(" ").ToArray().Length < 2)
+                {
+                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments. Please provide exactly two arguments for this command.");
+                }
+
                 commandArguments = StringHelper.SplitBeforeLastElement(commandParts[1]);
                 if (commandArguments.Length != 2)
                 {
@@ -296,6 +301,11 @@ public class InputValidator
                 }
                 if (firstArgument == "cargo")
                 {
+                    if (commandArguments.Length != 4)
+                    {
+                        throw new InvalidNumberOfArgumentsException("Invalid reserve command. The arguments must be exactly 3 (flight Id, cargo weight, cargo volume).");
+                    }
+
                     var flightId = commandArguments[1];
                     var cargoWeight = double.Parse(commandArguments[2]);
                     var cargoVolume = double.Parse(commandArguments[3]);
@@ -308,6 +318,11 @@ public class InputValidator
                 }
                 else if (firstArgument == "ticket")
                 {
+                    if (commandArguments.Length != 5)
+                    {
+                        throw new InvalidNumberOfArgumentsException("Invalid reserve command. The arguments must be exactly 4 (flight Id, seats, small baggage count, large baggage count).");
+                    }
+
                     var flightId = commandArguments[1];
                     var seats = int.Parse(commandArguments[2]);
                     var smallBaggageCount = int.Parse(commandArguments[3]);
@@ -328,7 +343,7 @@ public class InputValidator
                     throw new InvalidCommandArgumentException($"Invalid command argument. Batch command must be 'start', 'run', or 'cancel'.");
                 }
 
-                if (commandArguments.Length != 2)
+                if (commandArguments.Length != 1)
                 {
                     throw new InvalidNumberOfArgumentsException("Invalid number of arguments. Please provide exactly two arguments for this batch command.");
                 }

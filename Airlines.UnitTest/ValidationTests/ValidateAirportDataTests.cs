@@ -85,5 +85,4 @@ public class ValidateAirportDataTests
     {
         _ = Assert.Throws<InvalidAirportNameException>(() => _inputValidator.ValidateAirportData(data));
     }
-
 }
