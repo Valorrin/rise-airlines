@@ -230,7 +230,7 @@ public class InputValidator
             { "sort", ["airports", "airlines", "flights"] },
             { "exist", [] },
             { "list", [] },
-            { "route", ["new", "add", "remove", "print"] },
+            { "route", ["new", "add", "remove", "print", "find"] },
             { "reserve", ["cargo", "ticket"] },
             { "batch", ["start", "run", "cancel"] }
         };
@@ -287,10 +287,18 @@ public class InputValidator
                     break;
                 }
                 else if (firstArgument == "remove")
+                {
                     if (_routeManager.Routes.Count == 0)
                     {
                         throw new EmptyRouteException("No flights to remove.");
                     }
+                }
+                else if (firstArgument == "find")
+                    if (commandArguments.Length < 2)
+                    {
+                        throw new EmptyRouteException("Plese provide destination airport.");
+                    }
+
                 break;
 
             case "reserve":

@@ -98,6 +98,7 @@ public class FlightRouteTree
 
         if (routeExists)
         {
+            route.Reverse();
             Console.WriteLine($"Route to {destinationAirport} found:");
             foreach (var flight in route)
             {

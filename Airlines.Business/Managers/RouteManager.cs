@@ -26,5 +26,7 @@ public class RouteManager
 
     public void RemoveFlight(string startAirportId) => Routes[startAirportId].RemoveLastFlight();
 
+    public void Find(string startAirportId, string destinationAirportId) => Routes[startAirportId].FindRouteAndDisplay(destinationAirportId);
+
     public void Print(string startAirportId) => Routes[startAirportId].PrintRoute();
 }

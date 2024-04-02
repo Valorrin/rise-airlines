@@ -73,12 +73,19 @@ public class CommandClient
         }
         else if (action == "route")
         {
+            var destinationAirportId = string.Empty;
+
+            if (commandArguments[0] == "find")
+            {
+                destinationAirportId = commandParts[1].Split(" ", 2).LastOrDefault();
+
+            }
             var commandAction = commandArguments[0];
             var flightId = commandArguments[1];
             var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
-            var startAirportId = _flightManager.GetFlightById(flightId).Id;
+            var startAirportId = "DFW";
 
-            ProcessRouteCommand(commandAction, flightToAdd!, startAirportId, batchMode);
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirportId, destinationAirportId!, batchMode);
         }
         else if (action == "reserve")
         {
@@ -166,7 +173,7 @@ public class CommandClient
             _invoker.ExecuteCommand(listCommand);
     }
 
-    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, string startAirportId, bool batchMode)
+    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, string startAirportId, string destinationAirportId, bool batchMode)
     {
 
         ICommand? routeCommand = null;
@@ -188,6 +195,11 @@ public class CommandClient
             case "print":
                 routeCommand = RoutePrintCommand.CreateRoutePrintCommand(_routeManager, startAirportId);
                 break;
+
+            case "find":
+                routeCommand = RouteFindCommand.CreateRouteFindCommand(_routeManager, startAirportId, destinationAirportId);
+                break;
+
             default:
                 break;
         }
