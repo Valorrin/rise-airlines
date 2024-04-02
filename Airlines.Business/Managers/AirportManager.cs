@@ -1,5 +1,4 @@
 ﻿using Airlines.Business.Models;
-using static Airlines.Business.Utilities.Search;
 
 namespace Airlines.Business.Managers;
 public class AirportManager
@@ -51,11 +50,26 @@ public class AirportManager
 
     public void Search(string searchTerm)
     {
-        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList(); ;
+        var airportNames = Airports.Values.Where(airline => airline.Name == searchTerm).ToList();
 
-        if (BinarySearch(airportNames, searchTerm) >= 0)
+        if (airportNames.Count > 0)
             Console.WriteLine($" {searchTerm} is Airport name.");
     }
+
+    public List<string> SortByName()
+    {
+        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
+
+        return airportNames;
+    }
+
+    public List<string> SortDescByName()
+    {
+        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
+
+        return airportNames;
+    }
+
 
     public bool Exist(string name) => AirportNames.Contains(name);
 

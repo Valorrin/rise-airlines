@@ -3,6 +3,8 @@ using Airlines.Business.Managers;
 using Airlines.Business.Models.Reservations;
 
 namespace Airlines.UnitTests.CommandTests;
+
+[Collection("Sequential")]
 public class ReserveCommandsTests
 {
     [Fact]

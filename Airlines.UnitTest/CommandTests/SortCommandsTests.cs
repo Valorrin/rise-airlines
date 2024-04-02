@@ -3,6 +3,8 @@ using Airlines.Business.Managers;
 using Airlines.Business.Models;
 
 namespace Airlines.UnitTests.CommandTests;
+
+[Collection("Sequential")]
 public class SortCommandsTests
 {
     [Fact]
