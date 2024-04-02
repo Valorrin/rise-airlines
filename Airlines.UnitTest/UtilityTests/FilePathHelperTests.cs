@@ -1,6 +1,9 @@
 ﻿using Airlines.Console.Utilities;
 
 namespace Airlines.UnitTests.UtilityTests;
+
+
+[Collection("Sequential")]
 public class FilePathHelperTests
 {
     [Fact]

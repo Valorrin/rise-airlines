@@ -4,6 +4,7 @@ using Airlines.Console.Exceptions;
 
 namespace Airlines.UnitTests.ConsoleTests;
 
+[Collection("Sequential")]
 public class ValidateCommandInputDataTests
 {
     private readonly AirportManager _airportManager;
@@ -77,14 +78,5 @@ public class ValidateCommandInputDataTests
     public void ValidateCommandInputData_InvalidCommandArguments_ThrowsInvalidNumberOfArgumentsException(string data)
     {
         _ = Assert.Throws<InvalidNumberOfArgumentsException>(() => _inputValidator.ValidateCommandInputData(data));
-    }
-
-    [Fact]
-    public void ValidateCommandInputData_EmptyRouteForRemoveCommand_ThrowsEmptyRouteException()
-    {
-        var data = "route remove";
-        _routeManager.Routes.Clear();
-
-        _ = Assert.Throws<EmptyRouteException>(() => _inputValidator.ValidateCommandInputData(data));
     }
 }

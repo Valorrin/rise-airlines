@@ -73,11 +73,20 @@ public class CommandClient
         }
         else if (action == "route")
         {
+            var startAirportId = commandArguments.ElementAtOrDefault(1);
+            var destinationAirportId = commandArguments.ElementAtOrDefault(2);
+            FlightRouteTree? flightRouteTree = null;
+
+            if (startAirportId != null)
+            {
+                flightRouteTree = new FlightRouteTree(startAirportId);
+            }
+
             var commandAction = commandArguments[0];
             var flightId = commandArguments[1];
             var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
 
-            ProcessRouteCommand(commandAction, flightToAdd!, batchMode);
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirportId!, destinationAirportId!, flightRouteTree!, batchMode);
         }
         else if (action == "reserve")
         {
@@ -165,7 +174,7 @@ public class CommandClient
             _invoker.ExecuteCommand(listCommand);
     }
 
-    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, bool batchMode)
+    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, string startAirportId, string destinationAirportId, FlightRouteTree flightRouteTree, bool batchMode)
     {
 
         ICommand? routeCommand = null;
@@ -173,20 +182,25 @@ public class CommandClient
         switch (commandAction)
         {
             case "new":
-                routeCommand = RouteNewCommand.CreateRouteNewCommand(_routeManager);
+                routeCommand = RouteNewCommand.CreateRouteNewCommand(_routeManager, flightRouteTree);
                 break;
 
             case "add":
-                routeCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd);
+                routeCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd, startAirportId);
                 break;
 
             case "remove":
-                routeCommand = RouteRemoveCommand.CreateRouteRemoveCommand(_routeManager);
+                routeCommand = RouteRemoveCommand.CreateRouteRemoveCommand(_routeManager, startAirportId);
                 break;
 
             case "print":
-                routeCommand = RoutePrintCommand.CreateRoutePrintCommand(_routeManager);
+                routeCommand = RoutePrintCommand.CreateRoutePrintCommand(_routeManager, startAirportId);
                 break;
+
+            case "find":
+                routeCommand = RouteFindCommand.CreateRouteFindCommand(_routeManager, startAirportId, destinationAirportId);
+                break;
+
             default:
                 break;
         }

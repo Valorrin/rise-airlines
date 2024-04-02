@@ -230,7 +230,7 @@ public class InputValidator
             { "sort", ["airports", "airlines", "flights"] },
             { "exist", [] },
             { "list", [] },
-            { "route", ["new", "add", "remove", "print"] },
+            { "route", ["new", "add", "remove", "print", "find"] },
             { "reserve", ["cargo", "ticket"] },
             { "batch", ["start", "run", "cancel"] }
         };
@@ -287,10 +287,35 @@ public class InputValidator
                     break;
                 }
                 else if (firstArgument == "remove")
+                {
+                    if (commandArguments.Length != 2)
+                    {
+                        throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route remove <Departure Airport ID>");
+                    }
+
                     if (_routeManager.Routes.Count == 0)
                     {
                         throw new EmptyRouteException("No flights to remove.");
                     }
+
+                    if (_routeManager.Routes.ContainsKey(commandArguments[2]))
+                    {
+                        throw new KeyNotFoundException("Nothing to remove. The airport does not exist!");
+                    }
+                }
+                else if (firstArgument == "print")
+                {
+                    if (commandArguments.Length != 2)
+                    {
+                        throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route print <Departure Airport ID>");
+                    }
+                }
+                else if (firstArgument == "find")
+                    if (commandArguments.Length < 3)
+                    {
+                        throw new InvalidNumberOfArgumentsException("Plese provide destination airport.");
+                    }
+
                 break;
 
             case "reserve":
@@ -408,11 +433,6 @@ public class InputValidator
         if (_routeManager.Routes.Count > 0)
         {
             throw new InvalidRouteException("The Route is not empty");
-        }
-
-        if (_routeManager.Routes.Last!.Value.ArrivalAirport != flight.DepartureAirport)
-        {
-            throw new InvalidRouteException("The DepartureAirport of the new flight does not match the ArrivalAirport of the last flight in the route.");
         }
     }
     private bool ContainsOnlyLettersAndSpaces(string value)

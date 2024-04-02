@@ -2,8 +2,9 @@
 using Airlines.Console;
 using Airlines.Console.Exceptions;
 
-namespace Airlines.UnitTests.ConsoleTests;
+namespace Airlines.UnitTests.ValidationTests;
 
+[Collection("Sequential")]
 public class ValidateAircraftDataTests
 {
     private readonly AirportManager _airportManager;

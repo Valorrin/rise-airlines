@@ -3,6 +3,7 @@ using Airlines.Business.Models.Aircrafts;
 
 namespace Airlines.UnitTests.ManagerTests;
 
+[Collection("Sequential")]
 public class AircraftManagerTests
 {
     [Fact]
