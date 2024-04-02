@@ -2,7 +2,7 @@
 using Airlines.Console;
 using Airlines.Console.Exceptions;
 
-namespace Airlines.UnitTests.ConsoleTests;
+namespace Airlines.UnitTests.ValidationTests;
 
 public class ValidateAircraftDataTests
 {

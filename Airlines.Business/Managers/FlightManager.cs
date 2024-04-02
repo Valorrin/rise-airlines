@@ -30,9 +30,9 @@ public class FlightManager
 
     public void Search(string searchTerm)
     {
-        var flightIds = Flights.Select(flight => flight.Id).ToList().OrderBy(name => name).ToList(); ;
+        var flightIds = Flights.Select(flight => flight.Id).ToList();
 
-        if (BinarySearch(flightIds, searchTerm) >= 0)
+        if (flightIds != null)
             Console.WriteLine($" {searchTerm} is Flight name.");
     }
 

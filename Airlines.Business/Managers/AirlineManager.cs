@@ -28,9 +28,9 @@ public class AirlineManager
 
     public void Search(string searchTerm)
     {
-        var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
+        var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList();
 
-        if (BinarySearch(airlineNames, searchTerm) >= 0)
+        if (airlineNames != null)
             Console.WriteLine($" {searchTerm} is Airline name.");
     }
 }

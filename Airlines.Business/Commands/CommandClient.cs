@@ -86,7 +86,7 @@ public class CommandClient
             var flightId = commandArguments[1];
             var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
 
-            ProcessRouteCommand(commandAction, flightToAdd!, startAirportId!, destinationAirportId!, flightRouteTree!,  batchMode);
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirportId!, destinationAirportId!, flightRouteTree!, batchMode);
         }
         else if (action == "reserve")
         {

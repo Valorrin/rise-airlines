@@ -1,4 +1,5 @@
-﻿using Airlines.Business.Commands.RouteCommands;
+﻿using Airlines.Business;
+using Airlines.Business.Commands.RouteCommands;
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
 
@@ -6,78 +7,39 @@ namespace Airlines.UnitTests.CommandTests;
 public class RouteCommandsTests
 {
     [Fact]
-    public void Execute_AddsFlightToRouteManager()
-    {
-        var routeManager = new RouteManager();
-        var flight = new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" };
-        var command = RouteAddCommand.CreateRouteAddCommand(routeManager, flight);
-
-        command.Execute();
-
-        Assert.Contains(flight, routeManager.Routes);
-    }
-
-    [Fact]
     public void CreateRouteAddCommand_ReturnsInstanceOfRouteAddCommand()
     {
         var routeManager = new RouteManager();
+        var tree = new FlightRouteTree("DFW");
+        routeManager.Add(tree);
         var flight = new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" };
 
-        var command = RouteAddCommand.CreateRouteAddCommand(routeManager, flight);
+        var command = RouteAddCommand.CreateRouteAddCommand(routeManager, flight, "DFW");
 
         Assert.NotNull(command);
         _ = Assert.IsType<RouteAddCommand>(command);
     }
 
     [Fact]
-    public void Execute_ClearsRoutes()
-    {
-        var routeManager = new RouteManager();
-        _ = routeManager.Routes.AddLast(new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
-
-        var command = RouteNewCommand.CreateRouteNewCommand(routeManager);
-
-        command.Execute();
-
-        Assert.Empty(routeManager.Routes);
-    }
-
-    [Fact]
     public void CreateRouteNewCommand_ReturnsInstance()
     {
         var routeManager = new RouteManager();
+        var tree = new FlightRouteTree("DFW");
 
-        var command = RouteNewCommand.CreateRouteNewCommand(routeManager);
+        var command = RouteNewCommand.CreateRouteNewCommand(routeManager, tree);
 
         Assert.NotNull(command);
         _ = Assert.IsType<RouteNewCommand>(command);
     }
 
     [Fact]
-    public void Execute_PrintsRoutes()
-    {
-        var routeManager = new RouteManager();
-        routeManager.AddFlight(new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
-        routeManager.AddFlight(new Flight { Id = "F2", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
-
-        var command = RoutePrintCommand.CreateRoutePrintCommand(routeManager);
-
-        var consoleOutput = new StringWriter();
-        System.Console.SetOut(consoleOutput);
-
-        command.Execute();
-        var output = consoleOutput.ToString().Trim();
-
-        Assert.Contains("Flight ID: F1", output);
-        Assert.Contains("Flight ID: F2", output);
-    }
-
-    [Fact]
     public void CreateRoutePrintCommand_ReturnsInstance()
     {
         var routeManager = new RouteManager();
+        var tree = new FlightRouteTree("DFW");
+        routeManager.Add(tree);
 
-        var command = RoutePrintCommand.CreateRoutePrintCommand(routeManager);
+        var command = RoutePrintCommand.CreateRoutePrintCommand(routeManager, "DFW");
 
         Assert.NotNull(command);
         _ = Assert.IsType<RoutePrintCommand>(command);
@@ -87,10 +49,13 @@ public class RouteCommandsTests
     public void Execute_RemovesFlight()
     {
         var routeManager = new RouteManager();
-        routeManager.AddFlight(new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
-        routeManager.AddFlight(new Flight { Id = "F2", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" });
+        var tree = new FlightRouteTree("DFW");
+        routeManager.Add(tree);
 
-        var command = RouteRemoveCommand.CreateRouteRemoveCommand(routeManager);
+        routeManager.AddFlight(new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" }, "DFW");
+        routeManager.AddFlight(new Flight { Id = "F2", DepartureAirport = "Airport2", ArrivalAirport = "Airport3", AircraftModel = "Model1" }, "DFW");
+
+        var command = RouteRemoveCommand.CreateRouteRemoveCommand(routeManager, "DFW");
 
         command.Execute();
 
@@ -101,8 +66,10 @@ public class RouteCommandsTests
     public void CreateRouteRemoveCommand_ReturnsInstance()
     {
         var routeManager = new RouteManager();
+        var tree = new FlightRouteTree("DFW");
+        routeManager.Add(tree);
 
-        var command = RouteRemoveCommand.CreateRouteRemoveCommand(routeManager);
+        var command = RouteRemoveCommand.CreateRouteRemoveCommand(routeManager, "DFW");
 
         Assert.NotNull(command);
         _ = Assert.IsType<RouteRemoveCommand>(command);

@@ -1,5 +1,4 @@
 ﻿using Airlines.Business.Managers;
-using Airlines.Business.Models;
 
 namespace Airlines.Business.Commands.RouteCommands;
 public class RouteNewCommand : ICommand

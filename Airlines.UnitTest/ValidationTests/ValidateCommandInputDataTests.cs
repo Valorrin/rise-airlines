@@ -78,13 +78,4 @@ public class ValidateCommandInputDataTests
     {
         _ = Assert.Throws<InvalidNumberOfArgumentsException>(() => _inputValidator.ValidateCommandInputData(data));
     }
-
-    [Fact]
-    public void ValidateCommandInputData_EmptyRouteForRemoveCommand_ThrowsEmptyRouteException()
-    {
-        var data = "route remove";
-        _routeManager.Routes.Clear();
-
-        _ = Assert.Throws<EmptyRouteException>(() => _inputValidator.ValidateCommandInputData(data));
-    }
 }

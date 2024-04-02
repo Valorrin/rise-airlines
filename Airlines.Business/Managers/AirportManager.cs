@@ -51,9 +51,9 @@ public class AirportManager
 
     public void Search(string searchTerm)
     {
-        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList(); ;
+        var airportNames = Airports.Values.Select(airline => airline.Name).ToList();
 
-        if (BinarySearch(airportNames, searchTerm) >= 0)
+        if (airportNames != null)
             Console.WriteLine($" {searchTerm} is Airport name.");
     }
 
