@@ -14,17 +14,17 @@ public class AircraftManager
         PrivateAircrafts = [];
     }
 
-    public void Add(CargoAircraft cargoAircraft) => CargoAircrafts.Add(cargoAircraft);
-    public void Add(PassengerAircraft passengerAircraft) => PassengerAircrafts.Add(passengerAircraft);
-    public void Add(PrivateAircraft privateAircraft) => PrivateAircrafts.Add(privateAircraft);
-    public void Add(IList<string> aircraftData)
+    internal void Add(CargoAircraft cargoAircraft) => CargoAircrafts.Add(cargoAircraft);
+    internal void Add(PassengerAircraft passengerAircraft) => PassengerAircrafts.Add(passengerAircraft);
+    internal void Add(PrivateAircraft privateAircraft) => PrivateAircrafts.Add(privateAircraft);
+    internal void Add(IList<string> aircraftData)
     {
         foreach (var aircraft in aircraftData)
         {
             Add(aircraft);
         }
     }
-    public void Add(string aircraftData)
+    internal void Add(string aircraftData)
     {
         var aircraftDataParts = aircraftData.Split(", ").ToArray();
         var model = aircraftDataParts[0];
@@ -55,19 +55,19 @@ public class AircraftManager
         }
     }
 
-    public CargoAircraft? GetCargoAircraft(string model)
+    internal CargoAircraft? GetCargoAircraft(string model)
     {
         var cargoAircraft = CargoAircrafts.FirstOrDefault(a => a.Model == model);
         return cargoAircraft ?? null;
     }
 
-    public PassengerAircraft? GetPassengerAircraft(string model)
+    internal PassengerAircraft? GetPassengerAircraft(string model)
     {
         var passengerAircraft = PassengerAircrafts.FirstOrDefault(a => a.Model == model);
         return passengerAircraft ?? null;
     }
 
-    public PrivateAircraft? GetPrivateAircraft(string model)
+    internal PrivateAircraft? GetPrivateAircraft(string model)
     {
         var privateAircraft = PrivateAircrafts.FirstOrDefault(a => a.Model == model);
         return privateAircraft ?? null;

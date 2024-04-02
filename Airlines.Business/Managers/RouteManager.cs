@@ -7,9 +7,9 @@ public class RouteManager
 
     public RouteManager() => Routes = [];
 
-    public void Add(FlightRouteTree route) => Routes.Add(route.Root.Airport, route);
+    internal void Add(FlightRouteTree route) => Routes.Add(route.Root.Airport, route);
 
-    public void Add(List<string> routeData, FlightManager flightManager)
+    internal void Add(List<string> routeData, FlightManager flightManager)
     {
         var newRouteTree = new FlightRouteTree(routeData[0]);
 
@@ -22,11 +22,11 @@ public class RouteManager
         Add(newRouteTree);
     }
 
-    public void AddFlight(Flight flight, string startAirportId) => Routes[startAirportId].AddFlight(flight);
+    internal void AddFlight(Flight flight, string startAirportId) => Routes[startAirportId].AddFlight(flight);
 
-    public void RemoveFlight(string startAirportId) => Routes[startAirportId].RemoveLastFlight();
+    internal void RemoveFlight(string startAirportId) => Routes[startAirportId].RemoveLastFlight();
 
-    public void Find(string startAirportId, string destinationAirportId) => Routes[startAirportId].FindRouteAndDisplay(destinationAirportId);
+    internal void Find(string startAirportId, string destinationAirportId) => Routes[startAirportId].FindRouteAndDisplay(destinationAirportId);
 
-    public void Print(string startAirportId) => Routes[startAirportId].PrintRoute();
+    internal void Print(string startAirportId) => Routes[startAirportId].PrintRoute();
 }

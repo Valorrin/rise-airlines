@@ -7,9 +7,9 @@ public class AirlineManager
 
     public AirlineManager() => Airlines = [];
 
-    public void Add(Airline airline) => Airlines.Add(airline.Id, airline);
+    internal void Add(Airline airline) => Airlines.Add(airline.Id, airline);
 
-    public void Add(IList<string> airlineData)
+    internal void Add(IList<string> airlineData)
     {
         foreach (var airport in airlineData)
         {
@@ -25,22 +25,22 @@ public class AirlineManager
         }
     }
 
-    public void Search(string searchTerm)
+    internal void Search(string searchTerm)
     {
-        var airlineNames = Airlines.Values.Where(airline => airline.Name == searchTerm).ToList();
+        var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList();
 
-        if (airlineNames.Count > 0)
+        if (airlineNames != null)
             Console.WriteLine($" {searchTerm} is Airline name.");
     }
 
-    public List<string> SortByName()
+    internal List<string> SortByName()
     {
         var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
 
         return airlineNames;
     }
 
-    public List<string> SortDescByName()
+    internal List<string> SortDescByName()
     {
         var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
 
