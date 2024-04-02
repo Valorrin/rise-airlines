@@ -288,15 +288,32 @@ public class InputValidator
                 }
                 else if (firstArgument == "remove")
                 {
+                    if (commandArguments.Length != 2)
+                    {
+                        throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route remove <Departure Airport ID>");
+                    }
+
                     if (_routeManager.Routes.Count == 0)
                     {
                         throw new EmptyRouteException("No flights to remove.");
                     }
+
+                    if (_routeManager.Routes.ContainsKey(commandArguments[2]))
+                    {
+                        throw new KeyNotFoundException("Nothing to remove. The airport does not exist!");
+                    }
+                }
+                else if (firstArgument == "print")
+                {
+                    if (commandArguments.Length != 2)
+                    {
+                        throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route print <Departure Airport ID>");
+                    }
                 }
                 else if (firstArgument == "find")
-                    if (commandArguments.Length < 2)
+                    if (commandArguments.Length < 3)
                     {
-                        throw new EmptyRouteException("Plese provide destination airport.");
+                        throw new InvalidNumberOfArgumentsException("Plese provide destination airport.");
                     }
 
                 break;

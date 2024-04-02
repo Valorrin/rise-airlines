@@ -21,7 +21,7 @@ public class FlightRouteTree
 {
     public FlightTreeNode Root { get; }
 
-    public FlightRouteTree(string startAirport) => Root = new FlightTreeNode(startAirport);
+    public FlightRouteTree(string startAirportId) => Root = new FlightTreeNode(startAirportId);
 
     public void AddFlight(Flight flight) => AddFlightRecursive(Root, flight);
 
