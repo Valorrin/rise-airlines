@@ -3,22 +3,28 @@
 namespace Airlines.Business.Managers;
 public class RouteManager
 {
-    public LinkedList<Flight> Routes { get; set; }
+    public Dictionary<string, FlightRouteTree> Routes { get; set; }
 
-    public RouteManager() => Routes = new LinkedList<Flight>();
+    public RouteManager() => Routes = [];
 
-    public void AddFlight(Flight flight) => Routes.AddLast(flight);
+    public void Add(FlightRouteTree route) => Routes.Add(route.Root.Airport, route);
 
-    public void RemoveFlight() => Routes.RemoveLast();
-
-    public void Print()
+    public void Add(List<string> routeData, FlightManager flightManager)
     {
-        foreach (var flight in Routes)
+        var newRouteTree = new FlightRouteTree(routeData[0]);
+
+        for (var i = 1; i < routeData.Count; i++)
         {
-            Console.WriteLine($"Flight ID: {flight.Id}");
-            Console.WriteLine($"Departure Airport ID: {flight.DepartureAirport}");
-            Console.WriteLine($"Arrival Airport ID: {flight.ArrivalAirport}");
-            Console.WriteLine($"Aircraft Model: {flight.AircraftModel}\n");
+            var flight = flightManager.GetFlightById(routeData[i]);
+            newRouteTree.AddFlight(flight);
+
         }
+        Add(newRouteTree);
     }
+
+    public void AddFlight(Flight flight, string startAirportId) => Routes[startAirportId].AddFlight(flight);
+
+    public void RemoveFlight(string startAirportId) => Routes[startAirportId].RemoveLastFlight();
+
+    public void Print(string startAirportId) => Routes[startAirportId].PrintRoute();
 }

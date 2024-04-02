@@ -28,11 +28,13 @@ public class Program
         var airlineFilePath = GetFilePath("airlines.csv");
         var flightFilePath = GetFilePath("flights.csv");
         var aircraftFilePath = GetFilePath("aircrafts.csv");
+        var routeFilePath = GetFilePath("route.csv");
 
         var airportData = ReadFromFile(airportFilePath);
         var airlineData = ReadFromFile(airlineFilePath);
         var flightData = ReadFromFile(flightFilePath);
         var aircraftData = ReadFromFile(aircraftFilePath);
+        var routeData = ReadFromFile(routeFilePath);
 
         try
         {
@@ -52,6 +54,7 @@ public class Program
         airlineManager.Add(airlineData);
         flightManager.Add(flightData);
         aircraftManager.Add(aircraftData);
+        routeManager.Add(routeData, flightManager);
 
         printer.PrintAll();
 

@@ -41,4 +41,11 @@ public class FlightManager
         var aircraftModel = Flights.Where(f => f.Id == flightId).Select(f => f.AircraftModel).FirstOrDefault();
         return aircraftModel!;
     }
+
+    public Flight GetFlightById(string flightId)
+    {
+
+        var flight = Flights.FirstOrDefault(f => f.Id == flightId);
+        return flight!;
+    }
 }
