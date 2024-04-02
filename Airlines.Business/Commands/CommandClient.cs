@@ -76,8 +76,9 @@ public class CommandClient
             var commandAction = commandArguments[0];
             var flightId = commandArguments[1];
             var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
+            var startAirportId = _flightManager.GetFlightById(flightId).Id;
 
-            ProcessRouteCommand(commandAction, flightToAdd!, batchMode);
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirportId, batchMode);
         }
         else if (action == "reserve")
         {
@@ -165,7 +166,7 @@ public class CommandClient
             _invoker.ExecuteCommand(listCommand);
     }
 
-    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, bool batchMode)
+    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, string startAirportId, bool batchMode)
     {
 
         ICommand? routeCommand = null;
@@ -177,15 +178,15 @@ public class CommandClient
                 break;
 
             case "add":
-                routeCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd);
+                routeCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd, startAirportId);
                 break;
 
             case "remove":
-                routeCommand = RouteRemoveCommand.CreateRouteRemoveCommand(_routeManager);
+                routeCommand = RouteRemoveCommand.CreateRouteRemoveCommand(_routeManager, startAirportId);
                 break;
 
             case "print":
-                routeCommand = RoutePrintCommand.CreateRoutePrintCommand(_routeManager);
+                routeCommand = RoutePrintCommand.CreateRoutePrintCommand(_routeManager, startAirportId);
                 break;
             default:
                 break;

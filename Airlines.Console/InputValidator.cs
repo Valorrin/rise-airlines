@@ -409,11 +409,6 @@ public class InputValidator
         {
             throw new InvalidRouteException("The Route is not empty");
         }
-
-        if (_routeManager.Routes.Last!.Value.ArrivalAirport != flight.DepartureAirport)
-        {
-            throw new InvalidRouteException("The DepartureAirport of the new flight does not match the ArrivalAirport of the last flight in the route.");
-        }
     }
     private bool ContainsOnlyLettersAndSpaces(string value)
     {
