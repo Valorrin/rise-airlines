@@ -1,5 +1,4 @@
 ﻿using Airlines.Business.Models;
-using static Airlines.Business.Utilities.Search;
 
 namespace Airlines.Business.Managers;
 public class FlightManager
@@ -34,6 +33,20 @@ public class FlightManager
 
         if (flightIds != null)
             Console.WriteLine($" {searchTerm} is Flight name.");
+    }
+
+    public List<string> SortById()
+    {
+        var flightIds = Flights.Select(flight => flight.Id).ToList().OrderBy(name => name).ToList();
+
+        return flightIds;
+    }
+
+    public List<string> SortDescById()
+    {
+        var flightIds = Flights.Select(flight => flight.Id).ToList().OrderByDescending(name => name).ToList();
+
+        return flightIds;
     }
 
     public string GetAircraftModel(string flightId)

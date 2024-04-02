@@ -1,5 +1,4 @@
 ﻿using Airlines.Business.Models;
-using static Airlines.Business.Utilities.Search;
 
 namespace Airlines.Business.Managers;
 public class AirlineManager
@@ -32,5 +31,19 @@ public class AirlineManager
 
         if (airlineNames != null)
             Console.WriteLine($" {searchTerm} is Airline name.");
+    }
+
+    public List<string> SortByName()
+    {
+        var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
+
+        return airlineNames;
+    }
+
+    public List<string> SortDescByName()
+    {
+        var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
+
+        return airlineNames;
     }
 }

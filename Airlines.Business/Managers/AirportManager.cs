@@ -1,5 +1,4 @@
 ﻿using Airlines.Business.Models;
-using static Airlines.Business.Utilities.Search;
 
 namespace Airlines.Business.Managers;
 public class AirportManager
@@ -56,6 +55,21 @@ public class AirportManager
         if (airportNames != null)
             Console.WriteLine($" {searchTerm} is Airport name.");
     }
+
+    public List<string> SortByName()
+    {
+        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
+
+        return airportNames;
+    }
+
+    public List<string> SortDescByName()
+    {
+        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
+
+        return airportNames;
+    }
+
 
     public bool Exist(string name) => AirportNames.Contains(name);
 
