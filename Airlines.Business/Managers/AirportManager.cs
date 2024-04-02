@@ -50,9 +50,9 @@ public class AirportManager
 
     public void Search(string searchTerm)
     {
-        var airportNames = Airports.Values.Select(airline => airline.Name).ToList();
+        var airportNames = Airports.Values.Where(airline => airline.Name == searchTerm).ToList();
 
-        if (airportNames != null)
+        if (airportNames.Count > 0)
             Console.WriteLine($" {searchTerm} is Airport name.");
     }
 

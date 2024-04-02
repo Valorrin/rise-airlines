@@ -1,6 +1,8 @@
 ﻿using static Airlines.Console.Utilities.InputReader;
 
 namespace Airlines.UnitTests.UtilityTests;
+
+[Collection("Sequential")]
 public class InputReaderTests
 {
     [Fact]

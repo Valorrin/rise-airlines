@@ -2,6 +2,8 @@
 using Airlines.Business.Managers;
 
 namespace Airlines.UnitTests.CommandTests;
+
+[Collection("Sequential")]
 public class ExistCommandTests
 {
     [Fact]

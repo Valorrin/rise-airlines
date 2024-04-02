@@ -3,6 +3,7 @@ using Airlines.Business.Commands;
 
 namespace Airlines.UnitTests.ManagerTests;
 
+[Collection("Sequential")]
 public class BatchManagerTests
 {
     [Fact]

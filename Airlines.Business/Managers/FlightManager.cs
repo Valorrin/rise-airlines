@@ -29,9 +29,9 @@ public class FlightManager
 
     public void Search(string searchTerm)
     {
-        var flightIds = Flights.Select(flight => flight.Id).ToList();
+        var flightIds = Flights.Where(flight => flight.Id == searchTerm).ToList();
 
-        if (flightIds != null)
+        if (flightIds.Count > 0)
             Console.WriteLine($" {searchTerm} is Flight name.");
     }
 

@@ -4,6 +4,7 @@ using Airlines.Console.Exceptions;
 
 namespace Airlines.UnitTests.ValidationTests;
 
+[Collection("Sequential")]
 public class ValidateAircraftDataTests
 {
     private readonly AirportManager _airportManager;

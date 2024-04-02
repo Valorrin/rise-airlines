@@ -1,6 +1,8 @@
 ﻿using Airlines.Business.Utilities;
 
 namespace Airlines.UnitTests.UtilityTests;
+
+[Collection("Sequential")]
 public class StringHelperTests
 {
     [Fact]
