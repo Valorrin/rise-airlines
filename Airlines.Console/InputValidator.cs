@@ -319,12 +319,12 @@ public class InputValidator
 
                     if (commandArguments[1] == commandArguments[2])
                     {
-                        throw new InvalidCommandArgumentException("Deparute airport cannot be the same as the Arrival airport!");
+                        throw new InvalidCommandArgumentException("Departure airport cannot be the same as the Arrival airport!");
                     }
 
                     if (!_routeManager.Routes.ContainsKey(commandArguments[1]))
                     {
-                        throw new InvalidCommandArgumentException("Deparute airport does not exist!");
+                        throw new InvalidCommandArgumentException("Departure airport does not exist!");
 
                     }
                 }
