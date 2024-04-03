@@ -235,13 +235,19 @@ public class InputValidator
         {
             throw new EmptyRouteException("Route file is empty");
         }
-        var startairpotId = data[0];
+        var startAirpotId = data[0];
 
-        if (startairpotId.Length is < 2 or > 4)
+        if (string.IsNullOrEmpty(startAirpotId))
+        {
+            throw new InvalidInputException("Flight data cannot be empty.");
+        }
+
+        if (startAirpotId.Length is < 2 or > 4)
         {
             throw new InvalidIdLengthException("Departure airport ID length must be between 2 and 4 characters.");
         }
-        if (!ContainsOnlyLettersOrDigits(startairpotId))
+
+        if (!ContainsOnlyLettersOrDigits(startAirpotId))
         {
             throw new InvalidIdCharactersException("Airport ID contains invalid characters. Only letters and digits are allowed.");
         }
