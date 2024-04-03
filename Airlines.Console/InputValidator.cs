@@ -311,10 +311,23 @@ public class InputValidator
                     }
                 }
                 else if (firstArgument == "find")
+                {
                     if (commandArguments.Length < 3)
                     {
-                        throw new InvalidNumberOfArgumentsException("Plese provide destination airport.");
+                        throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route find <Departure Airport ID> <Arrival Airport>");
                     }
+
+                    if (commandArguments[1] == commandArguments[2])
+                    {
+                        throw new InvalidCommandArgumentException("Deparute airport cannot be the same as the Arrival airport!");
+                    }
+
+                    if (!_routeManager.Routes.ContainsKey(commandArguments[1]))
+                    {
+                        throw new InvalidCommandArgumentException("Deparute airport does not exist!");
+
+                    }
+                }
 
                 break;
 
