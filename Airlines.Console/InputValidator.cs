@@ -220,6 +220,41 @@ public class InputValidator
         }
     }
 
+    private void ValidateRouteDataFlights(string flightId)
+    {
+
+        if (!ContainsOnlyLettersOrDigits(flightId))
+        {
+            throw new InvalidIdCharactersException("Flight ID contains invalid characters. Only letters and digits are allowed.");
+        }
+    }
+
+    public void ValidateRouteData(IList<string> data)
+    {
+        if (data.Count == 0)
+        {
+            throw new EmptyRouteException("Route file is empty");
+        }
+        var startairpotId = data[0];
+
+        if (startairpotId.Length is < 2 or > 4)
+        {
+            throw new InvalidIdLengthException("Departure airport ID length must be between 2 and 4 characters.");
+        }
+        if (!ContainsOnlyLettersOrDigits(startairpotId))
+        {
+            throw new InvalidIdCharactersException("Airport ID contains invalid characters. Only letters and digits are allowed.");
+        }
+
+        for (var i = 1; i < data.Count; i++)
+        {
+            foreach (var flightId in data)
+            {
+                ValidateRouteDataFlights(flightId);
+            }
+        }
+    }
+
     public void ValidateCommandInputData(string data)
     {
         var commandParts = data.Split(' ', 2).ToArray();
