@@ -42,6 +42,7 @@ public class Program
             inputValidator.ValidateAirlineData(airlineData);
             inputValidator.ValidateFlightData(flightData);
             inputValidator.ValidateAircraftData(aircraftData);
+            inputValidator.ValidateRouteData(routeData);
         }
         catch (Exception ex)
         {

@@ -220,6 +220,47 @@ public class InputValidator
         }
     }
 
+    private void ValidateRouteDataFlights(string flightId)
+    {
+
+        if (!ContainsOnlyLettersOrDigits(flightId))
+        {
+            throw new InvalidIdCharactersException("Flight ID contains invalid characters. Only letters and digits are allowed.");
+        }
+    }
+
+    public void ValidateRouteData(IList<string> data)
+    {
+        if (data.Count == 0)
+        {
+            throw new EmptyRouteException("Route file is empty");
+        }
+        var startAirpotId = data[0];
+
+        if (string.IsNullOrEmpty(startAirpotId))
+        {
+            throw new InvalidInputException("Flight data cannot be empty.");
+        }
+
+        if (startAirpotId.Length is < 2 or > 4)
+        {
+            throw new InvalidIdLengthException("Departure airport ID length must be between 2 and 4 characters.");
+        }
+
+        if (!ContainsOnlyLettersOrDigits(startAirpotId))
+        {
+            throw new InvalidIdCharactersException("Airport ID contains invalid characters. Only letters and digits are allowed.");
+        }
+
+        for (var i = 1; i < data.Count; i++)
+        {
+            foreach (var flightId in data)
+            {
+                ValidateRouteDataFlights(flightId);
+            }
+        }
+    }
+
     public void ValidateCommandInputData(string data)
     {
         var commandParts = data.Split(' ', 2).ToArray();
@@ -311,10 +352,23 @@ public class InputValidator
                     }
                 }
                 else if (firstArgument == "find")
+                {
                     if (commandArguments.Length < 3)
                     {
-                        throw new InvalidNumberOfArgumentsException("Plese provide destination airport.");
+                        throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route find <Departure Airport ID> <Arrival Airport>");
                     }
+
+                    if (commandArguments[1] == commandArguments[2])
+                    {
+                        throw new InvalidCommandArgumentException("Departure airport cannot be the same as the Arrival airport!");
+                    }
+
+                    if (!_routeManager.Routes.ContainsKey(commandArguments[1]))
+                    {
+                        throw new InvalidCommandArgumentException("Departure airport does not exist!");
+
+                    }
+                }
 
                 break;
 

@@ -16,7 +16,7 @@ public class AirportManager
         AirportNames = [];
     }
 
-    public void Add(Airport airport)
+    internal void Add(Airport airport)
     {
         if (!AirportsByCity.ContainsKey(airport.City))
             AirportsByCity[airport.City] = [];
@@ -30,7 +30,7 @@ public class AirportManager
         Airports.Add(airport.Id, airport);
     }
 
-    public void Add(IList<string> airportData)
+    internal void Add(IList<string> airportData)
     {
         foreach (var airport in airportData)
         {
@@ -48,7 +48,7 @@ public class AirportManager
         }
     }
 
-    public void Search(string searchTerm)
+    internal void Search(string searchTerm)
     {
         var airportNames = Airports.Values.Where(airline => airline.Name == searchTerm).ToList();
 
@@ -56,14 +56,14 @@ public class AirportManager
             Console.WriteLine($" {searchTerm} is Airport name.");
     }
 
-    public List<string> SortByName()
+    internal List<string> SortByName()
     {
         var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
 
         return airportNames;
     }
 
-    public List<string> SortDescByName()
+    internal List<string> SortDescByName()
     {
         var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
 
@@ -71,9 +71,9 @@ public class AirportManager
     }
 
 
-    public bool Exist(string name) => AirportNames.Contains(name);
+    internal bool Exist(string name) => AirportNames.Contains(name);
 
-    public void ListData(string name, string airportsFrom)
+    internal void ListData(string name, string airportsFrom)
     {
         if (airportsFrom == "City")
         {

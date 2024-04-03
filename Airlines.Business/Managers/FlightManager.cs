@@ -7,9 +7,9 @@ public class FlightManager
 
     public FlightManager() => Flights = [];
 
-    public void Add(Flight flight) => Flights.Add(flight);
+    internal void Add(Flight flight) => Flights.Add(flight);
 
-    public void Add(IList<string> flightData)
+    internal void Add(IList<string> flightData)
     {
         foreach (var flight in flightData)
         {
@@ -27,7 +27,7 @@ public class FlightManager
         }
     }
 
-    public void Search(string searchTerm)
+    internal void Search(string searchTerm)
     {
         var flightIds = Flights.Where(flight => flight.Id == searchTerm).ToList();
 
@@ -35,27 +35,27 @@ public class FlightManager
             Console.WriteLine($" {searchTerm} is Flight name.");
     }
 
-    public List<string> SortById()
+    internal List<string> SortById()
     {
         var flightIds = Flights.Select(flight => flight.Id).ToList().OrderBy(name => name).ToList();
 
         return flightIds;
     }
 
-    public List<string> SortDescById()
+    internal List<string> SortDescById()
     {
         var flightIds = Flights.Select(flight => flight.Id).ToList().OrderByDescending(name => name).ToList();
 
         return flightIds;
     }
 
-    public string GetAircraftModel(string flightId)
+    internal string GetAircraftModel(string flightId)
     {
         var aircraftModel = Flights.Where(f => f.Id == flightId).Select(f => f.AircraftModel).FirstOrDefault();
         return aircraftModel!;
     }
 
-    public Flight GetFlightById(string flightId)
+    internal Flight GetFlightById(string flightId)
     {
 
         var flight = Flights.FirstOrDefault(f => f.Id == flightId);
