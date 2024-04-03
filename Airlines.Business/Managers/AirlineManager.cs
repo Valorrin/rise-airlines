@@ -27,9 +27,9 @@ public class AirlineManager
 
     internal void Search(string searchTerm)
     {
-        var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList();
+        var airlineNames = Airlines.Values.Where(airline => airline.Name == searchTerm).ToList();
 
-        if (airlineNames != null)
+        if (airlineNames.Count > 0)
             Console.WriteLine($" {searchTerm} is Airline name.");
     }
 
