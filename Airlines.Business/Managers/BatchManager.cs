@@ -13,9 +13,9 @@ public class BatchManager
         BatchMode = false;
     }
 
-    public void AddCommand(ICommand command) => Commands.Enqueue(command);
+    internal void AddCommand(ICommand command) => Commands.Enqueue(command);
 
-    public void ExecuteBatch(CommandInvoker invoker)
+    internal void ExecuteBatch(CommandInvoker invoker)
     {
         while (Commands.Count > 0)
         {
@@ -24,9 +24,9 @@ public class BatchManager
         }
     }
 
-    public void CancelBatch() => Commands.Clear();
+    internal void CancelBatch() => Commands.Clear();
 
-    public void BatchModeOn() => BatchMode = true;
+    internal void BatchModeOn() => BatchMode = true;
 
-    public void BatchModeOff() => BatchMode = false;
+    internal void BatchModeOff() => BatchMode = false;
 }

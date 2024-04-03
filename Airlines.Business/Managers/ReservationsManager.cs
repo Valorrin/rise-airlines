@@ -12,6 +12,6 @@ public class ReservationsManager
         TicketReservations = [];
     }
 
-    public void Add(CargoReservation reservation) => CargoReservations.Add(reservation);
-    public void Add(TicketReservation reservation) => TicketReservations.Add(reservation);
+    internal void Add(CargoReservation reservation) => CargoReservations.Add(reservation);
+    internal void Add(TicketReservation reservation) => TicketReservations.Add(reservation);
 }

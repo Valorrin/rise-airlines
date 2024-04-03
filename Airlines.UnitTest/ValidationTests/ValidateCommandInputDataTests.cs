@@ -79,4 +79,31 @@ public class ValidateCommandInputDataTests
     {
         _ = Assert.Throws<InvalidNumberOfArgumentsException>(() => _inputValidator.ValidateCommandInputData(data));
     }
+
+    [Fact]
+    public void ValidateCommandInputData_InvalidNumberOfArguments_ThrowsInvalidNumberOfArgumentsException()
+    {
+        var invalidCommand = "route find";
+
+        var exception = Assert.Throws<InvalidNumberOfArgumentsException>(() => _inputValidator.ValidateCommandInputData(invalidCommand));
+        Assert.Equal("Incorrect command format. Please use the following format: route find <Departure Airport ID> <Arrival Airport>", exception.Message);
+    }
+
+    [Fact]
+    public void ValidateCommandInputData_DepartureSameAsArrival_ThrowsInvalidCommandArgumentException()
+    {
+        var invalidCommand = "route find airport1 airport1";
+
+        var exception = Assert.Throws<InvalidCommandArgumentException>(() => _inputValidator.ValidateCommandInputData(invalidCommand));
+        Assert.Equal("Departure airport cannot be the same as the Arrival airport!", exception.Message);
+    }
+
+    [Fact]
+    public void ValidateCommandInputData_NonExistentDepartureAirport_ThrowsInvalidCommandArgumentException()
+    {
+        var invalidCommand = "route find nonExistentAirport airport2";
+
+        var exception = Assert.Throws<InvalidCommandArgumentException>(() => _inputValidator.ValidateCommandInputData(invalidCommand));
+        Assert.Equal("Departure airport does not exist!", exception.Message);
+    }
 }
