@@ -75,18 +75,18 @@ public class CommandClient
         {
             var startAirportId = commandArguments.ElementAtOrDefault(1);
             var destinationAirportId = commandArguments.ElementAtOrDefault(2);
-            FlightRouteTree? flightRouteTree = null;
+            FlightRouteGraph? flightRouteGraph = null;
 
             if (startAirportId != null)
             {
-                flightRouteTree = new FlightRouteTree(startAirportId);
+                flightRouteGraph = new FlightRouteGraph(startAirportId);
             }
 
             var commandAction = commandArguments[0];
             var flightId = commandArguments[1];
             var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
 
-            ProcessRouteCommand(commandAction, flightToAdd!, startAirportId!, destinationAirportId!, flightRouteTree!, batchMode);
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirportId!, destinationAirportId!, flightRouteGraph!, batchMode);
         }
         else if (action == "reserve")
         {
@@ -174,7 +174,7 @@ public class CommandClient
             _invoker.ExecuteCommand(listCommand);
     }
 
-    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, string startAirportId, string destinationAirportId, FlightRouteTree flightRouteTree, bool batchMode)
+    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, string startAirportId, string destinationAirportId, FlightRouteGraph flightRouteGraph, bool batchMode)
     {
 
         ICommand? routeCommand = null;
@@ -182,7 +182,7 @@ public class CommandClient
         switch (commandAction)
         {
             case "new":
-                routeCommand = RouteNewCommand.CreateRouteNewCommand(_routeManager, flightRouteTree);
+                routeCommand = RouteNewCommand.CreateRouteNewCommand(_routeManager, flightRouteGraph);
                 break;
 
             case "add":

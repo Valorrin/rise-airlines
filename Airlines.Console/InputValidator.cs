@@ -339,7 +339,7 @@ public class InputValidator
                         throw new EmptyRouteException("No flights to remove.");
                     }
 
-                    if (_routeManager.Routes.ContainsKey(commandArguments[2]))
+                    if (_routeManager.Routes.ContainsKey(commandArguments[1]))
                     {
                         throw new KeyNotFoundException("Nothing to remove. The airport does not exist!");
                     }

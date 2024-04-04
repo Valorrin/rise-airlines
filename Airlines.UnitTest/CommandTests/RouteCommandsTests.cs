@@ -12,7 +12,13 @@ public class RouteCommandsTests
     public void CreateRouteAddCommand_ReturnsInstanceOfRouteAddCommand()
     {
         var routeManager = new RouteManager();
-        var tree = new FlightRouteTree("DFW");
+        var tree = new 
+            
+            
+            
+            
+            
+            ("DFW");
         routeManager.Add(tree);
         var flight = new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", AircraftModel = "Model1" };
 

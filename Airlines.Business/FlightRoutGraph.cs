@@ -1,63 +1,107 @@
 ﻿using Airlines.Business.Models;
-using System;
-using System.Collections.Generic;
 
-namespace Airlines.Business
+namespace Airlines.Business;
+
+public class FlightRouteGraph
 {
-    public class FlightRouteGraph
+    public string StartAirportId { get; }
+
+    private readonly Dictionary<string, Queue<string>> _adjacencyList;
+
+    public FlightRouteGraph(string startAirportId)
     {
-        private readonly Dictionary<string, List<string>> _adjacencyList;
-
-        public FlightRouteGraph() => _adjacencyList = [];
-
-        public void AddAirport(string airport)
+        StartAirportId = startAirportId;
+        _adjacencyList = [];
+    }
+    public void AddAirport(string airport)
+    {
+        if (!_adjacencyList.ContainsKey(airport))
         {
-            if (!_adjacencyList.ContainsKey(airport))
+            _adjacencyList[airport] = [];
+        }
+    }
+
+    public void AddFlight(Flight flight)
+    {
+        var departureAirport = flight.DepartureAirport;
+        var arrivalAirport = flight.ArrivalAirport;
+
+        AddAirport(departureAirport);
+        AddAirport(arrivalAirport);
+
+        _adjacencyList[departureAirport].Enqueue(arrivalAirport);
+    }
+
+    public void RemoveLastFlight(string startAirportId)
+    {
+        if (_adjacencyList.ContainsKey(startAirportId))
+        {
+            var outgoingFlights = _adjacencyList[startAirportId];
+            if (outgoingFlights.Count > 0)
             {
-                _adjacencyList[airport] = [];
+                _ = outgoingFlights.Dequeue();
             }
-        }
-
-        public void AddFlight(Flight flight)
-        {
-            var departureAirport = flight.DepartureAirport;
-            var arrivalAirport = flight.ArrivalAirport;
-
-            AddAirport(departureAirport);
-            AddAirport(arrivalAirport);
-
-            _adjacencyList[departureAirport].Add(arrivalAirport);
-        }
-
-        public void RemoveFlight(Flight flight)
-        {
-            var departureAirport = flight.DepartureAirport;
-            var arrivalAirport = flight.ArrivalAirport;
-
-            _ = _adjacencyList[departureAirport].Remove(arrivalAirport);
-        }
-
-        public void PrintGraph()
-        {
-            foreach (var entry in _adjacencyList)
-            {
-                var departureAirport = entry.Key;
-                var arrivalAirports = entry.Value;
-                Console.Write($"Flights from {departureAirport} to: ");
-                foreach (var arrivalAirport in arrivalAirports)
-                {
-                    Console.Write($"{arrivalAirport}, ");
-                }
-                Console.WriteLine();
-            }
-        }
-
-        public List<string> GetConnectedAirports(string airport)
-        {
-            if (_adjacencyList.ContainsKey(airport))
-                return _adjacencyList[airport];
             else
-                return [];
+            {
+                Console.WriteLine("No outgoing flights to remove.");
+            }
         }
+        else
+        {
+            Console.WriteLine("Airport not found in the graph.");
+        }
+    }
+
+    public void PrintGraph()
+    {
+        foreach (var entry in _adjacencyList)
+        {
+            var departureAirport = entry.Key;
+            var arrivalAirports = entry.Value;
+            Console.Write($"Flights from {departureAirport} to: ");
+            foreach (var arrivalAirport in arrivalAirports)
+            {
+                Console.Write($"{arrivalAirport}, ");
+            }
+            Console.WriteLine();
+        }
+    }
+
+    public List<string> GetConnectedAirports(string airport)
+    {
+        if (_adjacencyList.ContainsKey(airport))
+            return new List<string>(_adjacencyList[airport]);
+        else
+            return [];
+    }
+
+    public bool IsConnected(string startAirportId, string endAirportId)
+    {
+        var visited = new HashSet<string>();
+        var queue = new Queue<string>();
+
+        visited.Add(startAirportId);
+        queue.Enqueue(startAirportId);
+
+        while (queue.Count > 0)
+        {
+            var currentAirport = queue.Dequeue();
+
+            if (currentAirport == endAirportId)
+            {
+                return true;
+            }
+
+            foreach (var neighbor in _adjacencyList[currentAirport])
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -3,30 +3,32 @@
 namespace Airlines.Business.Managers;
 public class RouteManager
 {
-    public Dictionary<string, FlightRouteTree> Routes { get; set; }
+    public Dictionary<string, FlightRouteGraph> Routes { get; set; }
 
     public RouteManager() => Routes = [];
 
-    internal void Add(FlightRouteTree route) => Routes.Add(route.Root.Airport, route);
+    internal void Add(FlightRouteGraph route) => Routes.Add(route.StartAirportId, route);
 
     internal void Add(List<string> routeData, FlightManager flightManager)
     {
-        var newRouteTree = new FlightRouteTree(routeData[0]);
+        var startAirportId = routeData[0];
+        var newRouteGraph = new FlightRouteGraph(startAirportId);
+        newRouteGraph.AddAirport(startAirportId);
 
         for (var i = 1; i < routeData.Count; i++)
         {
             var flight = flightManager.GetFlightById(routeData[i]);
-            newRouteTree.AddFlight(flight);
-
+            newRouteGraph.AddFlight(flight);
         }
-        Add(newRouteTree);
+
+        Add(newRouteGraph);
     }
 
     internal void AddFlight(Flight flight, string startAirportId) => Routes[startAirportId].AddFlight(flight);
 
-    internal void RemoveFlight(string startAirportId) => Routes[startAirportId].RemoveLastFlight();
+    internal void RemoveFlight(string startAirportId) => Routes[startAirportId].RemoveLastFlight(startAirportId);
 
-    internal void Find(string startAirportId, string destinationAirportId) => Routes[startAirportId].FindRouteAndDisplay(destinationAirportId);
+    internal void Find(string startAirportId, string destinationAirportId) => Console.WriteLine("Not implemented");
 
-    internal void Print(string startAirportId) => Routes[startAirportId].PrintRoute();
+    internal void Print(string startAirportId) => Routes[startAirportId].PrintGraph();
 }
