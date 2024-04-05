@@ -48,7 +48,7 @@ public class InputValidator
             throw new InvalidInputException("Airport data cannot be empty.");
         }
 
-        if (_airportManager.Airports.ContainsKey(id))
+        if (_airportManager.Airports.Any(airport => airport.Id == id))
         {
             throw new DuplicateIdException("An airport with the same ID already exists.");
         }
@@ -110,7 +110,7 @@ public class InputValidator
             throw new InvalidInputException("Both ID and name are required for an airline.");
         }
 
-        if (_airlineManager.Airlines.ContainsKey(id))
+        if (_airlineManager.Airlines.Any(airline => airline.Id == id))
         {
             throw new DuplicateIdException("An airline with the same ID already exists.");
         }
@@ -334,14 +334,9 @@ public class InputValidator
                         throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route remove <Departure Airport ID>");
                     }
 
-                    if (_routeManager.Routes.Count == 0)
+                    if (_routeManager.Route.AdjacencyList.Values.Count == 0)
                     {
                         throw new EmptyRouteException("No flights to remove.");
-                    }
-
-                    if (_routeManager.Routes.ContainsKey(commandArguments[1]))
-                    {
-                        throw new KeyNotFoundException("Nothing to remove. The airport does not exist!");
                     }
                 }
                 else if (firstArgument == "print")
@@ -362,14 +357,7 @@ public class InputValidator
                     {
                         throw new InvalidCommandArgumentException("Departure airport cannot be the same as the Arrival airport!");
                     }
-
-                    if (!_routeManager.Routes.ContainsKey(commandArguments[1]))
-                    {
-                        throw new InvalidCommandArgumentException("Departure airport does not exist!");
-
-                    }
                 }
-
                 break;
 
             case "reserve":
@@ -482,11 +470,6 @@ public class InputValidator
         if (flight == null)
         {
             throw new FlightNotFoundException("Flight does not exist.");
-        }
-
-        if (_routeManager.Routes.Count > 0)
-        {
-            throw new InvalidRouteException("The Route is not empty");
         }
     }
     private bool ContainsOnlyLettersAndSpaces(string value)

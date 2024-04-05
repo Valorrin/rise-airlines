@@ -13,7 +13,7 @@ public class Program
         var airportManager = new AirportManager();
         var airlineManager = new AirlineManager();
         var flightManager = new FlightManager();
-        var routeManager = new RouteManager();
+        var routeManager = new RouteManager(airportManager);
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationsManager();
         var batchManager = new BatchManager();
@@ -55,7 +55,7 @@ public class Program
         airlineManager.Add(airlineData);
         flightManager.Add(flightData);
         aircraftManager.Add(aircraftData);
-        routeManager.Add(routeData, flightManager);
+        routeManager.Add(routeData, airportManager, flightManager);
 
         printer.PrintAll();
 

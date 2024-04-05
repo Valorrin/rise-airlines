@@ -4,15 +4,10 @@ namespace Airlines.Business.Commands.RouteCommands;
 public class RouteRemoveCommand : ICommand
 {
     private readonly RouteManager _routeManager;
-    private readonly string _startAirportId;
 
-    private RouteRemoveCommand(RouteManager routeManager, string startAirportId)
-    {
-        _routeManager = routeManager;
-        _startAirportId = startAirportId;
-    }
+    private RouteRemoveCommand(RouteManager routeManager) => _routeManager = routeManager;
 
-    public void Execute() => _routeManager.RemoveFlight(_startAirportId);
+    public void Execute() => _routeManager.RemoveLastFlight();
 
-    public static RouteRemoveCommand CreateRouteRemoveCommand(RouteManager routeManager, string startAirportId) => new(routeManager, startAirportId);
+    public static RouteRemoveCommand CreateRouteRemoveCommand(RouteManager routeManager) => new(routeManager);
 }
