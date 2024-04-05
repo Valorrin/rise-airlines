@@ -93,6 +93,7 @@ public class RouteManager
 
             if (currentAirport == endAirport)
             {
+                Console.WriteLine("Connected!");
                 return true;
             }
 
@@ -106,6 +107,7 @@ public class RouteManager
                 }
             }
         }
+        Console.WriteLine("Not onnected!");
 
         return false;
     }
@@ -134,6 +136,11 @@ public class RouteManager
                     currentAirport = _airportManager.GetAirportById(previousFlight?.DepartureAirport!);
                 }
                 path.Reverse(); // Reverse the path to get correct order
+
+                foreach (var flight in path)
+                {
+                    Console.WriteLine($" Flight {flight.Id}: {flight.DepartureAirport} -> {flight.ArrivalAirport}");
+                }
                 return path;
             }
 
@@ -158,11 +165,11 @@ public class RouteManager
         {
             var departureAirport = entry.Key;
             var flights = entry.Value;
-            Console.Write($"Flights from {departureAirport.Name} to: ");
+            Console.Write($"Flights from {departureAirport.Id} to: ");
             foreach (var flight in flights)
             {
-                var airportName = _airportManager.GetAirportById(flight.ArrivalAirport).Name;
-                Console.Write($"{airportName}, ");
+                var arrivalAirport = _airportManager.GetAirportById(flight.ArrivalAirport);
+                Console.Write($"({arrivalAirport.Id}, ");
             }
             Console.WriteLine();
         }

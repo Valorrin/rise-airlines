@@ -73,13 +73,25 @@ public class CommandClient
         }
         else if (action == "route")
         {
-            var destinationAirportId = commandArguments.ElementAtOrDefault(1);
 
             var commandAction = commandArguments[0];
+
             Flight flightToAdd = null!;
 
+            Airport startAirport = null!;
+            Airport endAirport = null!;
 
-            ProcessRouteCommand(commandAction, flightToAdd!, destinationAirportId!, batchMode);
+            if (commandAction is "check" or "search")
+            {
+                var startAirportId = commandArguments[1];
+                var endAirportId = commandArguments[2];
+
+                startAirport = _airportManager.GetAirportById(startAirportId);
+                endAirport = _airportManager.GetAirportById(endAirportId);
+            }
+
+
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, batchMode);
         }
         else if (action == "reserve")
         {
@@ -167,7 +179,7 @@ public class CommandClient
             _invoker.ExecuteCommand(listCommand);
     }
 
-    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, string destinationAirportId, bool batchMode)
+    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, bool batchMode)
     {
 
         ICommand? routeCommand = null;
@@ -191,7 +203,15 @@ public class CommandClient
                 break;
 
             case "find":
-                routeCommand = RouteFindCommand.CreateRouteFindCommand(_routeManager, destinationAirportId);
+                routeCommand = RouteFindCommand.CreateRouteFindCommand(_routeManager, endAirport);
+                break;
+
+            case "check":
+                routeCommand = RouteCheckCommand.CreateRouteCheckCommand(_routeManager, startAirport, endAirport);
+                break;
+
+            case "search":
+                routeCommand = RouteSearchCommand.CreateRouteSearchCommand(_routeManager, startAirport, endAirport);
                 break;
 
             default:

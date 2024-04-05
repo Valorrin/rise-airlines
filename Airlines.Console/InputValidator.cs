@@ -271,7 +271,7 @@ public class InputValidator
             { "sort", ["airports", "airlines", "flights"] },
             { "exist", [] },
             { "list", [] },
-            { "route", ["new", "add", "remove", "print", "find"] },
+            { "route", ["new", "add", "remove", "print", "find", "check", "search"] },
             { "reserve", ["cargo", "ticket"] },
             { "batch", ["start", "run", "cancel"] }
         };
@@ -329,33 +329,10 @@ public class InputValidator
                 }
                 else if (firstArgument == "remove")
                 {
-                    if (commandArguments.Length != 2)
-                    {
-                        throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route remove <Departure Airport ID>");
-                    }
 
                     if (_routeManager.Route.AdjacencyList.Values.Count == 0)
                     {
                         throw new EmptyRouteException("No flights to remove.");
-                    }
-                }
-                else if (firstArgument == "print")
-                {
-                    if (commandArguments.Length != 2)
-                    {
-                        throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route print <Departure Airport ID>");
-                    }
-                }
-                else if (firstArgument == "find")
-                {
-                    if (commandArguments.Length < 3)
-                    {
-                        throw new InvalidNumberOfArgumentsException("Incorrect command format. Please use the following format: route find <Departure Airport ID> <Arrival Airport>");
-                    }
-
-                    if (commandArguments[1] == commandArguments[2])
-                    {
-                        throw new InvalidCommandArgumentException("Departure airport cannot be the same as the Arrival airport!");
                     }
                 }
                 break;

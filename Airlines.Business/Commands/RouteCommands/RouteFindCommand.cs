@@ -1,18 +1,19 @@
 ﻿using Airlines.Business.Managers;
+using Airlines.Business.Models;
 
 namespace Airlines.Business.Commands.RouteCommands;
 public class RouteFindCommand : ICommand
 {
     private readonly RouteManager _routeManager;
-    private readonly string _destinationAirportId;
+    private readonly Airport _destinationAirport;
 
-    private RouteFindCommand(RouteManager routeManager, string destinationAirportId)
+    private RouteFindCommand(RouteManager routeManager, Airport destinationAirport)
     {
         _routeManager = routeManager;
-        _destinationAirportId = destinationAirportId;
+        _destinationAirport = destinationAirport;
     }
 
-    public void Execute() => _routeManager.Find(_destinationAirportId);
+    public void Execute() => _routeManager.Find(_destinationAirport.Id);
 
-    public static RouteFindCommand CreateRouteFindCommand(RouteManager routeManager, string destinationAirportId) => new(routeManager, destinationAirportId);
+    public static RouteFindCommand CreateRouteFindCommand(RouteManager routeManager, Airport destinationAirport) => new(routeManager, destinationAirport);
 }
