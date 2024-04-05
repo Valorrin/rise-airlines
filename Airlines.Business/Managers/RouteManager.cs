@@ -1,4 +1,5 @@
-﻿using Airlines.Business.Models;
+﻿using Airlines.Business.DataStructures;
+using Airlines.Business.Models;
 
 namespace Airlines.Business.Managers;
 public class RouteManager
