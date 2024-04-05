@@ -1,4 +1,5 @@
-﻿using Airlines.Business.Managers;
+﻿using Airlines.Business.Exceptions;
+using Airlines.Business.Managers;
 using Airlines.Business.Models;
 using Airlines.Console;
 using Airlines.Console.Exceptions;

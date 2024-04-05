@@ -15,20 +15,9 @@ public class RouteManager
 
     public void New() => Route = new FlightRouteGraph();
 
-    public void Add(List<string> routeData, AirportManager airportManager, FlightManager flightManager)
-    {
-        var airport = airportManager.GetAirportById(routeData[0]);
+    public void Add(Flight flight) => AddFlight(flight);
 
-        AddAirport(airport);
-
-        for (var i = 1; i < routeData.Count; i++)
-        {
-            var flight = flightManager.GetFlightById(routeData[i]);
-            AddFlight(flight);
-        }
-    }
-
-    public void AddAirport(Airport airport)
+    private void AddAirport(Airport airport)
     {
         if (!Route.AdjacencyList.ContainsKey(airport))
         {
@@ -165,11 +154,11 @@ public class RouteManager
         {
             var departureAirport = entry.Key;
             var flights = entry.Value;
-            Console.Write($"Flights from {departureAirport.Id} to: ");
+            Console.Write($" Flights from {departureAirport.Id} to: ");
             foreach (var flight in flights)
             {
                 var arrivalAirport = _airportManager.GetAirportById(flight.ArrivalAirport);
-                Console.Write($"({arrivalAirport.Id}, ");
+                Console.Write($"{arrivalAirport.Id}");
             }
             Console.WriteLine();
         }

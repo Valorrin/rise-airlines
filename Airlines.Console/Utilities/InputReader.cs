@@ -19,20 +19,19 @@ public class InputReader
         }
     }
 
-    public static List<string> ReadFromFile(string filePath)
+    public static IEnumerable<string> ReadFromFile(string filePath)
     {
-        var data = new List<string>();
-
         using (var reader = new StreamReader(filePath))
+        {
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
-
                 if (line != null)
-                    data.Add(line);
+                {
+                    yield return line;
+                }
             }
-
-        return data;
+        }
     }
 
     public static string ReadCommandInput()

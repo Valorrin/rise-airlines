@@ -3,7 +3,9 @@ using static Airlines.Console.Utilities.FilePathHelper;
 using Airlines.Business.Managers;
 using Airlines.Business.Commands;
 using Airlines.Console.Utilities;
-using Airlines.Console;
+using Airlines.Business;
+using Airlines.Business.Mapping;
+
 
 namespace Airlines;
 public class Program
@@ -20,6 +22,7 @@ public class Program
 
         var inputValidator = new InputValidator(airportManager, airlineManager, flightManager, aircraftManager, routeManager);
         var printer = new Printer(airportManager, airlineManager, flightManager, aircraftManager);
+        var mapper = new ObjectMapper();
 
         var commandInvoker = new CommandInvoker();
         var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager);
@@ -38,11 +41,6 @@ public class Program
 
         try
         {
-            inputValidator.ValidateAirportData(airportData);
-            inputValidator.ValidateAirlineData(airlineData);
-            inputValidator.ValidateFlightData(flightData);
-            inputValidator.ValidateAircraftData(aircraftData);
-            inputValidator.ValidateRouteData(routeData);
         }
         catch (Exception ex)
         {
@@ -51,11 +49,41 @@ public class Program
             return;
         }
 
-        airportManager.Add(airportData);
-        airlineManager.Add(airlineData);
-        flightManager.Add(flightData);
-        aircraftManager.Add(aircraftData);
-        routeManager.Add(routeData, airportManager, flightManager);
+        foreach (var line in airportData)
+        {
+            inputValidator.ValidateAirportData(line);
+            var airport = mapper.MapToAirport(line);
+            airportManager.Add(airport);
+        }
+
+        foreach (var line in airlineData)
+        {
+            inputValidator.ValidateAirlineData(line);
+            var airline = mapper.MapToAirline(line);
+            airlineManager.Add(airline);
+        }
+
+        foreach (var line in flightData)
+        {
+            inputValidator.ValidateFlightData(line);
+            var flight = mapper.MapToFlight(line);
+            flightManager.Add(flight);
+        }
+
+        foreach (var line in aircraftData)
+        {
+            inputValidator.ValidateAircraftData(line);
+            //TODO: use the object mapper
+            aircraftManager.Add(line);
+        }
+
+        foreach (var line in routeData)
+        {
+            inputValidator.ValidateRouteData(line);
+            var flight = flightManager.GetFlightById(line);
+            routeManager.Add(flight);
+
+        }
 
         printer.PrintAll();
 

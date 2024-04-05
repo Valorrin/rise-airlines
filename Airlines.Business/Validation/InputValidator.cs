@@ -1,11 +1,10 @@
 ﻿using Airlines.Business.Managers;
-using Airlines.Business.Models;
 using Airlines.Business.Models.Aircrafts;
 using Airlines.Business.Models.Reservations;
 using Airlines.Business.Utilities;
-using Airlines.Console.Exceptions;
+using Airlines.Business.Exceptions;
 
-namespace Airlines.Console;
+namespace Airlines.Business;
 public class InputValidator
 {
     private readonly AirportManager _airportManager;
@@ -78,21 +77,7 @@ public class InputValidator
             throw new InvalidAirportCountryException("Airport country contains invalid characters. Only letters and spaces are allowed.");
         }
     }
-    public void ValidateAirportData(IList<string> data)
-    {
-        var ids = data.Select(line => line.Split(", ", 2)[0]);
 
-        if (ids.Distinct().Count() != data.Count)
-        {
-            throw new DuplicateIdException("Airport IDs must be unique. Duplicate IDs are not allowed.");
-        }
-
-        foreach (var line in data)
-        {
-            ValidateAirportData(line);
-
-        }
-    }
 
     public void ValidateAirlineData(string data)
     {
@@ -128,20 +113,6 @@ public class InputValidator
         if (!ContainsOnlyLettersAndSpaces(name))
         {
             throw new InvalidAirlineNameException("Airline name can only contain letters and spaces.");
-        }
-    }
-    public void ValidateAirlineData(IList<string> data)
-    {
-        var ids = data.Select(line => line.Split(", ", 2)[0]);
-
-        if (ids.Distinct().Count() != data.Count)
-        {
-            throw new DuplicateIdException("Airline IDs must be unique. Duplicate IDs are not allowed.");
-        }
-
-        foreach (var line in data)
-        {
-            ValidateAirlineData(line);
         }
     }
 
@@ -187,20 +158,6 @@ public class InputValidator
             throw new InvalidIdCharactersException("Airport ID contains invalid characters. Only letters and digits are allowed.");
         }
     }
-    public void ValidateFlightData(IList<string> data)
-    {
-        var ids = data.Select(line => line.Split(", ", 2)[0]);
-
-        if (ids.Distinct().Count() != data.Count)
-        {
-            throw new DuplicateIdException("Flight IDs must be unique. Duplicate IDs are not allowed.");
-        }
-
-        foreach (var line in data)
-        {
-            ValidateFlightData(line);
-        }
-    }
 
     public void ValidateAircraftData(string data)
     {
@@ -212,52 +169,14 @@ public class InputValidator
             throw new InvalidInputException("Aircraft name cannot be empty.");
         }
     }
-    public void ValidateAircraftData(IList<string> data)
+
+    public void ValidateRouteData(string data)
     {
-        foreach (var line in data)
-        {
-            ValidateAircraftData(line);
-        }
-    }
+        var flightId = data;
 
-    private void ValidateRouteDataFlights(string flightId)
-    {
-
-        if (!ContainsOnlyLettersOrDigits(flightId))
+        if (string.IsNullOrEmpty(flightId))
         {
-            throw new InvalidIdCharactersException("Flight ID contains invalid characters. Only letters and digits are allowed.");
-        }
-    }
-
-    public void ValidateRouteData(IList<string> data)
-    {
-        if (data.Count == 0)
-        {
-            throw new EmptyRouteException("Route file is empty");
-        }
-        var startAirpotId = data[0];
-
-        if (string.IsNullOrEmpty(startAirpotId))
-        {
-            throw new InvalidInputException("Flight data cannot be empty.");
-        }
-
-        if (startAirpotId.Length is < 2 or > 4)
-        {
-            throw new InvalidIdLengthException("Departure airport ID length must be between 2 and 4 characters.");
-        }
-
-        if (!ContainsOnlyLettersOrDigits(startAirpotId))
-        {
-            throw new InvalidIdCharactersException("Airport ID contains invalid characters. Only letters and digits are allowed.");
-        }
-
-        for (var i = 1; i < data.Count; i++)
-        {
-            foreach (var flightId in data)
-            {
-                ValidateRouteDataFlights(flightId);
-            }
+            throw new FlightNotFoundException("Flight does not exist.");
         }
     }
 
@@ -323,7 +242,7 @@ public class InputValidator
                     var flightId = commandArguments.ElementAtOrDefault(1);
                     var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
 
-                    ValidateRouteFlight(flightToAdd!);
+                    ValidateRouteData(flightId!);
 
                     break;
                 }
@@ -398,6 +317,8 @@ public class InputValidator
         }
     }
 
+
+
     private void ValidateCargoReservation(CargoReservation reservation, CargoAircraft aircraft)
     {
         if (aircraft == null)
@@ -442,13 +363,6 @@ public class InputValidator
         }
     }
 
-    private void ValidateRouteFlight(Flight flight)
-    {
-        if (flight == null)
-        {
-            throw new FlightNotFoundException("Flight does not exist.");
-        }
-    }
     private bool ContainsOnlyLettersAndSpaces(string value)
     {
         foreach (var c in value)

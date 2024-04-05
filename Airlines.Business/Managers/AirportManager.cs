@@ -30,24 +30,6 @@ public class AirportManager
         Airports.Add(airport);
     }
 
-    internal void Add(IList<string> airportData)
-    {
-        foreach (var airport in airportData)
-        {
-            var airportParts = airport.Split(", ");
-
-            var newAirport = new Airport
-            {
-                Id = airportParts[0],
-                Name = airportParts[1],
-                City = airportParts[2],
-                Country = airportParts[3]
-            };
-
-            Add(newAirport);
-        }
-    }
-
     internal void Search(string searchTerm)
     {
         var airportNames = Airports.Where(airline => airline.Name == searchTerm).ToList();
