@@ -104,7 +104,7 @@ public class CommandClient
         else if (action == "reserve")
         {
 
-
+            _commandValidator.ValidateReserveCommand(commandArguments);
             ProcessReserveCommand(commandArguments, batchMode);
         }
         else if (action == "batch")
@@ -242,34 +242,35 @@ public class CommandClient
 
         var commandAction = commandArguments[0];
         var flightId = commandArguments[1];
+        double cargoWeight;
+        double cargoVolume;
+        int seats;
+        int smallBaggageCount;
+        int largeBaggageCount;
 
         ICommand? reservationCommand = null;
 
         switch (commandAction)
         {
             case "cargo":
-                if (commandArguments.Length >= 4)
-                {
-                    var cargoWeight = double.Parse(commandArguments[2]);
-                    var cargoVolume = double.Parse(commandArguments[3]);
+                cargoWeight = double.Parse(commandArguments[2]);
+                cargoVolume = double.Parse(commandArguments[3]);
 
-                    var cargoReservation = new CargoReservation(flightId, cargoWeight, cargoVolume);
+                var cargoReservation = new CargoReservation(flightId, cargoWeight, cargoVolume);
 
-                    reservationCommand = ReserveCargoCommand.CreateReserveCargoCommand(_reservationsManager, cargoReservation);
-                }
+                reservationCommand = ReserveCargoCommand.CreateReserveCargoCommand(_reservationsManager, cargoReservation);
                 break;
+
             case "ticket":
-                if (commandArguments.Length >= 5)
-                {
-                    var seats = int.Parse(commandArguments[2]);
-                    var smallBaggageCount = int.Parse(commandArguments[3]);
-                    var largeBaggageCount = int.Parse(commandArguments[4]);
+                seats = int.Parse(commandArguments[2]);
+                smallBaggageCount = int.Parse(commandArguments[3]);
+                largeBaggageCount = int.Parse(commandArguments[4]);
 
-                    var ticketReservation = new TicketReservation(flightId, seats, smallBaggageCount, largeBaggageCount);
+                var ticketReservation = new TicketReservation(flightId, seats, smallBaggageCount, largeBaggageCount);
 
-                    reservationCommand = ReserveTicketCommand.CreateTicketCommand(_reservationsManager, ticketReservation);
-                }
+                reservationCommand = ReserveTicketCommand.CreateTicketCommand(_reservationsManager, ticketReservation);
                 break;
+
             default:
                 break;
         }
