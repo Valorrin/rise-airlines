@@ -8,6 +8,7 @@ using Airlines.Business.Managers;
 using Airlines.Business.Models;
 using Airlines.Business.Models.Reservations;
 using Airlines.Business.Utilities;
+using Airlines.Business.Validation;
 
 namespace Airlines.Business.Commands;
 public class CommandClient
@@ -19,6 +20,7 @@ public class CommandClient
     private readonly RouteManager _routeManager;
     private readonly ReservationsManager _reservationsManager;
     private readonly BatchManager _batchManager;
+    private readonly CommandValidator _commandValidator;
 
     public CommandClient(CommandInvoker invoker,
                              AirportManager airportManager,
@@ -26,7 +28,8 @@ public class CommandClient
                              FlightManager flightManager,
                              RouteManager routeManager,
                              ReservationsManager reservationsManager,
-                             BatchManager batchManager)
+                             BatchManager batchManager,
+                             CommandValidator commandValidator)
     {
         _invoker = invoker;
         _airportManager = airportManager;
@@ -35,6 +38,7 @@ public class CommandClient
         _routeManager = routeManager;
         _reservationsManager = reservationsManager;
         _batchManager = batchManager;
+        _commandValidator = commandValidator;
     }
 
     public void ProcessCommand(string command, bool batchMode)
@@ -47,6 +51,7 @@ public class CommandClient
         {
             var searchTerm = commandParts[1];
 
+            _commandValidator.ValidateSearchCommand(searchTerm);
             ProcessSearchCommand(searchTerm, batchMode);
         }
         else if (action == "sort")
@@ -54,12 +59,14 @@ public class CommandClient
             var target = commandArguments[0];
             var sortOrder = commandArguments.ElementAtOrDefault(1);
 
+            _commandValidator.ValidateSortCommand(target, sortOrder!);
             ProcessSortCommand(target, sortOrder!, batchMode);
         }
         else if (action == "exist")
         {
             var airportName = commandParts[1];
 
+            _commandValidator.ValidateExistCommand(airportName);
             ProcessExistCommand(airportName, batchMode);
 
         }
@@ -69,6 +76,7 @@ public class CommandClient
             var inputData = commandParts[0];
             var from = commandParts[1];
 
+            _commandValidator.ValidateListCommand(inputData, from);
             ProcessListCommand(inputData, from, batchMode);
         }
         else if (action == "route")
@@ -90,11 +98,13 @@ public class CommandClient
                 endAirport = _airportManager.GetAirportById(endAirportId);
             }
 
-
+            _commandValidator.ValidateRouteCommand(commandAction, flightToAdd, startAirport, endAirport);
             ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, batchMode);
         }
         else if (action == "reserve")
         {
+
+
             ProcessReserveCommand(commandArguments, batchMode);
         }
         else if (action == "batch")

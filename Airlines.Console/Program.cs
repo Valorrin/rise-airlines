@@ -26,8 +26,8 @@ public class Program
         var mapper = new ObjectMapper();
 
         var commandInvoker = new CommandInvoker();
-        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager);
-        var commandValidator = new CommandValidator(flightManager, aircraftManager, routeManager);
+        var commandValidator = new CommandValidator(airportManager, flightManager, aircraftManager, routeManager);
+        var commandClient = new CommandClient(commandInvoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager, commandValidator);
 
         var airportFilePath = GetFilePath("airports.csv");
         var airlineFilePath = GetFilePath("airlines.csv");
@@ -95,15 +95,15 @@ public class Program
 
             try
             {
-                commandValidator.ValidateCommandInputData(commandInput);
+                commandValidator.ValidateCommandArguments(commandInput);
+
+                commandClient.ProcessCommand(commandInput, batchMode);
             }
             catch (Exception ex)
             {
                 System.Console.WriteLine($" Error: {ex.Message}");
                 continue;
             }
-
-            commandClient.ProcessCommand(commandInput, batchMode);
         }
     }
 }

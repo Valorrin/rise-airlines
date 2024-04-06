@@ -7,18 +7,17 @@ public class RouteManager
     private readonly AirportManager _airportManager;
     public FlightRouteGraph Route { get; private set; }
 
-
-    public RouteManager(AirportManager airportManager)
+    internal RouteManager(AirportManager airportManager)
     {
         _airportManager = airportManager;
         Route = new FlightRouteGraph();
     }
 
-    public void New() => Route = new FlightRouteGraph();
+    internal void New() => Route = new FlightRouteGraph();
 
-    public void Add(Flight flight) => AddFlight(flight);
+    internal void Add(Flight flight) => AddFlight(flight);
 
-    private void AddAirport(Airport airport)
+    internal void AddAirport(Airport airport)
     {
         if (!Route.AdjacencyList.ContainsKey(airport))
         {
@@ -26,7 +25,7 @@ public class RouteManager
         }
     }
 
-    public void AddFlight(Flight flight)
+    internal void AddFlight(Flight flight)
     {
         var departureAirport = _airportManager.GetAirportById(flight.DepartureAirport);
         var arrivalAirport = _airportManager.GetAirportById(flight.ArrivalAirport);
@@ -37,7 +36,7 @@ public class RouteManager
         Route.AdjacencyList[departureAirport].Add(flight);
     }
 
-    public void RemoveLastFlight()
+    internal void RemoveLastFlight()
     {
         // Get all airports in the graph
         var airports = Route.AdjacencyList.Keys.ToList();
@@ -69,7 +68,7 @@ public class RouteManager
         Console.WriteLine($"Removed last flight: {lastFlight.Id}");
     }
 
-    public bool IsConnected(Airport startAirport, Airport endAirport)
+    internal bool IsConnected(Airport startAirport, Airport endAirport)
     {
         var visited = new HashSet<Airport>();
         var queue = new Queue<Airport>();
@@ -102,7 +101,7 @@ public class RouteManager
         return false;
     }
 
-    public List<Flight> ShortestPath(Airport startAirport, Airport endAirport)
+    internal List<Flight> ShortestPath(Airport startAirport, Airport endAirport)
     {
         var previous = new Dictionary<Airport, Flight>();
         var queue = new Queue<Airport>();
@@ -149,7 +148,7 @@ public class RouteManager
         return [];
     }
 
-    public void Print()
+    internal void Print()
     {
         foreach (var entry in Route.AdjacencyList)
         {
@@ -164,7 +163,7 @@ public class RouteManager
             Console.WriteLine();
         }
     }
-    public bool Find(string destinationAirportId)
+    internal bool Find(string destinationAirportId)
     {
         var destinationAirport = _airportManager.GetAirportById(destinationAirportId);
 

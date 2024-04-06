@@ -1,8 +1,8 @@
 ﻿namespace Airlines.Business.Models.Reservations;
 public class CargoReservation : Reservation
 {
-    public double CargoWeight { get; set; }
-    public double CargoVolume { get; set; }
+    public double CargoWeight { get; private set; }
+    public double CargoVolume { get; private set; }
 
     public CargoReservation(string flightId, double cargoWeight, double cargoVolume) : base(flightId)
     {

@@ -54,22 +54,26 @@ public class AirportManager
 
     internal bool Exist(string name) => AirportNames.Contains(name);
 
-    internal void ListData(string name, string airportsFrom)
+    internal List<Airport> ListData(string name, string airportsFrom)
     {
+        var airports = new List<Airport>();
+
         if (airportsFrom == "City")
         {
-            var names = AirportsByCity[name];
-
-            foreach (var airport in names)
-                Console.WriteLine(airport.Name);
+            if (AirportsByCity.TryGetValue(name, out var cityAirports))
+            {
+                airports.AddRange(cityAirports);
+            }
         }
         else if (airportsFrom == "Country")
         {
-            var names = AirportsByCountry[name];
-
-            foreach (var airport in names)
-                Console.WriteLine(airport.Name);
+            if (AirportsByCountry.TryGetValue(name, out var countryAirports))
+            {
+                airports.AddRange(countryAirports);
+            }
         }
+
+        return airports;
     }
 
     internal Airport GetAirportById(string airportId)

@@ -3,9 +3,9 @@
 namespace Airlines.Business.Managers;
 public class AircraftManager
 {
-    public List<CargoAircraft> CargoAircrafts { get; set; }
-    public List<PassengerAircraft> PassengerAircrafts { get; set; }
-    public List<PrivateAircraft> PrivateAircrafts { get; set; }
+    public List<CargoAircraft> CargoAircrafts { get; private set; }
+    public List<PassengerAircraft> PassengerAircrafts { get; private set; }
+    public List<PrivateAircraft> PrivateAircrafts { get; private set; }
 
     public AircraftManager()
     {
