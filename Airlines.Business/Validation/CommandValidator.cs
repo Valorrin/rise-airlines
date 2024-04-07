@@ -33,8 +33,6 @@ public class CommandValidator
     {
         var commandParts = commandInput.Split(' ', 2).ToArray();
         var action = commandParts[0];
-        var commandArguments = commandParts[1].Split().ToArray();
-        var argumentsCount = commandArguments.Length;
 
         var validCommands = new Dictionary<string, HashSet<string>>
         {
@@ -46,13 +44,15 @@ public class CommandValidator
             { "reserve", ["cargo", "ticket"] },
             { "batch", ["start", "run", "cancel"] }
         };
-
         if (!validCommands.ContainsKey(action) || commandParts.Length < 2)
         {
             var validCommandsList = string.Join(", ", validCommands.Keys);
 
             throw new InvalidCommandException($"The entered command is invalid. Valid commands are: {validCommandsList}.");
         }
+
+        var commandArguments = commandParts[1].Split().ToArray();
+        var argumentsCount = commandArguments.Length;
 
 
         switch (action)
@@ -76,6 +76,11 @@ public class CommandValidator
                 }
                 break;
             case "list":
+                if (commandArguments.Length == 1)
+                {
+                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments for 'list' command. Expected 2 arguments.");
+                }
+
                 var listArguments = StringHelper.SplitBeforeLastElement(commandParts[1]);
                 if (listArguments.Length != 2)
                 {
@@ -88,9 +93,13 @@ public class CommandValidator
                 {
                     throw new InvalidNumberOfArgumentsException("Invalid number of arguments for 'route add' command. Expected 2 arguments.");
                 }
-                if (routeAction is "add" or "check" or "search" && argumentsCount != 3)
+                if (routeAction is "check" && argumentsCount != 3)
                 {
-                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments for 'route add', 'route check', or 'route search' command. Expected 3 arguments.");
+                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments for'route check' command. Expected 3 arguments.");
+                }
+                if (routeAction is "search" && argumentsCount != 3)
+                {
+                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments for 'route search' command. Expected 3 arguments.");
                 }
                 break;
             case "reserve":

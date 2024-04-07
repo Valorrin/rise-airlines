@@ -10,8 +10,6 @@ public class ValidateRouteDataTests
     private readonly AirportManager _airportManager;
     private readonly AirlineManager _airlineManager;
     private readonly FlightManager _flightManager;
-    private readonly AircraftManager _aircraftManager;
-    private readonly RouteManager _routeManager;
     private readonly InputValidator _inputValidator;
 
     public ValidateRouteDataTests()
@@ -19,9 +17,6 @@ public class ValidateRouteDataTests
         _airportManager = new AirportManager();
         _airlineManager = new AirlineManager();
         _flightManager = new FlightManager();
-        _aircraftManager = new AircraftManager();
-        _routeManager = new RouteManager(_airportManager);
-
         _inputValidator = new InputValidator(
             _airportManager,
             _airlineManager,
