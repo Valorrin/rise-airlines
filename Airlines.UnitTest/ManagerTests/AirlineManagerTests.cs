@@ -18,8 +18,7 @@ public class AirlineManagerTests
 
         airlineManager.Add(airline);
 
-        Assert.Contains(airline.Id, airlineManager.Airlines.Keys);
-        Assert.Contains(airline, airlineManager.Airlines.Values);
+        Assert.Contains(airline, airlineManager.Airlines);
     }
 
     [Theory]

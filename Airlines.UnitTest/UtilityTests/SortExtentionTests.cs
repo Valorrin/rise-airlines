@@ -9,9 +9,9 @@ public class SortExtensionsTests
     public void SortByName_AirportManager_SortsNamesAlphabetically()
     {
         var airportManager = new AirportManager();
-        airportManager.Airports.Add("1", new Airport { Id = "1", Name = "Zulu", City = "City1", Country = "Country1" });
-        airportManager.Airports.Add("2", new Airport { Id = "2", Name = "Alpha", City = "City2", Country = "Country2" });
-        airportManager.Airports.Add("3", new Airport { Id = "3", Name = "Charlie", City = "City3", Country = "Country3" });
+        airportManager.Airports.Add(new Airport { Id = "1", Name = "Zulu", City = "City1", Country = "Country1" });
+        airportManager.Airports.Add(new Airport { Id = "2", Name = "Alpha", City = "City2", Country = "Country2" });
+        airportManager.Airports.Add(new Airport { Id = "3", Name = "Charlie", City = "City3", Country = "Country3" });
 
 
         var sortedNames = airportManager.SortByName();
@@ -26,9 +26,9 @@ public class SortExtensionsTests
     public void SortByName_AirlineManager_SortsNamesAlphabetically()
     {
         var airlineManager = new AirlineManager();
-        airlineManager.Airlines.Add("1", new Airline { Id = "1", Name = "Zulu" });
-        airlineManager.Airlines.Add("2", new Airline { Id = "2", Name = "Alpha" });
-        airlineManager.Airlines.Add("3", new Airline { Id = "3", Name = "Charlie" });
+        airlineManager.Airlines.Add(new Airline { Id = "1", Name = "Zulu" });
+        airlineManager.Airlines.Add(new Airline { Id = "2", Name = "Alpha" });
+        airlineManager.Airlines.Add(new Airline { Id = "3", Name = "Charlie" });
 
         var sortedNames = airlineManager.SortByName();
 
@@ -58,9 +58,9 @@ public class SortExtensionsTests
     public void SortDescByName_AirportManager_SortsNamesDescending()
     {
         var airportManager = new AirportManager();
-        airportManager.Airports.Add("1", new Airport { Id = "1", Name = "Zulu", City = "City1", Country = "Country1" });
-        airportManager.Airports.Add("2", new Airport { Id = "2", Name = "Alpha", City = "City2", Country = "Country2" });
-        airportManager.Airports.Add("3", new Airport { Id = "3", Name = "Charlie", City = "City3", Country = "Country3" });
+        airportManager.Airports.Add(new Airport { Id = "1", Name = "Zulu", City = "City1", Country = "Country1" });
+        airportManager.Airports.Add(new Airport { Id = "2", Name = "Alpha", City = "City2", Country = "Country2" });
+        airportManager.Airports.Add(new Airport { Id = "3", Name = "Charlie", City = "City3", Country = "Country3" });
 
         var sortedNames = airportManager.SortDescByName();
 
@@ -74,9 +74,9 @@ public class SortExtensionsTests
     public void SortDescByName_AirlineManager_SortsNamesDescending()
     {
         var airlineManager = new AirlineManager();
-        airlineManager.Airlines.Add("1", new Airline { Id = "1", Name = "Zulu" });
-        airlineManager.Airlines.Add("2", new Airline { Id = "2", Name = "Alpha" });
-        airlineManager.Airlines.Add("3", new Airline { Id = "3", Name = "Charlie" });
+        airlineManager.Airlines.Add(new Airline { Id = "1", Name = "Zulu" });
+        airlineManager.Airlines.Add(new Airline { Id = "2", Name = "Alpha" });
+        airlineManager.Airlines.Add(new Airline { Id = "3", Name = "Charlie" });
 
         var sortedNames = airlineManager.SortDescByName();
 

@@ -1,5 +1,6 @@
 ﻿using Airlines.Business.Commands;
 using Airlines.Business.Managers;
+using Airlines.Business.Validation;
 
 namespace Airlines.UnitTests.CommandTests;
 
@@ -14,10 +15,11 @@ public class BatchModeTests
         var airlineManager = new AirlineManager();
         var airportManager = new AirportManager();
         var flightManager = new FlightManager();
-        var routeManager = new RouteManager();
+        var routeManager = new RouteManager(airportManager);
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationsManager();
-        var commandClient = new CommandClient(invoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager);
+        var commandValidator = new CommandValidator(airportManager, flightManager, aircraftManager, routeManager);
+        var commandClient = new CommandClient(invoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager, commandValidator);
 
         commandClient.ProcessCommand("search searchTerm", batchMode: true);
 

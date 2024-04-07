@@ -8,12 +8,6 @@ public class InputValidator
     private readonly AirlineManager _airlineManager;
     private readonly FlightManager _flightManager;
 
-    public const int SmallBaggageMaximumWeight = 15;
-    public const double SmallBaggageMaximumVolume = 0.045;
-
-    public const int LargeBaggageMaximumWeight = 30;
-    public const double LargeBaggageMaximumVolume = 0.090;
-
     public InputValidator(AirportManager airportManager, AirlineManager airlineManager, FlightManager flightManager)
     {
         _airportManager = airportManager;

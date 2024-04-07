@@ -1,8 +1,7 @@
-﻿using Airlines.Business.Exceptions;
+﻿using Airlines.Business;
+using Airlines.Business.Exceptions;
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
-using Airlines.Console;
-using Airlines.Console.Exceptions;
 
 namespace Airlines.UnitTests.ConsoleTests;
 
@@ -22,14 +21,12 @@ public class ValidateAirportDataTests
         _airlineManager = new AirlineManager();
         _flightManager = new FlightManager();
         _aircraftManager = new AircraftManager();
-        _routeManager = new RouteManager();
+        _routeManager = new RouteManager(_airportManager);
 
         _inputValidator = new InputValidator(
             _airportManager,
             _airlineManager,
-            _flightManager,
-            _aircraftManager,
-            _routeManager
+            _flightManager
         );
     }
 
@@ -61,7 +58,7 @@ public class ValidateAirportDataTests
     public void ValidateAirportData_DuplicateId_ThrowsDuplicateIdException()
     {
         var data = "1, Airport1, City1, Country1";
-        _airportManager.Airports.Add("1", new Airport() { Id = "1", Name = "Airport1", City = "City1", Country = "Country1" });
+        _airportManager.Airports.Add(new Airport() { Id = "1", Name = "Airport1", City = "City1", Country = "Country1" });
 
         _ = Assert.Throws<DuplicateIdException>(() => _inputValidator.ValidateAirportData(data));
     }

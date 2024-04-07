@@ -11,9 +11,9 @@ public class SortCommandsTests
     public void Execute_DescendingOrder_PrintsDescendingNames()
     {
         var airlineManager = new AirlineManager();
-        airlineManager.Airlines.Add("2", new Airline { Id = "BBB", Name = "Airline2" });
-        airlineManager.Airlines.Add("1", new Airline { Id = "AAA", Name = "Airline1" });
-        airlineManager.Airlines.Add("3", new Airline { Id = "CCC", Name = "Airline3" });
+        airlineManager.Airlines.Add(new Airline { Id = "BBB", Name = "Airline2" });
+        airlineManager.Airlines.Add(new Airline { Id = "AAA", Name = "Airline1" });
+        airlineManager.Airlines.Add(new Airline { Id = "CCC", Name = "Airline3" });
 
         var command = new SortAirlinesCommand(airlineManager, "descending");
 
@@ -30,9 +30,9 @@ public class SortCommandsTests
     public void Execute_AscendingOrder_PrintsAscendingNames()
     {
         var airlineManager = new AirlineManager();
-        airlineManager.Airlines.Add("2", new Airline { Id = "BBB", Name = "Airline2" });
-        airlineManager.Airlines.Add("1", new Airline { Id = "AAA", Name = "Airline1" });
-        airlineManager.Airlines.Add("3", new Airline { Id = "CCC", Name = "Airline3" });
+        airlineManager.Airlines.Add(new Airline { Id = "BBB", Name = "Airline2" });
+        airlineManager.Airlines.Add(new Airline { Id = "AAA", Name = "Airline1" });
+        airlineManager.Airlines.Add(new Airline { Id = "CCC", Name = "Airline3" });
 
         var command = new SortAirlinesCommand(airlineManager, "ascending");
 
@@ -61,9 +61,9 @@ public class SortCommandsTests
     public void Execute_DescendingOrder_PrintsAirportsDescendingNames()
     {
         var airportManager = new AirportManager();
-        airportManager.Airports.Add("2", new Airport { Id = "BBB", Name = "Airport2", City = "City2", Country = "Country2" });
-        airportManager.Airports.Add("1", new Airport { Id = "AAA", Name = "Airport1", City = "City1", Country = "Country1" });
-        airportManager.Airports.Add("3", new Airport { Id = "CCC", Name = "Airport3", City = "City3", Country = "Country3" });
+        airportManager.Airports.Add(new Airport { Id = "BBB", Name = "Airport2", City = "City2", Country = "Country2" });
+        airportManager.Airports.Add(new Airport { Id = "AAA", Name = "Airport1", City = "City1", Country = "Country1" });
+        airportManager.Airports.Add(new Airport { Id = "CCC", Name = "Airport3", City = "City3", Country = "Country3" });
 
         var command = new SortAirportsCommand(airportManager, "descending");
 

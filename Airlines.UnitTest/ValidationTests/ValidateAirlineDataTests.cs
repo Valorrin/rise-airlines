@@ -1,8 +1,8 @@
-﻿using Airlines.Business.Exceptions;
+﻿using Airlines.Business;
+using Airlines.Business.Exceptions;
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
-using Airlines.Console;
-using Airlines.Console.Exceptions;
+
 
 namespace Airlines.UnitTests.ConsoleTests;
 
@@ -22,14 +22,12 @@ public class ValidateAirlineDataTests
         _airlineManager = new AirlineManager();
         _flightManager = new FlightManager();
         _aircraftManager = new AircraftManager();
-        _routeManager = new RouteManager();
+        _routeManager = new RouteManager(_airportManager);
 
         _inputValidator = new InputValidator(
             _airportManager,
             _airlineManager,
-            _flightManager,
-            _aircraftManager,
-            _routeManager
+            _flightManager
         );
     }
 
@@ -61,7 +59,7 @@ public class ValidateAirlineDataTests
     public void ValidateAirlineData_DuplicateId_ThrowsDuplicateIdException()
     {
         var data = "123, Airline";
-        _airlineManager.Airlines.Add("123", new Airline() { Id = "123", Name = "Airline" });
+        _airlineManager.Airlines.Add(new Airline() { Id = "123", Name = "Airline" });
 
         _ = Assert.Throws<DuplicateIdException>(() => _inputValidator.ValidateAirlineData(data));
     }
@@ -86,13 +84,5 @@ public class ValidateAirlineDataTests
     public void ValidateAirlineData_InvalidNameCharacters_ThrowsInvalidAirportNameException(string data)
     {
         _ = Assert.Throws<InvalidAirlineNameException>(() => _inputValidator.ValidateAirlineData(data));
-    }
-
-
-    [Theory]
-    [InlineData("123, Airline", "123, Airline")]
-    public void ValidateAirlineData_DuplicateIds_ThrowsDuplicateIdException(params string[] data)
-    {
-        _ = Assert.Throws<DuplicateIdException>(() => _inputValidator.ValidateAirlineData(data));
     }
 }
