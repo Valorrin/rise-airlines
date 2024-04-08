@@ -87,18 +87,20 @@ public class CommandClient
             Flight flightToAdd = null!;
             Airport startAirport = null!;
             Airport endAirport = null!;
+            string strategy = null!;
 
             if (commandAction is "check" or "search")
             {
                 var startAirportId = commandArguments[1];
                 var endAirportId = commandArguments[2];
+                strategy = commandArguments[3];
 
                 startAirport = _airportManager.GetAirportById(startAirportId);
                 endAirport = _airportManager.GetAirportById(endAirportId);
             }
 
-            _commandValidator.ValidateRouteCommand(commandAction, flightToAdd, startAirport, endAirport);
-            ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, batchMode);
+            _commandValidator.ValidateRouteCommand(commandAction, flightToAdd, startAirport, endAirport, strategy);
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, strategy!, batchMode);
         }
         else if (action == "reserve")
         {
@@ -188,7 +190,7 @@ public class CommandClient
             _invoker.ExecuteCommand(listCommand);
     }
 
-    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, bool batchMode)
+    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, string strategy, bool batchMode)
     {
 
         ICommand? routeCommand = null;
@@ -220,7 +222,7 @@ public class CommandClient
                 break;
 
             case "search":
-                routeCommand = RouteSearchCommand.CreateRouteSearchCommand(_routeManager, startAirport, endAirport);
+                routeCommand = RouteSearchCommand.CreateRouteSearchCommand(_routeManager, startAirport, endAirport, strategy);
                 break;
 
             default:

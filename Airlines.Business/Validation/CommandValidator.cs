@@ -97,9 +97,9 @@ public class CommandValidator
                 {
                     throw new InvalidNumberOfArgumentsException("Invalid number of arguments for'route check' command. Expected 3 arguments.");
                 }
-                if (routeAction is "search" && argumentsCount != 3)
+                if (routeAction is "search" && argumentsCount != 4)
                 {
-                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments for 'route search' command. Expected 3 arguments.");
+                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments for 'route search' command. Expected 4 arguments.");
                 }
                 break;
             case "reserve":
@@ -165,7 +165,7 @@ public class CommandValidator
         }
     }
 
-    public void ValidateRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport)
+    public void ValidateRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, string strategy)
     {
         if (commandAction == "add")
         {
@@ -204,6 +204,13 @@ public class CommandValidator
             if (!_airportManager.Airports.Any(x => x == endAirport))
             {
                 throw new AirportNotFoundException($"End airport '{endAirport.Name}' not found.");
+            }
+        }
+        if (commandAction is "search")
+        {
+            if (strategy is not "cheap" and not "short" and not "stops")
+            {
+                throw new InvalidCommandArgumentException("strategy must be cheap, short or stops");
             }
         }
     }

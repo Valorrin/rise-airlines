@@ -157,6 +157,7 @@ public class RouteManager
             Console.WriteLine();
         }
     }
+
     internal bool Find(string destinationAirportId)
     {
         var destinationAirport = _airportManager.GetAirportById(destinationAirportId);
@@ -217,5 +218,105 @@ public class RouteManager
         }
 
         return routeFound;
+    }
+
+    public List<Flight> FindRoute(Airport startAirport, Airport endAirport, string strategy)
+    {
+        return strategy switch
+        {
+            "cheap" => FindCheapestRoute(startAirport, endAirport),
+            "short" => FindShortestRoute(startAirport, endAirport),
+            "stops" => ShortestPath(startAirport, endAirport),
+            _ => throw new ArgumentException("Invalid route search strategy."),
+        };
+    }
+
+    public List<Flight> FindShortestRoute(Airport startAirport, Airport endAirport)
+    {
+        return FindRoute(startAirport, endAirport, (flight1, flight2) => flight1.Duration.CompareTo(flight2.Duration));
+    }
+
+    public List<Flight> FindCheapestRoute(Airport startAirport, Airport endAirport)
+    {
+        return FindRoute(startAirport, endAirport, (flight1, flight2) => flight1.Price.CompareTo(flight2?.Price ?? double.MaxValue));
+    }
+
+    private List<Flight> FindRoute(Airport startAirport, Airport endAirport, Comparison<Flight> compare)
+    {
+        var graph = Route.AdjacencyList;
+        var visitedAirports = new HashSet<Airport>();
+        var distances = new Dictionary<Airport, double>();
+        var previousFlight = new Dictionary<Airport, Flight>();
+
+        foreach (var airport in graph.Keys)
+        {
+            distances[airport] = airport == startAirport ? 0 : double.PositiveInfinity;
+        }
+
+        while (visitedAirports.Count < graph.Count)
+        {
+            var currentAirport = GetNextAirport(distances, visitedAirports);
+            _ = visitedAirports.Add(currentAirport);
+
+            foreach (var flight in graph[currentAirport])
+            {
+                var neighborAirport = _airportManager.GetAirportById(flight.ArrivalAirport);
+                var totalDistance = distances[currentAirport];
+
+                // Handle single edge graph (no flight2)
+                if (flight != default)
+                {
+                    totalDistance += compare(flight, default!);
+                }
+
+                if (totalDistance < distances[neighborAirport])
+                {
+                    distances[neighborAirport] = totalDistance;
+                    previousFlight[neighborAirport] = flight!;
+                }
+            }
+        }
+
+        return ReconstructRoute(previousFlight, startAirport, endAirport);
+    }
+
+    private Airport GetNextAirport(Dictionary<Airport, double> distances, HashSet<Airport> visitedAirports)
+    {
+        var unvisitedAirports = distances.Where(kv => !visitedAirports.Contains(kv.Key));
+        var minDistance = double.PositiveInfinity;
+        Airport nextAirport = null;
+
+        foreach (var kvp in unvisitedAirports)
+        {
+            if (kvp.Value < minDistance)
+            {
+                minDistance = kvp.Value;
+                nextAirport = kvp.Key;
+            }
+        }
+
+        return nextAirport;
+    }
+
+    private List<Flight> ReconstructRoute(Dictionary<Airport, Flight> previousFlight, Airport startAirport, Airport endAirport)
+    {
+        var route = new List<Flight>();
+        var currentAirport = endAirport;
+
+        while (currentAirport != startAirport)
+        {
+            if (!previousFlight.ContainsKey(currentAirport))
+            {
+                // No route exists
+                return new List<Flight>();
+            }
+
+            var flight = previousFlight[currentAirport];
+            route.Add(flight);
+            currentAirport = _airportManager.GetAirportById(flight.DepartureAirport);
+        }
+
+        route.Reverse();
+        return route;
     }
 }

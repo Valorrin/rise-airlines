@@ -7,16 +7,17 @@ public class RouteSearchCommand : ICommand
     private readonly RouteManager _routeManager;
     private readonly Airport _startAirport;
     private readonly Airport _endAirport;
+    private readonly string _strategy;
 
-
-    private RouteSearchCommand(RouteManager routeManager, Airport startAirport, Airport endAirport)
+    private RouteSearchCommand(RouteManager routeManager, Airport startAirport, Airport endAirport, string strategy)
     {
         _routeManager = routeManager;
         _startAirport = startAirport;
         _endAirport = endAirport;
+        _strategy = strategy;
     }
 
-    public void Execute() => _routeManager.ShortestPath(_startAirport, _endAirport);
+    public void Execute() => _routeManager.FindRoute(_startAirport, _endAirport, _strategy);
 
-    public static RouteSearchCommand CreateRouteSearchCommand(RouteManager routeManager, Airport startAirport, Airport endAirport) => new(routeManager, startAirport, endAirport);
+    public static RouteSearchCommand CreateRouteSearchCommand(RouteManager routeManager, Airport startAirport, Airport endAirport, string strategy) => new(routeManager, startAirport, endAirport, strategy);
 }
