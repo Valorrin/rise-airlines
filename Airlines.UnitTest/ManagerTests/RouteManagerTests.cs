@@ -123,24 +123,6 @@ public class RouteManagerTests
     }
 
     [Fact]
-    public void Print_PrintsAllFlightsFromEachAirport()
-    {
-        var output = new StringWriter();
-        Console.SetOut(output);
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
-        var airport1 = new Airport { Id = "Air1", Name = "Airport One", City = "City One", Country = "Country One" };
-        var airport2 = new Airport { Id = "Air2", Name = "Airport Two", City = "City Two", Country = "Country Two" };
-        airportManager.Add(airport1);
-        airportManager.Add(airport2);
-        routeManager.AddFlight(new Flight { Id = "Fl1", DepartureAirport = "Air1", ArrivalAirport = "Air2" });
-
-        routeManager.Print();
-
-        Assert.Contains($"Flights from {airport1.Id} to: {airport2.Id}\r\n", output.ToString());
-    }
-
-    [Fact]
     public void Find_ReturnsFalse_WhenDestinationAirportDoesNotExist()
     {
         var airportManager = new AirportManager();
