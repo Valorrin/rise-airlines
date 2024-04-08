@@ -1,24 +1,6 @@
 ﻿namespace Airlines.Console.Utilities;
 public class InputReader
 {
-    public static string ReadFromConsole()
-    {
-        System.Console.WriteLine($"Enter flight name:\n");
-
-        while (true)
-        {
-            var input = System.Console.ReadLine();
-
-            if (string.IsNullOrEmpty(input))
-            {
-                System.Console.WriteLine(" Error: The input cannot be null or empty!");
-                continue;
-            }
-
-            return input;
-        }
-    }
-
     public static IEnumerable<string> ReadFromFile(string filePath)
     {
         using (var reader = new StreamReader(filePath))

@@ -38,30 +38,24 @@ public class RouteManager
 
     internal void RemoveLastFlight()
     {
-        // Get all airports in the graph
         var airports = Route.AdjacencyList.Keys.ToList();
 
-        // Check if there are any airports in the graph
         if (airports.Count == 0)
         {
             Console.WriteLine("No flights to remove.");
             return;
         }
 
-        // Get the last airport in the list
         var lastAirport = airports.Last();
 
-        // Get the flights for the last airport
         var flights = Route.AdjacencyList[lastAirport];
 
-        // Check if there are any flights for the last airport
         if (flights.Count == 0)
         {
             Console.WriteLine("No flights to remove.");
             return;
         }
 
-        // Remove the last flight from the flights list
         var lastFlight = flights.Last();
         _ = flights.Remove(lastFlight);
 
@@ -180,7 +174,6 @@ public class RouteManager
         {
             if (airport.Id == destinationAirportId)
             {
-                // Skip if the current airport is the destination airport
                 continue;
             }
 

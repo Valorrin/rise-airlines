@@ -69,12 +69,34 @@ public class AirportManagerTests
     }
 
     [Fact]
-    public void List_Airports_By_City()
+    public void ListData_ReturnsEmptyList_WhenAirportsFromIsInvalid()
     {
+        var airportManager = new AirportManager();
+
+        var airports = airportManager.ListData("InvalidName", "InvalidType");
+
+        Assert.Empty(airports);
     }
 
     [Fact]
-    public void List_Airports_By_Country()
+    public void GetAirportById_ReturnsAirport_WhenAirportExists()
     {
+        var airportManager = new AirportManager();
+        var expectedAirport = new Airport { Id = "1", Name = "Airport One", City = "City One", Country = "Country One" };
+        airportManager.Airports.Add(expectedAirport);
+
+        var airport = airportManager.GetAirportById("1");
+
+        Assert.Equal(expectedAirport, airport);
+    }
+
+    [Fact]
+    public void GetAirportById_ReturnsNull_WhenAirportDoesNotExist()
+    {
+        var airportManager = new AirportManager();
+
+        var airport = airportManager.GetAirportById("NonExistingId");
+
+        Assert.Null(airport);
     }
 }

@@ -85,7 +85,6 @@ public class CommandClient
             var commandAction = commandArguments[0];
 
             Flight flightToAdd = null!;
-
             Airport startAirport = null!;
             Airport endAirport = null!;
 
