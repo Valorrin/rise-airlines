@@ -18,7 +18,7 @@ public class CommandClient
     private readonly AirlineManager _airlineManager;
     private readonly FlightManager _flightManager;
     private readonly RouteManager _routeManager;
-    private readonly ReservationsManager _reservationsManager;
+    private readonly ReservationManager _reservationsManager;
     private readonly BatchManager _batchManager;
     private readonly CommandValidator _commandValidator;
 
@@ -27,7 +27,7 @@ public class CommandClient
                              AirlineManager airlineManager,
                              FlightManager flightManager,
                              RouteManager routeManager,
-                             ReservationsManager reservationsManager,
+                             ReservationManager reservationsManager,
                              BatchManager batchManager,
                              CommandValidator commandValidator)
     {

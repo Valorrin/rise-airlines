@@ -40,7 +40,7 @@ public class AirportManagerTests
         airportManager.Add(airport);
 
         var writer = new StringWriter();
-        System.Console.SetOut(writer);
+        Console.SetOut(writer);
 
         airportManager.Search("Test Airport");
 

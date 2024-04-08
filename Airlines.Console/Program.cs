@@ -18,7 +18,7 @@ public class Program
         var flightManager = new FlightManager();
         var routeManager = new RouteManager(airportManager);
         var aircraftManager = new AircraftManager();
-        var reservationManager = new ReservationsManager();
+        var reservationManager = new ReservationManager();
         var batchManager = new BatchManager();
 
         var inputValidator = new InputValidator(airportManager, airlineManager, flightManager);

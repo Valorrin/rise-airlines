@@ -4,10 +4,10 @@ using Airlines.Business.Models.Reservations;
 namespace Airlines.Business.Commands.ReserveCommands;
 public class ReserveTicketCommand : ICommand
 {
-    private readonly ReservationsManager _reservationsManager;
+    private readonly ReservationManager _reservationsManager;
     private readonly TicketReservation _ticketReservation;
 
-    private ReserveTicketCommand(ReservationsManager reservationsManager, TicketReservation ticketReservation)
+    private ReserveTicketCommand(ReservationManager reservationsManager, TicketReservation ticketReservation)
     {
 
         _reservationsManager = reservationsManager;
@@ -16,7 +16,7 @@ public class ReserveTicketCommand : ICommand
 
     public void Execute() => _reservationsManager.Add(_ticketReservation);
 
-    public static ReserveTicketCommand CreateTicketCommand(ReservationsManager reservationsManager, TicketReservation ticketReservation)
+    public static ReserveTicketCommand CreateTicketCommand(ReservationManager reservationsManager, TicketReservation ticketReservation)
         => new(reservationsManager, ticketReservation);
 
 }

@@ -10,7 +10,7 @@ public class ReserveCommandsTests
     [Fact]
     public void Execute_AddsCargoReservationToReservationsManager()
     {
-        var reservationsManager = new ReservationsManager();
+        var reservationsManager = new ReservationManager();
         var cargoReservation = new CargoReservation("flightId", 100.0, 10.0);
         var command = ReserveCargoCommand.CreateReserveCargoCommand(reservationsManager, cargoReservation);
 
@@ -22,7 +22,7 @@ public class ReserveCommandsTests
     [Fact]
     public void CreateReserveCargoCommand_ReturnsInstanceOfReserveCargoCommand()
     {
-        var reservationsManager = new ReservationsManager();
+        var reservationsManager = new ReservationManager();
         var cargoReservation = new CargoReservation("flightId", 100.0, 10.0);
 
         var command = ReserveCargoCommand.CreateReserveCargoCommand(reservationsManager, cargoReservation);
@@ -34,7 +34,7 @@ public class ReserveCommandsTests
     [Fact]
     public void Execute_AddsTicketReservationToReservationsManager()
     {
-        var reservationsManager = new ReservationsManager();
+        var reservationsManager = new ReservationManager();
         var ticketReservation = new TicketReservation("flightId", 3, 2, 1);
         var command = ReserveTicketCommand.CreateTicketCommand(reservationsManager, ticketReservation);
 
@@ -46,7 +46,7 @@ public class ReserveCommandsTests
     [Fact]
     public void CreateTicketCommand_ReturnsInstanceOfReserveTicketCommand()
     {
-        var reservationsManager = new ReservationsManager();
+        var reservationsManager = new ReservationManager();
         var ticketReservation = new TicketReservation("flightId", 3, 2, 1);
 
         var command = ReserveTicketCommand.CreateTicketCommand(reservationsManager, ticketReservation);

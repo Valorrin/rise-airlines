@@ -17,7 +17,7 @@ public class BatchModeTests
         var flightManager = new FlightManager();
         var routeManager = new RouteManager(airportManager);
         var aircraftManager = new AircraftManager();
-        var reservationManager = new ReservationsManager();
+        var reservationManager = new ReservationManager();
         var commandValidator = new CommandValidator(airportManager, flightManager, aircraftManager, routeManager);
         var commandClient = new CommandClient(invoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager, commandValidator);
 
