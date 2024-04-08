@@ -3,9 +3,9 @@
 namespace Airlines.Business.Managers;
 public class AircraftManager
 {
-    public List<CargoAircraft> CargoAircrafts { get; set; }
-    public List<PassengerAircraft> PassengerAircrafts { get; set; }
-    public List<PrivateAircraft> PrivateAircrafts { get; set; }
+    public List<CargoAircraft> CargoAircrafts { get; private set; }
+    public List<PassengerAircraft> PassengerAircrafts { get; private set; }
+    public List<PrivateAircraft> PrivateAircrafts { get; private set; }
 
     public AircraftManager()
     {
@@ -17,13 +17,6 @@ public class AircraftManager
     internal void Add(CargoAircraft cargoAircraft) => CargoAircrafts.Add(cargoAircraft);
     internal void Add(PassengerAircraft passengerAircraft) => PassengerAircrafts.Add(passengerAircraft);
     internal void Add(PrivateAircraft privateAircraft) => PrivateAircrafts.Add(privateAircraft);
-    internal void Add(IList<string> aircraftData)
-    {
-        foreach (var aircraft in aircraftData)
-        {
-            Add(aircraft);
-        }
-    }
     internal void Add(string aircraftData)
     {
         var aircraftDataParts = aircraftData.Split(", ").ToArray();
@@ -54,6 +47,8 @@ public class AircraftManager
             Add(new PassengerAircraft(model, cargoWeightToDouble, cargoVolumeToDouble, seatsToInt));
         }
     }
+
+
 
     internal CargoAircraft? GetCargoAircraft(string model)
     {

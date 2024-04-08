@@ -34,17 +34,6 @@ public class AircraftManagerTests
     }
 
     [Fact]
-    public void Add_AircraftData_AddsCorrectAircraftToList()
-    {
-        var manager = new AircraftManager();
-        var aircraftData = new List<string> { "Cargo1, 1000, 2000, -", "Passenger1, 500, 1000, 200", "Private1, -, -, 4" };
-        manager.Add(aircraftData);
-        _ = Assert.Single(manager.CargoAircrafts);
-        _ = Assert.Single(manager.PassengerAircrafts);
-        _ = Assert.Single(manager.PrivateAircrafts);
-    }
-
-    [Fact]
     public void GetCargoAircraft_ReturnsCorrectCargoAircraft()
     {
         var manager = new AircraftManager();

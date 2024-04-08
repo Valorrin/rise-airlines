@@ -6,17 +6,15 @@ public class RouteAddCommand : ICommand
 {
     private readonly RouteManager _routeManager;
     private readonly Flight _flight;
-    private readonly string _startAirportId;
 
 
-    private RouteAddCommand(RouteManager routeManager, Flight flight, string startAirportId)
+    private RouteAddCommand(RouteManager routeManager, Flight flight)
     {
         _routeManager = routeManager;
         _flight = flight;
-        _startAirportId = startAirportId;
     }
 
-    public void Execute() => _routeManager.AddFlight(_flight, _startAirportId);
+    public void Execute() => _routeManager.AddFlight(_flight);
 
-    public static RouteAddCommand CreateRouteAddCommand(RouteManager routeManager, Flight flight, string startAirportId) => new(routeManager, flight, startAirportId);
+    public static RouteAddCommand CreateRouteAddCommand(RouteManager routeManager, Flight flight) => new(routeManager, flight);
 }

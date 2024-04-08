@@ -4,15 +4,10 @@ namespace Airlines.Business.Commands.RouteCommands;
 public class RouteNewCommand : ICommand
 {
     private readonly RouteManager _routeManager;
-    private readonly FlightRouteTree _route;
 
-    private RouteNewCommand(RouteManager routeManager, FlightRouteTree route)
-    {
-        _routeManager = routeManager;
-        _route = route;
-    }
+    private RouteNewCommand(RouteManager routeManager) => _routeManager = routeManager;
 
-    public void Execute() => _routeManager.Add(_route);
+    public void Execute() => _routeManager.New();
 
-    public static RouteNewCommand CreateRouteNewCommand(RouteManager routeManager, FlightRouteTree route) => new(routeManager, route);
+    public static RouteNewCommand CreateRouteNewCommand(RouteManager routeManager) => new(routeManager);
 }

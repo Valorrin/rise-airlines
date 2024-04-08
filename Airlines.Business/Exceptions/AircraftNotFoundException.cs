@@ -1,4 +1,4 @@
-﻿namespace Airlines.Console.Exceptions;
+﻿namespace Airlines.Business.Exceptions;
 public class AircraftNotFoundException : Exception
 {
     public AircraftNotFoundException(string message) : base(message)

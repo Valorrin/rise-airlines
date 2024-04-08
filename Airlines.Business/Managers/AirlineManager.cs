@@ -3,11 +3,11 @@
 namespace Airlines.Business.Managers;
 public class AirlineManager
 {
-    public Dictionary<string, Airline> Airlines { get; private set; }
+    public List<Airline> Airlines { get; private set; }
 
     public AirlineManager() => Airlines = [];
 
-    internal void Add(Airline airline) => Airlines.Add(airline.Id, airline);
+    internal void Add(Airline airline) => Airlines.Add(airline);
 
     internal void Add(IList<string> airlineData)
     {
@@ -27,7 +27,7 @@ public class AirlineManager
 
     internal void Search(string searchTerm)
     {
-        var airlineNames = Airlines.Values.Where(airline => airline.Name == searchTerm).ToList();
+        var airlineNames = Airlines.Where(airline => airline.Name == searchTerm).ToList();
 
         if (airlineNames.Count > 0)
             Console.WriteLine($" {searchTerm} is Airline name.");
@@ -35,14 +35,14 @@ public class AirlineManager
 
     internal List<string> SortByName()
     {
-        var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
+        var airlineNames = Airlines.Select(airline => airline.Name).OrderBy(name => name).ToList();
 
         return airlineNames;
     }
 
     internal List<string> SortDescByName()
     {
-        var airlineNames = Airlines.Values.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
+        var airlineNames = Airlines.Select(airline => airline.Name).OrderByDescending(name => name).ToList();
 
         return airlineNames;
     }

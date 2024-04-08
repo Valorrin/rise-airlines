@@ -14,8 +14,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<InternalsVisibleTo Include = "Airlines.Console" />
-		<InternalsVisibleTo Include = "Airlines.UnitTests" />
+		<InternalsVisibleTo Include="Airlines.Console" />
+		<InternalsVisibleTo Include="Airlines.UnitTests" />
 	</ItemGroup>
 
 </Project>

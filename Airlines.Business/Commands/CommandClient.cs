@@ -8,6 +8,7 @@ using Airlines.Business.Managers;
 using Airlines.Business.Models;
 using Airlines.Business.Models.Reservations;
 using Airlines.Business.Utilities;
+using Airlines.Business.Validation;
 
 namespace Airlines.Business.Commands;
 public class CommandClient
@@ -17,16 +18,18 @@ public class CommandClient
     private readonly AirlineManager _airlineManager;
     private readonly FlightManager _flightManager;
     private readonly RouteManager _routeManager;
-    private readonly ReservationsManager _reservationsManager;
+    private readonly ReservationManager _reservationsManager;
     private readonly BatchManager _batchManager;
+    private readonly CommandValidator _commandValidator;
 
     public CommandClient(CommandInvoker invoker,
                              AirportManager airportManager,
                              AirlineManager airlineManager,
                              FlightManager flightManager,
                              RouteManager routeManager,
-                             ReservationsManager reservationsManager,
-                             BatchManager batchManager)
+                             ReservationManager reservationsManager,
+                             BatchManager batchManager,
+                             CommandValidator commandValidator)
     {
         _invoker = invoker;
         _airportManager = airportManager;
@@ -35,6 +38,7 @@ public class CommandClient
         _routeManager = routeManager;
         _reservationsManager = reservationsManager;
         _batchManager = batchManager;
+        _commandValidator = commandValidator;
     }
 
     public void ProcessCommand(string command, bool batchMode)
@@ -47,6 +51,7 @@ public class CommandClient
         {
             var searchTerm = commandParts[1];
 
+            _commandValidator.ValidateSearchCommand(searchTerm);
             ProcessSearchCommand(searchTerm, batchMode);
         }
         else if (action == "sort")
@@ -54,12 +59,14 @@ public class CommandClient
             var target = commandArguments[0];
             var sortOrder = commandArguments.ElementAtOrDefault(1);
 
+            _commandValidator.ValidateSortCommand(target, sortOrder!);
             ProcessSortCommand(target, sortOrder!, batchMode);
         }
         else if (action == "exist")
         {
             var airportName = commandParts[1];
 
+            _commandValidator.ValidateExistCommand(airportName);
             ProcessExistCommand(airportName, batchMode);
 
         }
@@ -69,27 +76,34 @@ public class CommandClient
             var inputData = commandParts[0];
             var from = commandParts[1];
 
+            _commandValidator.ValidateListCommand(inputData, from);
             ProcessListCommand(inputData, from, batchMode);
         }
         else if (action == "route")
         {
-            var startAirportId = commandArguments.ElementAtOrDefault(1);
-            var destinationAirportId = commandArguments.ElementAtOrDefault(2);
-            FlightRouteTree? flightRouteTree = null;
-
-            if (startAirportId != null)
-            {
-                flightRouteTree = new FlightRouteTree(startAirportId);
-            }
 
             var commandAction = commandArguments[0];
-            var flightId = commandArguments[1];
-            var flightToAdd = _flightManager.Flights.FirstOrDefault(x => x.Id == flightId);
 
-            ProcessRouteCommand(commandAction, flightToAdd!, startAirportId!, destinationAirportId!, flightRouteTree!, batchMode);
+            Flight flightToAdd = null!;
+            Airport startAirport = null!;
+            Airport endAirport = null!;
+
+            if (commandAction is "check" or "search")
+            {
+                var startAirportId = commandArguments[1];
+                var endAirportId = commandArguments[2];
+
+                startAirport = _airportManager.GetAirportById(startAirportId);
+                endAirport = _airportManager.GetAirportById(endAirportId);
+            }
+
+            _commandValidator.ValidateRouteCommand(commandAction, flightToAdd, startAirport, endAirport);
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, batchMode);
         }
         else if (action == "reserve")
         {
+
+            _commandValidator.ValidateReserveCommand(commandArguments);
             ProcessReserveCommand(commandArguments, batchMode);
         }
         else if (action == "batch")
@@ -174,7 +188,7 @@ public class CommandClient
             _invoker.ExecuteCommand(listCommand);
     }
 
-    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, string startAirportId, string destinationAirportId, FlightRouteTree flightRouteTree, bool batchMode)
+    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, bool batchMode)
     {
 
         ICommand? routeCommand = null;
@@ -182,23 +196,31 @@ public class CommandClient
         switch (commandAction)
         {
             case "new":
-                routeCommand = RouteNewCommand.CreateRouteNewCommand(_routeManager, flightRouteTree);
+                routeCommand = RouteNewCommand.CreateRouteNewCommand(_routeManager);
                 break;
 
             case "add":
-                routeCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd, startAirportId);
+                routeCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd);
                 break;
 
             case "remove":
-                routeCommand = RouteRemoveCommand.CreateRouteRemoveCommand(_routeManager, startAirportId);
+                routeCommand = RouteRemoveCommand.CreateRouteRemoveCommand(_routeManager);
                 break;
 
             case "print":
-                routeCommand = RoutePrintCommand.CreateRoutePrintCommand(_routeManager, startAirportId);
+                routeCommand = RoutePrintCommand.CreateRoutePrintCommand(_routeManager);
                 break;
 
             case "find":
-                routeCommand = RouteFindCommand.CreateRouteFindCommand(_routeManager, startAirportId, destinationAirportId);
+                routeCommand = RouteFindCommand.CreateRouteFindCommand(_routeManager, endAirport);
+                break;
+
+            case "check":
+                routeCommand = RouteCheckCommand.CreateRouteCheckCommand(_routeManager, startAirport, endAirport);
+                break;
+
+            case "search":
+                routeCommand = RouteSearchCommand.CreateRouteSearchCommand(_routeManager, startAirport, endAirport);
                 break;
 
             default:
@@ -219,34 +241,35 @@ public class CommandClient
 
         var commandAction = commandArguments[0];
         var flightId = commandArguments[1];
+        double cargoWeight;
+        double cargoVolume;
+        int seats;
+        int smallBaggageCount;
+        int largeBaggageCount;
 
         ICommand? reservationCommand = null;
 
         switch (commandAction)
         {
             case "cargo":
-                if (commandArguments.Length >= 4)
-                {
-                    var cargoWeight = double.Parse(commandArguments[2]);
-                    var cargoVolume = double.Parse(commandArguments[3]);
+                cargoWeight = double.Parse(commandArguments[2]);
+                cargoVolume = double.Parse(commandArguments[3]);
 
-                    var cargoReservation = new CargoReservation(flightId, cargoWeight, cargoVolume);
+                var cargoReservation = new CargoReservation(flightId, cargoWeight, cargoVolume);
 
-                    reservationCommand = ReserveCargoCommand.CreateReserveCargoCommand(_reservationsManager, cargoReservation);
-                }
+                reservationCommand = ReserveCargoCommand.CreateReserveCargoCommand(_reservationsManager, cargoReservation);
                 break;
+
             case "ticket":
-                if (commandArguments.Length >= 5)
-                {
-                    var seats = int.Parse(commandArguments[2]);
-                    var smallBaggageCount = int.Parse(commandArguments[3]);
-                    var largeBaggageCount = int.Parse(commandArguments[4]);
+                seats = int.Parse(commandArguments[2]);
+                smallBaggageCount = int.Parse(commandArguments[3]);
+                largeBaggageCount = int.Parse(commandArguments[4]);
 
-                    var ticketReservation = new TicketReservation(flightId, seats, smallBaggageCount, largeBaggageCount);
+                var ticketReservation = new TicketReservation(flightId, seats, smallBaggageCount, largeBaggageCount);
 
-                    reservationCommand = ReserveTicketCommand.CreateTicketCommand(_reservationsManager, ticketReservation);
-                }
+                reservationCommand = ReserveTicketCommand.CreateTicketCommand(_reservationsManager, ticketReservation);
                 break;
+
             default:
                 break;
         }

@@ -3,7 +3,7 @@
 namespace Airlines.Business.Managers;
 public class AirportManager
 {
-    public Dictionary<string, Airport> Airports { get; private set; }
+    public List<Airport> Airports { get; private set; }
     public Dictionary<string, HashSet<Airport>> AirportsByCity { get; private set; }
     public Dictionary<string, HashSet<Airport>> AirportsByCountry { get; private set; }
     public HashSet<string> AirportNames { get; private set; }
@@ -27,30 +27,12 @@ public class AirportManager
         _ = AirportsByCountry[airport.Country].Add(airport);
 
         _ = AirportNames.Add(airport.Name);
-        Airports.Add(airport.Id, airport);
-    }
-
-    internal void Add(IList<string> airportData)
-    {
-        foreach (var airport in airportData)
-        {
-            var airportParts = airport.Split(", ");
-
-            var newAirport = new Airport
-            {
-                Id = airportParts[0],
-                Name = airportParts[1],
-                City = airportParts[2],
-                Country = airportParts[3]
-            };
-
-            Add(newAirport);
-        }
+        Airports.Add(airport);
     }
 
     internal void Search(string searchTerm)
     {
-        var airportNames = Airports.Values.Where(airline => airline.Name == searchTerm).ToList();
+        var airportNames = Airports.Where(airline => airline.Name == searchTerm).ToList();
 
         if (airportNames.Count > 0)
             Console.WriteLine($" {searchTerm} is Airport name.");
@@ -58,36 +40,46 @@ public class AirportManager
 
     internal List<string> SortByName()
     {
-        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
+        var airportNames = Airports.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
 
         return airportNames;
     }
 
     internal List<string> SortDescByName()
     {
-        var airportNames = Airports.Values.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
+        var airportNames = Airports.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
 
         return airportNames;
     }
 
-
     internal bool Exist(string name) => AirportNames.Contains(name);
 
-    internal void ListData(string name, string airportsFrom)
+    internal List<Airport> ListData(string name, string airportsFrom)
     {
+        var airports = new List<Airport>();
+
         if (airportsFrom == "City")
         {
-            var names = AirportsByCity[name];
-
-            foreach (var airport in names)
-                Console.WriteLine(airport.Name);
+            if (AirportsByCity.TryGetValue(name, out var cityAirports))
+            {
+                airports.AddRange(cityAirports);
+            }
         }
         else if (airportsFrom == "Country")
         {
-            var names = AirportsByCountry[name];
-
-            foreach (var airport in names)
-                Console.WriteLine(airport.Name);
+            if (AirportsByCountry.TryGetValue(name, out var countryAirports))
+            {
+                airports.AddRange(countryAirports);
+            }
         }
+
+        return airports;
+    }
+
+    internal Airport GetAirportById(string airportId)
+    {
+
+        var airport = Airports.FirstOrDefault(a => a.Id == airportId);
+        return airport!;
     }
 }

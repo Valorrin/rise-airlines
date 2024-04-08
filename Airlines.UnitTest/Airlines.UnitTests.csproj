@@ -31,7 +31,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Airlines.Business\Airlines.Business.csproj" />
-		<ProjectReference Include="..\Airlines.Console\Airlines.Console.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

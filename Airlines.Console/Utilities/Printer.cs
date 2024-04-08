@@ -19,7 +19,7 @@ public class Printer
     public void PrintAirports()
     {
         System.Console.Write($"Airports:\n");
-        foreach (var airport in _airportManager.Airports.Values)
+        foreach (var airport in _airportManager.Airports)
         {
             System.Console.WriteLine($" Airport name: {airport.Name}");
             System.Console.WriteLine($" Airport city: {airport.City}");
@@ -29,7 +29,7 @@ public class Printer
     public void PrintAirlines()
     {
         System.Console.Write($"Airlines:\n");
-        foreach (var airline in _airlineManager.Airlines.Values)
+        foreach (var airline in _airlineManager.Airlines)
             System.Console.WriteLine($" Airline name: {airline.Name}\n");
     }
     public void PrintFlights()
