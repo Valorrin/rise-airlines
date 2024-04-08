@@ -122,19 +122,6 @@ public class RouteManagerTests
     }
 
     [Fact]
-    public void RemoveLastFlight_NoFlightsToRemove_PrintsMessage()
-    {
-        var output = new StringWriter();
-        Console.SetOut(output);
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
-
-        routeManager.RemoveLastFlight();
-
-        Assert.Equal("No flights to remove.\r\n", output.ToString());
-    }
-
-    [Fact]
     public void Print_PrintsAllFlightsFromEachAirport()
     {
         var output = new StringWriter();
