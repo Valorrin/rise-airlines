@@ -5,10 +5,10 @@ namespace Airlines.Business.Commands.ReserveCommands;
 public class ReserveCargoCommand : ICommand
 {
 
-    private readonly ReservationsManager _reservationsManager;
+    private readonly ReservationManager _reservationsManager;
     private readonly CargoReservation _cargoReservation;
 
-    private ReserveCargoCommand(ReservationsManager reservationsManager, CargoReservation cargoReservation)
+    private ReserveCargoCommand(ReservationManager reservationsManager, CargoReservation cargoReservation)
     {
         _reservationsManager = reservationsManager;
         _cargoReservation = cargoReservation;
@@ -17,5 +17,5 @@ public class ReserveCargoCommand : ICommand
 
     public void Execute() => _reservationsManager.Add(_cargoReservation);
 
-    public static ReserveCargoCommand CreateReserveCargoCommand(ReservationsManager reservationsManager, CargoReservation cargoReservation) => new(reservationsManager, cargoReservation);
+    public static ReserveCargoCommand CreateReserveCargoCommand(ReservationManager reservationsManager, CargoReservation cargoReservation) => new(reservationsManager, cargoReservation);
 }

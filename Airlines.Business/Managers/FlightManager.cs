@@ -5,7 +5,7 @@ public class FlightManager
 {
     public List<Flight> Flights { get; private set; }
 
-    public FlightManager() => Flights = [];
+    internal FlightManager() => Flights = [];
 
     internal void Add(Flight flight) => Flights.Add(flight);
 

@@ -7,7 +7,7 @@ public class BatchManager
     public bool BatchMode { get; private set; }
     public Queue<ICommand> Commands { get; private set; }
 
-    public BatchManager()
+    internal BatchManager()
     {
         Commands = new Queue<ICommand>();
         BatchMode = false;

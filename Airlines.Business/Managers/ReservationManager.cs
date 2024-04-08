@@ -1,12 +1,12 @@
 ﻿using Airlines.Business.Models.Reservations;
 
 namespace Airlines.Business.Managers;
-public class ReservationsManager
+public class ReservationManager
 {
-    public List<CargoReservation> CargoReservations { get; set; }
-    public List<TicketReservation> TicketReservations { get; set; }
+    public List<CargoReservation> CargoReservations { get; private set; }
+    public List<TicketReservation> TicketReservations { get; private set; }
 
-    public ReservationsManager()
+    internal ReservationManager()
     {
         CargoReservations = [];
         TicketReservations = [];
