@@ -3,6 +3,7 @@ using Airlines.Business.Models;
 
 namespace Airlines.UnitTests.ManagerTests;
 
+[Collection("Sequential")]
 public class RouteManagerTests
 {
     [Fact]
