@@ -105,6 +105,11 @@ public class CommandClient
             {
                 strategy = commandArguments[3];
             }
+            if (commandAction is "find")
+            {
+                var endAirportId = commandArguments[1];
+                endAirport = _airportManager.GetAirportById(endAirportId);
+            }
 
             _commandValidator.ValidateRouteCommand(commandAction, flightToAdd, startAirport, endAirport, strategy);
             ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, strategy!, batchMode);

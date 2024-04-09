@@ -175,23 +175,28 @@ public class RouteManager
         return routeFound;
     }
 
-    private readonly Dictionary<string, Func<Flight, double>> weightFunctions = new Dictionary<string, Func<Flight, double>>
+    private readonly Dictionary<string, Func<Flight, double>> _weightFunctions = new()
     {
-        {"cheap", flight => flight.Price }, // For the "cheap" strategy, weight is calculated based on price
-        {"short", flight => flight.Duration } // For the "short" strategy, weight is calculated based on duration
-        // Add more strategy mappings as needed
+        {"cheap", flight => flight.Price },
+        {"short", flight => flight.Duration },
+        {"stops", flight => 0}
     };
 
     public (List<Flight> route, double totalDuration, double totalPrice, int numStops) FindRoute(Airport startAirport, Airport endAirport, string strategy)
     {
-        var weightFunction = strategy != "stops" ? weightFunctions[strategy] : flight => 0;
+        if (!IsConnected(startAirport, endAirport))
+        {
+            throw new ArgumentException("No route exists between the start and end airports.");
+        }
+
+        var weightFunction = _weightFunctions[strategy];
         var graph = Route.AdjacencyList;
         var visitedAirports = new HashSet<Airport>();
         var distances = new Dictionary<Airport, double>();
         var previousFlight = new Dictionary<Airport, Flight>();
         double totalDuration = 0;
         double totalPrice = 0;
-        int numStops = 0;
+        var numStops = 0;
 
         foreach (var airport in graph.Keys)
         {
@@ -217,9 +222,9 @@ public class RouteManager
         }
 
         var route = ReconstructRoute(previousFlight, startAirport, endAirport);
-        totalDuration = route.Sum(flight => flight.Duration); // Calculate total duration
-        totalPrice = route.Sum(flight => flight.Price); // Calculate total price
-        numStops = route.Count; // Number of stops is the number of airports visited
+        totalDuration = route.Sum(flight => flight.Duration);
+        totalPrice = route.Sum(flight => flight.Price);
+        numStops = route.Count;
 
         Console.WriteLine("Route:");
         foreach (var flight in route)
@@ -260,8 +265,7 @@ public class RouteManager
         {
             if (!previousFlight.TryGetValue(currentAirport, out var value))
             {
-                // No route exists
-                return new List<Flight>();
+                return [];
             }
 
             var flight = value;
@@ -269,8 +273,7 @@ public class RouteManager
             currentAirport = _airportManager.GetAirportById(flight.DepartureAirport);
         }
 
-        route.Reverse(); // Reverse the route to get the correct order
+        route.Reverse();
         return route;
     }
-
 }

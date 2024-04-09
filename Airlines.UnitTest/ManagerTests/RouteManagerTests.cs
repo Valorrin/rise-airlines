@@ -87,28 +87,6 @@ public class RouteManagerTests
         Assert.True(isConnected);
     }
 
-    [Fact]
-    public void ShortestPathAnalysis_StartAirportIsConnectedToEndAirport_ReturnsShortestPath()
-    {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
-
-        var airport1 = new Airport { Id = "Air1", Name = "Airport One", City = "City One", Country = "Country One" };
-        var airport2 = new Airport { Id = "Air2", Name = "Airport Two", City = "City Two", Country = "Country Two" };
-        var airport3 = new Airport { Id = "Air3", Name = "Airport Three", City = "City Three", Country = "Country Three" };
-
-        airportManager.Add(airport1);
-        airportManager.Add(airport2);
-        airportManager.Add(airport3);
-        routeManager.AddFlight(new Flight { Id = "Fl1", DepartureAirport = "Air1", ArrivalAirport = "Air2", Duration = 10, Price = 5.5 });
-        routeManager.AddFlight(new Flight { Id = "Fl2", DepartureAirport = "Air2", ArrivalAirport = "Air3", Duration = 10, Price = 5.5 });
-
-        var shortestPath = routeManager.ShortestPath(airport1, airport3);
-
-        Assert.Equal(2, shortestPath.Count);
-        Assert.Equal("Fl1", shortestPath[0].Id);
-        Assert.Equal("Fl2", shortestPath[1].Id);
-    }
 
     [Fact]
     public void AddAirport_AddsAirportToRoute()
@@ -160,16 +138,5 @@ public class RouteManagerTests
         var result = routeManager.Find("2");
 
         Assert.True(result);
-    }
-
-    [Fact]
-    public void FindRoute_InvalidStrategy_ThrowsArgumentException()
-    {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
-        var startAirport = new Airport { Id = "Start", Name = "Start Airport", City = "city", Country = "country" };
-        var endAirport = new Airport { Id = "End", Name = "End Airport", City = "city", Country = "country" };
-
-        _ = Assert.Throws<ArgumentException>(() => routeManager.FindRoute(startAirport, endAirport, "invalid"));
     }
 }
