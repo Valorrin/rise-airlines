@@ -231,15 +231,9 @@ public class RouteManager
         };
     }
 
-    public List<Flight> FindShortestRoute(Airport startAirport, Airport endAirport)
-    {
-        return FindRoute(startAirport, endAirport, (flight1, flight2) => flight1.Duration.CompareTo(flight2.Duration));
-    }
+    public List<Flight> FindShortestRoute(Airport startAirport, Airport endAirport) => FindRoute(startAirport, endAirport, (flight1, flight2) => flight1.Duration.CompareTo(flight2.Duration));
 
-    public List<Flight> FindCheapestRoute(Airport startAirport, Airport endAirport)
-    {
-        return FindRoute(startAirport, endAirport, (flight1, flight2) => flight1.Price.CompareTo(flight2?.Price ?? double.MaxValue));
-    }
+    public List<Flight> FindCheapestRoute(Airport startAirport, Airport endAirport) => FindRoute(startAirport, endAirport, (flight1, flight2) => flight1.Price.CompareTo(flight2?.Price ?? double.MaxValue));
 
     private List<Flight> FindRoute(Airport startAirport, Airport endAirport, Comparison<Flight> compare)
     {
@@ -263,7 +257,6 @@ public class RouteManager
                 var neighborAirport = _airportManager.GetAirportById(flight.ArrivalAirport);
                 var totalDistance = distances[currentAirport];
 
-                // Handle single edge graph (no flight2)
                 if (flight != default)
                 {
                     totalDistance += compare(flight, default!);
@@ -284,7 +277,7 @@ public class RouteManager
     {
         var unvisitedAirports = distances.Where(kv => !visitedAirports.Contains(kv.Key));
         var minDistance = double.PositiveInfinity;
-        Airport nextAirport = null;
+        Airport nextAirport = null!;
 
         foreach (var kvp in unvisitedAirports)
         {
@@ -305,13 +298,13 @@ public class RouteManager
 
         while (currentAirport != startAirport)
         {
-            if (!previousFlight.ContainsKey(currentAirport))
+            if (!previousFlight.TryGetValue(currentAirport, out var value))
             {
                 // No route exists
-                return new List<Flight>();
+                return [];
             }
 
-            var flight = previousFlight[currentAirport];
+            var flight = value;
             route.Add(flight);
             currentAirport = _airportManager.GetAirportById(flight.DepartureAirport);
         }
