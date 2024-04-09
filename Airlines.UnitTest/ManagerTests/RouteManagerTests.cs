@@ -161,4 +161,15 @@ public class RouteManagerTests
 
         Assert.True(result);
     }
+
+    [Fact]
+    public void FindRoute_InvalidStrategy_ThrowsArgumentException()
+    {
+        var airportManager = new AirportManager();
+        var routeManager = new RouteManager(airportManager);
+        var startAirport = new Airport { Id = "Start", Name = "Start Airport", City = "city", Country = "country" };
+        var endAirport = new Airport { Id = "End", Name = "End Airport", City = "city", Country = "country" };
+
+        _ = Assert.Throws<ArgumentException>(() => routeManager.FindRoute(startAirport, endAirport, "invalid"));
+    }
 }
