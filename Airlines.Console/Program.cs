@@ -75,7 +75,7 @@ public class Program
             {
                 inputValidator.ValidateRouteData(line);
                 var flight = flightManager.GetFlightById(line);
-                routeManager.Add(flight);
+                routeManager.AddFlight(flight);
 
             }
         }
