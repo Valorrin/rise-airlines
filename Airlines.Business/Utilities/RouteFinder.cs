@@ -61,8 +61,6 @@ public class RouteFinder
         return (route, totalDuration, totalPrice, numStops);
     }
 
-
-
     private readonly Dictionary<string, Func<Flight, double>> _weightFunctions = new()
         {
             {"cheap", flight => flight.Price },

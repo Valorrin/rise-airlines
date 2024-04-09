@@ -139,4 +139,24 @@ public class RouteManagerTests
 
         Assert.True(result);
     }
+
+    [Fact]
+    public void RemoveLastFlight_RemovesLastFlightFromRoute()
+    {
+        var airportManager = new AirportManager();
+        var routeManager = new RouteManager(airportManager);
+        var airport1 = new Airport { Id = "Airport1", Name = "Airport One", City = "City", Country = "Country" };
+        var airport2 = new Airport { Id = "Airport2", Name = "Airport Two", City = "City", Country = "Country" };
+        var flight1 = new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", Price = 10, Duration = 10 };
+        var flight2 = new Flight { Id = "F2", DepartureAirport = "Airport1", ArrivalAirport = "Airport2" , Price = 10, Duration = 10 };
+
+        airportManager.Add(airport1);
+        airportManager.Add(airport2);
+        routeManager.AddFlight(flight1);
+        routeManager.AddFlight(flight2);
+
+        routeManager.RemoveLastFlight();
+
+        Assert.DoesNotContain(flight2, routeManager.Route.AdjacencyList.Values.SelectMany(list => list));
+    }
 }

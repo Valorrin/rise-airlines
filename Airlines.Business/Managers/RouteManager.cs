@@ -19,13 +19,11 @@ public class RouteManager
 
     internal void New() => Route = new FlightRouteGraph();
 
-    internal void Add(Flight flight) => AddFlight(flight);
-
     internal void AddAirport(Airport airport)
     {
         if (!Route.AdjacencyList.ContainsKey(airport))
         {
-            Route.AdjacencyList[airport] = new List<Flight>();
+            Route.AdjacencyList[airport] = [];
         }
     }
 
