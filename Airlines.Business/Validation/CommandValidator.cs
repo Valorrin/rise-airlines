@@ -187,14 +187,18 @@ public class CommandValidator
 
         if (commandAction is "check" or "search")
         {
+            if (startAirport == endAirport)
+            {
+                throw new InvalidCommandArgumentException("Start airport cannot be the same as End airport.");
+            }
             if (startAirport == null)
             {
-                throw new InvalidCommandArgumentException("");
+                throw new InvalidCommandArgumentException("Start airport cannot be null.");
             }
 
             if (endAirport == null)
             {
-                throw new InvalidCommandArgumentException("");
+                throw new InvalidCommandArgumentException("End airport cannot be null.");
             }
 
             if (!_airportManager.Airports.Any(x => x == startAirport))

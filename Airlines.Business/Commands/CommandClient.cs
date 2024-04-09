@@ -93,7 +93,6 @@ public class CommandClient
             {
                 var startAirportId = commandArguments[1];
                 var endAirportId = commandArguments[2];
-                strategy = commandArguments[3];
 
                 startAirport = _airportManager.GetAirportById(startAirportId);
                 endAirport = _airportManager.GetAirportById(endAirportId);
@@ -101,6 +100,10 @@ public class CommandClient
             if (commandAction is "add")
             {
                 flightToAdd = _flightManager.GetFlightById(commandArguments[1]);
+            }
+            if (commandAction is "search")
+            {
+                strategy = commandArguments[3];
             }
 
             _commandValidator.ValidateRouteCommand(commandAction, flightToAdd, startAirport, endAirport, strategy);
