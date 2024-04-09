@@ -171,8 +171,9 @@ public class CommandValidator
         {
             if (flightToAdd == null)
             {
-                throw new InvalidCommandArgumentException("");
+                throw new InvalidCommandArgumentException("flightToAdd is null");
             }
+            ValidateIfFlightExists(flightToAdd);
         }
 
         if (commandAction == "remove")
@@ -288,6 +289,15 @@ public class CommandValidator
         if ((reservation.SmallBaggageCount * SmallBaggageMaximumVolume) + (reservation.LargeBaggageCount * LargeBaggageMaximumVolume) > aircraft.CargoVolume)
         {
             throw new InvalidTicketReservationException("Baggage volume exceeds the aircraft's cargo volume capacity.");
+        }
+    }
+
+    public void ValidateIfFlightExists(Flight flight)
+    {
+        var airport = _airportManager.GetAirportById(flight.DepartureAirport);
+        if (_routeManager.Route.AdjacencyList.TryGetValue(airport, out var value) && value.Contains(flight))
+        {
+            throw new InvalidCommandArgumentException("The flight already exists");
         }
     }
 }
