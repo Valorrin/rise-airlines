@@ -51,7 +51,7 @@ public class SortCommandsTests
         var airlineManager = new AirlineManager();
         var sortOrder = "descending";
 
-        var command = SortAirlinesCommand.CreateSortAirlinesCommand(airlineManager, sortOrder);
+        var command = new SortAirlinesCommand(airlineManager, sortOrder);
 
         Assert.NotNull(command);
         _ = Assert.IsType<SortAirlinesCommand>(command);
@@ -82,7 +82,7 @@ public class SortCommandsTests
         var airportManager = new AirportManager();
         var sortOrder = "descending";
 
-        var command = SortAirportsCommand.CreateSortAirportsCommand(airportManager, sortOrder);
+        var command = new SortAirportsCommand(airportManager, sortOrder);
 
         Assert.NotNull(command);
         _ = Assert.IsType<SortAirportsCommand>(command);
@@ -132,7 +132,7 @@ public class SortCommandsTests
         var flightManager = new FlightManager();
         var sortOrder = "descending";
 
-        var command = SortFlightsCommand.CreateSortFlightsCommand(flightManager, sortOrder);
+        var command = new SortFlightsCommand(flightManager, sortOrder);
 
         Assert.NotNull(command);
         _ = Assert.IsType<SortFlightsCommand>(command);
