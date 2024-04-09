@@ -46,20 +46,22 @@ public class RouteManager
             return;
         }
 
-        var lastAirport = airports.Last();
-
-        var flights = Route.AdjacencyList[lastAirport];
-
-        if (flights.Count == 0)
+        for (int i = airports.Count - 1; i >= 0; i--)
         {
-            Console.WriteLine("No flights to remove.");
-            return;
+            var airport = airports[i];
+            var flights = Route.AdjacencyList[airport];
+
+            if (flights.Count > 0)
+            {
+                var lastFlight = flights.Last();
+                _ = flights.Remove(lastFlight);
+
+                Console.WriteLine($"Removed last flight ({lastFlight.Id}) from {airport.Name}");
+                return;
+            }
         }
 
-        var lastFlight = flights.Last();
-        _ = flights.Remove(lastFlight);
-
-        Console.WriteLine($"Removed last flight: {lastFlight.Id}");
+        Console.WriteLine("No flights to remove.");
     }
 
     internal bool IsConnected(Airport startAirport, Airport endAirport)
