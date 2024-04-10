@@ -87,6 +87,7 @@ public class CommandClient
             Flight flightToAdd = null!;
             Airport startAirport = null!;
             Airport endAirport = null!;
+            string strategy = null!;
 
             if (commandAction is "check" or "search")
             {
@@ -96,9 +97,22 @@ public class CommandClient
                 startAirport = _airportManager.GetAirportById(startAirportId);
                 endAirport = _airportManager.GetAirportById(endAirportId);
             }
+            if (commandAction is "add")
+            {
+                flightToAdd = _flightManager.GetFlightById(commandArguments[1]);
+            }
+            if (commandAction is "search")
+            {
+                strategy = commandArguments[3];
+            }
+            if (commandAction is "find")
+            {
+                var endAirportId = commandArguments[1];
+                endAirport = _airportManager.GetAirportById(endAirportId);
+            }
 
-            _commandValidator.ValidateRouteCommand(commandAction, flightToAdd, startAirport, endAirport);
-            ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, batchMode);
+            _commandValidator.ValidateRouteCommand(commandAction, flightToAdd, startAirport, endAirport, strategy);
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, strategy!, batchMode);
         }
         else if (action == "reserve")
         {
@@ -116,7 +130,7 @@ public class CommandClient
 
     private void ProcessSearchCommand(string searchTerm, bool batchMode)
     {
-        var searchCommand = SearchCommand.CreateSearchCommand(_airportManager, _airlineManager, _flightManager, searchTerm);
+        var searchCommand = new SearchCommand(_airportManager, _airlineManager, _flightManager, searchTerm);
 
         if (batchMode)
             _batchManager.AddCommand(searchCommand);
@@ -129,7 +143,7 @@ public class CommandClient
 
         if (target == "airports")
         {
-            var sortAirportsCommand = SortAirportsCommand.CreateSortAirportsCommand(_airportManager, sortOrder!);
+            var sortAirportsCommand = new SortAirportsCommand(_airportManager, sortOrder!);
 
             if (batchMode)
             {
@@ -142,7 +156,7 @@ public class CommandClient
         }
         else if (target == "airlines")
         {
-            var sortAirlinesCommand = SortAirlinesCommand.CreateSortAirlinesCommand(_airlineManager, sortOrder!);
+            var sortAirlinesCommand = new SortAirlinesCommand(_airlineManager, sortOrder!);
 
             if (batchMode)
             {
@@ -155,7 +169,7 @@ public class CommandClient
         }
         else if (target == "flights")
         {
-            var sortFlightsCommand = SortFlightsCommand.CreateSortFlightsCommand(_flightManager, sortOrder!);
+            var sortFlightsCommand = new SortFlightsCommand(_flightManager, sortOrder!);
 
             if (batchMode)
             {
@@ -170,7 +184,7 @@ public class CommandClient
 
     private void ProcessExistCommand(string airportName, bool batchMode)
     {
-        var existCommand = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(_airportManager, airportName);
+        var existCommand = new CheckAirportExistenceCommand(_airportManager, airportName);
 
         if (batchMode)
             _batchManager.AddCommand(existCommand);
@@ -180,7 +194,7 @@ public class CommandClient
 
     private void ProcessListCommand(string inputData, string from, bool batchMode)
     {
-        var listCommand = ListDataCommand.CreateListDataCommand(_airportManager, inputData, from);
+        var listCommand = new ListDataCommand(_airportManager, inputData, from);
 
         if (batchMode)
             _batchManager.AddCommand(listCommand);
@@ -188,7 +202,7 @@ public class CommandClient
             _invoker.ExecuteCommand(listCommand);
     }
 
-    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, bool batchMode)
+    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, string strategy, bool batchMode)
     {
 
         ICommand? routeCommand = null;
@@ -196,31 +210,31 @@ public class CommandClient
         switch (commandAction)
         {
             case "new":
-                routeCommand = RouteNewCommand.CreateRouteNewCommand(_routeManager);
+                routeCommand = new RouteNewCommand(_routeManager);
                 break;
 
             case "add":
-                routeCommand = RouteAddCommand.CreateRouteAddCommand(_routeManager, flightToAdd);
+                routeCommand = new RouteAddCommand(_routeManager, flightToAdd);
                 break;
 
             case "remove":
-                routeCommand = RouteRemoveCommand.CreateRouteRemoveCommand(_routeManager);
+                routeCommand = new RouteRemoveCommand(_routeManager);
                 break;
 
             case "print":
-                routeCommand = RoutePrintCommand.CreateRoutePrintCommand(_routeManager);
+                routeCommand = new RoutePrintCommand(_routeManager);
                 break;
 
             case "find":
-                routeCommand = RouteFindCommand.CreateRouteFindCommand(_routeManager, endAirport);
+                routeCommand = new RouteFindCommand(_routeManager, endAirport);
                 break;
 
             case "check":
-                routeCommand = RouteCheckCommand.CreateRouteCheckCommand(_routeManager, startAirport, endAirport);
+                routeCommand = new RouteCheckCommand(_routeManager, startAirport, endAirport);
                 break;
 
             case "search":
-                routeCommand = RouteSearchCommand.CreateRouteSearchCommand(_routeManager, startAirport, endAirport);
+                routeCommand = new RouteSearchCommand(_routeManager, startAirport, endAirport, strategy);
                 break;
 
             default:
@@ -257,7 +271,7 @@ public class CommandClient
 
                 var cargoReservation = new CargoReservation(flightId, cargoWeight, cargoVolume);
 
-                reservationCommand = ReserveCargoCommand.CreateReserveCargoCommand(_reservationsManager, cargoReservation);
+                reservationCommand = new ReserveCargoCommand(_reservationsManager, cargoReservation);
                 break;
 
             case "ticket":
@@ -267,7 +281,7 @@ public class CommandClient
 
                 var ticketReservation = new TicketReservation(flightId, seats, smallBaggageCount, largeBaggageCount);
 
-                reservationCommand = ReserveTicketCommand.CreateTicketCommand(_reservationsManager, ticketReservation);
+                reservationCommand = new ReserveTicketCommand(_reservationsManager, ticketReservation);
                 break;
 
             default:
@@ -295,13 +309,13 @@ public class CommandClient
         switch (commandAction)
         {
             case "start":
-                batchCommand = BatchStartCommand.CreateBatchStartCommand(_batchManager);
+                batchCommand = new BatchStartCommand(_batchManager);
                 break;
             case "run":
-                batchCommand = BatchRunCommand.CreateBatchRunCommand(_batchManager, _invoker);
+                batchCommand = new BatchRunCommand(_batchManager, _invoker);
                 break;
             case "cancel":
-                batchCommand = BatchCancelCommand.CreateBatchCancelCommand(_batchManager);
+                batchCommand = new BatchCancelCommand(_batchManager);
                 break;
             default:
                 break;

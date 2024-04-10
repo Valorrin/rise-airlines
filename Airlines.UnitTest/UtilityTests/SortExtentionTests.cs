@@ -42,9 +42,9 @@ public class SortExtensionsTests
     public void SortById_FlightManager_SortsIdsAlphabetically()
     {
         var flightManager = new FlightManager();
-        flightManager.Flights.Add(new Flight { Id = "Flight3", DepartureAirport = "AAA", ArrivalAirport = "BBB" });
-        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "CCC", ArrivalAirport = "DDD" });
-        flightManager.Flights.Add(new Flight { Id = "Flight2", DepartureAirport = "EEE", ArrivalAirport = "FFF" });
+        flightManager.Flights.Add(new Flight { Id = "Flight3", DepartureAirport = "AAA", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 });
+        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "CCC", ArrivalAirport = "DDD", Duration = 10, Price = 5.5 });
+        flightManager.Flights.Add(new Flight { Id = "Flight2", DepartureAirport = "EEE", ArrivalAirport = "FFF", Duration = 10, Price = 5.5 });
 
         var sortedIds = flightManager.SortById();
 
@@ -90,9 +90,9 @@ public class SortExtensionsTests
     public void SortDescById_FlightManager_SortsIdsDescending()
     {
         var flightManager = new FlightManager();
-        flightManager.Flights.Add(new Flight { Id = "Flight3", DepartureAirport = "AAA", ArrivalAirport = "BBB" });
-        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "CCC", ArrivalAirport = "DDD" });
-        flightManager.Flights.Add(new Flight { Id = "Flight2", DepartureAirport = "EEE", ArrivalAirport = "FFF" });
+        flightManager.Flights.Add(new Flight { Id = "Flight3", DepartureAirport = "AAA", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 });
+        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "CCC", ArrivalAirport = "DDD", Duration = 10, Price = 5.5 });
+        flightManager.Flights.Add(new Flight { Id = "Flight2", DepartureAirport = "EEE", ArrivalAirport = "FFF", Duration = 10, Price = 5.5 });
 
         var sortedIds = flightManager.SortDescById();
 

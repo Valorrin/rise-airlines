@@ -15,7 +15,7 @@ public class SearchCommandTests
         var flightManager = new FlightManager();
         var searchTerm = "test";
 
-        var command = SearchCommand.CreateSearchCommand(airportManager, airlineManager, flightManager, searchTerm);
+        var command = new SearchCommand(airportManager, airlineManager, flightManager, searchTerm);
 
         Assert.NotNull(command);
         _ = Assert.IsType<SearchCommand>(command);

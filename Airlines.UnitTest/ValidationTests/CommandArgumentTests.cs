@@ -36,7 +36,7 @@ public class ValidateCommandIArgumentTests
     [InlineData("list arg1 arg2")]
     [InlineData("route add arg1")]
     [InlineData("route check arg1 arg2")]
-    [InlineData("route search arg1 arg2")]
+    [InlineData("route search arg1 arg2 aeg3")]
     [InlineData("reserve cargo arg1 arg2 arg3")]
     [InlineData("reserve ticket arg1 arg2 arg3 arg4")]
     [InlineData("batch new")]

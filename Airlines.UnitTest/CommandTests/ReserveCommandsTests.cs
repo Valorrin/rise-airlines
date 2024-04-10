@@ -12,7 +12,7 @@ public class ReserveCommandsTests
     {
         var reservationsManager = new ReservationManager();
         var cargoReservation = new CargoReservation("flightId", 100.0, 10.0);
-        var command = ReserveCargoCommand.CreateReserveCargoCommand(reservationsManager, cargoReservation);
+        var command = new ReserveCargoCommand(reservationsManager, cargoReservation);
 
         command.Execute();
 
@@ -25,7 +25,7 @@ public class ReserveCommandsTests
         var reservationsManager = new ReservationManager();
         var cargoReservation = new CargoReservation("flightId", 100.0, 10.0);
 
-        var command = ReserveCargoCommand.CreateReserveCargoCommand(reservationsManager, cargoReservation);
+        var command = new ReserveCargoCommand(reservationsManager, cargoReservation);
 
         Assert.NotNull(command);
         _ = Assert.IsType<ReserveCargoCommand>(command);
@@ -36,7 +36,7 @@ public class ReserveCommandsTests
     {
         var reservationsManager = new ReservationManager();
         var ticketReservation = new TicketReservation("flightId", 3, 2, 1);
-        var command = ReserveTicketCommand.CreateTicketCommand(reservationsManager, ticketReservation);
+        var command = new ReserveTicketCommand(reservationsManager, ticketReservation);
 
         command.Execute();
 
@@ -49,7 +49,7 @@ public class ReserveCommandsTests
         var reservationsManager = new ReservationManager();
         var ticketReservation = new TicketReservation("flightId", 3, 2, 1);
 
-        var command = ReserveTicketCommand.CreateTicketCommand(reservationsManager, ticketReservation);
+        var command = new ReserveTicketCommand(reservationsManager, ticketReservation);
 
         Assert.NotNull(command);
         _ = Assert.IsType<ReserveTicketCommand>(command);

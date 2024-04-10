@@ -12,6 +12,4 @@ public class BatchCancelCommand : ICommand
         _batchManager.CancelBatch();
         _batchManager.BatchModeOff();
     }
-
-    public static BatchCancelCommand CreateBatchCancelCommand(BatchManager batchManager) => new(batchManager);
 }

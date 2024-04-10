@@ -25,6 +25,4 @@ public class SortFlightsCommand : ICommand
             Console.WriteLine(string.Join(", ", ids));
         }
     }
-
-    public static SortFlightsCommand CreateSortFlightsCommand(FlightManager flightManager, string sortOrder) => new(flightManager, sortOrder);
 }

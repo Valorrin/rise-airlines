@@ -1,21 +1,23 @@
 ﻿using Airlines.Business.DataStructures;
 using Airlines.Business.Models;
+using Airlines.Business.Utilities;
 
 namespace Airlines.Business.Managers;
 public class RouteManager
 {
     private readonly AirportManager _airportManager;
+    private readonly RouteFinder _routeFinder;
+
     public FlightRouteGraph Route { get; private set; }
 
-    internal RouteManager(AirportManager airportManager)
+    public RouteManager(AirportManager airportManager)
     {
         _airportManager = airportManager;
+        _routeFinder = new RouteFinder(airportManager);
         Route = new FlightRouteGraph();
     }
 
     internal void New() => Route = new FlightRouteGraph();
-
-    internal void Add(Flight flight) => AddFlight(flight);
 
     internal void AddAirport(Airport airport)
     {
@@ -46,20 +48,22 @@ public class RouteManager
             return;
         }
 
-        var lastAirport = airports.Last();
-
-        var flights = Route.AdjacencyList[lastAirport];
-
-        if (flights.Count == 0)
+        for (var i = airports.Count - 1; i >= 0; i--)
         {
-            Console.WriteLine("No flights to remove.");
-            return;
+            var airport = airports[i];
+            var flights = Route.AdjacencyList[airport];
+
+            if (flights.Count > 0)
+            {
+                var lastFlight = flights.Last();
+                _ = flights.Remove(lastFlight);
+
+                Console.WriteLine($"Removed last flight ({lastFlight.Id}) from {airport.Name}");
+                return;
+            }
         }
 
-        var lastFlight = flights.Last();
-        _ = flights.Remove(lastFlight);
-
-        Console.WriteLine($"Removed last flight: {lastFlight.Id}");
+        Console.WriteLine("No flights to remove.");
     }
 
     internal bool IsConnected(Airport startAirport, Airport endAirport)
@@ -90,56 +94,9 @@ public class RouteManager
                 }
             }
         }
-        Console.WriteLine("Not onnected!");
+        Console.WriteLine("Not connected!");
 
         return false;
-    }
-
-    internal List<Flight> ShortestPath(Airport startAirport, Airport endAirport)
-    {
-        var previous = new Dictionary<Airport, Flight>();
-        var queue = new Queue<Airport>();
-
-        previous[startAirport] = null!;
-        queue.Enqueue(startAirport);
-
-        while (queue.Count > 0)
-        {
-            var currentAirport = queue.Dequeue();
-
-            if (currentAirport == endAirport)
-            {
-                // Reconstruct path
-                var path = new List<Flight>();
-                while (currentAirport != null)
-                {
-                    var previousFlight = previous[currentAirport];
-                    if (previousFlight != null)
-                        path.Add(previousFlight);
-                    currentAirport = _airportManager.GetAirportById(previousFlight?.DepartureAirport!);
-                }
-                path.Reverse(); // Reverse the path to get correct order
-
-                foreach (var flight in path)
-                {
-                    Console.WriteLine($" Flight {flight.Id}: {flight.DepartureAirport} -> {flight.ArrivalAirport}");
-                }
-                return path;
-            }
-
-            foreach (var flight in Route.AdjacencyList[currentAirport])
-            {
-                var neighbor = _airportManager.GetAirportById(flight.ArrivalAirport);
-                if (!previous.ContainsKey(neighbor))
-                {
-                    previous[neighbor] = flight;
-                    queue.Enqueue(neighbor);
-                }
-            }
-        }
-
-        // No path found
-        return [];
     }
 
     internal void Print()
@@ -157,6 +114,7 @@ public class RouteManager
             Console.WriteLine();
         }
     }
+
     internal bool Find(string destinationAirportId)
     {
         var destinationAirport = _airportManager.GetAirportById(destinationAirportId);
@@ -217,5 +175,16 @@ public class RouteManager
         }
 
         return routeFound;
+    }
+
+    public (List<Flight> route, double totalDuration, double totalPrice, int numStops) FindRoute(Airport startAirport, Airport endAirport, string strategy)
+    {
+        if (!IsConnected(startAirport, endAirport))
+        {
+            throw new ArgumentException("No route exists between the start and end airports.");
+        }
+
+        var routeGraph = Route;
+        return _routeFinder.FindRoute(startAirport, endAirport, strategy, routeGraph);
     }
 }
