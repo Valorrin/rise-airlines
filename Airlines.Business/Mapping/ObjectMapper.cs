@@ -48,13 +48,16 @@ internal class ObjectMapper
         var id = dataParts[0];
         var departureAirportId = dataParts[1];
         var arrivalAirportId = dataParts[2];
+        var price = double.Parse(dataParts[3]);
+        var duration = double.Parse(dataParts[4]);
 
         var flight = new Flight()
         {
             Id = id,
             DepartureAirport = departureAirportId,
             ArrivalAirport = arrivalAirportId,
-            AircraftModel = null
+            Price = price,
+            Duration = duration
         };
 
         return flight;

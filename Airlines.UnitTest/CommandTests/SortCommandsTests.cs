@@ -18,7 +18,7 @@ public class SortCommandsTests
         var command = new SortAirlinesCommand(airlineManager, "descending");
 
         var writer = new StringWriter();
-        System.Console.SetOut(writer);
+        Console.SetOut(writer);
 
         command.Execute();
 
@@ -37,7 +37,7 @@ public class SortCommandsTests
         var command = new SortAirlinesCommand(airlineManager, "ascending");
 
         var writer = new StringWriter();
-        System.Console.SetOut(writer);
+        Console.SetOut(writer);
 
         command.Execute();
 
@@ -51,7 +51,7 @@ public class SortCommandsTests
         var airlineManager = new AirlineManager();
         var sortOrder = "descending";
 
-        var command = SortAirlinesCommand.CreateSortAirlinesCommand(airlineManager, sortOrder);
+        var command = new SortAirlinesCommand(airlineManager, sortOrder);
 
         Assert.NotNull(command);
         _ = Assert.IsType<SortAirlinesCommand>(command);
@@ -68,7 +68,7 @@ public class SortCommandsTests
         var command = new SortAirportsCommand(airportManager, "descending");
 
         var writer = new StringWriter();
-        System.Console.SetOut(writer);
+        Console.SetOut(writer);
 
         command.Execute();
 
@@ -82,7 +82,7 @@ public class SortCommandsTests
         var airportManager = new AirportManager();
         var sortOrder = "descending";
 
-        var command = SortAirportsCommand.CreateSortAirportsCommand(airportManager, sortOrder);
+        var command = new SortAirportsCommand(airportManager, sortOrder);
 
         Assert.NotNull(command);
         _ = Assert.IsType<SortAirportsCommand>(command);
@@ -92,14 +92,14 @@ public class SortCommandsTests
     public void Execute_DescendingOrder_PrintsDescendingIds()
     {
         var flightManager = new FlightManager();
-        flightManager.Flights.Add(new Flight { Id = "Flight2", DepartureAirport = "BBB", ArrivalAirport = "BBB" });
-        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "AAA" });
-        flightManager.Flights.Add(new Flight { Id = "Flight3", DepartureAirport = "CCC", ArrivalAirport = "CCC" });
+        flightManager.Flights.Add(new Flight { Id = "Flight2", DepartureAirport = "BBB", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 });
+        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "AAA", Duration = 10, Price = 5.5 });
+        flightManager.Flights.Add(new Flight { Id = "Flight3", DepartureAirport = "CCC", ArrivalAirport = "CCC", Duration = 10, Price = 5.5 });
 
         var command = new SortFlightsCommand(flightManager, "descending");
 
         var writer = new StringWriter();
-        System.Console.SetOut(writer);
+        Console.SetOut(writer);
 
         command.Execute();
 
@@ -111,14 +111,14 @@ public class SortCommandsTests
     public void Execute_AscendingOrder_PrintsAscendingIds()
     {
         var flightManager = new FlightManager();
-        flightManager.Flights.Add(new Flight { Id = "Flight2", DepartureAirport = "BBB", ArrivalAirport = "BBB" });
-        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "AAA" });
-        flightManager.Flights.Add(new Flight { Id = "Flight3", DepartureAirport = "CCC", ArrivalAirport = "CCC" });
+        flightManager.Flights.Add(new Flight { Id = "Flight2", DepartureAirport = "BBB", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 });
+        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "AAA", Duration = 10, Price = 5.5 });
+        flightManager.Flights.Add(new Flight { Id = "Flight3", DepartureAirport = "CCC", ArrivalAirport = "CCC", Duration = 10, Price = 5.5 });
 
         var command = new SortFlightsCommand(flightManager, "ascending");
 
         var writer = new StringWriter();
-        System.Console.SetOut(writer);
+        Console.SetOut(writer);
 
         command.Execute();
 
@@ -132,7 +132,7 @@ public class SortCommandsTests
         var flightManager = new FlightManager();
         var sortOrder = "descending";
 
-        var command = SortFlightsCommand.CreateSortFlightsCommand(flightManager, sortOrder);
+        var command = new SortFlightsCommand(flightManager, sortOrder);
 
         Assert.NotNull(command);
         _ = Assert.IsType<SortFlightsCommand>(command);

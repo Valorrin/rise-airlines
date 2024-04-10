@@ -1,4 +1,4 @@
-﻿namespace Airlines.Console.Utilities;
+namespace Airlines.Console.Utilities;
 public class InputReader
 {
     public static IEnumerable<string> ReadFromFile(string filePath)

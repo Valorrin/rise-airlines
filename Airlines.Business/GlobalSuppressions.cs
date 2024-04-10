@@ -1,4 +1,4 @@
-﻿// This file is used by Code Analysis to maintain SuppressMessage
+// This file is used by Code Analysis to maintain SuppressMessage
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given
 // a specific target and scoped to a namespace, type, member, etc.
@@ -24,3 +24,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Validation.CommandValidator.ValidateSortCommand(System.String,System.String)")]
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Validation.CommandValidator.ValidateExistCommand(System.String)")]
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Validation.CommandValidator.ValidateListCommand(System.String,System.String)")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Utilities.RouteFinder.GetNextAirport(System.Collections.Generic.Dictionary{Airlines.Business.Models.Airport,System.Double},System.Collections.Generic.HashSet{Airlines.Business.Models.Airport})~Airlines.Business.Models.Airport")]

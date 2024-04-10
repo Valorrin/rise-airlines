@@ -1,4 +1,4 @@
-﻿using Airlines.Business.Managers;
+using Airlines.Business.Managers;
 using Airlines.Business.Models;
 
 namespace Airlines.Business.Commands.RouteCommands;
@@ -9,7 +9,7 @@ public class RouteCheckCommand : ICommand
     private readonly Airport _endAirport;
 
 
-    private RouteCheckCommand(RouteManager routeManager, Airport startAirport, Airport endAirport)
+    public RouteCheckCommand(RouteManager routeManager, Airport startAirport, Airport endAirport)
     {
         _routeManager = routeManager;
         _startAirport = startAirport;
@@ -17,6 +17,4 @@ public class RouteCheckCommand : ICommand
     }
 
     public void Execute() => _routeManager.IsConnected(_startAirport, _endAirport);
-
-    public static RouteCheckCommand CreateRouteCheckCommand(RouteManager routeManager, Airport startAirport, Airport endAirport) => new(routeManager, startAirport, endAirport);
 }

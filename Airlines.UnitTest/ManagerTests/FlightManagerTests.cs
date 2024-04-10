@@ -10,7 +10,7 @@ public class FlightManagerTests
     public void Add_AddsFlightToList()
     {
         var flightManager = new FlightManager();
-        var flight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB" };
+        var flight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 };
 
         flightManager.Add(flight);
 
@@ -23,7 +23,11 @@ public class FlightManagerTests
         var flightManager = new FlightManager();
         var writer = new StringWriter();
         Console.SetOut(writer);
+<<<<<<< HEAD
         flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "BBB" });
+=======
+        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 });
+>>>>>>> Task-19-Enhanced-Flight-Route-Search
 
         flightManager.Search("Flight2");
 
@@ -37,7 +41,11 @@ public class FlightManagerTests
         var flightManager = new FlightManager();
         var writer = new StringWriter();
         Console.SetOut(writer);
+<<<<<<< HEAD
         flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "BBB" });
+=======
+        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 });
+>>>>>>> Task-19-Enhanced-Flight-Route-Search
 
         flightManager.Search("Flight1");
 
@@ -49,7 +57,11 @@ public class FlightManagerTests
     public void GetAircraftModel_ReturnsAircraftModel()
     {
         var flightManager = new FlightManager();
+<<<<<<< HEAD
         var flight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB", AircraftModel = "Boeing 747" };
+=======
+        var flight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB", AircraftModel = "Boeing 747", Duration = 10, Price = 5.5 };
+>>>>>>> Task-19-Enhanced-Flight-Route-Search
         flightManager.Flights.Add(flight);
 
         var aircraftModel = flightManager.GetAircraftModel("F1");
@@ -71,7 +83,11 @@ public class FlightManagerTests
     public void GetFlightById_ReturnsFlight()
     {
         var flightManager = new FlightManager();
+<<<<<<< HEAD
         var expectedFlight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB" };
+=======
+        var expectedFlight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 };
+>>>>>>> Task-19-Enhanced-Flight-Route-Search
         flightManager.Flights.Add(expectedFlight);
 
         var flight = flightManager.GetFlightById("F1");

@@ -12,7 +12,7 @@ public class ExistCommandTests
         var airportManager = new AirportManager();
         var airlineName = "TestAirline";
 
-        var command = CheckAirportExistenceCommand.CreateCheckAirportExistenceCommand(airportManager, airlineName);
+        var command = new CheckAirportExistenceCommand(airportManager, airlineName);
 
         Assert.NotNull(command);
         _ = Assert.IsType<CheckAirportExistenceCommand>(command);

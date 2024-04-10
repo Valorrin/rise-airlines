@@ -8,6 +8,4 @@ public class BatchStartCommand : ICommand
     public BatchStartCommand(BatchManager batchManager) => _batchManager = batchManager;
 
     public void Execute() => _batchManager.BatchModeOn();
-
-    public static BatchStartCommand CreateBatchStartCommand(BatchManager batchManager) => new(batchManager);
 }

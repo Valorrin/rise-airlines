@@ -30,15 +30,14 @@ public class Printer
     {
         System.Console.Write($"Airlines:\n");
         foreach (var airline in _airlineManager.Airlines)
-            System.Console.WriteLine($" Airline name: {airline.Name}\n");
+            System.Console.WriteLine($" Airline name: {airline.Name}");
     }
     public void PrintFlights()
     {
-        System.Console.Write($"Flights: \n");
+        System.Console.Write($"\nFlights: \n");
         foreach (var flight in _flightManager.Flights)
         {
             System.Console.WriteLine($" Flight ID: {flight.Id}");
-            System.Console.WriteLine($" Aircraft Model: {flight.AircraftModel}");
         }
     }
     public void PrintAircrafts()
