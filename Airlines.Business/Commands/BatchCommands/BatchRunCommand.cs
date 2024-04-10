@@ -13,6 +13,4 @@ public class BatchRunCommand : ICommand
     }
 
     public void Execute() => _batchManager.ExecuteBatch(_invoker);
-
-    public static BatchRunCommand CreateBatchRunCommand(BatchManager batchManager, CommandInvoker commandInvoker) => new(batchManager, commandInvoker);
 }

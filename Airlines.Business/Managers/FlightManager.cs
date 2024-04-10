@@ -9,24 +9,6 @@ public class FlightManager
 
     internal void Add(Flight flight) => Flights.Add(flight);
 
-    internal void Add(IList<string> flightData)
-    {
-        foreach (var flight in flightData)
-        {
-            var flightParts = flight.Split(", ");
-
-            var newFlight = new Flight
-            {
-                Id = flightParts[0],
-                DepartureAirport = flightParts[1],
-                ArrivalAirport = flightParts[2],
-                AircraftModel = flightParts[3]
-            };
-
-            Add(newFlight);
-        }
-    }
-
     internal void Search(string searchTerm)
     {
         var flightIds = Flights.Where(flight => flight.Id == searchTerm).ToList();

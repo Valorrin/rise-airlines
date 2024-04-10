@@ -3,7 +3,6 @@ using Airlines.Business.Exceptions;
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
 
-
 namespace Airlines.UnitTests.ConsoleTests;
 
 [Collection("Sequential")]

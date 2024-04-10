@@ -97,9 +97,9 @@ public class CommandValidator
                 {
                     throw new InvalidNumberOfArgumentsException("Invalid number of arguments for'route check' command. Expected 3 arguments.");
                 }
-                if (routeAction is "search" && argumentsCount != 3)
+                if (routeAction is "search" && argumentsCount != 4)
                 {
-                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments for 'route search' command. Expected 3 arguments.");
+                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments for 'route search' command. Expected 4 arguments.");
                 }
                 break;
             case "reserve":
@@ -165,14 +165,15 @@ public class CommandValidator
         }
     }
 
-    public void ValidateRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport)
+    public void ValidateRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, string strategy)
     {
         if (commandAction == "add")
         {
             if (flightToAdd == null)
             {
-                throw new InvalidCommandArgumentException("");
+                throw new InvalidCommandArgumentException("flightToAdd is null");
             }
+            ValidateIfFlightExists(flightToAdd);
         }
 
         if (commandAction == "remove")
@@ -188,12 +189,17 @@ public class CommandValidator
         {
             if (startAirport == null)
             {
-                throw new InvalidCommandArgumentException("");
+                throw new InvalidCommandArgumentException("Start airport cannot be null.");
             }
 
             if (endAirport == null)
             {
-                throw new InvalidCommandArgumentException("");
+                throw new InvalidCommandArgumentException("End airport cannot be null.");
+            }
+
+            if (startAirport == endAirport)
+            {
+                throw new InvalidCommandArgumentException("Start airport cannot be the same as End airport.");
             }
 
             if (!_airportManager.Airports.Any(x => x == startAirport))
@@ -204,6 +210,13 @@ public class CommandValidator
             if (!_airportManager.Airports.Any(x => x == endAirport))
             {
                 throw new AirportNotFoundException($"End airport '{endAirport.Name}' not found.");
+            }
+        }
+        if (commandAction is "search")
+        {
+            if (strategy is not "cheap" and not "short" and not "stops")
+            {
+                throw new InvalidCommandArgumentException("strategy must be cheap, short or stops");
             }
         }
     }
@@ -281,6 +294,15 @@ public class CommandValidator
         if ((reservation.SmallBaggageCount * SmallBaggageMaximumVolume) + (reservation.LargeBaggageCount * LargeBaggageMaximumVolume) > aircraft.CargoVolume)
         {
             throw new InvalidTicketReservationException("Baggage volume exceeds the aircraft's cargo volume capacity.");
+        }
+    }
+
+    public void ValidateIfFlightExists(Flight flight)
+    {
+        var airport = _airportManager.GetAirportById(flight.DepartureAirport);
+        if (_routeManager.Route.AdjacencyList.TryGetValue(airport, out var value) && value.Contains(flight))
+        {
+            throw new InvalidCommandArgumentException("The flight already exists");
         }
     }
 }

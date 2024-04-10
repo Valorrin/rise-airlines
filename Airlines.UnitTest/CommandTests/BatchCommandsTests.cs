@@ -25,7 +25,7 @@ public class BatchCommandsTests
     {
         var batchManager = new BatchManager();
 
-        var command = BatchCancelCommand.CreateBatchCancelCommand(batchManager);
+        var command = new BatchCancelCommand(batchManager);
 
         Assert.NotNull(command);
         _ = Assert.IsType<BatchCancelCommand>(command);
@@ -49,7 +49,7 @@ public class BatchCommandsTests
         var batchManager = new BatchManager();
         var commandInvoker = new CommandInvoker();
 
-        var command = BatchRunCommand.CreateBatchRunCommand(batchManager, commandInvoker);
+        var command = new BatchRunCommand(batchManager, commandInvoker);
 
         Assert.NotNull(command);
         _ = Assert.IsType<BatchRunCommand>(command);
@@ -71,7 +71,7 @@ public class BatchCommandsTests
     {
         var batchManager = new BatchManager();
 
-        var command = BatchStartCommand.CreateBatchStartCommand(batchManager);
+        var command = new BatchStartCommand(batchManager);
 
         Assert.NotNull(command);
         _ = Assert.IsType<BatchStartCommand>(command);

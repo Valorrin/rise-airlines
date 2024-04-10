@@ -13,7 +13,7 @@ public class ListCommandTests
         var inputData = "Test Country";
         var from = "Country";
 
-        var command = ListDataCommand.CreateListDataCommand(airportManager, inputData, from);
+        var command = new ListDataCommand(airportManager, inputData, from);
 
         Assert.NotNull(command);
         _ = Assert.IsType<ListDataCommand>(command);
