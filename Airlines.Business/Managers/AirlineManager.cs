@@ -30,7 +30,9 @@ public class AirlineManager
         var airlineNames = Airlines.Where(airline => airline.Name == searchTerm).ToList();
 
         if (airlineNames.Count > 0)
+        {
             Console.WriteLine($" {searchTerm} is Airline name.");
+        }
     }
 
     internal List<string> SortByName()

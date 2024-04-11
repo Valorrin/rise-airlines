@@ -4,31 +4,10 @@ namespace Airlines.Business.Managers;
 public class AirportManager
 {
     public List<Airport> Airports { get; private set; }
-    public Dictionary<string, HashSet<Airport>> AirportsByCity { get; private set; }
-    public Dictionary<string, HashSet<Airport>> AirportsByCountry { get; private set; }
-    public HashSet<string> AirportNames { get; private set; }
 
-    public AirportManager()
-    {
-        Airports = [];
-        AirportsByCity = [];
-        AirportsByCountry = [];
-        AirportNames = [];
-    }
+    public AirportManager() => Airports = [];
 
-    internal void Add(Airport airport)
-    {
-        if (!AirportsByCity.ContainsKey(airport.City))
-            AirportsByCity[airport.City] = [];
-        _ = AirportsByCity[airport.City].Add(airport);
-
-        if (!AirportsByCountry.ContainsKey(airport.Country))
-            AirportsByCountry[airport.Country] = [];
-        _ = AirportsByCountry[airport.Country].Add(airport);
-
-        _ = AirportNames.Add(airport.Name);
-        Airports.Add(airport);
-    }
+    internal void Add(Airport airport) => Airports.Add(airport);
 
     internal void Search(string searchTerm)
     {
@@ -52,7 +31,7 @@ public class AirportManager
         return airportNames;
     }
 
-    internal bool Exist(string name) => AirportNames.Contains(name);
+    internal bool Exist(string name) => Airports.Any(x => x.Name == name);
 
     internal List<Airport> ListData(string name, string airportsFrom)
     {
@@ -60,17 +39,11 @@ public class AirportManager
 
         if (airportsFrom == "City")
         {
-            if (AirportsByCity.TryGetValue(name, out var cityAirports))
-            {
-                airports.AddRange(cityAirports);
-            }
+            airports = Airports.Where(x => x.City == name).ToList();
         }
         else if (airportsFrom == "Country")
         {
-            if (AirportsByCountry.TryGetValue(name, out var countryAirports))
-            {
-                airports.AddRange(countryAirports);
-            }
+            airports = Airports.Where(x => x.Country == name).ToList();
         }
 
         return airports;
