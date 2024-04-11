@@ -7,8 +7,13 @@ namespace Airlines.Business.Utilities;
 public class RouteFinder
 {
     private readonly AirportManager _airportManager;
+    private readonly ILogger _logger;
 
-    public RouteFinder(AirportManager airportManager) => _airportManager = airportManager;
+    public RouteFinder(AirportManager airportManager, ILogger logger)
+    {
+        _airportManager = airportManager;
+        _logger = logger;
+    }
 
     public (List<Flight> route, double totalDuration, double totalPrice, int numStops) FindRoute(Airport startAirport, Airport endAirport, string strategy, FlightRouteGraph routeGraph)
     {
@@ -49,14 +54,14 @@ public class RouteFinder
         totalPrice = route.Sum(flight => flight.Price);
         numStops = route.Count;
 
-        Console.WriteLine("Route:");
+        _logger.Log("Route:");
         foreach (var flight in route)
         {
-            Console.WriteLine($"Flight {flight.Id}: {flight.DepartureAirport} -> {flight.ArrivalAirport}");
+            _logger.Log($"Flight {flight.Id}: {flight.DepartureAirport} -> {flight.ArrivalAirport}");
         }
-        Console.WriteLine($"Total duration: {totalDuration}");
-        Console.WriteLine($"Total price: {totalPrice}");
-        Console.WriteLine($"Number of stops: {numStops}");
+        _logger.Log($"Total duration: {totalDuration}");
+        _logger.Log($"Total price: {totalPrice}");
+        _logger.Log($"Number of stops: {numStops}");
 
         return (route, totalDuration, totalPrice, numStops);
     }

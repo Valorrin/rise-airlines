@@ -23,23 +23,31 @@ public class AirportManager
         }
     }
 
-    internal List<string> SortByName()
+    internal void SortByName()
     {
-        var airportNames = Airports.Select(airline => airline.Name).ToList().OrderBy(name => name).ToList();
-
-        return airportNames;
+        Airports = Airports.OrderBy(name => name).ToList();
+        _logger.Log($"Airports sorted by name ascending.");
     }
 
-    internal List<string> SortDescByName()
+    internal void SortDescByName()
     {
-        var airportNames = Airports.Select(airline => airline.Name).ToList().OrderByDescending(name => name).ToList();
-
-        return airportNames;
+        Airports = Airports.OrderByDescending(name => name).ToList();
+        _logger.Log($"Airlines sorted by name descending.");
     }
 
-    internal bool Exist(string name) => Airports.Any(x => x.Name == name);
+    internal void Exist(string name)
+    {
+        if (Airports.Any(x => x.Name == name))
+        {
+            _logger.Log($"{name} exists.");
+        }
+        else
+        {
+            _logger.Log($"{name} does not exist.");
+        }
+    }
 
-    internal List<Airport> ListData(string name, string airportsFrom)
+    internal void ListData(string name, string airportsFrom)
     {
         var airports = new List<Airport>();
 
@@ -52,7 +60,10 @@ public class AirportManager
             airports = Airports.Where(x => x.Country == name).ToList();
         }
 
-        return airports;
+        foreach (var airport in airports)
+        {
+            _logger.Log(string.Join(", ", airport.Name));
+        }
     }
 
     internal Airport GetAirportById(string airportId)

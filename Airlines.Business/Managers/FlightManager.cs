@@ -24,18 +24,18 @@ public class FlightManager
         }
     }
 
-    internal List<string> SortById()
+    internal void SortById()
     {
-        var flightIds = Flights.Select(flight => flight.Id).ToList().OrderBy(name => name).ToList();
+        Flights = Flights.OrderBy(name => name).ToList();
 
-        return flightIds;
+        _logger.Log($"Flights sorted by id descending.");
     }
 
-    internal List<string> SortDescById()
+    internal void SortDescById()
     {
-        var flightIds = Flights.Select(flight => flight.Id).ToList().OrderByDescending(name => name).ToList();
+        var flightIds = Flights.OrderByDescending(name => name).ToList();
 
-        return flightIds;
+        _logger.Log($"Flights sorted by id descending.");
     }
 
     internal string GetAircraftModel(string flightId)

@@ -297,7 +297,7 @@ public class CommandClient
         }
         else
         {
-            Console.WriteLine("Error: Invalid reservation command or parameters.");
+            throw new ArgumentException("Error: Invalid reservation command or parameters.");
         }
     }
 
@@ -327,7 +327,7 @@ public class CommandClient
         }
         else
         {
-            Console.WriteLine("Error: Invalid batch command.");
+            throw new ArgumentException("Error: Invalid batch command.");
         }
     }
 }

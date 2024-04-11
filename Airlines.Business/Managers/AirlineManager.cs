@@ -40,17 +40,15 @@ public class AirlineManager
         }
     }
 
-    internal List<string> SortByName()
+    internal void SortByName()
     {
-        var airlineNames = Airlines.Select(airline => airline.Name).OrderBy(name => name).ToList();
-
-        return airlineNames;
+        Airlines = Airlines.OrderBy(name => name).ToList();
+        _logger.Log($"Airlines sorted by name ascending.");
     }
 
-    internal List<string> SortDescByName()
+    internal void SortDescByName()
     {
-        var airlineNames = Airlines.Select(airline => airline.Name).OrderByDescending(name => name).ToList();
-
-        return airlineNames;
+        Airlines = Airlines.OrderByDescending(name => name).ToList();
+        _logger.Log($"Airlines sorted by name descending.");
     }
 }
