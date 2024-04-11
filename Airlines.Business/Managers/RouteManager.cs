@@ -8,13 +8,15 @@ public class RouteManager
 {
     private readonly AirportManager _airportManager;
     private readonly RouteFinder _routeFinder;
+    private readonly ILogger _logger;
 
     public FlightRouteGraph Route { get; private set; }
 
-    public RouteManager(AirportManager airportManager)
+    public RouteManager(AirportManager airportManager, ILogger logger)
     {
         _airportManager = airportManager;
         _routeFinder = new RouteFinder(airportManager);
+        _logger = logger;
         Route = new FlightRouteGraph();
     }
 
@@ -45,7 +47,7 @@ public class RouteManager
 
         if (airports.Count == 0)
         {
-            Console.WriteLine("No flights to remove.");
+            _logger.Log("No flights to remove.");
             return;
         }
 

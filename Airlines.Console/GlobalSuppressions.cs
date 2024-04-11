@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0063:Use simple 'using' statement", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Console.Utilities.InputReader.ReadFromFile(System.String)~System.Collections.Generic.IEnumerable{System.String}")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Console.Utilities.Printer.Print(System.Collections.Generic.IEnumerable{System.String})")]

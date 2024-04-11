@@ -173,6 +173,7 @@ public class CommandValidator
             {
                 throw new InvalidCommandArgumentException("flightToAdd is null");
             }
+
             ValidateIfFlightExists(flightToAdd);
         }
 

@@ -16,6 +16,14 @@ public class Printer
         _aircraftManager = aircraftManager;
     }
 
+    public void Print(IEnumerable<string> collection)
+    {
+        foreach (var item in collection)
+        {
+            System.Console.WriteLine(item);
+        }
+    }
+
     public void PrintAirports()
     {
         System.Console.Write($"Airports:\n");

@@ -1,20 +1,26 @@
 ﻿using Airlines.Business.Models;
+using Airlines.Business.Utilities;
 
 namespace Airlines.Business.Managers;
 public class AirportManager
 {
+    private readonly ILogger _logger;
     public List<Airport> Airports { get; private set; }
 
-    public AirportManager() => Airports = [];
+    public AirportManager(ILogger logger)
+    {
+        Airports = [];
+        _logger = logger;
+    }
 
     internal void Add(Airport airport) => Airports.Add(airport);
 
     internal void Search(string searchTerm)
     {
-        var airportNames = Airports.Where(airline => airline.Name == searchTerm).ToList();
-
-        if (airportNames.Count > 0)
-            Console.WriteLine($" {searchTerm} is Airport name.");
+        if (Airports.Any(airport => airport.Name == searchTerm))
+        {
+            _logger.Log($" {searchTerm} is Airport name.");
+        }
     }
 
     internal List<string> SortByName()

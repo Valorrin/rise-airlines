@@ -1,11 +1,18 @@
 ﻿using Airlines.Business.Models;
+using Airlines.Business.Utilities;
 
 namespace Airlines.Business.Managers;
 public class AirlineManager
 {
+    private readonly ILogger _logger;
+
     public List<Airline> Airlines { get; private set; }
 
-    public AirlineManager() => Airlines = [];
+    public AirlineManager(ILogger logger)
+    {
+        Airlines = [];
+        _logger = logger;
+    }
 
     internal void Add(Airline airline) => Airlines.Add(airline);
 
@@ -27,11 +34,9 @@ public class AirlineManager
 
     internal void Search(string searchTerm)
     {
-        var airlineNames = Airlines.Where(airline => airline.Name == searchTerm).ToList();
-
-        if (airlineNames.Count > 0)
+        if (Airlines.Any(airline => airline.Name == searchTerm))
         {
-            Console.WriteLine($" {searchTerm} is Airline name.");
+            _logger.Log($" {searchTerm} is Airline name.");
         }
     }
 
