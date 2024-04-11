@@ -2,10 +2,6 @@
 using Airlines.Business.Exceptions;
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
-<<<<<<< HEAD
-
-=======
->>>>>>> Task-19-Enhanced-Flight-Route-Search
 
 namespace Airlines.UnitTests.ConsoleTests;
 

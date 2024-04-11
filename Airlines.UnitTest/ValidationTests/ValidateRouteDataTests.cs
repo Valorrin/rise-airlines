@@ -1,11 +1,8 @@
 ﻿using Airlines.Business;
 using Airlines.Business.Exceptions;
 using Airlines.Business.Managers;
-<<<<<<< HEAD
-=======
 using Airlines.Business.Models;
 using Airlines.Business.Validation;
->>>>>>> Task-19-Enhanced-Flight-Route-Search
 
 namespace Airlines.UnitTests.ConsoleTests;
 
@@ -15,11 +12,8 @@ public class ValidateRouteDataTests
     private readonly AirportManager _airportManager;
     private readonly AirlineManager _airlineManager;
     private readonly FlightManager _flightManager;
-<<<<<<< HEAD
-=======
     private readonly RouteManager _routeManager;
     private readonly AircraftManager _aircraftManager;
->>>>>>> Task-19-Enhanced-Flight-Route-Search
     private readonly InputValidator _inputValidator;
     private readonly CommandValidator _commandValidator;
 
@@ -28,8 +22,6 @@ public class ValidateRouteDataTests
         _airportManager = new AirportManager();
         _airlineManager = new AirlineManager();
         _flightManager = new FlightManager();
-<<<<<<< HEAD
-=======
         _aircraftManager = new AircraftManager();
         _routeManager = new RouteManager(_airportManager);
         _commandValidator = new CommandValidator(
@@ -37,7 +29,6 @@ public class ValidateRouteDataTests
             _flightManager,
             _aircraftManager,
             _routeManager);
->>>>>>> Task-19-Enhanced-Flight-Route-Search
         _inputValidator = new InputValidator(
             _airportManager,
             _airlineManager,
@@ -51,8 +42,6 @@ public class ValidateRouteDataTests
         var emptyData = "";
 
         var exception = Assert.Throws<FlightNotFoundException>(() => _inputValidator.ValidateRouteData(emptyData));
-<<<<<<< HEAD
-=======
     }
 
     [Fact]
@@ -136,6 +125,5 @@ public class ValidateRouteDataTests
         airportManager.Add(startAirport);
 
         _ = Assert.Throws<AirportNotFoundException>(() => _commandValidator.ValidateRouteCommand(commandAction, null!, startAirport, endAirport, "strategy"));
->>>>>>> Task-19-Enhanced-Flight-Route-Search
     }
 }
