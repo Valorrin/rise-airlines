@@ -3,16 +3,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>Db</Name>
+    <Name>Airlines.Db</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{5e702ab3-1745-49b0-b53f-4f98599d4c35}</ProjectGuid>
+    <ProjectGuid>{031e9e50-0161-4281-8b51-42df7d6e83bd}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>Db</RootNamespace>
-    <AssemblyName>Db</AssemblyName>
+    <RootNamespace>Airlines.Db</RootNamespace>
+    <AssemblyName>Airlines.Db</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
