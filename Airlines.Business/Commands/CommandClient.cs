@@ -171,14 +171,7 @@ public class CommandClient
         {
             var sortFlightsCommand = new SortFlightsCommand(_flightManager, sortOrder!);
 
-            if (batchMode)
-            {
-                _batchManager.AddCommand(sortFlightsCommand);
-            }
-            else
-            {
-                _invoker.ExecuteCommand(sortFlightsCommand);
-            }
+            ProcessCommandBasedOnMode(sortFlightsCommand, batchMode);
         }
     }
 
@@ -186,20 +179,14 @@ public class CommandClient
     {
         var existCommand = new CheckAirportExistenceCommand(_airportManager, airportName);
 
-        if (batchMode)
-            _batchManager.AddCommand(existCommand);
-        else
-            _invoker.ExecuteCommand(existCommand);
+        ProcessCommandBasedOnMode(existCommand, batchMode);
     }
 
     private void ProcessListCommand(string inputData, string from, bool batchMode)
     {
         var listCommand = new ListDataCommand(_airportManager, inputData, from);
 
-        if (batchMode)
-            _batchManager.AddCommand(listCommand);
-        else
-            _invoker.ExecuteCommand(listCommand);
+        ProcessCommandBasedOnMode(listCommand, batchMode);
     }
 
     private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, string strategy, bool batchMode)
@@ -243,10 +230,7 @@ public class CommandClient
 
         if (routeCommand != null)
         {
-            if (batchMode)
-                _batchManager.AddCommand(routeCommand);
-            else
-                _invoker.ExecuteCommand(routeCommand);
+            ProcessCommandBasedOnMode(routeCommand, batchMode);
         }
     }
 
@@ -290,10 +274,7 @@ public class CommandClient
 
         if (reservationCommand != null)
         {
-            if (batchMode)
-                _batchManager.AddCommand(reservationCommand);
-            else
-                _invoker.ExecuteCommand(reservationCommand);
+            ProcessCommandBasedOnMode(reservationCommand, batchMode);
         }
         else
         {
@@ -329,5 +310,13 @@ public class CommandClient
         {
             throw new ArgumentException("Error: Invalid batch command.");
         }
+    }
+
+    private void ProcessCommandBasedOnMode(ICommand command, bool batchMode)
+    {
+        if (batchMode)
+            _batchManager.AddCommand(command);
+        else
+            _invoker.ExecuteCommand(command);
     }
 }
