@@ -18,7 +18,6 @@ public class SortAirlinesCommand : ICommand
         if (_sortOrder == "descending")
         {
             _airlineManager.SortDescByName();
-
         }
         else
         {

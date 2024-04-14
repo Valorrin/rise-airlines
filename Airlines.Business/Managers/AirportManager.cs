@@ -68,7 +68,6 @@ public class AirportManager
 
     internal Airport GetAirportById(string airportId)
     {
-
         var airport = Airports.FirstOrDefault(a => a.Id == airportId);
         return airport!;
     }

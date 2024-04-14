@@ -98,6 +98,7 @@ public class RouteManager
                 }
             }
         }
+
         _logger.Log("Not connected!");
 
         return false;
@@ -111,6 +112,7 @@ public class RouteManager
             var flights = entry.Value;
             var flightDetails = new StringBuilder();
             _ = flightDetails.Append($" Flights from {departureAirport.Id} to: ");
+
             foreach (var flight in flights)
             {
                 var arrivalAirport = _airportManager.GetAirportById(flight.ArrivalAirport);

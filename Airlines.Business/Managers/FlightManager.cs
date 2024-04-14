@@ -34,7 +34,6 @@ public class FlightManager
     internal void SortDescById()
     {
         var flightIds = Flights.OrderByDescending(name => name).ToList();
-
         _logger.Log($"Flights sorted by id descending.");
     }
 

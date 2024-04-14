@@ -3,7 +3,6 @@
 namespace Airlines.Business.Managers;
 public class BatchManager
 {
-
     public bool BatchMode { get; private set; }
     public Queue<ICommand> Commands { get; private set; }
 

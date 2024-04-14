@@ -131,11 +131,7 @@ public class CommandClient
     private void ProcessSearchCommand(string searchTerm, bool batchMode)
     {
         var searchCommand = new SearchCommand(_airportManager, _airlineManager, _flightManager, searchTerm);
-
-        if (batchMode)
-            _batchManager.AddCommand(searchCommand);
-        else
-            _invoker.ExecuteCommand(searchCommand);
+        ProcessCommandBasedOnMode(searchCommand, batchMode);
     }
 
     private void ProcessSortCommand(string target, string sortOrder, bool batchMode)
@@ -144,33 +140,16 @@ public class CommandClient
         if (target == "airports")
         {
             var sortAirportsCommand = new SortAirportsCommand(_airportManager, sortOrder!);
-
-            if (batchMode)
-            {
-                _batchManager.AddCommand(sortAirportsCommand);
-            }
-            else
-            {
-                _invoker.ExecuteCommand(sortAirportsCommand);
-            }
+            ProcessCommandBasedOnMode(sortAirportsCommand, batchMode);
         }
         else if (target == "airlines")
         {
             var sortAirlinesCommand = new SortAirlinesCommand(_airlineManager, sortOrder!);
-
-            if (batchMode)
-            {
-                _batchManager.AddCommand(sortAirlinesCommand);
-            }
-            else
-            {
-                _invoker.ExecuteCommand(sortAirlinesCommand);
-            }
+            ProcessCommandBasedOnMode(sortAirlinesCommand, batchMode);
         }
         else if (target == "flights")
         {
             var sortFlightsCommand = new SortFlightsCommand(_flightManager, sortOrder!);
-
             ProcessCommandBasedOnMode(sortFlightsCommand, batchMode);
         }
     }
@@ -178,20 +157,17 @@ public class CommandClient
     private void ProcessExistCommand(string airportName, bool batchMode)
     {
         var existCommand = new CheckAirportExistenceCommand(_airportManager, airportName);
-
         ProcessCommandBasedOnMode(existCommand, batchMode);
     }
 
     private void ProcessListCommand(string inputData, string from, bool batchMode)
     {
         var listCommand = new ListDataCommand(_airportManager, inputData, from);
-
         ProcessCommandBasedOnMode(listCommand, batchMode);
     }
 
     private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, string strategy, bool batchMode)
     {
-
         ICommand? routeCommand = null;
 
         switch (commandAction)
