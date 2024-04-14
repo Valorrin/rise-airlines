@@ -123,7 +123,6 @@ public class CommandClient
         else if (action == "batch")
         {
             var commandAction = commandArguments[0];
-
             ProcessBatchCommand(commandAction);
         }
     }
