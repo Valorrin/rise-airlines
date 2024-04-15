@@ -1,13 +1,12 @@
-﻿USE master;
-GO
-
-CREATE DATABASE AirlinesDB;
-GO
-
 USE AirlinesDB;
 GO
 
+DROP TABLE IF EXISTS Flights;
+DROP TABLE IF EXISTS Airports; 
+DROP TABLE IF EXISTS Airlines;  
+
 CREATE TABLE Airports (
+	[AirportId] NVARCHAR(3) PRIMARY KEY,
     [Name] NVARCHAR(255) NOT NULL,
     [Country] NVARCHAR(75) NOT NULL,
     [City] NVARCHAR(100) NOT NULL,
@@ -17,6 +16,7 @@ CREATE TABLE Airports (
 );
 
 CREATE TABLE Airlines (
+	[AirlineId] INT PRIMARY KEY IDENTITY,
     [Name] NVARCHAR(6) NOT NULL,
     [Founded] DATE NOT NULL,
     [FleetSize] INT NOT NULL,
@@ -24,9 +24,15 @@ CREATE TABLE Airlines (
 );
 
 CREATE TABLE Flights (
-    [Number] NVARCHAR(255) NOT NULL,
-    [DepartureAirport] NVARCHAR(3) NOT NULL,
-    [ArrivalAirport] NVARCHAR(3) NOT NULL,
-    [DepartureDateTime] NVARCHAR NOT NULL,
-    [ArrivalDateTime] NVARCHAR NOT NULL
+	[FlightId] INT PRIMARY KEY IDENTITY,
+    [Number] NVARCHAR(5) NOT NULL,
+    [DepartureAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
+    [ArrivalAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
+    [DepartureDateTime] DATETIME2 NOT NULL CHECK (DepartureDateTime > GetDate()),
+    [ArrivalDateTime] DATETIME2 NOT NULL CHECK (ArrivalDateTime > GetDate()),
+	CONSTRAINT CheckDepartureBeforeArrival CHECK (DepartureDateTime < ArrivalDateTime)
 );
+
+SELECT * FROM Airports
+SELECT * FROM Airlines
+SELECT * FROM Flights
