@@ -98,7 +98,6 @@ public class Program
             try
             {
                 commandValidator.ValidateCommandArguments(commandInput);
-
                 commandClient.ProcessCommand(commandInput, batchMode);
 
                 var logs = logger.GetLogs();
