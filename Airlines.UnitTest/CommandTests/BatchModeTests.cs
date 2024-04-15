@@ -1,6 +1,8 @@
 ﻿using Airlines.Business.Commands;
 using Airlines.Business.Managers;
+using Airlines.Business.Utilities;
 using Airlines.Business.Validation;
+using Castle.Core.Logging;
 
 namespace Airlines.UnitTests.CommandTests;
 
@@ -10,12 +12,13 @@ public class BatchModeTests
     [Fact]
     public void ProcessCommand_BatchModeTrue_AddsCommandToBatchManager()
     {
+        var logger = new Business.Utilities.ConsoleLogger();
         var invoker = new CommandInvoker();
         var batchManager = new BatchManager();
-        var airlineManager = new AirlineManager();
-        var airportManager = new AirportManager();
-        var flightManager = new FlightManager();
-        var routeManager = new RouteManager(airportManager);
+        var airlineManager = new AirlineManager(logger);
+        var airportManager = new AirportManager(logger);
+        var flightManager = new FlightManager(logger);
+        var routeManager = new RouteManager(airportManager, logger);
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationManager();
         var commandValidator = new CommandValidator(airportManager, flightManager, aircraftManager, routeManager);

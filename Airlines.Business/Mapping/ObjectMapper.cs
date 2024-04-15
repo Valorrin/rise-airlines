@@ -35,7 +35,6 @@ internal class ObjectMapper
         {
             Id = id,
             Name = name,
-
         };
 
         return airline;

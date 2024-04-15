@@ -10,8 +10,9 @@ public class RouteFinderTests
     [Fact]
     public void FindRoute_ReturnsCorrectRouteWithCheapStrategy()
     {
-        var airportManager = new AirportManager();
-        var routeFinder = new RouteFinder(airportManager);
+        var logger = new ConsoleLogger();
+        var airportManager = new AirportManager(logger);
+        var routeFinder = new RouteFinder(airportManager, logger);
         var airport1 = new Airport { Id = "Airport1", Name = "Airport One", City = "City", Country = "Country" };
         var airport2 = new Airport { Id = "Airport2", Name = "Airport Two", City = "City", Country = "Country" };
         var flight1 = new Flight { Id = "Flight1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", Duration = 2, Price = 100 };
@@ -20,7 +21,7 @@ public class RouteFinderTests
         airportManager.Add(airport1);
         airportManager.Add(airport2);
 
-        var routeManager = new RouteManager(airportManager);
+        var routeManager = new RouteManager(airportManager, logger);
         routeManager.AddFlight(flight1);
         routeManager.AddFlight(flight2);
         routeManager.AddFlight(flight3);
@@ -35,8 +36,8 @@ public class RouteFinderTests
 
     [Fact]
     public void FindRoute_ReturnsCorrectRouteWithShortStrategy()
-    {
-        var airportManager = new AirportManager();
+    { 
+        var airportManager = new AirportManager(logger);
         var routeFinder = new RouteFinder(airportManager);
         var airport1 = new Airport { Id = "Airport1", Name = "Airport One", City = "City", Country = "Country" };
         var airport2 = new Airport { Id = "Airport2", Name = "Airport Two", City = "City", Country = "Country" };
