@@ -24,13 +24,13 @@ CREATE TABLE Airlines (
 );
 
 CREATE TABLE Flights (
-	[FlightId] INT PRIMARY KEY IDENTITY,
+    [FlightId] INT PRIMARY KEY IDENTITY,
     [Number] NVARCHAR(5) NOT NULL,
     [DepartureAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
     [ArrivalAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
     [DepartureDateTime] DATETIME2 NOT NULL CHECK (DepartureDateTime >= GetDate()),
     [ArrivalDateTime] DATETIME2 NOT NULL CHECK (ArrivalDateTime >= GetDate()),
-	CONSTRAINT CheckDepartureBeforeArrival CHECK (DepartureDateTime < ArrivalDateTime)
+    CONSTRAINT CheckDepartureBeforeArrival CHECK (DepartureDateTime < ArrivalDateTime)
 );
 
 SELECT * FROM Airports
