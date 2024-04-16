@@ -2,9 +2,9 @@ USE AirlinesDB;
 GO
 
 SELECT 
-	Flights.FlightId,
-	Flights.Number,
-	Flights.DepartureDateTime,
+	Flights.FlightId AS FlightId,
+    Flights.Number AS FlightNumber,
+    Flights.DepartureDateTime AS DepartureDateTime,
 	da.AirportId AS DepartureAirportId,
 	da.Name AS DepartureAirportName,
 	da.Country AS DepartureAirportCode,
