@@ -25,13 +25,13 @@ public class AirportManager
 
     internal void SortByName()
     {
-        Airports = Airports.OrderBy(name => name).ToList();
+        Airports = Airports.OrderBy(airport => airport.Name, StringComparer.OrdinalIgnoreCase).ToList();
         _logger.Log($"Airports sorted by name ascending.");
     }
 
     internal void SortDescByName()
     {
-        Airports = Airports.OrderByDescending(name => name).ToList();
+        Airports = Airports.OrderByDescending(airport => airport.Name, StringComparer.OrdinalIgnoreCase).ToList();
         _logger.Log($"Airlines sorted by name descending.");
     }
 

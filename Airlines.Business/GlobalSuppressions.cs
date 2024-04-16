@@ -30,3 +30,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Managers.AirportManager.SortByName")]
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Managers.AirportManager.SortDescByName")]
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Managers.FlightManager.SortById")]
+[assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Business.Managers.FlightManager.SortDescById")]

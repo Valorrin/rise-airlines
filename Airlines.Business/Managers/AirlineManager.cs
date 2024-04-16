@@ -16,22 +16,6 @@ public class AirlineManager
 
     internal void Add(Airline airline) => Airlines.Add(airline);
 
-    internal void Add(IList<string> airlineData)
-    {
-        foreach (var airport in airlineData)
-        {
-            var airportParts = airport.Split(", ");
-
-            var newAirline = new Airline
-            {
-                Id = airportParts[0],
-                Name = airportParts[1]
-            };
-
-            Add(newAirline);
-        }
-    }
-
     internal void Search(string searchTerm)
     {
         if (Airlines.Any(airline => airline.Name == searchTerm))
@@ -42,13 +26,13 @@ public class AirlineManager
 
     internal void SortByName()
     {
-        Airlines = Airlines.OrderBy(name => name).ToList();
+        Airlines = Airlines.OrderBy(airline => airline.Name, StringComparer.OrdinalIgnoreCase).ToList();
         _logger.Log($"Airlines sorted by name ascending.");
     }
 
     internal void SortDescByName()
     {
-        Airlines = Airlines.OrderByDescending(name => name).ToList();
+        Airlines = Airlines.OrderByDescending(airline => airline.Name, StringComparer.OrdinalIgnoreCase).ToList();
         _logger.Log($"Airlines sorted by name descending.");
     }
 }

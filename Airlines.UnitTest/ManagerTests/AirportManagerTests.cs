@@ -1,15 +1,19 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
+using Airlines.Business.Utilities;
+using Moq;
 
 namespace Airlines.UnitTests.ManagerTests;
 
 [Collection("Sequential")]
 public class AirportManagerTests
 {
+    private readonly ConsoleLogger _logger = new();
+
     [Fact]
     public void Add_Airport_Successfully()
     {
-        var airportManager = new AirportManager();
+        var airportManager = new AirportManager(_logger);
         var airport = new Airport
         {
             Id = "ABC",
@@ -21,67 +25,51 @@ public class AirportManagerTests
         airportManager.Add(airport);
 
         Assert.Contains(airport, airportManager.Airports);
-        Assert.Contains(airport, airportManager.AirportsByCity["Test City"]);
-        Assert.Contains(airport, airportManager.AirportsByCountry["Test Country"]);
-        Assert.Contains(airport.Name, airportManager.AirportNames);
     }
 
     [Fact]
-    public void Search_Airport_By_Name()
+    public void Search_AirportDoesNotExist_DoesNotLog()
     {
-        var airportManager = new AirportManager();
-        var airport = new Airport
-        {
-            Id = "ABC",
-            Name = "Test Airport",
-            City = "Test City",
-            Country = "Test Country"
-        };
-        airportManager.Add(airport);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
 
-        var writer = new StringWriter();
-        Console.SetOut(writer);
+        airportManager.Search("Nonexistent Airport");
 
-        airportManager.Search("Test Airport");
+        loggerMock.Verify(logger => logger.Log(It.IsAny<string>()), Times.Never);
+    }
 
-        var output = writer.ToString().Trim();
-        Assert.Contains("Test Airport", output);
+
+    [Theory]
+    [InlineData("ExistingAirport")]
+    public void Exist_AirportExists_LoggedExistence(string airportName)
+    {
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var existingAirport = new Airport { Id = "1", Name = airportName, City = "City One", Country = "Country One" };
+        airportManager.Add(existingAirport);
+
+        airportManager.Exist(airportName);
+
+        loggerMock.Verify(logger => logger.Log($"{airportName} exists."), Times.Once);
     }
 
     [Theory]
-    [InlineData("Test Airport", true)]
-    [InlineData("Nonexistent Airport", false)]
-    public void Check_Airport_Existence(string airportName, bool expectedResult)
+    [InlineData("NonExistingAirport")]
+    public void Exist_AirportDoesNotExist_LoggedNonExistence(string airportName)
     {
-        var airportManager = new AirportManager();
-        var airport = new Airport
-        {
-            Id = "ABC",
-            Name = "Test Airport",
-            City = "Test City",
-            Country = "Test Country"
-        };
-        airportManager.Add(airport);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var existingAirport = new Airport { Id = "1", Name = "ExistingAirport", City = "City One", Country = "Country One" };
+        airportManager.Add(existingAirport);
 
-        var result = airportManager.Exist(airportName);
+        airportManager.Exist(airportName);
 
-        Assert.Equal(expectedResult, result);
+        loggerMock.Verify(logger => logger.Log($"{airportName} does not exist."), Times.Once);
     }
-
-    [Fact]
-    public void ListData_ReturnsEmptyList_WhenAirportsFromIsInvalid()
-    {
-        var airportManager = new AirportManager();
-
-        var airports = airportManager.ListData("InvalidName", "InvalidType");
-
-        Assert.Empty(airports);
-    }
-
     [Fact]
     public void GetAirportById_ReturnsAirport_WhenAirportExists()
     {
-        var airportManager = new AirportManager();
+        var airportManager = new AirportManager(_logger);
         var expectedAirport = new Airport { Id = "1", Name = "Airport One", City = "City One", Country = "Country One" };
         airportManager.Airports.Add(expectedAirport);
 
@@ -93,7 +81,7 @@ public class AirportManagerTests
     [Fact]
     public void GetAirportById_ReturnsNull_WhenAirportDoesNotExist()
     {
-        var airportManager = new AirportManager();
+        var airportManager = new AirportManager(_logger);
 
         var airport = airportManager.GetAirportById("NonExistingId");
 

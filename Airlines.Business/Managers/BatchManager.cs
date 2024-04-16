@@ -14,7 +14,7 @@ public class BatchManager
 
     internal void AddCommand(ICommand command) => Commands.Enqueue(command);
 
-    internal void ExecuteBatch(CommandInvoker invoker)
+    internal void ExecuteBatch(ICommandInvoker invoker)
     {
         while (Commands.Count > 0)
         {

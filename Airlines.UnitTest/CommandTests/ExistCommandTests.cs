@@ -1,5 +1,7 @@
 ﻿using Airlines.Business.Commands.SearchCommands;
 using Airlines.Business.Managers;
+using Airlines.Business.Utilities;
+using Moq;
 
 namespace Airlines.UnitTests.CommandTests;
 
@@ -9,7 +11,8 @@ public class ExistCommandTests
     [Fact]
     public void CreateCheckAirportExistenceCommand_ReturnsInstance()
     {
-        var airportManager = new AirportManager();
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
         var airlineName = "TestAirline";
 
         var command = new CheckAirportExistenceCommand(airportManager, airlineName);

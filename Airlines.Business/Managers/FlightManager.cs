@@ -26,14 +26,14 @@ public class FlightManager
 
     internal void SortById()
     {
-        Flights = Flights.OrderBy(name => name).ToList();
+        Flights = Flights.OrderBy(flight => flight.Id, StringComparer.OrdinalIgnoreCase).ToList();
 
         _logger.Log($"Flights sorted by id descending.");
     }
 
     internal void SortDescById()
     {
-        var flightIds = Flights.OrderByDescending(name => name).ToList();
+        Flights = Flights.OrderByDescending(flight => flight.Id, StringComparer.OrdinalIgnoreCase).ToList();
         _logger.Log($"Flights sorted by id descending.");
     }
 

@@ -70,7 +70,6 @@ public class Program
             foreach (var line in aircraftData)
             {
                 inputValidator.ValidateAircraftData(line);
-                //TODO: maybe use the object mapper?
                 aircraftManager.Add(line);
             }
 
