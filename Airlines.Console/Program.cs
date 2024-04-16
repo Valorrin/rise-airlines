@@ -92,12 +92,12 @@ public class Program
         while (true)
         {
             var commandInput = ReadCommandInput();
-            var batchMode = batchManager.BatchMode;
+            var isBatchMode = batchManager.IsBatchMode;
 
             try
             {
                 commandValidator.ValidateCommandArguments(commandInput);
-                commandClient.ProcessCommand(commandInput, batchMode);
+                commandClient.ProcessCommand(commandInput, isBatchMode);
 
                 var logs = logger.GetLogs();
                 printer.Print(logs);

@@ -41,7 +41,7 @@ public class CommandClient
         _commandValidator = commandValidator;
     }
 
-    public void ProcessCommand(string command, bool batchMode)
+    public void ProcessCommand(string command, bool isBatchMode)
     {
         var commandParts = command.Split(' ', 2).ToArray();
         var action = commandParts[0];
@@ -52,7 +52,7 @@ public class CommandClient
             var searchTerm = commandParts[1];
 
             _commandValidator.ValidateSearchCommand(searchTerm);
-            ProcessSearchCommand(searchTerm, batchMode);
+            ProcessSearchCommand(searchTerm, isBatchMode);
         }
         else if (action == "sort")
         {
@@ -60,14 +60,14 @@ public class CommandClient
             var sortOrder = commandArguments.ElementAtOrDefault(1);
 
             _commandValidator.ValidateSortCommand(target, sortOrder!);
-            ProcessSortCommand(target, sortOrder!, batchMode);
+            ProcessSortCommand(target, sortOrder!, isBatchMode);
         }
         else if (action == "exist")
         {
             var airportName = commandParts[1];
 
             _commandValidator.ValidateExistCommand(airportName);
-            ProcessExistCommand(airportName, batchMode);
+            ProcessExistCommand(airportName, isBatchMode);
 
         }
         else if (action == "list")
@@ -77,7 +77,7 @@ public class CommandClient
             var from = commandParts[1];
 
             _commandValidator.ValidateListCommand(inputData, from);
-            ProcessListCommand(inputData, from, batchMode);
+            ProcessListCommand(inputData, from, isBatchMode);
         }
         else if (action == "route")
         {
@@ -112,13 +112,13 @@ public class CommandClient
             }
 
             _commandValidator.ValidateRouteCommand(commandAction, flightToAdd, startAirport, endAirport, strategy);
-            ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, strategy!, batchMode);
+            ProcessRouteCommand(commandAction, flightToAdd!, startAirport!, endAirport!, strategy!, isBatchMode);
         }
         else if (action == "reserve")
         {
 
             _commandValidator.ValidateReserveCommand(commandArguments);
-            ProcessReserveCommand(commandArguments, batchMode);
+            ProcessReserveCommand(commandArguments, isBatchMode);
         }
         else if (action == "batch")
         {
@@ -127,45 +127,45 @@ public class CommandClient
         }
     }
 
-    private void ProcessSearchCommand(string searchTerm, bool batchMode)
+    private void ProcessSearchCommand(string searchTerm, bool isBatchMode)
     {
         var searchCommand = new SearchCommand(_airportManager, _airlineManager, _flightManager, searchTerm);
-        ProcessCommandBasedOnMode(searchCommand, batchMode);
+        ProcessCommandBasedOnMode(searchCommand, isBatchMode);
     }
 
-    private void ProcessSortCommand(string target, string sortOrder, bool batchMode)
+    private void ProcessSortCommand(string target, string sortOrder, bool isBatchMode)
     {
 
         if (target == "airports")
         {
             var sortAirportsCommand = new SortAirportsCommand(_airportManager, sortOrder!);
-            ProcessCommandBasedOnMode(sortAirportsCommand, batchMode);
+            ProcessCommandBasedOnMode(sortAirportsCommand, isBatchMode);
         }
         else if (target == "airlines")
         {
             var sortAirlinesCommand = new SortAirlinesCommand(_airlineManager, sortOrder!);
-            ProcessCommandBasedOnMode(sortAirlinesCommand, batchMode);
+            ProcessCommandBasedOnMode(sortAirlinesCommand, isBatchMode);
         }
         else if (target == "flights")
         {
             var sortFlightsCommand = new SortFlightsCommand(_flightManager, sortOrder!);
-            ProcessCommandBasedOnMode(sortFlightsCommand, batchMode);
+            ProcessCommandBasedOnMode(sortFlightsCommand, isBatchMode);
         }
     }
 
-    private void ProcessExistCommand(string airportName, bool batchMode)
+    private void ProcessExistCommand(string airportName, bool isBatchMode)
     {
         var existCommand = new CheckAirportExistenceCommand(_airportManager, airportName);
-        ProcessCommandBasedOnMode(existCommand, batchMode);
+        ProcessCommandBasedOnMode(existCommand, isBatchMode);
     }
 
-    private void ProcessListCommand(string inputData, string from, bool batchMode)
+    private void ProcessListCommand(string inputData, string from, bool isBatchMode)
     {
         var listCommand = new ListDataCommand(_airportManager, inputData, from);
-        ProcessCommandBasedOnMode(listCommand, batchMode);
+        ProcessCommandBasedOnMode(listCommand, isBatchMode);
     }
 
-    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, string strategy, bool batchMode)
+    private void ProcessRouteCommand(string commandAction, Flight flightToAdd, Airport startAirport, Airport endAirport, string strategy, bool isBatchMode)
     {
         ICommand? routeCommand = null;
 
@@ -205,11 +205,11 @@ public class CommandClient
 
         if (routeCommand != null)
         {
-            ProcessCommandBasedOnMode(routeCommand, batchMode);
+            ProcessCommandBasedOnMode(routeCommand, isBatchMode);
         }
     }
 
-    private void ProcessReserveCommand(string[] commandArguments, bool batchMode)
+    private void ProcessReserveCommand(string[] commandArguments, bool isBatchMode)
     {
 
         var commandAction = commandArguments[0];
@@ -249,7 +249,7 @@ public class CommandClient
 
         if (reservationCommand != null)
         {
-            ProcessCommandBasedOnMode(reservationCommand, batchMode);
+            ProcessCommandBasedOnMode(reservationCommand, isBatchMode);
         }
         else
         {
@@ -287,11 +287,15 @@ public class CommandClient
         }
     }
 
-    private void ProcessCommandBasedOnMode(ICommand command, bool batchMode)
+    private void ProcessCommandBasedOnMode(ICommand command, bool isBatchMode)
     {
-        if (batchMode)
+        if (isBatchMode)
+        {
             _batchManager.AddCommand(command);
+        }
         else
+        {
             _invoker.ExecuteCommand(command);
+        }
     }
 }
