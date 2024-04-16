@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airlines.UnitTests", "Airli
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airlines.Business", "Airlines.Business\Airlines.Business.csproj", "{144FC130-6FFD-4F9A-81FF-FA76BAEDE788}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Airlines.Db", "Airlines.Db\Airlines.Db.sqlproj", "{031E9E50-0161-4281-8B51-42DF7D6E83BD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,12 +27,6 @@ Global
 		{144FC130-6FFD-4F9A-81FF-FA76BAEDE788}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{144FC130-6FFD-4F9A-81FF-FA76BAEDE788}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{144FC130-6FFD-4F9A-81FF-FA76BAEDE788}.Release|Any CPU.Build.0 = Release|Any CPU
-		{031E9E50-0161-4281-8B51-42DF7D6E83BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{031E9E50-0161-4281-8B51-42DF7D6E83BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{031E9E50-0161-4281-8B51-42DF7D6E83BD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{031E9E50-0161-4281-8B51-42DF7D6E83BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{031E9E50-0161-4281-8B51-42DF7D6E83BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{031E9E50-0161-4281-8B51-42DF7D6E83BD}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
