@@ -15,6 +15,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Airlines.Business\Airlines.Business.csproj" />
+	  <ProjectReference Include="..\Airlines.Persistence\Airlines.Persistence.csproj" />
 	</ItemGroup>
 
 </Project>

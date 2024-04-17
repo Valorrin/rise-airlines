@@ -7,6 +7,7 @@ using Airlines.Business;
 using Airlines.Business.Mapping;
 using Airlines.Business.Validation;
 using Airlines.Business.Utilities;
+using Airlines.Persistence.Repository;
 
 
 namespace Airlines;
@@ -43,6 +44,12 @@ public class Program
         var flightData = ReadFromFile(flightFilePath);
         var aircraftData = ReadFromFile(aircraftFilePath);
         var routeData = ReadFromFile(routeFilePath);
+
+        var flightRepository = new FlightRepository();
+
+        var a = flightRepository.GetFlights();
+
+
 
         try
         {
@@ -87,7 +94,7 @@ public class Program
             return;
         }
 
-        printer.PrintAll();
+        //printer.PrintAll();
 
         while (true)
         {
