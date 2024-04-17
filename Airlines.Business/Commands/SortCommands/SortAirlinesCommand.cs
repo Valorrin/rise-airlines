@@ -17,13 +17,11 @@ public class SortAirlinesCommand : ICommand
     {
         if (_sortOrder == "descending")
         {
-            var names = _airlineManager.SortDescByName();
-            Console.WriteLine(string.Join(", ", names));
+            _airlineManager.SortDescByName();
         }
         else
         {
-            var names = _airlineManager.SortByName();
-            Console.WriteLine(string.Join(", ", names));
+            _airlineManager.SortByName();
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Airlines.Business.Commands.SearchCommands;
 using Airlines.Business.Managers;
+using Airlines.Business.Utilities;
+using Moq;
 
 namespace Airlines.UnitTests.CommandTests;
 
@@ -10,9 +12,10 @@ public class SearchCommandTests
     [Fact]
     public void CreateSearchCommand_ReturnsInstance()
     {
-        var airportManager = new AirportManager();
-        var airlineManager = new AirlineManager();
-        var flightManager = new FlightManager();
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var airlineManager = new AirlineManager(loggerMock.Object);
+        var flightManager = new FlightManager(loggerMock.Object);
         var searchTerm = "test";
 
         var command = new SearchCommand(airportManager, airlineManager, flightManager, searchTerm);

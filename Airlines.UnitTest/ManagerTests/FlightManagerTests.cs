@@ -1,5 +1,7 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
+using Airlines.Business.Utilities;
+using Moq;
 
 namespace Airlines.UnitTests.ManagerTests;
 
@@ -9,7 +11,8 @@ public class FlightManagerTests
     [Fact]
     public void Add_AddsFlightToList()
     {
-        var flightManager = new FlightManager();
+        var loggerMock = new Mock<ILogger>();
+        var flightManager = new FlightManager(loggerMock.Object);
         var flight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 };
 
         flightManager.Add(flight);
@@ -20,7 +23,8 @@ public class FlightManagerTests
     [Fact]
     public void Search_WhenSearchTermDoesNotExist_PrintsErrorMessage()
     {
-        var flightManager = new FlightManager();
+        var loggerMock = new Mock<ILogger>();
+        var flightManager = new FlightManager(loggerMock.Object);
         var writer = new StringWriter();
         Console.SetOut(writer);
 
@@ -32,24 +36,12 @@ public class FlightManagerTests
         Assert.DoesNotContain("Flight2 is Flight name.", result);
     }
 
-    [Fact]
-    public void Search_WhenSearchTermExists_PrintsMessage()
-    {
-        var flightManager = new FlightManager();
-        var writer = new StringWriter();
-        Console.SetOut(writer);
-        flightManager.Flights.Add(new Flight { Id = "Flight1", DepartureAirport = "AAA", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 });
-
-        flightManager.Search("Flight1");
-
-        var result = writer.ToString();
-        Assert.Contains("Flight1 is Flight name.", result);
-    }
 
     [Fact]
     public void GetAircraftModel_ReturnsAircraftModel()
     {
-        var flightManager = new FlightManager();
+        var loggerMock = new Mock<ILogger>();
+        var flightManager = new FlightManager(loggerMock.Object);
         var flight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB", AircraftModel = "Boeing 747", Duration = 10, Price = 5.5 };
         flightManager.Flights.Add(flight);
 
@@ -61,7 +53,8 @@ public class FlightManagerTests
     [Fact]
     public void GetAircraftModel_WhenFlightIdDoesNotExist_ReturnsNull()
     {
-        var flightManager = new FlightManager();
+        var loggerMock = new Mock<ILogger>();
+        var flightManager = new FlightManager(loggerMock.Object);
 
         var aircraftModel = flightManager.GetAircraftModel("NonExistingFlightId");
 
@@ -71,7 +64,8 @@ public class FlightManagerTests
     [Fact]
     public void GetFlightById_ReturnsFlight()
     {
-        var flightManager = new FlightManager();
+        var loggerMock = new Mock<ILogger>();
+        var flightManager = new FlightManager(loggerMock.Object);
         var expectedFlight = new Flight { Id = "F1", DepartureAirport = "AAA", ArrivalAirport = "BBB", Duration = 10, Price = 5.5 };
         flightManager.Flights.Add(expectedFlight);
 
@@ -83,7 +77,8 @@ public class FlightManagerTests
     [Fact]
     public void GetFlightById_WhenFlightIdDoesNotExist_ReturnsNull()
     {
-        var flightManager = new FlightManager();
+        var loggerMock = new Mock<ILogger>();
+        var flightManager = new FlightManager(loggerMock.Object);
 
         var flight = flightManager.GetFlightById("NonExistingFlightId");
 

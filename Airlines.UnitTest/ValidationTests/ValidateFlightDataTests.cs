@@ -2,6 +2,7 @@
 using Airlines.Business.Exceptions;
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
+using Airlines.Business.Utilities;
 
 namespace Airlines.UnitTests.ConsoleTests;
 
@@ -12,12 +13,14 @@ public class ValidateFlightDataTests
     private readonly AirlineManager _airlineManager;
     private readonly FlightManager _flightManager;
     private readonly InputValidator _inputValidator;
+    private readonly ConsoleLogger _logger;
 
     public ValidateFlightDataTests()
     {
-        _airportManager = new AirportManager();
-        _airlineManager = new AirlineManager();
-        _flightManager = new FlightManager();
+        _logger = new ConsoleLogger();
+        _airportManager = new AirportManager(_logger);
+        _airlineManager = new AirlineManager(_logger);
+        _flightManager = new FlightManager(_logger);
         _inputValidator = new InputValidator(
             _airportManager,
             _airlineManager,

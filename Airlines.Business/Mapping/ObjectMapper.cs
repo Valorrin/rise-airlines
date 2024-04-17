@@ -35,7 +35,6 @@ internal class ObjectMapper
         {
             Id = id,
             Name = name,
-
         };
 
         return airline;
@@ -74,7 +73,6 @@ internal class ObjectMapper
         var cargoAircraft = new CargoAircraft(model, cargoWeight, cargoVolume);
 
         return cargoAircraft;
-
     }
 
     public PassengerAircraft MapToPassengerAircraft(string data)

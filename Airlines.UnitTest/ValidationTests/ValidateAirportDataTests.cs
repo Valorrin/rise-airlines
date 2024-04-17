@@ -2,6 +2,7 @@
 using Airlines.Business.Exceptions;
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
+using Airlines.Business.Utilities;
 
 namespace Airlines.UnitTests.ConsoleTests;
 
@@ -12,12 +13,14 @@ public class ValidateAirportDataTests
     private readonly AirlineManager _airlineManager;
     private readonly FlightManager _flightManager;
     private readonly InputValidator _inputValidator;
+    private readonly ConsoleLogger _logger;
 
     public ValidateAirportDataTests()
     {
-        _airportManager = new AirportManager();
-        _airlineManager = new AirlineManager();
-        _flightManager = new FlightManager();
+        _logger = new ConsoleLogger();
+        _airportManager = new AirportManager(_logger);
+        _airlineManager = new AirlineManager(_logger);
+        _flightManager = new FlightManager(_logger);
         _inputValidator = new InputValidator(
             _airportManager,
             _airlineManager,
@@ -26,9 +29,9 @@ public class ValidateAirportDataTests
     }
 
     [Theory]
-    [InlineData("JFK, John F Kennedy International Airport, New York, USA")] // Valid data
-    [InlineData("123, AirportA, City, Country")] // Valid data
-    [InlineData("1234, AirportB, City, Country")] // Valid data
+    [InlineData("JFK, John F Kennedy International Airport, New York, USA")]
+    [InlineData("123, AirportA, City, Country")]
+    [InlineData("1234, AirportB, City, Country")]
     public void ValidateAirportData_ValidData_NoExceptionThrown(string data)
     {
         try

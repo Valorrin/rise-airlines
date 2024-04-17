@@ -1,5 +1,4 @@
 ﻿using Airlines.Business.Managers;
-
 namespace Airlines.Business.Commands.ListingCommands;
 public class ListDataCommand : ICommand
 {

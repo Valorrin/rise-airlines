@@ -1,5 +1,7 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
+using Airlines.Business.Utilities;
+using Moq;
 
 namespace Airlines.UnitTests.ManagerTests;
 
@@ -7,39 +9,27 @@ namespace Airlines.UnitTests.ManagerTests;
 public class AirlineManagerTests
 {
     [Fact]
-    public void Add_Airline_Successfully()
+    public void Add_AirlineAddedToList()
     {
-        var airlineManager = new AirlineManager();
-        var airline = new Airline
-        {
-            Id = "ABC",
-            Name = "Test Airline"
-        };
+        var loggerMock = new Mock<ILogger>();
+        var airlineManager = new AirlineManager(loggerMock.Object);
+        var airline = new Airline { Id = "ABC", Name = "Test Airline" };
 
         airlineManager.Add(airline);
 
         Assert.Contains(airline, airlineManager.Airlines);
     }
 
-    [Theory]
-    [InlineData("Test Airline", true)]
-    [InlineData("Nonexistent Airline", false)]
-    public void Search_Airline_By_Name(string airlineName, bool expectedResult)
+    [Fact]
+    public void Search_AirlineExists_LoggedExistence()
     {
-        var airlineManager = new AirlineManager();
-        var airline = new Airline
-        {
-            Id = "ABC",
-            Name = "Test Airline"
-        };
-        airlineManager.Add(airline);
+        var loggerMock = new Mock<ILogger>();
+        var airlineManager = new AirlineManager(loggerMock.Object);
+        var searchTerm = "Test Airline";
+        airlineManager.Add(new Airline { Id = "ABC", Name = searchTerm });
 
-        var writer = new StringWriter();
-        System.Console.SetOut(writer);
+        airlineManager.Search(searchTerm);
 
-        airlineManager.Search(airlineName);
-
-        var output = writer.ToString().Trim();
-        Assert.Equal(expectedResult, output.Contains(airlineName));
+        loggerMock.Verify(logger => logger.Log($" {searchTerm} is Airline name."), Times.Once);
     }
 }

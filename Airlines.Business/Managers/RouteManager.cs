@@ -2,19 +2,22 @@
 using Airlines.Business.Models;
 
 using Airlines.Business.Utilities;
+using System.Text;
 
 namespace Airlines.Business.Managers;
 public class RouteManager
 {
     private readonly AirportManager _airportManager;
     private readonly RouteFinder _routeFinder;
+    private readonly ILogger _logger;
 
     public FlightRouteGraph Route { get; private set; }
 
-    public RouteManager(AirportManager airportManager)
+    public RouteManager(AirportManager airportManager, ILogger logger)
     {
         _airportManager = airportManager;
-        _routeFinder = new RouteFinder(airportManager);
+        _routeFinder = new RouteFinder(airportManager, logger);
+        _logger = logger;
         Route = new FlightRouteGraph();
     }
 
@@ -45,7 +48,7 @@ public class RouteManager
 
         if (airports.Count == 0)
         {
-            Console.WriteLine("No flights to remove.");
+            _logger.Log("No flights to remove.");
             return;
         }
 
@@ -59,12 +62,12 @@ public class RouteManager
                 var lastFlight = flights.Last();
                 _ = flights.Remove(lastFlight);
 
-                Console.WriteLine($"Removed last flight ({lastFlight.Id}) from {airport.Name}");
+                _logger.Log($"Removed last flight ({lastFlight.Id}) from {airport.Name}");
                 return;
             }
         }
 
-        Console.WriteLine("No flights to remove.");
+        _logger.Log("No flights to remove.");
     }
 
     internal bool IsConnected(Airport startAirport, Airport endAirport)
@@ -81,7 +84,7 @@ public class RouteManager
 
             if (currentAirport == endAirport)
             {
-                Console.WriteLine("Connected!");
+                _logger.Log("Connected!");
                 return true;
             }
 
@@ -95,7 +98,8 @@ public class RouteManager
                 }
             }
         }
-        Console.WriteLine("Not connected!");
+
+        _logger.Log("Not connected!");
 
         return false;
     }
@@ -106,13 +110,16 @@ public class RouteManager
         {
             var departureAirport = entry.Key;
             var flights = entry.Value;
-            Console.Write($" Flights from {departureAirport.Id} to: ");
+            var flightDetails = new StringBuilder();
+            _ = flightDetails.Append($" Flights from {departureAirport.Id} to: ");
+
             foreach (var flight in flights)
             {
                 var arrivalAirport = _airportManager.GetAirportById(flight.ArrivalAirport);
-                Console.Write($"{arrivalAirport.Id}");
+                _ = flightDetails.Append($"{arrivalAirport.Id}");
             }
-            Console.WriteLine();
+
+            _logger.Log(flightDetails.ToString());
         }
     }
 
@@ -165,14 +172,14 @@ public class RouteManager
 
             if (routeFound)
             {
-                Console.WriteLine($"Route found from {airport.Name} to {destinationAirport.Name}");
+                _logger.Log($"Route found from {airport.Name} to {destinationAirport.Name}");
                 break;
             }
         }
 
         if (!routeFound)
         {
-            Console.WriteLine($"No route found to {destinationAirport.Name}");
+            _logger.Log($"No route found to {destinationAirport.Name}");
         }
 
         return routeFound;

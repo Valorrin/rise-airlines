@@ -1,49 +1,38 @@
 ﻿using Airlines.Business.Models;
+using Airlines.Business.Utilities;
 
 namespace Airlines.Business.Managers;
 public class AirlineManager
 {
+    private readonly ILogger _logger;
+
     public List<Airline> Airlines { get; private set; }
 
-    public AirlineManager() => Airlines = [];
+    public AirlineManager(ILogger logger)
+    {
+        Airlines = [];
+        _logger = logger;
+    }
 
     internal void Add(Airline airline) => Airlines.Add(airline);
 
-    internal void Add(IList<string> airlineData)
+    internal void Search(string searchTerm)
     {
-        foreach (var airport in airlineData)
+        if (Airlines.Any(airline => airline.Name == searchTerm))
         {
-            var airportParts = airport.Split(", ");
-
-            var newAirline = new Airline
-            {
-                Id = airportParts[0],
-                Name = airportParts[1]
-            };
-
-            Add(newAirline);
+            _logger.Log($" {searchTerm} is Airline name.");
         }
     }
 
-    internal void Search(string searchTerm)
+    internal void SortByName()
     {
-        var airlineNames = Airlines.Where(airline => airline.Name == searchTerm).ToList();
-
-        if (airlineNames.Count > 0)
-            Console.WriteLine($" {searchTerm} is Airline name.");
+        Airlines = Airlines.OrderBy(airline => airline.Name, StringComparer.OrdinalIgnoreCase).ToList();
+        _logger.Log($"Airlines sorted by name ascending.");
     }
 
-    internal List<string> SortByName()
+    internal void SortDescByName()
     {
-        var airlineNames = Airlines.Select(airline => airline.Name).OrderBy(name => name).ToList();
-
-        return airlineNames;
-    }
-
-    internal List<string> SortDescByName()
-    {
-        var airlineNames = Airlines.Select(airline => airline.Name).OrderByDescending(name => name).ToList();
-
-        return airlineNames;
+        Airlines = Airlines.OrderByDescending(airline => airline.Name, StringComparer.OrdinalIgnoreCase).ToList();
+        _logger.Log($"Airlines sorted by name descending.");
     }
 }
