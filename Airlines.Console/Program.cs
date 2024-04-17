@@ -6,6 +6,7 @@ using Airlines.Console.Utilities;
 using Airlines.Business;
 using Airlines.Business.Mapping;
 using Airlines.Business.Validation;
+using Airlines.Business.Utilities;
 
 
 namespace Airlines;
@@ -13,10 +14,12 @@ public class Program
 {
     public static void Main()
     {
-        var airportManager = new AirportManager();
-        var airlineManager = new AirlineManager();
-        var flightManager = new FlightManager();
-        var routeManager = new RouteManager(airportManager);
+        var logger = new ConsoleLogger();
+
+        var airportManager = new AirportManager(logger);
+        var airlineManager = new AirlineManager(logger);
+        var flightManager = new FlightManager(logger);
+        var routeManager = new RouteManager(airportManager, logger);
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationManager();
         var batchManager = new BatchManager();
@@ -67,7 +70,6 @@ public class Program
             foreach (var line in aircraftData)
             {
                 inputValidator.ValidateAircraftData(line);
-                //TODO: maybe use the object mapper?
                 aircraftManager.Add(line);
             }
 
@@ -90,13 +92,16 @@ public class Program
         while (true)
         {
             var commandInput = ReadCommandInput();
-            var batchMode = batchManager.BatchMode;
+            var isBatchMode = batchManager.IsBatchMode;
 
             try
             {
                 commandValidator.ValidateCommandArguments(commandInput);
+                commandClient.ProcessCommand(commandInput, isBatchMode);
 
-                commandClient.ProcessCommand(commandInput, batchMode);
+                var logs = logger.GetLogs();
+                printer.Print(logs);
+                logger.ClearLogs();
             }
             catch (Exception ex)
             {

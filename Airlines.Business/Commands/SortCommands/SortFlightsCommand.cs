@@ -16,13 +16,11 @@ public class SortFlightsCommand : ICommand
     {
         if (_sortOrder == "descending")
         {
-            var ids = _flightManager.SortDescById();
-            Console.WriteLine(string.Join(", ", ids));
+            _flightManager.SortDescById();
         }
         else
         {
-            var ids = _flightManager.SortById();
-            Console.WriteLine(string.Join(", ", ids));
+            _flightManager.SortById();
         }
     }
 }

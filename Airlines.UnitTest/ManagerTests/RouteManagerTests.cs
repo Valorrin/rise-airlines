@@ -1,5 +1,7 @@
 ﻿using Airlines.Business.Managers;
 using Airlines.Business.Models;
+using Airlines.Business.Utilities;
+using Moq;
 
 namespace Airlines.UnitTests.ManagerTests;
 
@@ -9,8 +11,9 @@ public class RouteManagerTests
     [Fact]
     public void AddFlight_AddsFlightToRoute()
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
 
         var airport1 = new Airport { Id = "Air1", Name = "Airport One", City = "City One", Country = "Country One" };
         var airport2 = new Airport { Id = "Air2", Name = "Airport Two", City = "City Two", Country = "Country Two" };
@@ -28,8 +31,9 @@ public class RouteManagerTests
     [Fact]
     public void IsConnected_StartAirportIsNotConnectedToEndAirport_ReturnsFalse()
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
 
         var airport1 = new Airport { Id = "Air1", Name = "Airport One", City = "City One", Country = "Country One" };
         var airport2 = new Airport { Id = "Air2", Name = "Airport Two", City = "City Two", Country = "Country Two" };
@@ -49,8 +53,9 @@ public class RouteManagerTests
     [Fact]
     public void IsConnected_StartAirportIsConnectedToEndAirportDirectly_ReturnsTrue()
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
 
         var airport1 = new Airport { Id = "Air1", Name = "Airport One", City = "City One", Country = "Country One" };
         var airport2 = new Airport { Id = "Air2", Name = "Airport Two", City = "City Two", Country = "Country Two" };
@@ -69,8 +74,9 @@ public class RouteManagerTests
     [Fact]
     public void IsConnected_StartAirportIsConnectedToEndAirportThroughIntermediateStops_ReturnsTrue()
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
 
         var airport1 = new Airport { Id = "Air1", Name = "Airport One", City = "City One", Country = "Country One" };
         var airport2 = new Airport { Id = "Air2", Name = "Airport Two", City = "City Two", Country = "Country Two" };
@@ -90,8 +96,9 @@ public class RouteManagerTests
     [Fact]
     public void AddAirport_AddsAirportToRoute()
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
         var airport = new Airport { Id = "Air1", Name = "Airport One", City = "City One", Country = "Country One" };
 
         routeManager.AddAirport(airport);
@@ -102,8 +109,9 @@ public class RouteManagerTests
     [Fact]
     public void Find_ReturnsFalse_WhenDestinationAirportDoesNotExist()
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
 
         var result = routeManager.Find("NonExistingAirportId");
 
@@ -113,8 +121,9 @@ public class RouteManagerTests
     [Fact]
     public void Find_ReturnsFalse_WhenNoRouteExistsToDestinationAirport()
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
         var airport1 = new Airport { Id = "1", Name = "Airport One", City = "City One", Country = "Country One" };
         airportManager.Add(airport1);
 
@@ -126,8 +135,9 @@ public class RouteManagerTests
     [Fact]
     public void Find_ReturnsTrue_WhenRouteExistsToDestinationAirport()
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
         var airport1 = new Airport { Id = "1", Name = "Airport One", City = "City One", Country = "Country One" };
         var airport2 = new Airport { Id = "2", Name = "Airport Two", City = "City Two", Country = "Country Two" };
         airportManager.Add(airport1);
@@ -142,8 +152,9 @@ public class RouteManagerTests
     [Fact]
     public void RemoveLastFlight_RemovesLastFlightFromRoute()
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var loggerMock = new Mock<ILogger>();
+        var airportManager = new AirportManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
         var airport1 = new Airport { Id = "Airport1", Name = "Airport One", City = "City", Country = "Country" };
         var airport2 = new Airport { Id = "Airport2", Name = "Airport Two", City = "City", Country = "Country" };
         var flight1 = new Flight { Id = "F1", DepartureAirport = "Airport1", ArrivalAirport = "Airport2", Price = 10, Duration = 10 };

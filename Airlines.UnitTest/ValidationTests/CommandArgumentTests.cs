@@ -1,5 +1,6 @@
 ﻿using Airlines.Business.Exceptions;
 using Airlines.Business.Managers;
+using Airlines.Business.Utilities;
 using Airlines.Business.Validation;
 
 
@@ -13,13 +14,16 @@ public class ValidateCommandIArgumentTests
     private readonly AircraftManager _aircraftManager;
     private readonly RouteManager _routeManager;
     private readonly CommandValidator _commandValidator;
+    private readonly ConsoleLogger _consoleLogger;
+
 
     public ValidateCommandIArgumentTests()
     {
-        _airportManager = new AirportManager();
-        _flightManager = new FlightManager();
+        _consoleLogger = new ConsoleLogger();
+        _airportManager = new AirportManager(_consoleLogger);
+        _flightManager = new FlightManager(_consoleLogger);
         _aircraftManager = new AircraftManager();
-        _routeManager = new RouteManager(_airportManager);
+        _routeManager = new RouteManager(_airportManager, _consoleLogger);
 
         _commandValidator = new CommandValidator(
             _airportManager,
@@ -54,13 +58,6 @@ public class ValidateCommandIArgumentTests
     {
         var commandInput = "invalidCommand";
         _ = Assert.Throws<InvalidCommandException>(() => _commandValidator.ValidateCommandArguments(commandInput));
-    }
-
-    [Fact]
-    public void ValidateCommandArguments_InvalidNumberOfArgumentsForSearch_ThrowsInvalidNumberOfArgumentsException()
-    {
-        var commandInput = "search arg1 arg2";
-        _ = Assert.Throws<InvalidNumberOfArgumentsException>(() => _commandValidator.ValidateCommandArguments(commandInput));
     }
 
     [Fact]

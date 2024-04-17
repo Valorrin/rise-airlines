@@ -35,7 +35,7 @@ public class BatchManagerTests
 
         batchManager.BatchModeOn();
 
-        Assert.True(batchManager.BatchMode);
+        Assert.True(batchManager.IsBatchMode);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class BatchManagerTests
 
         batchManager.BatchModeOff();
 
-        Assert.False(batchManager.BatchMode);
+        Assert.False(batchManager.IsBatchMode);
     }
 }
 

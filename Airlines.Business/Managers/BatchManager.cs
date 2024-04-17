@@ -3,19 +3,18 @@
 namespace Airlines.Business.Managers;
 public class BatchManager
 {
-
-    public bool BatchMode { get; private set; }
+    public bool IsBatchMode { get; private set; }
     public Queue<ICommand> Commands { get; private set; }
 
     internal BatchManager()
     {
         Commands = new Queue<ICommand>();
-        BatchMode = false;
+        IsBatchMode = false;
     }
 
     internal void AddCommand(ICommand command) => Commands.Enqueue(command);
 
-    internal void ExecuteBatch(CommandInvoker invoker)
+    internal void ExecuteBatch(ICommandInvoker invoker)
     {
         while (Commands.Count > 0)
         {
@@ -26,7 +25,7 @@ public class BatchManager
 
     internal void CancelBatch() => Commands.Clear();
 
-    internal void BatchModeOn() => BatchMode = true;
+    internal void BatchModeOn() => IsBatchMode = true;
 
-    internal void BatchModeOff() => BatchMode = false;
+    internal void BatchModeOff() => IsBatchMode = false;
 }

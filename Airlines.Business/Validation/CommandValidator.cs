@@ -57,12 +57,6 @@ public class CommandValidator
 
         switch (action)
         {
-            case "search":
-                if (argumentsCount != 1)
-                {
-                    throw new InvalidNumberOfArgumentsException("Invalid number of arguments for 'search' command. Expected 1 argument.");
-                }
-                break;
             case "sort":
                 if (argumentsCount != 2)
                 {
@@ -173,6 +167,7 @@ public class CommandValidator
             {
                 throw new InvalidCommandArgumentException("flightToAdd is null");
             }
+
             ValidateIfFlightExists(flightToAdd);
         }
 

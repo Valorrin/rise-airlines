@@ -2,6 +2,7 @@
 using Airlines.Business.Exceptions;
 using Airlines.Business.Managers;
 using Airlines.Business.Models;
+using Airlines.Business.Utilities;
 using Airlines.Business.Validation;
 
 namespace Airlines.UnitTests.ConsoleTests;
@@ -16,14 +17,17 @@ public class ValidateRouteDataTests
     private readonly AircraftManager _aircraftManager;
     private readonly InputValidator _inputValidator;
     private readonly CommandValidator _commandValidator;
+    private readonly ConsoleLogger _consoleLogger;
+
 
     public ValidateRouteDataTests()
     {
-        _airportManager = new AirportManager();
-        _airlineManager = new AirlineManager();
-        _flightManager = new FlightManager();
+        _consoleLogger = new ConsoleLogger();
+        _airportManager = new AirportManager(_consoleLogger);
+        _airlineManager = new AirlineManager(_consoleLogger);
+        _flightManager = new FlightManager(_consoleLogger);
         _aircraftManager = new AircraftManager();
-        _routeManager = new RouteManager(_airportManager);
+        _routeManager = new RouteManager(_airportManager, _consoleLogger);
         _commandValidator = new CommandValidator(
             _airportManager,
             _flightManager,
@@ -47,7 +51,7 @@ public class ValidateRouteDataTests
     [Fact]
     public void ValidateRouteCommand_AddAction_NullFlightToAdd_ThrowsInvalidCommandArgumentException()
     {
-        var routeManager = new RouteManager(new AirportManager());
+        var routeManager = new RouteManager(new AirportManager(_consoleLogger), _consoleLogger);
         Flight nullFlight = null!;
         var startAirport = new Airport { Id = "StartAirport", Name = "Start Airport", City = "City", Country = "Country" };
         var endAirport = new Airport { Id = "EndAirport", Name = "End Airport", City = "City", Country = "Country" };
@@ -58,7 +62,7 @@ public class ValidateRouteDataTests
     [Fact]
     public void ValidateRouteCommand_RemoveAction_EmptyRoute_ThrowsEmptyRouteException()
     {
-        var routeManager = new RouteManager(new AirportManager());
+        var routeManager = new RouteManager(new AirportManager(_consoleLogger), _consoleLogger);
 
         _ = Assert.Throws<EmptyRouteException>(() => _commandValidator.ValidateRouteCommand("remove", null!, null!, null!, null!));
     }
@@ -68,7 +72,7 @@ public class ValidateRouteDataTests
     [InlineData("search")]
     public void ValidateRouteCommand_CheckOrSearchAction_NullStartAirport_ThrowsInvalidCommandArgumentException(string commandAction)
     {
-        var routeManager = new RouteManager(new AirportManager());
+        var routeManager = new RouteManager(new AirportManager(_consoleLogger), _consoleLogger);
         Airport startAirport = null!;
         var endAirport = new Airport { Id = "EndAirport", Name = "End Airport", City = "City", Country = "Country" };
 
@@ -80,7 +84,7 @@ public class ValidateRouteDataTests
     [InlineData("search")]
     public void ValidateRouteCommand_CheckOrSearchAction_NullEndAirport_ThrowsInvalidCommandArgumentException(string commandAction)
     {
-        var routeManager = new RouteManager(new AirportManager());
+        var routeManager = new RouteManager(new AirportManager(_consoleLogger), _consoleLogger);
         var startAirport = new Airport { Id = "StartAirport", Name = "Start Airport", City = "City", Country = "Country" };
         Airport? endAirport = null;
 
@@ -92,7 +96,7 @@ public class ValidateRouteDataTests
     [InlineData("search")]
     public void ValidateRouteCommand_CheckOrSearchAction_SameStartAndEndAirport_ThrowsInvalidCommandArgumentException(string commandAction)
     {
-        var routeManager = new RouteManager(new AirportManager());
+        var routeManager = new RouteManager(new AirportManager(_consoleLogger), _consoleLogger);
         var startAirport = new Airport { Id = "SameAirport", Name = "Same Airport", City = "City", Country = "Country" };
         var endAirport = new Airport { Id = "SameAirport", Name = "Same Airport", City = "City", Country = "Country" };
 
@@ -104,8 +108,8 @@ public class ValidateRouteDataTests
     [InlineData("search")]
     public void ValidateRouteCommand_CheckOrSearchAction_StartAirportNotFound_ThrowsAirportNotFoundException(string commandAction)
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var airportManager = new AirportManager(_consoleLogger);
+        var routeManager = new RouteManager(airportManager, _consoleLogger);
         var startAirport = new Airport { Id = "StartAirport", Name = "Start Airport", City = "City", Country = "Country" };
         var endAirport = new Airport { Id = "EndAirport", Name = "End Airport", City = "City", Country = "Country" };
         airportManager.Add(endAirport);
@@ -118,8 +122,8 @@ public class ValidateRouteDataTests
     [InlineData("search")]
     public void ValidateRouteCommand_CheckOrSearchAction_EndAirportNotFound_ThrowsAirportNotFoundException(string commandAction)
     {
-        var airportManager = new AirportManager();
-        var routeManager = new RouteManager(airportManager);
+        var airportManager = new AirportManager(_consoleLogger);
+        var routeManager = new RouteManager(airportManager, _consoleLogger);
         var startAirport = new Airport { Id = "StartAirport", Name = "Start Airport", City = "City", Country = "Country" };
         var endAirport = new Airport { Id = "EndAirport", Name = "End Airport", City = "City", Country = "Country" };
         airportManager.Add(startAirport);
