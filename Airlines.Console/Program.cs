@@ -49,8 +49,6 @@ public class Program
 
         var a = flightRepository.GetFlights();
 
-
-
         try
         {
             foreach (var line in airportData)
