@@ -17,7 +17,7 @@ public class BatchCommandsTests
         command.Execute();
 
         Assert.Empty(batchManager.Commands);
-        Assert.False(batchManager.BatchMode);
+        Assert.False(batchManager.IsBatchMode);
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public class BatchCommandsTests
 
         command.Execute();
 
-        Assert.True(batchManager.BatchMode);
+        Assert.True(batchManager.IsBatchMode);
     }
 
     [Fact]

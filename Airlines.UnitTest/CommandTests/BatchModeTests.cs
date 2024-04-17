@@ -1,8 +1,6 @@
 ﻿using Airlines.Business.Commands;
 using Airlines.Business.Managers;
-using Airlines.Business.Utilities;
 using Airlines.Business.Validation;
-using Castle.Core.Logging;
 
 namespace Airlines.UnitTests.CommandTests;
 
@@ -24,7 +22,7 @@ public class BatchModeTests
         var commandValidator = new CommandValidator(airportManager, flightManager, aircraftManager, routeManager);
         var commandClient = new CommandClient(invoker, airportManager, airlineManager, flightManager, routeManager, reservationManager, batchManager, commandValidator);
 
-        commandClient.ProcessCommand("search searchTerm", batchMode: true);
+        commandClient.ProcessCommand("search searchTerm", isBatchMode: true);
 
         Assert.Contains(batchManager.Commands, c => c.GetType().Name == "SearchCommand");
     }
