@@ -46,8 +46,7 @@ public class Program
         var routeData = ReadFromFile(routeFilePath);
 
         var flightRepository = new FlightRepository();
-
-        var a = flightRepository.GetFlights();
+        _ = flightRepository.GetFlights();
 
         try
         {

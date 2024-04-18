@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Airlines.Persistence.Configuration;
 
 namespace Airlines.Persistence.Entities;
 
@@ -26,7 +26,12 @@ public partial class AirlinesDBContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Data Source=SPARESCHOOL5\\SQLEXPRESS;Initial Catalog=AirlinesDB;Integrated Security=True;Encrypt=False;");
+        if (!optionsBuilder.IsConfigured)
+        {
+            var connection = ConfigurationManager.GetConnectionString("Local");
+            optionsBuilder.UseSqlServer(connection);
+        }
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
