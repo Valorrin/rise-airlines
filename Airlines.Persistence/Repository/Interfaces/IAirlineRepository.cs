@@ -5,4 +5,6 @@ public interface IAirlineRepository
 {
     void Dispose();
     List<Airline> GetAirlines();
+
+    public List<Airline> GetAirlinesByFilter(string filter, string value);
 }

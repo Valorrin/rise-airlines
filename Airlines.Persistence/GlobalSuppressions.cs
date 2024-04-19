@@ -6,3 +6,6 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Persistence.Repository.FlightRepository.Dispose")]
+[assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Persistence.Repository.AirportRepository.GetAirports~System.Collections.Generic.List{Airlines.Persistence.Entities.Airport}")]
+[assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Persistence.Repository.AirportRepository.GetAirportsByFilter(System.String,System.String)~System.Collections.Generic.List{Airlines.Persistence.Entities.Airport}")]
+[assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Persistence.Repository.AirlineRepository.GetAirinesById(System.Int32)~System.Collections.Generic.List{Airlines.Persistence.Entities.Airline}")]
