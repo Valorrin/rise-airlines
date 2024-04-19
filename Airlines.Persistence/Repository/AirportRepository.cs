@@ -1,14 +1,40 @@
 ﻿using Airlines.Persistence.Entities;
 using Airlines.Persistence.Repository.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Persistence.Repository;
 public class AirportRepository : IAirportRepository, IDisposable
 {
     public void Dispose() { }
-    public List<Airport> GetFlights() => throw new NotImplementedException();
+    public List<Airport> GetAirports()
+    {
+        using var context = new AirlinesDBContext();
+        return context.Airports.ToList();
+    }
+
+    public List<Airport> GetAirportsByFilter(string filter, string value)
+    {
+        using var context = new AirlinesDBContext();
+        var result = context.Airports.Where(airport => EF.Property<string>(airport, filter) == value);
+
+        return result.ToList();
+    }
+
+    public bool AddAirport(Airport airport)
+    {
+        try
+        {
+            using var context = new AirlinesDBContext();
+
+            _ = context.Airports.Add(airport);
+            _ = context.SaveChanges();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding airport: {ex.Message}");
+            return false;
+        }
+    }
 }

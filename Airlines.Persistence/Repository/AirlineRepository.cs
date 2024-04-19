@@ -1,11 +1,6 @@
 ﻿using Airlines.Persistence.Entities;
 using Airlines.Persistence.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airlines.Persistence.Repository;
 public class AirlineRepository : IAirlineRepository, IDisposable
@@ -27,19 +22,21 @@ public class AirlineRepository : IAirlineRepository, IDisposable
         return result.ToList();
     }
 
-    public List<Airline> GetAirlinesByName(string name)
+    public bool AddAirline(Airline airline)
     {
-        using var context = new AirlinesDBContext();
-        var result = context.Airlines.Where(airline => airline.Name == name);
+        try
+        {
+            using var context = new AirlinesDBContext();
 
-        return result.ToList();
-    }
+            _ = context.Airlines.Add(airline);
+            _ = context.SaveChanges();
 
-    public List<Airline> GetAirinesById(int id)
-    {
-        using var context = new AirlinesDBContext();
-        var result = context.Airlines.Where(airline => airline.AirlineId == id);
-
-        return result.ToList();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding airline: {ex.Message}");
+            return false;
+        }
     }
 }

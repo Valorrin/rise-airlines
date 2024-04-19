@@ -20,4 +20,22 @@ public class FlightRepository : IFlightRepository, IDisposable
 
         return result.ToList();
     }
+
+    public bool AddFlight(Flight flight)
+    {
+        try
+        {
+            using var context = new AirlinesDBContext();
+
+            _ = context.Flights.Add(flight);
+            _ = context.SaveChanges();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding flight: {ex.Message}");
+            return false;
+        }
+    }
 }
