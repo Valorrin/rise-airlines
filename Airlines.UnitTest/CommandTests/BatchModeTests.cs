@@ -1,6 +1,8 @@
 ﻿using Airlines.Business.Commands;
 using Airlines.Business.Managers;
+using Airlines.Business.Utilities;
 using Airlines.Business.Validation;
+using Moq;
 
 namespace Airlines.UnitTests.CommandTests;
 
@@ -10,13 +12,13 @@ public class BatchModeTests
     [Fact]
     public void ProcessCommand_BatchModeTrue_AddsCommandToBatchManager()
     {
-        var logger = new Business.Utilities.ConsoleLogger();
+        var loggerMock = new Mock<ILogger>();
         var invoker = new CommandInvoker();
         var batchManager = new BatchManager();
-        var airlineManager = new AirlineManager(logger);
-        var airportManager = new AirportManager(logger);
-        var flightManager = new FlightManager(logger);
-        var routeManager = new RouteManager(airportManager, logger);
+        var airlineManager = new AirlineManager(loggerMock.Object);
+        var airportManager = new AirportManager(loggerMock.Object);
+        var flightManager = new FlightManager(loggerMock.Object);
+        var routeManager = new RouteManager(airportManager, loggerMock.Object);
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationManager();
         var commandValidator = new CommandValidator(airportManager, flightManager, aircraftManager, routeManager);

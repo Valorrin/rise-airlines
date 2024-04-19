@@ -26,9 +26,11 @@ CREATE TABLE Airlines (
 CREATE TABLE Flights (
     [FlightId] INT PRIMARY KEY IDENTITY,
     [Number] NVARCHAR(5) NOT NULL,
+	[AirlineId] INT FOREIGN KEY REFERENCES Airlines(AirlineId),
     [DepartureAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
     [ArrivalAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
     [DepartureDateTime] DATETIME2 NOT NULL CHECK (DepartureDateTime >= GetDate()),
     [ArrivalDateTime] DATETIME2 NOT NULL CHECK (ArrivalDateTime >= GetDate()),
+	[Price] DECIMAL NOT NULL,
     CONSTRAINT CheckDepartureBeforeArrival CHECK (DepartureDateTime < ArrivalDateTime)
 );
