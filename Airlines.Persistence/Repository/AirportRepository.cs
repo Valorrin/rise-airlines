@@ -37,4 +37,22 @@ public class AirportRepository : IAirportRepository, IDisposable
             return false;
         }
     }
+
+    public bool UpdateAirport(Airport airport)
+    {
+        try
+        {
+            using var context = new AirlinesDBContext();
+
+            _ = context.Airports.Update(airport);
+            _ = context.SaveChanges();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating airport: {ex.Message}");
+            return false;
+        }
+    }
 }

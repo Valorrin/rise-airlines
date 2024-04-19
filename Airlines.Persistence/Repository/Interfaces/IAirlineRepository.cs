@@ -7,4 +7,7 @@ public interface IAirlineRepository
     List<Airline> GetAirlines();
 
     public List<Airline> GetAirlinesByFilter(string filter, string value);
+
+    public bool AddAirline(Airline airline);
+    public bool UpdateAirline(Airline airline);
 }

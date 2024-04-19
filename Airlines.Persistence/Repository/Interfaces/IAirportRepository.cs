@@ -5,4 +5,9 @@ public interface IAirportRepository
 {
     void Dispose();
     List<Airport> GetAirports();
+
+    public List<Airport> GetAirportsByFilter(string filter, string value);
+
+    public bool AddAirport(Airport airport);
+    public bool UpdateAirport(Airport airport);
 }

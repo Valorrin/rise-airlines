@@ -38,4 +38,23 @@ public class FlightRepository : IFlightRepository, IDisposable
             return false;
         }
     }
+
+    public bool UpdateFlight(Flight flight)
+    {
+        try
+        {
+            using var context = new AirlinesDBContext();
+
+            _ = context.Flights.Update(flight);
+            _ = context.SaveChanges();
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating flight: {ex.Message}");
+            return false;
+        }
+
+    }
 }
