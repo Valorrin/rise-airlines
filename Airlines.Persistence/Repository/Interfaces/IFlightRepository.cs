@@ -1,6 +1,6 @@
 ﻿using Airlines.Persistence.Entities;
 
-namespace Airlines.Persistence.Repository;
+namespace Airlines.Persistence.Repository.Interfaces;
 public interface IFlightRepository
 {
     void Dispose();
