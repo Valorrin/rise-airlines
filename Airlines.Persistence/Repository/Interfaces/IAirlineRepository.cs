@@ -9,5 +9,8 @@ public interface IAirlineRepository
     public List<Airline> GetAirlinesByFilter(string filter, string value);
 
     public bool AddAirline(Airline airline);
+
     public bool UpdateAirline(Airline airline);
+
+    public bool DeleteAirline(int id);
 }

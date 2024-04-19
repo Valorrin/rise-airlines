@@ -57,4 +57,19 @@ public class AirlineRepository : IAirlineRepository, IDisposable
             return false;
         }
     }
+
+    public bool DeleteFlight(int id)
+    {
+        using var context = new AirlinesDBContext();
+        var airline = context.Airlines.FirstOrDefault(airline => airline.AirlineId == id);
+        if (airline != null)
+        {
+            _ = context.Airlines.Remove(airline);
+            _ = context.SaveChanges();
+            return true;
+        }
+
+        Console.WriteLine("Error deleting airline");
+        return false;
+    }
 }

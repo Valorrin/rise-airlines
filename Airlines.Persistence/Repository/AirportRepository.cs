@@ -55,4 +55,19 @@ public class AirportRepository : IAirportRepository, IDisposable
             return false;
         }
     }
+
+    public bool DeleteAirport(string id)
+    {
+        using var context = new AirlinesDBContext();
+        var airport = context.Airports.FirstOrDefault(airport => airport.AirportId == id);
+        if (airport != null)
+        {
+            _ = context.Airports.Remove(airport);
+            _ = context.SaveChanges();
+            return true;
+        }
+
+        Console.WriteLine("Error deleting airport");
+        return false;
+    }
 }

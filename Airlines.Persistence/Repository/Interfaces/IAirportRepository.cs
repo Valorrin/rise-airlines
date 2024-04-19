@@ -9,5 +9,8 @@ public interface IAirportRepository
     public List<Airport> GetAirportsByFilter(string filter, string value);
 
     public bool AddAirport(Airport airport);
+
     public bool UpdateAirport(Airport airport);
+
+    public bool DeleteAirport(int id);
 }
