@@ -15,3 +15,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Persistence.Repository.AirlineRepository.Dispose")]
 [assembly: SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Persistence.Repository.AirportRepository.Dispose")]
 [assembly: SuppressMessage("Style", "IDE0058:Expression value is never used", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Persistence.Profiles.AirlineMapper.#ctor")]
+[assembly: SuppressMessage("Style", "IDE0058:Expression value is never used", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Persistence.Profiles.AirportMapper.#ctor")]
+[assembly: SuppressMessage("Style", "IDE0058:Expression value is never used", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Persistence.Profiles.FlightMapper.#ctor")]

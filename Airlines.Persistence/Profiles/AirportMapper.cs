@@ -3,23 +3,24 @@ using Airlines.Persistence.Entities;
 using AutoMapper;
 
 namespace Airlines.Persistence.Profiles;
-public class AirlineMapper
+public class AirportMapper
 {
     private readonly IMapper _mapper;
 
-    public AirlineMapper()
+    public AirportMapper()
     {
         var mapperConfig = new MapperConfiguration(cfg =>
         {
-            cfg.CreateMap<Airline, AirlineDto>().ReverseMap();
+            cfg.CreateMap<Airport, AirportDto>().ReverseMap();
         });
 
         _mapper = mapperConfig.CreateMapper();
     }
-    public Airline MapAirline(AirlineDto airlineDto)
+    public Airport MapAirport(AirportDto airportDto)
     {
-        var airline = _mapper.Map<Airline>(airlineDto);
+        var airport = _mapper.Map<Airport>(airportDto);
 
-        return airline;
+        return airport;
+
     }
 }
