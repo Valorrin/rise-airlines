@@ -12,5 +12,5 @@ public interface IFlightRepository
 
     public bool UpdateFlight(Flight flight);
 
-    public bool DeleteFlight(int id);
+    public bool DeleteFlight(string id);
 }

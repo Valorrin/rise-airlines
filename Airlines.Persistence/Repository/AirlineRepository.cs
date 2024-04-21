@@ -58,7 +58,7 @@ public class AirlineRepository : IAirlineRepository, IDisposable
         }
     }
 
-    public bool DeleteFlight(int id)
+    public bool DeleteAirline(int id)
     {
         using var context = new AirlinesDBContext();
         var airline = context.Airlines.FirstOrDefault(airline => airline.AirlineId == id);

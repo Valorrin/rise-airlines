@@ -12,5 +12,5 @@ public interface IAirportRepository
 
     public bool UpdateAirport(Airport airport);
 
-    public bool DeleteAirport(int id);
+    public bool DeleteAirport(string id);
 }

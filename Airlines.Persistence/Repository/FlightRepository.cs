@@ -55,7 +55,6 @@ public class FlightRepository : IFlightRepository, IDisposable
             Console.WriteLine($"Error updating flight: {ex.Message}");
             return false;
         }
-
     }
 
     public bool DeleteFlight(int id)
