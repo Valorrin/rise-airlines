@@ -33,9 +33,8 @@ public class AirlineRepository : IAirlineRepository, IDisposable
 
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"Error adding airline: {ex.Message}");
             return false;
         }
     }
@@ -51,9 +50,8 @@ public class AirlineRepository : IAirlineRepository, IDisposable
 
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"Error updating airline: {ex.Message}");
             return false;
         }
     }
@@ -68,8 +66,6 @@ public class AirlineRepository : IAirlineRepository, IDisposable
             _ = context.SaveChanges();
             return true;
         }
-
-        Console.WriteLine("Error deleting airline");
         return false;
     }
 }

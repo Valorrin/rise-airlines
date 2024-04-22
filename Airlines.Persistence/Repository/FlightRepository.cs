@@ -32,9 +32,8 @@ public class FlightRepository : IFlightRepository, IDisposable
 
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"Error adding flight: {ex.Message}");
             return false;
         }
     }
@@ -50,9 +49,8 @@ public class FlightRepository : IFlightRepository, IDisposable
 
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"Error updating flight: {ex.Message}");
             return false;
         }
     }
@@ -67,8 +65,6 @@ public class FlightRepository : IFlightRepository, IDisposable
             _ = context.SaveChanges();
             return true;
         }
-
-        Console.WriteLine("Error deleting flight");
         return false;
     }
 }

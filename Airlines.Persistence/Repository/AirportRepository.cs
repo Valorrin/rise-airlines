@@ -31,9 +31,8 @@ public class AirportRepository : IAirportRepository, IDisposable
 
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"Error adding airport: {ex.Message}");
             return false;
         }
     }
@@ -49,9 +48,8 @@ public class AirportRepository : IAirportRepository, IDisposable
 
             return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"Error updating airport: {ex.Message}");
             return false;
         }
     }
@@ -66,8 +64,6 @@ public class AirportRepository : IAirportRepository, IDisposable
             _ = context.SaveChanges();
             return true;
         }
-
-        Console.WriteLine("Error deleting airport");
         return false;
     }
 }

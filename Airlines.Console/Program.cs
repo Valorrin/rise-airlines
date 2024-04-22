@@ -7,7 +7,7 @@ using Airlines.Business;
 using Airlines.Business.Mapping;
 using Airlines.Business.Validation;
 using Airlines.Business.Utilities;
-using Airlines.Persistence.Repository;
+using Airlines.Persistence.Services;
 
 
 namespace Airlines;
@@ -24,6 +24,10 @@ public class Program
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationManager();
         var batchManager = new BatchManager();
+
+        var airportService = new AirportService();
+        var airlineService = new AirlineService();
+        var flightService = new FlightService();
 
         var inputValidator = new InputValidator(airportManager, airlineManager, flightManager);
         var printer = new Printer(airportManager, airlineManager, flightManager, aircraftManager);
@@ -44,9 +48,6 @@ public class Program
         var flightData = ReadFromFile(flightFilePath);
         var aircraftData = ReadFromFile(aircraftFilePath);
         var routeData = ReadFromFile(routeFilePath);
-
-        var flightRepository = new FlightRepository();
-        _ = flightRepository.GetFlights();
 
         try
         {
