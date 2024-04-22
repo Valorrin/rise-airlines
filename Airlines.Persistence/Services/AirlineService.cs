@@ -36,7 +36,7 @@ public class AirlineService
         }
         else
         {
-            Console.WriteLine("Failed to add airline. Check input data and try again.");
+            Console.WriteLine("Failed to add airline.");
         }
     }
 
@@ -51,7 +51,7 @@ public class AirlineService
         }
         else
         {
-            Console.WriteLine("Failed to update airline. Check input data and try again.");
+            Console.WriteLine("Failed to update airline.");
         }
     }
 
@@ -65,7 +65,7 @@ public class AirlineService
         }
         else
         {
-            Console.WriteLine("Failed to delete airline. Airline not found.");
+            Console.WriteLine("Failed to delete airline.");
         }
     }
 

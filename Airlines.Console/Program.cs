@@ -8,6 +8,7 @@ using Airlines.Business.Mapping;
 using Airlines.Business.Validation;
 using Airlines.Business.Utilities;
 using Airlines.Persistence.Services;
+using Airlines.Persistence.Dto;
 
 
 namespace Airlines;
@@ -48,6 +49,12 @@ public class Program
         var flightData = ReadFromFile(flightFilePath);
         var aircraftData = ReadFromFile(aircraftFilePath);
         var routeData = ReadFromFile(routeFilePath);
+
+        airportService.PrintAllAirports();
+        airportService.PrintAllAirports("City", "Dallas");
+        airportService.AddAirport(new AirportDto("ATL", "Hartsfield-Jackson Atlanta International Airport", "USA", "Atlanta", 105, 6, new DateOnly(1980, 09, 1)));
+        //airportService.UpdateAirport(new AirportDto("ATL", "Hartsfield-Jackson Atlanta International Airport", "USA", "Atlanta", 105, 6, new DateOnly(1980, 09, 1)));
+        airportService.DeleteAirport("ATL");
 
         try
         {

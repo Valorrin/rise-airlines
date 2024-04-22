@@ -9,14 +9,14 @@ public class AirportDto
 
     public string City { get; set; }
 
-    public string Code { get; set; }
+    public int Code { get; set; }
 
     public int RunwaysCount { get; set; }
 
     public DateOnly Founded { get; set; }
 
 
-    public AirportDto(string airportId, string name, string country, string city, string code, int runwaysCount, DateOnly founded)
+    public AirportDto(string airportId, string name, string country, string city, int code, int runwaysCount, DateOnly founded)
     {
         AirportId = airportId;
         Name = name;

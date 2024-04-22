@@ -22,7 +22,7 @@ public class AirportService
         }
         else
         {
-            Console.WriteLine("Failed to add airport. Check input data and try again.");
+            Console.WriteLine("Failed to add airport.");
         }
     }
 
@@ -52,7 +52,7 @@ public class AirportService
         }
         else
         {
-            Console.WriteLine("Failed to delete airport. Airport not found.");
+            Console.WriteLine("Failed to delete airport.");
         }
     }
 
