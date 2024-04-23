@@ -9,16 +9,33 @@ public class FlightRepository : IFlightRepository, IDisposable
 
     public List<Flight> GetFlights()
     {
-        using var context = new AirlinesDBContext();
-        return context.Flights.ToList();
+        try
+        {
+            using var context = new AirlinesDBContext();
+            return context.Flights.ToList();
+        }
+        catch (Exception)
+        {
+
+            Console.WriteLine("There is no flight data!");
+            return new List<Flight>();
+        }
     }
 
     public List<Flight> GetFlightsByFilter(string filter, string value)
     {
-        using var context = new AirlinesDBContext();
-        var result = context.Flights.Where(flight => EF.Property<string>(flight, filter) == value);
+        try
+        {
+            using var context = new AirlinesDBContext();
+            var result = context.Flights.Where(flight => EF.Property<string>(flight, filter) == value);
 
-        return result.ToList();
+            return result.ToList();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("There is no flight data!");
+            return new List<Flight>();
+        }
     }
 
     public bool AddFlight(Flight flight)

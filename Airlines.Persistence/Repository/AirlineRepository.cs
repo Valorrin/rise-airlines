@@ -8,18 +8,34 @@ public class AirlineRepository : IAirlineRepository, IDisposable
     public void Dispose() { }
     public List<Airline> GetAirlines()
     {
-        using var context = new AirlinesDBContext();
-        var result = context.Airlines;
+        try
+        {
+            using var context = new AirlinesDBContext();
+            var result = context.Airlines;
 
-        return result.ToList();
+            return result.ToList();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("There is no airline data!");
+            return new List<Airline>();
+        }
     }
 
     public List<Airline> GetAirlinesByFilter(string filter, string value)
     {
-        using var context = new AirlinesDBContext();
-        var result = context.Airlines.Where(airline => EF.Property<string>(airline, filter) == value);
+        try
+        {
+            using var context = new AirlinesDBContext();
+            var result = context.Airlines.Where(airline => EF.Property<string>(airline, filter) == value);
 
-        return result.ToList();
+            return result.ToList();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("There is no airline data!");
+            return new List<Airline>();
+        }
     }
 
     public bool AddAirline(Airline airline)

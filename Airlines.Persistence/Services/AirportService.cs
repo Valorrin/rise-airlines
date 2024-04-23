@@ -1,6 +1,6 @@
 ﻿using Airlines.Persistence.Dto;
 using Airlines.Persistence.Entities;
-using Airlines.Persistence.Profiles;
+using Airlines.Persistence.Mappers;
 using Airlines.Persistence.Repository;
 using System.Text;
 
@@ -8,7 +8,7 @@ namespace Airlines.Persistence.Services;
 public class AirportService
 {
     private readonly AirportMapper _mapper;
-    public AirportService() => _mapper = new AirportMapper();
+    public AirportService(AirportMapper mapper) => _mapper = mapper;
 
     public void AddAirport(AirportDto airportDto)
     {

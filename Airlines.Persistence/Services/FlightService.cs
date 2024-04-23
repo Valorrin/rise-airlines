@@ -1,6 +1,6 @@
 ﻿using Airlines.Persistence.Dto;
 using Airlines.Persistence.Entities;
-using Airlines.Persistence.Profiles;
+using Airlines.Persistence.Mappers;
 using Airlines.Persistence.Repository;
 using System.Text;
 
@@ -8,7 +8,7 @@ namespace Airlines.Persistence.Services;
 public class FlightService
 {
     private readonly FlightMapper _mapper;
-    public FlightService() => _mapper = new FlightMapper();
+    public FlightService(FlightMapper mapper) => _mapper = mapper;
 
     public void AddFlight(FlightDto flightDto)
     {

@@ -1,13 +1,13 @@
 ﻿using Airlines.Persistence.Dto;
 using Airlines.Persistence.Entities;
-using Airlines.Persistence.Profiles;
+using Airlines.Persistence.Mappers;
 using Airlines.Persistence.Repository;
 
 namespace Airlines.Persistence.Services;
 public class AirlineService
 {
     private readonly AirlineMapper _mapper;
-    public AirlineService() => _mapper = new AirlineMapper();
+    public AirlineService(AirlineMapper mapper) => _mapper = mapper;
 
     public void PrintAllAirlines()
     {

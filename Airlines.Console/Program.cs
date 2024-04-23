@@ -9,6 +9,8 @@ using Airlines.Business.Validation;
 using Airlines.Business.Utilities;
 using Airlines.Persistence.Services;
 using Airlines.Persistence.Dto;
+using Airlines.Persistence.Profiles;
+using Airlines.Persistence.Mappers;
 
 
 namespace Airlines;
@@ -25,10 +27,6 @@ public class Program
         var aircraftManager = new AircraftManager();
         var reservationManager = new ReservationManager();
         var batchManager = new BatchManager();
-
-        var airportService = new AirportService();
-        var airlineService = new AirlineService();
-        var flightService = new FlightService();
 
         var inputValidator = new InputValidator(airportManager, airlineManager, flightManager);
         var printer = new Printer(airportManager, airlineManager, flightManager, aircraftManager);
@@ -49,6 +47,17 @@ public class Program
         var flightData = ReadFromFile(flightFilePath);
         var aircraftData = ReadFromFile(aircraftFilePath);
         var routeData = ReadFromFile(routeFilePath);
+
+
+        var autoMapperConfig = new AutoMapperConfig();
+        var autoMapper = autoMapperConfig.Mapper;
+        var airportMapper = new AirportMapper(autoMapper);
+        var airlineMapper = new AirlineMapper(autoMapper);
+        var flightMapper = new FlightMapper(autoMapper);
+
+        var airportService = new AirportService(airportMapper);
+        var airlineService = new AirlineService(airlineMapper);
+        var flightService = new FlightService(flightMapper);
 
         airportService.PrintAllAirports();
         airportService.PrintAllAirports("City", "Dallas");

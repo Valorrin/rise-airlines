@@ -15,9 +15,9 @@ public class FlightDto
 
     public decimal Price { get; set; }
 
-    public virtual AirportDto ArrivalAirport { get; set; }
+    public virtual AirportDto? ArrivalAirport { get; set; }
 
-    public virtual AirportDto DeparturAirport { get; set; }
+    public virtual AirportDto? DeparturAirport { get; set; }
 
     public FlightDto(string number, int airlineId, string departurAirportId, string arrivalAirportId,
         DateTime departureDateTime, DateTime arrivalDateTime, decimal price)

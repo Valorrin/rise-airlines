@@ -8,16 +8,32 @@ public class AirportRepository : IAirportRepository, IDisposable
     public void Dispose() { }
     public List<Airport> GetAirports()
     {
-        using var context = new AirlinesDBContext();
-        return context.Airports.ToList();
+        try
+        {
+            using var context = new AirlinesDBContext();
+            return context.Airports.ToList();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("There is no airport data!");
+            return new List<Airport>();
+        }
     }
 
     public List<Airport> GetAirportsByFilter(string filter, string value)
     {
-        using var context = new AirlinesDBContext();
-        var result = context.Airports.Where(airport => EF.Property<string>(airport, filter) == value);
+        try
+        {
+            using var context = new AirlinesDBContext();
+            var result = context.Airports.Where(airport => EF.Property<string>(airport, filter) == value);
 
-        return result.ToList();
+            return result.ToList();
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("There is no airport data!");
+            return new List<Airport>();
+        }
     }
 
     public bool AddAirport(Airport airport)
