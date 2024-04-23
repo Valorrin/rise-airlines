@@ -5,9 +5,9 @@ public class FlightDto
 
     public int AirlineId { get; set; }
 
-    public int DeparturAirportId { get; set; }
+    public string DeparturAirportId { get; set; }
 
-    public int ArrivalAirportId { get; set; }
+    public string ArrivalAirportId { get; set; }
 
     public DateTime DepartureDateTime { get; set; }
 
@@ -19,7 +19,7 @@ public class FlightDto
 
     public virtual AirportDto DeparturAirport { get; set; }
 
-    public FlightDto(string number, int airlineId, int departurAirportId, int arrivalAirportId,
+    public FlightDto(string number, int airlineId, string departurAirportId, string arrivalAirportId,
         DateTime departureDateTime, DateTime arrivalDateTime, decimal price)
     {
         Number = number;

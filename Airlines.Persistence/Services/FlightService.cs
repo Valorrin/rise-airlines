@@ -26,9 +26,9 @@ public class FlightService
         }
     }
 
-    public void UpdateFlight(int id, FlightDto flightDto)
+    public void UpdateFlight(int id, FlightDto updatedFlight)
     {
-        var flight = _mapper.MapFlight(flightDto);
+        var flight = _mapper.MapFlight(updatedFlight);
 
         using var flightRepository = new FlightRepository();
         var updated = flightRepository.UpdateFlight(id, flight);

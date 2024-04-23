@@ -40,9 +40,9 @@ public class AirlineService
         }
     }
 
-    public void UpdateAirline(int id, AirlineDto airlineDto)
+    public void UpdateAirline(int id, AirlineDto updatedAirline)
     {
-        var airline = _mapper.MapAirline(airlineDto);
+        var airline = _mapper.MapAirline(updatedAirline);
         using var airlineRepository = new AirlineRepository();
         var updated = airlineRepository.UpdateAirline(id, airline);
         if (updated)
