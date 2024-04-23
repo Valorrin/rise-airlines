@@ -9,7 +9,7 @@ public interface IAirportRepository
 
     public bool AddAirport(Airport airport);
 
-    public bool UpdateAirport(Airport airport);
+    public bool UpdateAirport(string id, Airport airport);
 
     public bool DeleteAirport(string id);
 }

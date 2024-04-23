@@ -9,7 +9,7 @@ public interface IAirlineRepository
 
     public bool AddAirline(Airline airline);
 
-    public bool UpdateAirline(Airline airline);
+    public bool UpdateAirline(int id, Airline airline);
 
     public bool DeleteAirline(int id);
 }

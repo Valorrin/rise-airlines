@@ -38,16 +38,27 @@ public class FlightRepository : IFlightRepository, IDisposable
         }
     }
 
-    public bool UpdateFlight(Flight flight)
+    public bool UpdateFlight(int id, Flight flight)
     {
         try
         {
             using var context = new AirlinesDBContext();
+            var existingFlight = context.Flights.FirstOrDefault(f => f.FlightId == id);
+            if (existingFlight != null)
+            {
+                existingFlight.Number = flight.Number;
+                existingFlight.AirlineId = flight.AirlineId;
+                existingFlight.DepartureAirportId = flight.DepartureAirportId;
+                existingFlight.ArrivalAirportId = flight.ArrivalAirportId;
+                existingFlight.DepartureDateTime = flight.DepartureDateTime;
+                existingFlight.ArrivalDateTime = flight.ArrivalDateTime;
+                existingFlight.Price = flight.Price;
 
-            _ = context.Flights.Update(flight);
-            _ = context.SaveChanges();
+                context.SaveChanges();
 
-            return true;
+                return true;
+            }
+            return false;
         }
         catch (Exception)
         {
@@ -57,14 +68,21 @@ public class FlightRepository : IFlightRepository, IDisposable
 
     public bool DeleteFlight(int id)
     {
-        using var context = new AirlinesDBContext();
-        var flight = context.Flights.FirstOrDefault(flight => flight.FlightId == id);
-        if (flight != null)
+        try
         {
-            _ = context.Flights.Remove(flight);
-            _ = context.SaveChanges();
-            return true;
+            using var context = new AirlinesDBContext();
+            var flight = context.Flights.FirstOrDefault(flight => flight.FlightId == id);
+            if (flight != null)
+            {
+                _ = context.Flights.Remove(flight);
+                _ = context.SaveChanges();
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }

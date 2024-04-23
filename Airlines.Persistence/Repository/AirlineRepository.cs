@@ -39,16 +39,23 @@ public class AirlineRepository : IAirlineRepository, IDisposable
         }
     }
 
-    public bool UpdateAirline(Airline airline)
+    public bool UpdateAirline(int id, Airline airline)
     {
         try
         {
             using var context = new AirlinesDBContext();
+            var existingAirline = context.Airlines.FirstOrDefault(a => a.AirlineId == id);
+            if (existingAirline != null)
+            {
+                existingAirline.Name = airline.Name;
+                existingAirline.Founded = airline.Founded;
+                existingAirline.FleetSize = airline.FleetSize;
+                existingAirline.Description = airline.Description;
 
-            _ = context.Airlines.Add(airline);
-            _ = context.SaveChanges();
-
-            return true;
+                context.SaveChanges();
+                return true;
+            }
+            return false;
         }
         catch (Exception)
         {
@@ -58,14 +65,21 @@ public class AirlineRepository : IAirlineRepository, IDisposable
 
     public bool DeleteAirline(int id)
     {
-        using var context = new AirlinesDBContext();
-        var airline = context.Airlines.FirstOrDefault(airline => airline.AirlineId == id);
-        if (airline != null)
+        try
         {
-            _ = context.Airlines.Remove(airline);
-            _ = context.SaveChanges();
-            return true;
+            using var context = new AirlinesDBContext();
+            var airline = context.Airlines.FirstOrDefault(airline => airline.AirlineId == id);
+            if (airline != null)
+            {
+                _ = context.Airlines.Remove(airline);
+                _ = context.SaveChanges();
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }

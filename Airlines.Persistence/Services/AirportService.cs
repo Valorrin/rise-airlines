@@ -26,12 +26,12 @@ public class AirportService
         }
     }
 
-    public void UpdateAirport(AirportDto airportDto)
+    public void UpdateAirport(string id, AirportDto airportDto)
     {
         var airport = _mapper.MapAirport(airportDto);
 
         using var airportRepository = new AirportRepository();
-        var updated = airportRepository.UpdateAirport(airport);
+        var updated = airportRepository.UpdateAirport(id, airport);
         if (updated)
         {
             Console.WriteLine("Airport updated successfully.");

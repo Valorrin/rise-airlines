@@ -37,16 +37,26 @@ public class AirportRepository : IAirportRepository, IDisposable
         }
     }
 
-    public bool UpdateAirport(Airport airport)
+    public bool UpdateAirport(string id, Airport airport)
     {
         try
         {
             using var context = new AirlinesDBContext();
+            var existingAirport = context.Airports.FirstOrDefault(a => a.AirportId == id);
+            if (existingAirport != null)
+            {
+                existingAirport.Name = airport.Name;
+                existingAirport.Country = airport.Country;
+                existingAirport.City = airport.City;
+                existingAirport.Code = airport.Code;
+                existingAirport.Runways = airport.Runways;
+                existingAirport.Founded = airport.Founded;
 
-            _ = context.Airports.Update(airport);
-            _ = context.SaveChanges();
+                context.SaveChanges();
 
-            return true;
+                return true;
+            }
+            return false;
         }
         catch (Exception)
         {
@@ -56,14 +66,21 @@ public class AirportRepository : IAirportRepository, IDisposable
 
     public bool DeleteAirport(string id)
     {
-        using var context = new AirlinesDBContext();
-        var airport = context.Airports.FirstOrDefault(airport => airport.AirportId == id);
-        if (airport != null)
+        try
         {
-            _ = context.Airports.Remove(airport);
-            _ = context.SaveChanges();
-            return true;
+            using var context = new AirlinesDBContext();
+            var airport = context.Airports.FirstOrDefault(a => a.AirportId == id);
+            if (airport != null)
+            {
+                _ = context.Airports.Remove(airport);
+                _ = context.SaveChanges();
+                return true;
+            }
+            return false;
         }
-        return false;
+        catch (Exception)
+        {
+            return false;
+        }
     }
 }

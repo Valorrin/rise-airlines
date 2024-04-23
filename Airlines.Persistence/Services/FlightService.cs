@@ -26,12 +26,12 @@ public class FlightService
         }
     }
 
-    public void UpdateFlight(FlightDto flightDto)
+    public void UpdateFlight(int id, FlightDto flightDto)
     {
         var flight = _mapper.MapFlight(flightDto);
 
         using var flightRepository = new FlightRepository();
-        var updated = flightRepository.UpdateFlight(flight);
+        var updated = flightRepository.UpdateFlight(id, flight);
         if (updated)
         {
             Console.WriteLine("Flight updated successfully.");

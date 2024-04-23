@@ -9,7 +9,7 @@ public interface IFlightRepository
 
     public bool AddFlight(Flight flight);
 
-    public bool UpdateFlight(Flight flight);
+    public bool UpdateFlight(int id, Flight flight);
 
     public bool DeleteFlight(int id);
 }
