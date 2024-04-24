@@ -26,7 +26,7 @@ CREATE TABLE Airlines (
 CREATE TABLE Flights (
     [FlightId] INT PRIMARY KEY IDENTITY,
     [Number] NVARCHAR(5) NOT NULL,
-	[AirlineId] INT FOREIGN KEY REFERENCES Airlines(AirlineId),
+	[AirlineId] INT NOT NULL,
     [DepartureAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
     [ArrivalAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
     [DepartureDateTime] DATETIME2 NOT NULL CHECK (DepartureDateTime >= GetDate()),
