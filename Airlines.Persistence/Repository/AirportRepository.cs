@@ -68,7 +68,7 @@ public class AirportRepository : IAirportRepository, IDisposable
                 existingAirport.Runways = airport.Runways;
                 existingAirport.Founded = airport.Founded;
 
-                context.SaveChanges();
+                _ = context.SaveChanges();
 
                 return true;
             }
