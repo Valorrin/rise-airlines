@@ -18,8 +18,4 @@
 		<InternalsVisibleTo Include="Airlines.UnitTests" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Airlines.Persistence\Airlines.Persistence.csproj" />
-	</ItemGroup>
-
 </Project>
