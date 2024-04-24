@@ -28,7 +28,7 @@ public partial class AirlinesDBContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            var connection = ConfigurationManager.GetConnectionString("Local");
+            var connection = ConfigurationManager.GetConnectionString("Home");
             optionsBuilder.UseSqlServer(connection);
         }
 
