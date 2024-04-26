@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airlines</title>
+</head>
+<body>
+    <header>
+        <h1>Rise Airlines</h1>  
+        <nav>
+            <ul>
+                <li><a href="index.html">Index</a></li>
+                <li><a href="airports.html">Airports</a></li>
+                <li><a href="airlines.html">Airlines</a></li>
+                <li><a href="flights.html">Flights</a> </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <form>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="founed">Founded:</label><br>
+        <input type="date" id="founded" name="founded"><br>
+        <label for="fleetSize">Fleet size:</label><br>
+        <input type="number" id="fleetSize" name="fleetSize"><br>
+        <label for="description">Description</label><br>
+        <input type="text" id="description" name="description"><br>
+        <input type="submit" value="Add Airline">
+    </form>
+
+    <table border="1px" cellspacing="0px">
+        <caption>Airlines</caption>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Founded</th>
+                <th>Fleet Size</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Aer Lingus</td>
+                <td>2010-10-12</td>
+                <td>12</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, consequatur!</td>
+            </tr>
+            <tr>
+                <td>British Airways</td>
+                <td>2001-05-03</td>
+                <td>25</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, atque?</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
