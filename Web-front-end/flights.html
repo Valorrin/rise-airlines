@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flights</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
@@ -17,24 +18,6 @@
             </ul>
         </nav>
     </header>
-    
-    <form>
-        <label for="number">Number:</label><br>
-        <input type="text" id="number" name="number"><br>
-        <label for="airline">Airline:</label><br>
-        <input type="text" id="airline" name="airline"><br>
-        <label for="price">Price:</label><br>
-        <input type="number" id="price" name="price"><br>
-        <label for="departureAirport">Departure Airport:</label><br>
-        <input type="text" id="departureAirport" name="departureAirport"><br>
-        <label for="arrivalAirport">Arrival Airport:</label><br>
-        <input type="text" id="arrivalAirport" name="arrivalAirport"><br>
-        <label for="departureTime">Departure Time:</label><br>
-        <input type="datetime-local" id="departureTime" name="departureTime"><br>
-        <label for="arrivalTime">Arrival Time:</label><br>
-        <input type="datetime-local" id="arrivalTime" name="arrivalTime"><br>
-        <input type="submit" value="Add Flight">
-    </form>
 
     <table border="1px" cellspacing="0px">
         <caption>Flights</caption>
@@ -70,5 +53,23 @@
             </tr>
         </tbody>
     </table>
+
+    <form>
+        <label for="number">Number:</label><br>
+        <input type="text" id="number" name="number"><br>
+        <label for="airline">Airline:</label><br>
+        <input type="text" id="airline" name="airline"><br>
+        <label for="price">Price:</label><br>
+        <input type="number" id="price" name="price"><br>
+        <label for="departureAirport">Departure Airport:</label><br>
+        <input type="text" id="departureAirport" name="departureAirport"><br>
+        <label for="arrivalAirport">Arrival Airport:</label><br>
+        <input type="text" id="arrivalAirport" name="arrivalAirport"><br>
+        <label for="departureTime">Departure Time:</label><br>
+        <input type="datetime-local" id="departureTime" name="departureTime"><br>
+        <label for="arrivalTime">Arrival Time:</label><br>
+        <input type="datetime-local" id="arrivalTime" name="arrivalTime"><br>
+        <input type="submit" value="Add Flight">
+    </form>
 </body>
 </html>
