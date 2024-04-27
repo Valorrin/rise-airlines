@@ -16,12 +16,12 @@ header {
 .logo {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: 0.4rem;
     font-weight: 200;
   }
 
   .logo span {
-    margin-left: 0.5rem;
+    padding: 0.3rem;
     
 }
 
