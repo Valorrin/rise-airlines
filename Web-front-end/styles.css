@@ -61,6 +61,7 @@ main {
 main h2 {
   margin-top: 100px;
   margin-bottom: 40px;
+  font-size: 28px;
 }
 
 .card-container {
@@ -75,14 +76,14 @@ main h2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-right: 30px;
-  margin-left: 30px;
+  margin-right: 35px;
+  margin-left: 35px;
   align-items: center;
 }
 
 .card-outer button {
   width: 100%;
-  height: 28px;
+  height: 30px;
   margin-top: 10px;
   border: 0;
   background-color: #e5e5e5;
@@ -102,6 +103,36 @@ main h2 {
   font-size: 18px;
 }
 
+.airports-title {
+  display: flex;
+  margin-top: 100px;
+  margin-bottom: 40px;
+  font-size: 28px;
+  border-bottom: 1px solid #e5e5e5;
+  width: 600px;
+  justify-content: center;
+}
+
+table {
+  width: 600px;
+}
+
+thead {
+  background-color: #e5e5e5;
+}
+
+table, td, th{
+  border: 1px solid #000000;
+  border-collapse: collapse;
+}
+
+th {
+  width: 100px;
+}
+
+tr {
+  height: 50px;
+}
 
 footer {
   display: flex;
