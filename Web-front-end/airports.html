@@ -8,47 +8,52 @@
 </head>
 <body>
     <header>
-        <h1 class="logo"><span>Rise Airlines</span><span><img src="./assets/header-plane.png" alt="icon"></span></h1>
-        <nav class="nav-bar">
+        <div id="logo">
+            <h1>Rise Airlines</h1>
+            <img src="./assets/header-plane.png" alt="icon">
+        </div>
+        <nav id="nav-bar">
             <ul class="nav-list">
-                <li class="nav-link"><a href="airports.html">Airports</a></li>
+                <li class="nav-link"><a href="./airports.html">Airports</a></li>
                 <li class="nav-link"><a href="airlines.html">Airlines</a></li>
                 <li class="nav-link"><a href="flights.html">Flights</a> </li>
             </ul>
         </nav>
     </header>
     <main>
-        <div class="airports-title">Airports</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Country</th>
-                    <th>City</th>
-                    <th>Code</th>
-                    <th>Runways</th>
-                    <th>Founded</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>John F Kennedy Airport</td>
-                    <td>USA</td>
-                    <td>New York</td>
-                    <td>101</td>
-                    <td>4</td>
-                    <td>2018</td>
-                </tr>
-                <tr>
-                    <td>Los Angeles Airport</td>
-                    <td>USA</td>
-                    <td>Los Angeles</td>
-                    <td>102</td>
-                    <td>5</td>
-                    <td>2007</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <h2 id="airports-title">Airports</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Country</th>
+                        <th>City</th>
+                        <th>Code</th>
+                        <th>Runways</th>
+                        <th>Founded</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John F Kennedy Airport</td>
+                        <td>USA</td>
+                        <td>New York</td>
+                        <td>101</td>
+                        <td>4</td>
+                        <td>2018</td>
+                    </tr>
+                    <tr>
+                        <td>Los Angeles Airport</td>
+                        <td>USA</td>
+                        <td>Los Angeles</td>
+                        <td>102</td>
+                        <td>5</td>
+                        <td>2007</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <button class="show-form-button">Show Form</button>
         <form>
             <label for="name">Name:</label><br>

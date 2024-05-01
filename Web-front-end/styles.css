@@ -12,21 +12,28 @@ header {
   justify-content: space-between;
   background-color: #000000;
   color: #ffffff;
+  height: 45px
 }
 
-.logo {
+#logo {
   display: flex;
-  font-size: 18px;
-  justify-content: space-between;
-  padding: 0.3rem;
-  font-weight: 200;
+  flex-direction: row;
+  font-size: 10px;
+  align-items: center;
+  margin-left: 6px;
 }
 
-.logo span {
-  margin: 0.2rem;
+#logo h1 {
+  margin-left: 6px;
+  font-weight: lighter;
 }
 
-.nav-bar {
+#logo img {
+  width: 18px;
+  margin-left: 8px;
+}
+
+#nav-bar {
   padding: 0.3rem;
 }
 
@@ -43,6 +50,7 @@ header {
 }
 
 .nav-link a {
+  font-weight: lighter;
   text-decoration: none;
   color: #ffffff;
 }
@@ -103,18 +111,31 @@ main h2 {
   font-size: 18px;
 }
 
-.airports-title {
+.table-container {
+  width: 50%;
+  min-width: 350px;
+  max-height: 450px;
+  overflow: auto;
+}
+
+#airports-title {
   display: flex;
-  margin-top: 100px;
-  margin-bottom: 40px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  padding-bottom: 40px;
   font-size: 28px;
   border-bottom: 1px solid #e5e5e5;
-  width: 600px;
+  width: 100%;
   justify-content: center;
 }
 
 table {
-  width: 600px;
+  width: 100%;
+  min-width: 400px;
+  overflow: auto;
+  table-layout: fixed;
+  text-align: center;
+  font-size: 12px;
 }
 
 thead {
@@ -124,19 +145,36 @@ thead {
 table, td, th{
   border: 1px solid #000000;
   border-collapse: collapse;
-  text-align: center;
+  padding: 8px;
 }
 
 th {
-  width: 100px;
+  position: sticky;
 }
 
-tr {
-  height: 50px;
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tr { 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 14px;
+  white-space: nowrap;
 }
 
 .show-form-button {
   background-color: #fca311;
+  height: 25px;
+  width: 20%;
+  min-width: 160px;
+  margin-top: 15px;
+  border: 0;
+  color: #ffffff;
+  font-size: 12px;
+  border-radius: 6px;
+  font-weight: 700;
 }
 
 footer {
