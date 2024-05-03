@@ -21,8 +21,13 @@
         </nav>
     </header>
     <main>
+        <div class="main-header">
+            <a href="./index.html" class="arrow-back">
+              <img src="./assets/left sidebar.png" alt="arrow-back" />
+            </a>
+            <h2>Airports</h2>
+        </div>    
         <div class="table-container">
-            <h2 id="airports-title">Airports</h2>
             <table>
                 <thead>
                     <tr>
@@ -56,20 +61,21 @@
         </div>
         <div class="form-wrapper">
             <button class="show-form-button">Show Form</button>
-            <form>
-                <label for="name">Name:</label><br>
-                <input type="text" id="name" name="name"><br>
-                <label for="counry">Country:</label><br>
-                <input type="text" id="counry" name="counry"><br>
-                <label for="city">City:</label><br>
-                <input type="text" id="city" name="city"><br>
-                <label for="code">Code</label><br>
-                <input type="number" id="code" name="code"><br>
-                <label for="runways">Runways</label><br>
-                <input type="number" id="runways" name="runways"><br>
-                <label for="founed">Founded:</label><br>
-                <input type="date" id="founded" name="founded"><br>
-                <input type="submit" value="Add Airport">
+            <h3 class="form-header">Add New Airport</h3>
+            <form method="post">
+                <label for="name">Name</label>
+                <input type="text" id="airport-name" name="name">
+                <label for="counry">Country</label>
+                <input type="text" id="airport-counry" name="counry">
+                <label for="city">City</label>
+                <input type="number" id="airport-code" name="code">
+                <label for="code">Code</label>
+                <input type="text" id="airport-city" name="city">
+                <label for="runways">Runways</label>
+                <input type="number" id="airport-runways" name="runways">
+                <label for="founed">Founded</label>
+                <input type="date" id="airport-founded" name="founded">
+                <input type="submit" value="Submit" class="submit-form-button">
             </form>
         </div>
     </main>
