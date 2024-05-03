@@ -17,7 +17,9 @@ header {
 
 #logo {
   display: flex;
+  color: #ffffff;
   flex-direction: row;
+  text-decoration: none;
   font-size: 10px;
   align-items: center;
   margin-left: 6px;
@@ -55,8 +57,13 @@ header {
   color: #ffffff;
 }
 
-li {
-  display: inline;
+.nav-link a.active {
+  color: #fca311;
+}
+
+.nav-link a:hover {
+  color: #fca311;
+  transition: color 0.3s ease;
 }
 
 main {
@@ -64,6 +71,13 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 60px;
+}
+
+#dashboard-header {
+  margin-top: 80px;
+  margin-bottom: 40px;
+  font-size: 30px;
 }
 
 .main-header {
@@ -76,7 +90,6 @@ main {
   margin-bottom: 20px;
   border-bottom: 1px solid #e5e5e5;
 }
-
 
 .main-header h2 {
   position: relative;
@@ -99,7 +112,7 @@ main {
   width: 100%;
 }
 
-.card-outer {
+.card-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,15 +121,26 @@ main {
   align-items: center;
 }
 
-.card-outer button {
+.card-wrapper a{
   width: 100%;
-  height: 30px;
+}
+
+.dashboard-button{
+  width: 100%;
+  height: 32px;
   margin-top: 10px;
   border: 0;
   background-color: #e5e5e5;
   border-radius: 6px;
   font-weight: 700;
 }
+
+.dashboard-button:hover {
+  color: #ffffff;
+  background-color: #fca311;
+  transition: all 0.3s ease;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -135,17 +159,6 @@ main {
   min-width: 350px;
   max-height: 450px;
   overflow: auto;
-}
-
-#airports-title {
-  display: flex;
-  margin-top: 40px;
-  margin-bottom: 20px;
-  padding-bottom: 40px;
-  font-size: 28px;
-  border-bottom: 1px solid #e5e5e5;
-  width: 100%;
-  justify-content: center;
 }
 
 table {
@@ -167,8 +180,11 @@ table, td, th{
   padding: 8px;
 }
 
-thead {
+th {
   position: sticky;
+  top: 0;
+  background-color: #e5e5e5;
+  font-weight: 700;
 }
 
 td {
@@ -176,11 +192,16 @@ td {
   text-overflow: ellipsis;
 }
 
-tr { 
+tbody tr { 
   overflow: hidden;
   text-overflow: ellipsis;
   height: 14px;
   white-space: nowrap;
+}
+
+tr:hover {
+  overflow: visible;
+  white-space: initial;
 }
 
 .show-form-button {
@@ -201,14 +222,14 @@ tr {
   flex-direction: column;
   align-items: center;
   width: 360px;
-  margin-top: 20px;
+  margin-top: 40px; 
 }
 
 .form-header {
   position: relative;
   width: fit-content;
   top: 27px;
-  left: -30%;
+  left: -31%;
   right: auto;
   font-size: 13px;
   font-weight: 500;
@@ -229,7 +250,6 @@ form {
   background-color: #fca311;
   height: 28px;
   width: 100%;
-  min-width: 160px;
   margin-top: 15px;
   margin-bottom: 0px;
   border: 0;

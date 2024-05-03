@@ -8,10 +8,10 @@
 </head>
 <body>
     <header>
-        <div id="logo">
+        <a id="logo" href="./index.html">
             <h1>Rise Airlines</h1>
             <img src="./assets/header-plane.png" alt="icon">
-        </div>
+        </a>
         <nav id="nav-bar">
             <ul class="nav-list">
                 <li class="nav-link"><a href="./airports.html">Airports</a></li>
@@ -22,33 +22,33 @@
     </header>
 
     <main>
-        <h2>
+        <h2 id="dashboard-header">
             Welcome To Dashboard
         </h2>
         <div class="card-container">
-            <div class="card-outer">
+            <div class="card-wrapper">
                 <div class="card">
                     Airports
                     <img src="./assets/mdi_airport.png" alt="airport-icon">
                     150
                 </div>
-                <button>Add New Airport</button>
+                <a href="./airports.html"><button class="dashboard-button">Add New Airport</button></a>
             </div>
-            <div class="card-outer">
+            <div class="card-wrapper">
                 <div class="card">
                     Airlines
                     <img src="./assets/ri_plane-fill.png" alt="plane-icon">
                     50
                 </div>
-                <button>Add New Airline</button>
+                <a href="./airlines.html"><button class="dashboard-button">Add New Airline</button></a>
             </div>
-            <div class="card-outer">
+            <div class="card-wrapper">
                 <div class="card">
                     Flights
                     <img src="./assets/carbon_flight-schedule.png" alt="flight-icon">
                     200
                 </div>
-                <button>Add New Flight</button>
+                <a href="./flights.html"><button class="dashboard-button">Add New Flight</button></a>
             </div>
         </div>
     </main>
