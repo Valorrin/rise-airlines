@@ -72,10 +72,11 @@ main {
   justify-content: center;
   align-items: center;
   margin-bottom: 60px;
+  margin-top: 45px;
 }
 
 #dashboard-header {
-  margin-top: 80px;
+  margin-top: 40px;
   margin-bottom: 40px;
   font-size: 30px;
 }
@@ -102,7 +103,6 @@ main {
   left: 15%;
   user-select: none;
 }
-
 
 .card-container {
   display: flex;
@@ -137,8 +137,6 @@ main {
 
 .dashboard-button:hover {
   color: #ffffff;
-  background-color: #fca311;
-  transition: all 0.3s ease;
 }
 
 .card {
@@ -172,6 +170,7 @@ table {
 
 thead {
   background-color: #e5e5e5;
+  border: 1px solid #000000;
 }
 
 table, td, th{
@@ -180,7 +179,7 @@ table, td, th{
   padding: 8px;
 }
 
-th {
+thead th {
   position: sticky;
   top: 0;
   background-color: #e5e5e5;
@@ -215,6 +214,11 @@ tr:hover {
   font-size: 12px;
   border-radius: 6px;
   font-weight: 700;
+}
+
+button:hover {
+  background-color: #14213D;
+  transition: all 0.3s ease;
 }
 
 .form-wrapper {
@@ -254,7 +258,11 @@ legend {
   font-size: 12px;
   border-radius: 6px;
   font-weight: 700;
-  
+}
+
+.submit-form-button:hover {
+  background-color: #14213D;
+  transition: all 0.3s ease;
 }
 
 input,
@@ -281,4 +289,30 @@ footer {
   font-size: 12px;
   height: 35px;
   align-items: center;
+}
+
+@media (max-width: 1200px) {
+  .table-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  #logo {
+    font-size: 8px;
+  }
+
+  main {
+    margin-top: 50px;
+  }
+
+  .dashboard {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .arrow-back {
+    left: 0;
+  }
 }
