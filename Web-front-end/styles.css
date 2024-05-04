@@ -225,18 +225,11 @@ tr:hover {
   margin-top: 40px; 
 }
 
-.form-header {
-  position: relative;
-  width: fit-content;
-  top: 27px;
-  left: -31%;
-  right: auto;
-  font-size: 13px;
-  font-weight: 500;
-  background-color: #ffffff;
+form {
+  width: 100%;
 }
 
-form {
+fieldset {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -244,6 +237,10 @@ form {
   padding: 20px;
   border: 1px solid #e5e5e5;
   border-radius: 18px;
+}
+
+legend {
+  font-size: 13px;
 }
 
 .submit-form-button {
