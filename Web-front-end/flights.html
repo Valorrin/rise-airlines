@@ -1,74 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flights</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Rise Airlines</h1>  
-        <nav>
-            <ul>
-                <li><a href="index.html">Index</a></li>
-                <li><a href="airports.html">Airports</a></li>
-                <li><a href="airlines.html">Airlines</a></li>
-                <li><a href="flights.html">Flights</a> </li>
+        <a class="logo" href="./index.html">
+            <h1>Rise Airlines</h1>
+            <img src="./assets/header-plane.png" alt="icon">
+        </a>
+        <nav class="nav-bar">
+            <ul class="nav-list">
+                <li class="nav-link"><a href="./airports.html">Airports</a></li>
+                <li class="nav-link"><a href="airlines.html">Airlines</a></li>
+                <li class="nav-link"><a href="flights.html" class="active">Flights</a> </li>
             </ul>
         </nav>
     </header>
-    
-    <form>
-        <label for="number">Number:</label><br>
-        <input type="text" id="number" name="number"><br>
-        <label for="airline">Airline:</label><br>
-        <input type="text" id="airline" name="airline"><br>
-        <label for="price">Price:</label><br>
-        <input type="number" id="price" name="price"><br>
-        <label for="departureAirport">Departure Airport:</label><br>
-        <input type="text" id="departureAirport" name="departureAirport"><br>
-        <label for="arrivalAirport">Arrival Airport:</label><br>
-        <input type="text" id="arrivalAirport" name="arrivalAirport"><br>
-        <label for="departureTime">Departure Time:</label><br>
-        <input type="datetime-local" id="departureTime" name="departureTime"><br>
-        <label for="arrivalTime">Arrival Time:</label><br>
-        <input type="datetime-local" id="arrivalTime" name="arrivalTime"><br>
-        <input type="submit" value="Add Flight">
-    </form>
-
-    <table border="1px" cellspacing="0px">
-        <caption>Flights</caption>
-        <thead>
-            <tr>
-                <th>Number</th>
-                <th>Airline</th>
-                <th>Price</th>
-                <th>Departure Airport</th>
-                <th>Arrival Airport</th>
-                <th>Departure Time</th>
-                <th>Arrival Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>FL123</td>
-                <td>British Airways</td>
-                <td>40 $</td>
-                <td>DallasFort Worth Airport</td>
-                <td>OHare Airport</td>
-                <td>2024-04-16 14:30:00</td>
-                <td>2024-04-16 14:30:00</td>
-            </tr>
-            <tr>
-                <td>FL456</td>
-                <td>Aer Lingus</td>
-                <td>23 $</td>
-                <td>John F Kennedy Airport</td>
-                <td>Los Angeles Airport</td>
-                <td>2024-04-16 14:30:00</td>
-                <td>2024-04-16 14:30:00</td>
-            </tr>
-        </tbody>
-    </table>
+    <main>
+        <div class="main-header">
+            <a href="./index.html" class="arrow-back">
+              <img src="./assets/left sidebar.png" alt="arrow-back" />
+            </a>
+            <h2>Flights</h2>
+        </div>    
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Flight Number</th>
+                        <th>Airline</th>
+                        <th>Price</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>FL123</td>
+                        <td>British Airways</td>
+                        <td>40 $</td>
+                        <td>DallasFort Worth Airport</td>
+                        <td>OHare Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL456</td>
+                        <td>Aer Lingus</td>
+                        <td>23 $</td>
+                        <td>John F Kennedy Airport</td>
+                        <td>Los Angeles Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL123</td>
+                        <td>British Airways</td>
+                        <td>40 $</td>
+                        <td>Dallas/Fort Worth Airport</td>
+                        <td>O'Hare International Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL456</td>
+                        <td>Aer Lingus</td>
+                        <td>23 $</td>
+                        <td>John F Kennedy Airport</td>
+                        <td>Los Angeles Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL789</td>
+                        <td>Lufthansa</td>
+                        <td>55 $</td>
+                        <td>Heathrow Airport</td>
+                        <td>Charles de Gaulle Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL101</td>
+                        <td>Qantas</td>
+                        <td>30 $</td>
+                        <td>Sydney Airport</td>
+                        <td>Hong Kong International Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL202</td>
+                        <td>Emirates</td>
+                        <td>70 $</td>
+                        <td>Dubai International Airport</td>
+                        <td>Shanghai Pudong International Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL303</td>
+                        <td>All Nippon Airways</td>
+                        <td>45 $</td>
+                        <td>Tokyo Haneda Airport</td>
+                        <td>Indira Gandhi International Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL404</td>
+                        <td>Singapore Airlines</td>
+                        <td>60 $</td>
+                        <td>Singapore Changi Airport</td>
+                        <td>Frankfurt Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL505</td>
+                        <td>Air France</td>
+                        <td>48 $</td>
+                        <td>Beijing Capital International Airport</td>
+                        <td>Adolfo Suárez Madrid–Barajas Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL606</td>
+                        <td>Delta Air Lines</td>
+                        <td>37 $</td>
+                        <td>Denver International Airport</td>
+                        <td>Atlanta Hartsfield-Jackson International Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                    <tr>
+                        <td>FL707</td>
+                        <td>KLM Royal Dutch Airlines</td>
+                        <td>52 $</td>
+                        <td>Amsterdam Airport Schiphol</td>
+                        <td>Los Angeles International Airport</td>
+                        <td>2024-04-16 14:30:00</td>
+                        <td>2024-04-16 14:30:00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-wrapper">
+            <button class="show-form-button">Show Form</button>
+            <form method="post">
+                <fieldset>
+                    <legend>Add New Flight</legend>
+                    <label for="number">Number</label>
+                    <input type="text" id="number" name="number">
+                    <label for="airline">Airline</label>
+                    <input type="text" id="airline" name="airline">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" name="price">
+                    <label for="departureAirport">Departure Airport</label>
+                    <input type="text" id="departureAirport" name="departureAirport">
+                    <label for="arrivalAirport">Arrival Airport</label>
+                    <input type="text" id="arrivalAirport" name="arrivalAirport">
+                    <label for="departureTime">Departure Time</label>
+                    <input type="datetime-local" id="departureTime" name="departureTime">
+                    <label for="arrivalTime">Arrival Time</label>
+                    <input type="datetime-local" id="arrivalTime" name="arrivalTime">
+                    <input type="submit" value="Submit" class="submit-form-button">
+                </fieldset>
+            </form>
+        </div>
+    </main>
+    <footer>
+        Rise Airlines 2024 &#169;
+    </footer>
 </body>
 </html>
