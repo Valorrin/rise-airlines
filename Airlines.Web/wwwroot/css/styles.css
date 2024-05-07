@@ -17,6 +17,7 @@ main {
   display: flex;
   justify-content: center;
   width: 50%;
+  min-width: 450px;
   margin-top: 40px;
   padding-bottom: 30px;
   margin-bottom: 20px;
@@ -82,7 +83,7 @@ main {
 
 .table-container {
   width: 50%;
-  min-width: 350px;
+  min-width: 450px;
   max-height: 450px;
   overflow: auto;
   border-bottom: 1px solid #000000;
@@ -90,7 +91,6 @@ main {
 
 table {
   width: 100%;
-  min-width: 350px;
   overflow: auto;
   table-layout: fixed;
   text-align: center;
