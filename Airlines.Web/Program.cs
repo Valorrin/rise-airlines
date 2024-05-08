@@ -1,7 +1,16 @@
+using Airlines.Persistence.Repository;
+using Airlines.Persistence.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Airlines.Persistence.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("Home");
+builder.Services.AddDbContext<AirlinesDBContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IAirlineRepository, AirlineRepository>();
+builder.Services.AddScoped<IAirportRepository, AirportRepository>();
+builder.Services.AddScoped<IFlightRepository, FlightRepository>();
 
 var app = builder.Build();
 

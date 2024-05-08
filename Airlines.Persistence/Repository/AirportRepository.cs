@@ -35,14 +35,12 @@ public class AirportRepository : IAirportRepository
         }
     }
 
-    public bool AddAirport(Airport airport)
+    public async Task<bool> AddAirportAsync(Airport airport)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-
-            _ = context.Airports.Add(airport);
-            _ = context.SaveChanges();
+            await _context.Airports.AddAsync(airport);
+            await _context.SaveChangesAsync();
 
             return true;
         }
@@ -52,12 +50,11 @@ public class AirportRepository : IAirportRepository
         }
     }
 
-    public bool UpdateAirport(string id, Airport airport)
+    public async Task<bool> UpdateAirportAsync(string id, Airport airport)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var existingAirport = context.Airports.FirstOrDefault(a => a.AirportId == id);
+            var existingAirport = await _context.Airports.FirstOrDefaultAsync(a => a.AirportId == id);
             if (existingAirport != null)
             {
                 existingAirport.Name = airport.Name;
@@ -67,7 +64,7 @@ public class AirportRepository : IAirportRepository
                 existingAirport.Runways = airport.Runways;
                 existingAirport.Founded = airport.Founded;
 
-                _ = context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return true;
             }
@@ -79,16 +76,15 @@ public class AirportRepository : IAirportRepository
         }
     }
 
-    public bool DeleteAirport(string id)
+    public async Task<bool> DeleteAirportAsync(string id)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var airport = context.Airports.FirstOrDefault(a => a.AirportId == id);
+            var airport = await _context.Airports.FirstOrDefaultAsync(a => a.AirportId == id);
             if (airport != null)
             {
-                _ = context.Airports.Remove(airport);
-                _ = context.SaveChanges();
+                _context.Airports.Remove(airport);
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;

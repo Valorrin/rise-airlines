@@ -2,22 +2,27 @@
 using Airlines.Persistence.Entities;
 using Airlines.Persistence.Mappers;
 using Airlines.Persistence.Repository;
-using Airlines.Services.Services.Interfaces;
 
-namespace Airlines.Persistence.Services;
+namespace Airlines.Services.AirlineService;
 public class AirlineService : IAirlineService
 {
+    private readonly AirlineRepository _airlineRepository;
     private readonly AirlineMapper _mapper;
-    public AirlineService(AirlineMapper mapper) => _mapper = mapper;
-
-    public void PrintAllAirlines()
+    public AirlineService(AirlineRepository airlineRepository,  AirlineMapper mapper)
     {
-        using var airlineRepository = new AirlineRepository();
+        _airlineRepository = airlineRepository;
+        _mapper = mapper;
+    }
+
+    public void GetAllAirlines()
+    {
+        List<Airline> airlineList = await _airlineRepository.GetAllAirlinesAsync();
+
         var airlineList = airlineRepository.GetAirlines();
         PrintAirlineList(airlineList);
     }
 
-    public void PrintAllAirlines(string filter, string value)
+    public void GetAllAirlines(string filter, string value)
     {
         Console.WriteLine($"Filtered Airlines by {filter}: {value}");
         using var airlineRepository = new AirlineRepository();
@@ -31,13 +36,9 @@ public class AirlineService : IAirlineService
         using var airlineRepository = new AirlineRepository();
         var added = airlineRepository.AddAirline(airline);
         if (added)
-        {
             Console.WriteLine("Airline added successfully.");
-        }
         else
-        {
             Console.WriteLine("Failed to add airline.");
-        }
     }
 
     public void UpdateAirline(int id, AirlineDto updatedAirline)
@@ -46,13 +47,9 @@ public class AirlineService : IAirlineService
         using var airlineRepository = new AirlineRepository();
         var updated = airlineRepository.UpdateAirline(id, airline);
         if (updated)
-        {
             Console.WriteLine("Airline updated successfully.");
-        }
         else
-        {
             Console.WriteLine("Failed to update airline.");
-        }
     }
 
     public void DeleteAirline(int id)
@@ -60,24 +57,18 @@ public class AirlineService : IAirlineService
         using var airlineRepository = new AirlineRepository();
         var deleted = airlineRepository.DeleteAirline(id);
         if (deleted)
-        {
             Console.WriteLine("Airline deleted successfully.");
-        }
         else
-        {
             Console.WriteLine("Failed to delete airline.");
-        }
     }
 
     private void PrintAirlineList(List<Airline> airlineList)
     {
         foreach (var airline in airlineList)
-        {
             Console.WriteLine($"Airline ID: {airline.AirlineId}," +
                 $"Name: {airline.Name}, " +
                 $"Founded: {airline.Founded}, " +
                 $"FleetSize: {airline.FleetSize}, " +
                 $"Description: {airline.Description}");
-        }
     }
 }

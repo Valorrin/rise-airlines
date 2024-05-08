@@ -52,12 +52,11 @@ public class FlightRepository : IFlightRepository
         }
     }
 
-    public bool UpdateFlight(int id, Flight flight)
+    public async Task<bool> UpdateFlightAsync(int id, Flight flight)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var existingFlight = context.Flights.FirstOrDefault(f => f.FlightId == id);
+            var existingFlight = await _context.Flights.FirstOrDefaultAsync(f => f.FlightId == id);
             if (existingFlight != null)
             {
                 existingFlight.Number = flight.Number;
@@ -68,7 +67,7 @@ public class FlightRepository : IFlightRepository
                 existingFlight.ArrivalDateTime = flight.ArrivalDateTime;
                 existingFlight.Price = flight.Price;
 
-                context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return true;
             }
@@ -80,16 +79,15 @@ public class FlightRepository : IFlightRepository
         }
     }
 
-    public bool DeleteFlight(int id)
+    public async Task<bool> DeleteFlightAsync(int id)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var flight = context.Flights.FirstOrDefault(flight => flight.FlightId == id);
+            var flight = await _context.Flights.FirstOrDefaultAsync(flight => flight.FlightId == id);
             if (flight != null)
             {
-                _ = context.Flights.Remove(flight);
-                _ = context.SaveChanges();
+                _context.Flights.Remove(flight);
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;

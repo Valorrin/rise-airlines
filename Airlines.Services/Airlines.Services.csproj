@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Airlines.Persistence\Airlines.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
+
 </Project>
