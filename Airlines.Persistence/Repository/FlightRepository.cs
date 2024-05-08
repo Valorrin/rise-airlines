@@ -3,49 +3,46 @@ using Airlines.Persistence.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Persistence.Repository;
-public class FlightRepository : IFlightRepository, IDisposable
+public class FlightRepository : IFlightRepository
 {
-    public void Dispose() { }
 
-    public List<Flight> GetFlights()
+    private readonly AirlinesDBContext _context;
+
+    public FlightRepository(AirlinesDBContext context) => _context = context;
+
+    public async Task<List<Flight>> GetAllFlightsAsync()
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            return context.Flights.ToList();
+            return await _context.Flights.ToListAsync();
         }
         catch (Exception)
         {
 
             Console.WriteLine("There is no flight data!");
-            return new List<Flight>();
+            return [];
         }
     }
 
-    public List<Flight> GetFlightsByFilter(string filter, string value)
+    public async Task<List<Flight>> GetAllFlightsByFilterAsync(string filter, string value)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var result = context.Flights.Where(flight => EF.Property<string>(flight, filter) == value);
-
-            return result.ToList();
+            return await _context.Flights.Where(flight => EF.Property<string>(flight, filter) == value).ToListAsync();
         }
         catch (Exception)
         {
             Console.WriteLine("There is no flight data!");
-            return new List<Flight>();
+            return [];
         }
     }
 
-    public bool AddFlight(Flight flight)
+    public async Task<bool> AddFlightAsync(Flight flight)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-
-            _ = context.Flights.Add(flight);
-            _ = context.SaveChanges();
+            await _context.Flights.AddAsync(flight);
+            await _context.SaveChangesAsync();
 
             return true;
         }

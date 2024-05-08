@@ -2,16 +2,16 @@
 using Airlines.Persistence.Entities;
 using Airlines.Persistence.Mappers;
 using Airlines.Persistence.Repository;
+using Airlines.Services.Services.Interfaces;
 
 namespace Airlines.Persistence.Services;
-public class AirlineService
+public class AirlineService : IAirlineService
 {
     private readonly AirlineMapper _mapper;
     public AirlineService(AirlineMapper mapper) => _mapper = mapper;
 
     public void PrintAllAirlines()
     {
-        Console.WriteLine("All Airlines:");
         using var airlineRepository = new AirlineRepository();
         var airlineList = airlineRepository.GetAirlines();
         PrintAirlineList(airlineList);
