@@ -3,13 +3,13 @@
 namespace Airlines.Service.Services.AirportService;
 public interface IAirportService
 {
-    public void GetAllAirports();
+    Task<List<AirlineDto>> GetAllAirportsAsync();
 
-    public void GetAllAirports(string filter, string value);
+    Task<List<AirlineDto>> GetAllAirportsAsync(string filter, string value);
 
-    public void AddAirport(AirportDto airporteDto);
+    Task<bool> AddAirportAsync(AirportDto airporteDto);
 
-    public void UpdateAirport(int id, AirportDto updatedAirport);
+    Task<bool> UpdateAirportAsync(int id, AirportDto updatedAirport);
 
-    public void DeleteAirport(int id);
+    Task<bool> DeleteAirportAsync(int id);
 }

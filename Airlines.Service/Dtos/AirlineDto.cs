@@ -10,12 +10,4 @@ public class AirlineDto
     public int FleetSize { get; set; }
 
     public string Description { get; set; }
-
-    public AirlineDto(string name, DateOnly founded, int fleetSize, string description)
-    {
-        Name = name;
-        Founded = founded;
-        FleetSize = fleetSize;
-        Description = description;
-    }
 }

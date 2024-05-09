@@ -14,4 +14,11 @@ public class AirlineMapper
 
         return airline;
     }
+
+    public AirlineDto MapAirline(Airline airline)
+    {
+        var airlineDto = _mapper.Map<AirlineDto>(airline);
+
+        return airlineDto;
+    }
 }

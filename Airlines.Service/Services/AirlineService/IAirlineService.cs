@@ -1,17 +1,16 @@
 ﻿using Airlines.Service.Dto;
 
-namespace Airlines.Service.Services.AirlineService
+namespace Airlines.Service.Services.AirlineService;
+
+public interface IAirlineService
 {
-    public interface IAirlineService
-    {
-        public void GetAllAirlines();
+    Task<List<AirlineDto>> GetAllAirlinesAsync();
 
-        public void GetAllAirlines(string filter, string value);
+    Task<List<AirlineDto>> GetAllAirlinesAsync(string filter, string value);
 
-        public void AddAirline(AirlineDto airlineDto);
+    Task<bool> AddAirlineAsync(AirlineDto airlineDto);
 
-        public void UpdateAirline(int id, AirlineDto updatedAirline);
+    Task<bool> UpdateAirlineAsync(int id, AirlineDto updatedAirline);
 
-        public void DeleteAirline(int id);
-    }
+    Task<bool> DeleteAirlineAsync(int id);
 }

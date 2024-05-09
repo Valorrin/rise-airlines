@@ -1,4 +1,6 @@
-﻿<div class="main-header">
+﻿@model IEnumerable<Airlines.Service.Dto.AirlineDto>
+
+<div class="main-header">
     <a asp-controller="Home" asp-action="Index" class="arrow-back">
         <img src="./assets/left sidebar.png" alt="arrow-back" />
     </a>
@@ -15,64 +17,31 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Aer Lingus</td>
-                <td>2010-10-12</td>
-                <td>12</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, consequatur!</td>
-            </tr>
-            <tr>
-                <td>British Airways</td>
-                <td>2001-05-03</td>
-                <td>25</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, atque?</td>
-            </tr>
-            <tr>
-                <td>Qantas</td>
-                <td>2015-08-20</td>
-                <td>18</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, expedita.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, expedita.</td>
-            </tr>
-            <tr>
-                <td>Lufthansa</td>
-                <td>2008-12-30</td>
-                <td>20</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, culpa!</td>
-            </tr>
-            <tr>
-                <td>Emirates</td>
-                <td>2012-04-15</td>
-                <td>22</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, veritatis.</td>
-            </tr>
-            <tr>
-                <td>All Nippon Airways</td>
-                <td>2005-09-28</td>
-                <td>16</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, distinctio.</td>
-            </tr>
-            <tr>
-                <td>Singapore Airlines</td>
-                <td>2003-11-17</td>
-                <td>28</td>
-                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, laboriosam.</td>
-            </tr>
+             @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Founded)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FleetSize)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
 <div class="form-wrapper">
     <button class="show-form-button">Show Form</button>
-    <form method="post">
+    <form asp-controller="Airlines" asp-action="AddAirline" method="post">
         <fieldset>
             <legend>Add New Airline</legend>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name">
-            <label for="founed">Founded</label>
-            <input type="date" id="founded" name="founded">
-            <label for="fleetSize">Fleet size</label>
-            <input type="number" id="fleetSize" name="fleetSize">
-            <label for="description">Description</label>
-            <textarea id="description" name="description"></textarea>
+            <label asp-for="First().Name">Name:</label>
+            <input asp-for="First().Name" class="form-control">
+            <label asp-for="First().Founded">Founded:</label>
+            <input asp-for="First().Founded" class="form-control" type="date">
+            <label asp-for="First().FleetSize">Fleet Size:</label>
+            <input asp-for="First().FleetSize" class="form-control" type="number">
+            <label asp-for="First().Description">Description:</label>
+            <textarea asp-for="First().Description" class="form-control"></textarea>
             <input type="submit" value="Submit" class="submit-form-button">
         </fieldset>
     </form>

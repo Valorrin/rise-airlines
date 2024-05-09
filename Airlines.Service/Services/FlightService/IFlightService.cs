@@ -3,13 +3,13 @@
 namespace Airlines.Service.Services.FlightService;
 public interface IFlightService
 {
-    public void GetAllFlights();
+    Task<List<FlightDto>> GetAllFlightsAsync();
 
-    public void PrintAllFlights(string filter, string value);
+    Task<List<FlightDto>> GetAllFlightsAsync(string filter, string value);
 
-    public void AddFlight(FlightDto flightDto);
+    Task<bool> AddFlightAsync(FlightDto flightDto);
 
-    public void UpdateFlight(int id, FlightDto updatedFlight);
+    Task<bool> UpdateFlightAsync(int id, FlightDto updatedFlight);
 
-    public void DeleteFlight(int id);
+    Task<bool> DeleteFlightAsync(int id);
 }

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Airlines.Service.Dto;
 
 namespace Airlines.Service.Services.FlightService;
-internal class FlightService
+public class FlightService : IFlightService
 {
+    public Task<bool> AddFlightAsync(FlightDto flightDto) => throw new NotImplementedException();
+    public Task<bool> DeleteFlightAsync(int id) => throw new NotImplementedException();
+    public Task<List<FlightDto>> GetAllFlightsAsync() => throw new NotImplementedException();
+    public Task<List<FlightDto>> GetAllFlightsAsync(string filter, string value) => throw new NotImplementedException();
+    public Task<bool> UpdateFlightAsync(int id, FlightDto updatedFlight) => throw new NotImplementedException();
 }

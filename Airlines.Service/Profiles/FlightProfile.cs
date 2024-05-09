@@ -9,5 +9,7 @@ public class FlightProfile : Profile
     {
         CreateMap<Flight, FlightDto>().ReverseMap();
         CreateMap<Airport, AirportDto>().ReverseMap();
+        CreateMap<FlightDto, Flight>().ReverseMap();
+        CreateMap<AirportDto, Airport>().ReverseMap();
     }
 }

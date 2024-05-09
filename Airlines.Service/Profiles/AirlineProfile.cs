@@ -5,5 +5,9 @@ using AutoMapper;
 namespace Airlines.Service.Profiles;
 public class AirlineProfile : Profile
 {
-    public AirlineProfile() => CreateMap<Airline, AirlineDto>().ReverseMap();
+    public AirlineProfile()
+    {
+        CreateMap<Airline, AirlineDto>().ReverseMap();
+        CreateMap<AirlineDto, Airline>().ReverseMap();
+    }
 }
