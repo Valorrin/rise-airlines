@@ -1,8 +1,8 @@
-﻿using Airlines.Persistence.Dto;
+﻿using Airlines.Service.Dto;
 using Airlines.Persistence.Entities;
 using AutoMapper;
 
-namespace Airlines.Persistence.Profiles;
+namespace Airlines.Service.Profiles;
 public class FlightProfile : Profile
 {
     public FlightProfile()

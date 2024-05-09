@@ -1,4 +1,4 @@
-﻿namespace Airlines.Persistence.Dto;
+﻿namespace Airlines.Service.Dto;
 public class AirportDto
 {
     public string AirportId { get; set; }

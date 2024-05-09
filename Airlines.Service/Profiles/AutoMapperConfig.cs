@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
 
-namespace Airlines.Persistence.Profiles;
+namespace Airlines.Service.Profiles;
 public class AutoMapperConfig
 {
     public AutoMapperConfig()

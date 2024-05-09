@@ -1,8 +1,8 @@
-﻿using Airlines.Persistence.Dto;
+﻿using Airlines.Service.Dto;
 using Airlines.Persistence.Entities;
 using AutoMapper;
 
-namespace Airlines.Persistence.Mappers;
+namespace Airlines.Service.Mappers;
 public class FlightMapper
 {
     private readonly IMapper _mapper;
