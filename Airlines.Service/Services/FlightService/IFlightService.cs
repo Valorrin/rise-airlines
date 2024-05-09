@@ -1,6 +1,6 @@
-﻿using Airlines.Persistence.Dto;
+﻿using Airlines.Service.Dto;
 
-namespace Airlines.Service.FlightService;
+namespace Airlines.Service.Services.FlightService;
 public interface IFlightService
 {
     public void GetAllFlights();

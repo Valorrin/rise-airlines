@@ -1,6 +1,6 @@
-﻿using Airlines.Persistence.Dto;
+﻿using Airlines.Service.Dto;
 
-namespace Airlines.Service.AirportService;
+namespace Airlines.Service.Services.AirportService;
 public interface IAirportService
 {
     public void GetAllAirports();

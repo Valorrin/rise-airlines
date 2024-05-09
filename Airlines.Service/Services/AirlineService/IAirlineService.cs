@@ -1,6 +1,6 @@
-﻿using Airlines.Persistence.Dto;
+﻿using Airlines.Service.Dto;
 
-namespace Airlines.Service.AirlineService
+namespace Airlines.Service.Services.AirlineService
 {
     public interface IAirlineService
     {
