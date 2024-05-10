@@ -16,13 +16,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(typeof(AirlineMapper).Assembly);
 builder.Services.AddSingleton<AirlineMapper>();
 builder.Services.AddSingleton<AirportMapper>();
+builder.Services.AddSingleton<FlightMapper>();
 
 builder.Services.AddScoped<IAirlineRepository, AirlineRepository>();
 builder.Services.AddScoped<IAirportRepository, AirportRepository>();
 builder.Services.AddScoped<IFlightRepository, FlightRepository>();
 builder.Services.AddScoped<IAirlineService, AirlineService>();
-//builder.Services.AddScoped<IAirportService, AirportService>();
-//builder.Services.AddScoped<IFlightService, FlightService>();
+builder.Services.AddScoped<IAirportService, AirportService>();
+builder.Services.AddScoped<IFlightService, FlightService>();
 
 var app = builder.Build();
 

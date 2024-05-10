@@ -14,4 +14,11 @@ public class FlightMapper
 
         return flight;
     }
+
+    public FlightDto MapFlight(Flight flight)
+    {
+        var flightDto = _mapper.Map<FlightDto>(flight);
+
+        return flightDto;
+    }
 }
