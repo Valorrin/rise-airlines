@@ -50,7 +50,7 @@ public class AirportRepository : IAirportRepository
         }
     }
 
-    public async Task<bool> UpdateAirportAsync(string id, Airport airport)
+    public async Task<bool> UpdateAirportAsync(int id, Airport airport)
     {
         try
         {
@@ -76,7 +76,7 @@ public class AirportRepository : IAirportRepository
         }
     }
 
-    public async Task<bool> DeleteAirportAsync(string id)
+    public async Task<bool> DeleteAirportAsync(int id)
     {
         try
         {

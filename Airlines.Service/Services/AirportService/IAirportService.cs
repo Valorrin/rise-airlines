@@ -9,7 +9,7 @@ public interface IAirportService
 
     Task<bool> AddAirportAsync(AirportDto airporteDto);
 
-    Task<bool> UpdateAirportAsync(string id, AirportDto updatedAirport);
+    Task<bool> UpdateAirportAsync(int id, AirportDto updatedAirport);
 
-    Task<bool> DeleteAirportAsync(string id);
+    Task<bool> DeleteAirportAsync(int id);
 }

@@ -60,12 +60,10 @@ public class FlightRepository : IFlightRepository
             if (existingFlight != null)
             {
                 existingFlight.Number = flight.Number;
-                existingFlight.AirlineId = flight.AirlineId;
                 existingFlight.DepartureAirportId = flight.DepartureAirportId;
                 existingFlight.ArrivalAirportId = flight.ArrivalAirportId;
                 existingFlight.DepartureDateTime = flight.DepartureDateTime;
                 existingFlight.ArrivalDateTime = flight.ArrivalDateTime;
-                existingFlight.Price = flight.Price;
 
                 await _context.SaveChangesAsync();
 

@@ -11,8 +11,6 @@
         <thead>
             <tr>
                 <th>Flight Number</th>
-                <th>Airline</th>
-                <th>Price</th>
                 <th>From</th>
                 <th>To</th>
                 <th>Departure</th>
@@ -24,8 +22,6 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Number)</td>
-                    <td>@Html.DisplayFor(modelItem => item.AirlineId)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
                     <td>@Html.DisplayFor(modelItem => item.DeparturAirportId)</td>
                     <td>@Html.DisplayFor(modelItem => item.ArrivalAirportId)</td>
                     <td>@Html.DisplayFor(modelItem => item.DepartureDateTime)</td>
@@ -42,9 +38,6 @@
             <legend>Add New Flight</legend>
             <label asp-for="First().Number">Number:</label>
             <input asp-for="First().Number" class="form-control">
-
-            <label asp-for="First().Price">Price:</label>
-            <input asp-for="First().Price" class="form-control">
 
             <label asp-for="First().DeparturAirportId">From:</label>
             <input asp-for="First().DeparturAirportId" class="form-control">

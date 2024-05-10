@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS Airports;
 DROP TABLE IF EXISTS Airlines;  
 
 CREATE TABLE Airports (
-    [AirportId] NVARCHAR(3) PRIMARY KEY,
+    [AirportId] INT PRIMARY KEY IDENTITY,
     [Name] NVARCHAR(255) NOT NULL,
     [Country] NVARCHAR(75) NOT NULL,
     [City] NVARCHAR(100) NOT NULL,
@@ -26,11 +26,9 @@ CREATE TABLE Airlines (
 CREATE TABLE Flights (
     [FlightId] INT PRIMARY KEY IDENTITY,
     [Number] NVARCHAR(5) NOT NULL,
-	[AirlineId] INT NOT NULL,
-    [DepartureAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
-    [ArrivalAirportId] NVARCHAR(3) FOREIGN KEY REFERENCES Airports(AirportId),
+    [DepartureAirportId] INT FOREIGN KEY REFERENCES Airports(AirportId),
+    [ArrivalAirportId] INT FOREIGN KEY REFERENCES Airports(AirportId),
     [DepartureDateTime] DATETIME2 NOT NULL CHECK (DepartureDateTime >= GetDate()),
     [ArrivalDateTime] DATETIME2 NOT NULL CHECK (ArrivalDateTime >= GetDate()),
-	[Price] DECIMAL NOT NULL,
     CONSTRAINT CheckDepartureBeforeArrival CHECK (DepartureDateTime < ArrivalDateTime)
 );
