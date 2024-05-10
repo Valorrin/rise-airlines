@@ -18,16 +18,4 @@ public class FlightDto
     public virtual AirportDto? ArrivalAirport { get; set; }
 
     public virtual AirportDto? DeparturAirport { get; set; }
-
-    public FlightDto(string number, int airlineId, string departurAirportId, string arrivalAirportId,
-        DateTime departureDateTime, DateTime arrivalDateTime, decimal price)
-    {
-        Number = number;
-        AirlineId = airlineId;
-        DeparturAirportId = departurAirportId;
-        ArrivalAirportId = arrivalAirportId;
-        DepartureDateTime = departureDateTime;
-        ArrivalDateTime = arrivalDateTime;
-        Price = price;
-    }
 }
