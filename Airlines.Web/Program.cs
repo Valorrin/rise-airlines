@@ -9,12 +9,13 @@ using Airlines.Service.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("Home");
+var connectionString = builder.Configuration.GetConnectionString("Local");
 builder.Services.AddDbContext<AirlinesDBContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(typeof(AirlineMapper).Assembly);
 builder.Services.AddSingleton<AirlineMapper>();
+builder.Services.AddSingleton<AirportMapper>();
 
 builder.Services.AddScoped<IAirlineRepository, AirlineRepository>();
 builder.Services.AddScoped<IAirportRepository, AirportRepository>();

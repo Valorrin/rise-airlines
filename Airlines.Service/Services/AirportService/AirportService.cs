@@ -1,4 +1,5 @@
-﻿using Airlines.Persistence.Repository.Interfaces;
+﻿using Airlines.Persistence.Repository;
+using Airlines.Persistence.Repository.Interfaces;
 using Airlines.Service.Dto;
 using Airlines.Service.Mappers;
 
@@ -13,9 +14,17 @@ public class AirportService : IAirportService
         _mapper = mapper;
     }
 
-    public Task<List<AirlineDto>> GetAllAirportsAsync() => throw new NotImplementedException();
-    public Task<List<AirlineDto>> GetAllAirportsAsync(string filter, string value) => throw new NotImplementedException();
-    public Task<bool> AddAirportAsync(AirportDto airporteDto) => throw new NotImplementedException();
-    public Task<bool> DeleteAirportAsync(int id) => throw new NotImplementedException();
-    public Task<bool> UpdateAirportAsync(int id, AirportDto updatedAirport) => throw new NotImplementedException();
+    public async Task<List<AirportDto>> GetAllAirportsAsync()
+    {
+        var airports = await _airportRepository.GetAllAirportsAsync();
+        return airports.Select(_mapper.MapAirport).ToList();
+    }
+    public async Task<List<AirportDto>> GetAllAirportsAsync(string filter, string value)
+    {
+        var airports = await _airportRepository.GetAllAirportsByFilterAsync(filter, value);
+        return airports.Select(_mapper.MapAirport).ToList();
+    }
+    public async Task<bool> AddAirportAsync(AirportDto airporteDto) => await _airportRepository.AddAirportAsync(_mapper.MapAirport(airporteDto));
+    public async Task<bool> UpdateAirportAsync(string id, AirportDto updatedAirport) => await _airportRepository.UpdateAirportAsync(id, _mapper.MapAirport(updatedAirport));
+    public async Task<bool> DeleteAirportAsync(string id) => await _airportRepository.DeleteAirportAsync(id);
 }

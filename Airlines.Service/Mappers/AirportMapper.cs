@@ -14,4 +14,11 @@ public class AirportMapper
 
         return airport;
     }
+
+    public AirportDto MapAirport(Airport airport)
+    {
+        var airportDto = _mapper.Map<AirportDto>(airport);
+
+        return airportDto;
+    }
 }
