@@ -22,7 +22,7 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Number)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DeparturAirportId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DepartureAirportId)</td>
                     <td>@Html.DisplayFor(modelItem => item.ArrivalAirportId)</td>
                     <td>@Html.DisplayFor(modelItem => item.DepartureDateTime)</td>
                     <td>@Html.DisplayFor(modelItem => item.ArrivalDateTime)</td>
@@ -39,8 +39,8 @@
             <label asp-for="First().Number">Number:</label>
             <input asp-for="First().Number" class="form-control">
 
-            <label asp-for="First().DeparturAirportId">From:</label>
-            <input asp-for="First().DeparturAirportId" class="form-control">
+            <label asp-for="First().DepartureAirportId">From:</label>
+            <input asp-for="First().DepartureAirportId" class="form-control">
 
             <label asp-for="First().ArrivalAirportId">To:</label>
             <input asp-for="First().ArrivalAirportId" class="form-control">

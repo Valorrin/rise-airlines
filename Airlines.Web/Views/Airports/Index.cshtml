@@ -26,7 +26,7 @@
                     <td>@Html.DisplayFor(modelItem => item.Country)</td>
                     <td>@Html.DisplayFor(modelItem => item.City)</td>
                     <td>@Html.DisplayFor(modelItem => item.Code)</td>
-                    <td>@Html.DisplayFor(modelItem => item.RunwaysCount)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Runways)</td>
                     <td>@Html.DisplayFor(modelItem => item.Founded)</td>
                 </tr>
             }
@@ -50,8 +50,8 @@
             <label asp-for="First().Code">Code</label>
             <input asp-for="First().Code" class="form-control">
 
-            <label asp-for="First().RunwaysCount">Runways</label>
-            <input asp-for="First().RunwaysCount" class="form-control" type="number">
+            <label asp-for="First().Runways">Runways</label>
+            <input asp-for="First().Runways" class="form-control" type="number">
 
             <label asp-for="First().Founded">Founded</label>
             <input asp-for="First().Founded" class="form-control" type="date">

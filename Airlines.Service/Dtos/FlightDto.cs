@@ -6,7 +6,7 @@ public class FlightDto
 
     public string? Number { get; set; }
 
-    public int DeparturAirportId { get; set; }
+    public int DepartureAirportId { get; set; }
 
     public int ArrivalAirportId { get; set; }
 
@@ -16,5 +16,5 @@ public class FlightDto
 
     public virtual AirportDto? ArrivalAirport { get; set; }
 
-    public virtual AirportDto? DeparturAirport { get; set; }
+    public virtual AirportDto? DepartureAirport { get; set; }
 }

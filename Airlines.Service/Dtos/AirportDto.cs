@@ -11,7 +11,7 @@ public class AirportDto
 
     public int Code { get; set; }
 
-    public int RunwaysCount { get; set; }
+    public int Runways { get; set; }
 
     public DateOnly Founded { get; set; }
 }

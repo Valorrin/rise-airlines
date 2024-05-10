@@ -17,13 +17,22 @@
             </tr>
         </thead>
         <tbody>
-             @foreach (var item in Model)
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Founded)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FleetSize)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Founded)</td>
-                    <td>@Html.DisplayFor(modelItem => item.FleetSize)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td colspan="4">No data available</td>
                 </tr>
             }
         </tbody>
