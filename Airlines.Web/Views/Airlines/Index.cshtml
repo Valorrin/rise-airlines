@@ -41,17 +41,39 @@
 <div class="form-wrapper">
     <button class="show-form-button">Show Form</button>
     <form asp-controller="Airlines" asp-action="AddAirline" method="post">
-        <fieldset>
-            <legend>Add New Airline</legend>
-            <label asp-for="First().Name">Name:</label>
-            <input asp-for="First().Name" class="form-control">
-            <label asp-for="First().Founded">Founded:</label>
-            <input asp-for="First().Founded" class="form-control" type="date">
-            <label asp-for="First().FleetSize">Fleet Size:</label>
-            <input asp-for="First().FleetSize" class="form-control" type="number">
-            <label asp-for="First().Description">Description:</label>
-            <textarea asp-for="First().Description" class="form-control"></textarea>
-            <input type="submit" value="Submit" class="submit-form-button">
-        </fieldset>
+        @if (Model.Any())
+        {
+            <fieldset>
+                <legend>Add New Airline</legend>
+                <label asp-for="Last().Name">Name:</label>
+                <input asp-for="Last().Name" class="form-control">
+                <label asp-for="Last().Founded">Founded:</label>
+                <input asp-for="Last().Founded" class="form-control" type="date">
+                <label asp-for="Last().FleetSize">Fleet Size:</label>
+                <input asp-for="Last().FleetSize" class="form-control" type="number">
+                <label asp-for="Last().Description">Description:</label>
+                <textarea asp-for="Last().Description" class="form-control"></textarea>
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
+        else
+        {
+            <fieldset>
+                <legend>Add New Airline</legend>
+                <label for="Name">Name:</label>
+                <input name="Name" class="form-control">
+
+                <label for="Founded">Founded:</label>
+                <input name="Founded" class="form-control" type="date">
+
+                <label for="FleetSize">Fleet Size:</label>
+                <input name="FleetSize" class="form-control" type="number">
+
+                <label for="Description">Description:</label>
+                <textarea name="Description" class="form-control"></textarea>
+
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
     </form>
 </div>

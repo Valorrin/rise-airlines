@@ -18,14 +18,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Flights)
+            @if(Model.Flights.Any())
+            {
+                @foreach (var item in Model.Flights)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Number)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DepartureAirport.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ArrivalAirport.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DepartureDateTime)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ArrivalDateTime)</td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Number)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DepartureAirport != null ? item.DepartureAirport.Name : string.Empty)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ArrivalAirport != null ? item.ArrivalAirport.Name : string.Empty)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DepartureDateTime)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ArrivalDateTime)</td>
+                    <td colspan="4">No data available</td>
                 </tr>
             }
         </tbody>
@@ -34,28 +43,65 @@
 <div class="form-wrapper">
     <button class="show-form-button">Show Form</button>
     <form asp-controller="Flights" asp-action="AddFlight" method="post">
-        <fieldset>
-            <legend>Add New Flight</legend>
-            <label asp-for="Flights.First().Number">Number:</label>
-            <input asp-for="Flights.First().Number" class="form-control">
+        @if (Model.Flights.Any())
+        {
+            <fieldset>
+                <legend>Add New Flight</legend>
+                <label asp-for="Flights.Last().Number">Number:</label>
+                <input asp-for="Flights.Last().Number" class="form-control">
 
-            <label asp-for="Flights.First().DepartureAirportId">From:</label>
-            <select asp-for="Flights.First().DepartureAirportId" asp-items="@(new SelectList(Model.Airports, "AirportId", "Name"))" class="form-control">
-                <option value="">Select Departure Airport</option>
-            </select>
+                <label asp-for="Flights.Last().DepartureAirportId">From:</label>
+                <select asp-for="Flights.Last().DepartureAirportId" asp-items="@(new SelectList(Model.Airports, "AirportId", "Name"))" class="form-control">
+                    <option value="">Select Departure Airport</option>
+                </select>
 
-            <label asp-for="Flights.First().ArrivalAirportId">To:</label>
-            <select asp-for="Flights.First().ArrivalAirportId" asp-items="@(new SelectList(Model.Airports, "AirportId", "Name"))" class="form-control">
-                <option value="">Select Arrival Airport</option>
-            </select>
+                <label asp-for="Flights.Last().ArrivalAirportId">To:</label>
+                <select asp-for="Flights.Last().ArrivalAirportId" asp-items="@(new SelectList(Model.Airports, "AirportId", "Name"))" class="form-control">
+                    <option value="">Select Arrival Airport</option>
+                </select>
 
-            <label asp-for="Flights.First().DepartureDateTime">Departure Time:</label>
-            <input asp-for="Flights.First().DepartureDateTime" class="form-control" type="datetime-local">
+                <label asp-for="Flights.Last().DepartureDateTime">Departure Time:</label>
+                <input asp-for="Flights.Last().DepartureDateTime" class="form-control" type="datetime-local">
 
-            <label asp-for="Flights.First().ArrivalDateTime">Arrival Time:</label>
-            <input asp-for="Flights.First().ArrivalDateTime" class="form-control" type="datetime-local">
+                <label asp-for="Flights.Last().ArrivalDateTime">Arrival Time:</label>
+                <input asp-for="Flights.Last().ArrivalDateTime" class="form-control" type="datetime-local">
 
-            <input type="submit" value="Submit" class="submit-form-button">
-        </fieldset>
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
+        else
+        {
+            <fieldset>
+                <legend>Add New Flight</legend>
+                <label for="Number">Number:</label>
+                <input name="Number" class="form-control">
+
+                <label for="DepartureAirportId">From:</label>
+                <select name="DepartureAirportId" class="form-control">
+                    <option value="">Select Departure Airport</option>
+                    @foreach (var airport in Model.Airports)
+                    {
+                        <option value="@airport.AirportId">@airport.Name</option>
+                    }
+                </select>
+
+                <label for="ArrivalAirportId">To:</label>
+                <select name="ArrivalAirportId" class="form-control">
+                    <option value="">Select Arrival Airport</option>
+                    @foreach (var airport in Model.Airports)
+                    {
+                        <option value="@airport.AirportId">@airport.Name</option>
+                    }
+                </select>
+
+                <label for="DepartureDateTime">Departure Time:</label>
+                <input name="DepartureDateTime" class="form-control" type="datetime-local">
+
+                <label for="ArrivalDateTime">Arrival Time:</label>
+                <input name="ArrivalDateTime" class="form-control" type="datetime-local">
+
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
     </form>
 </div>

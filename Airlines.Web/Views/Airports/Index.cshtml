@@ -19,15 +19,24 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @if (Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                        <td>@Html.DisplayFor(modelItem => item.City)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Code)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Runways)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Founded)</td>
+                    </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Country)</td>
-                    <td>@Html.DisplayFor(modelItem => item.City)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Code)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Runways)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Founded)</td>
+                    <td colspan="4">No data available</td>
                 </tr>
             }
         </tbody>
@@ -36,27 +45,56 @@
 <div class="form-wrapper">
     <button class="show-form-button">Show Form</button>
     <form asp-controller="Airports" asp-action="AddAirport" method="post">
-        <fieldset>
-            <legend>Add New Airline</legend>
-            <label asp-for="First().Name">Name</label>
-            <input asp-for="First().Name" class="form-control">
+        @if (Model.Any())
+        {
+            <fieldset>
+                <legend>Add New Airline</legend>
+                <label asp-for="Last().Name">Name</label>
+                <input asp-for="Last().Name" class="form-control">
 
-            <label asp-for="First().Country">Country</label>
-            <input asp-for="First().Country" class="form-control">
+                <label asp-for="Last().Country">Country</label>
+                <input asp-for="Last().Country" class="form-control">
 
-            <label asp-for="First().City">City</label>
-            <input asp-for="First().City" class="form-control">
+                <label asp-for="Last().City">City</label>
+                <input asp-for="Last().City" class="form-control">
 
-            <label asp-for="First().Code">Code</label>
-            <input asp-for="First().Code" class="form-control">
+                <label asp-for="Last().Code">Code</label>
+                <input asp-for="Last().Code" class="form-control">
 
-            <label asp-for="First().Runways">Runways</label>
-            <input asp-for="First().Runways" class="form-control" type="number">
+                <label asp-for="Last().Runways">Runways</label>
+                <input asp-for="Last().Runways" class="form-control" type="number">
 
-            <label asp-for="First().Founded">Founded</label>
-            <input asp-for="First().Founded" class="form-control" type="date">
+                <label asp-for="Last().Founded">Founded</label>
+                <input asp-for="Last().Founded" class="form-control" type="date">
 
-            <input type="submit" value="Submit" class="submit-form-button">
-        </fieldset>
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
+        else
+        {
+            <fieldset>
+                <legend>Add New Airline</legend>
+                <label for="Name">Name</label>
+                <input name="Name" class="form-control">
+
+                <label for="Country">Country</label>
+                <input name="Country" class="form-control">
+
+                <label for="City">City</label>
+                <input name="City" class="form-control">
+
+                <label for="Code">Code</label>
+                <input name="Code" class="form-control">
+
+                <label for="Runways">Runways</label>
+                <input name="Runways" class="form-control" type="number">
+
+                <label for="Founded">Founded</label>
+                <input name="Founded" class="form-control" type="date">
+
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
+
     </form>
 </div>
