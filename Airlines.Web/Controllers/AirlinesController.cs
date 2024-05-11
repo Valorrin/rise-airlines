@@ -21,6 +21,14 @@ public class AirlinesController : Controller
     [HttpPost]
     public async Task<IActionResult> AddAirline(AirlineDto model)
     {
+        if (!ModelState.IsValid)
+        {
+            var airlines = await _airlineService.GetAllAirlinesAsync();
+            var viewModel = new AirlinesViewModel { Airlines = airlines };
+
+            return View("Index", viewModel);
+        }
+
         await _airlineService.AddAirlineAsync(model);
         return RedirectToAction(nameof(Index));
     }
