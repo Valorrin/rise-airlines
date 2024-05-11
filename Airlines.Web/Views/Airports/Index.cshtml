@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Airlines.Service.Dto.AirportDto>
+﻿@model Airlines.Web.Models.AirportViewModel
 
 <div class="main-header">
     <a asp-controller="Home" asp-action="Index" class="arrow-back">
@@ -19,9 +19,9 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model.Any())
+            @if (Model.Airports.Any())
             {
-                @foreach (var item in Model)
+                @foreach (var item in Model.Airports)
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
@@ -45,27 +45,27 @@
 <div class="form-wrapper">
     <button class="show-form-button">Show Form</button>
     <form asp-controller="Airports" asp-action="AddAirport" method="post">
-        @if (Model.Any())
+        @if (Model.Airports.Any())
         {
             <fieldset>
                 <legend>Add New Airline</legend>
-                <label asp-for="Last().Name">Name</label>
-                <input asp-for="Last().Name" class="form-control">
+                <label asp-for="Airports.Last().Name">Name</label>
+                <input asp-for="Airports.Last().Name" class="form-control">
 
-                <label asp-for="Last().Country">Country</label>
-                <input asp-for="Last().Country" class="form-control">
+                <label asp-for="Airports.Last().Country">Country</label>
+                <input asp-for="Airports.Last().Country" class="form-control">
 
-                <label asp-for="Last().City">City</label>
-                <input asp-for="Last().City" class="form-control">
+                <label asp-for="Airports.Last().City">City</label>
+                <input asp-for="Airports.Last().City" class="form-control">
 
-                <label asp-for="Last().Code">Code</label>
-                <input asp-for="Last().Code" class="form-control">
+                <label asp-for="Airports.Last().Code">Code</label>
+                <input asp-for="Airports.Last().Code" class="form-control">
 
-                <label asp-for="Last().Runways">Runways</label>
-                <input asp-for="Last().Runways" class="form-control" type="number">
+                <label asp-for="Airports.Last().Runways">Runways</label>
+                <input asp-for="Airports.Last().Runways" class="form-control" type="number">
 
-                <label asp-for="Last().Founded">Founded</label>
-                <input asp-for="Last().Founded" class="form-control" type="date">
+                <label asp-for="Airports.Last().Founded">Founded</label>
+                <input asp-for="Airports.Last().Founded" class="form-control" type="date">
 
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>
@@ -95,6 +95,5 @@
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>
         }
-
     </form>
 </div>

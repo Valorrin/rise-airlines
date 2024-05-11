@@ -21,6 +21,7 @@ builder.Services.AddSingleton<FlightMapper>();
 builder.Services.AddScoped<IAirlineRepository, AirlineRepository>();
 builder.Services.AddScoped<IAirportRepository, AirportRepository>();
 builder.Services.AddScoped<IFlightRepository, FlightRepository>();
+
 builder.Services.AddScoped<IAirlineService, AirlineService>();
 builder.Services.AddScoped<IAirportService, AirportService>();
 builder.Services.AddScoped<IFlightService, FlightService>();

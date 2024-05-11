@@ -1,5 +1,6 @@
 ﻿using Airlines.Service.Dto;
 using Airlines.Service.Services.AirlineService;
+using Airlines.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airlines.Web.Controllers;
@@ -12,7 +13,9 @@ public class AirlinesController : Controller
     public async Task<IActionResult> Index()
     {
         var airlines = await _airlineService.GetAllAirlinesAsync();
-        return View(airlines);
+        var viewModel = new AirlinesViewModel { Airlines = airlines };
+
+        return View(viewModel);
     }
 
     [HttpPost]

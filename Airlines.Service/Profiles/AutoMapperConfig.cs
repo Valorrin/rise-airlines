@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 
-
 namespace Airlines.Service.Profiles;
 public class AutoMapperConfig
 {

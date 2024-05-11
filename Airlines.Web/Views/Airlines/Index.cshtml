@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Airlines.Service.Dto.AirlineDto>
+﻿@model Airlines.Web.Models.AirlinesViewModel
 
 <div class="main-header">
     <a asp-controller="Home" asp-action="Index" class="arrow-back">
@@ -17,9 +17,9 @@
             </tr>
         </thead>
         <tbody>
-            @if (Model.Any())
+            @if (Model.Airlines.Any())
             {
-                @foreach (var item in Model)
+                @foreach (var item in Model.Airlines)
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
@@ -41,18 +41,18 @@
 <div class="form-wrapper">
     <button class="show-form-button">Show Form</button>
     <form asp-controller="Airlines" asp-action="AddAirline" method="post">
-        @if (Model.Any())
+        @if (Model.Airlines.Any())
         {
             <fieldset>
                 <legend>Add New Airline</legend>
-                <label asp-for="Last().Name">Name:</label>
-                <input asp-for="Last().Name" class="form-control">
-                <label asp-for="Last().Founded">Founded:</label>
-                <input asp-for="Last().Founded" class="form-control" type="date">
-                <label asp-for="Last().FleetSize">Fleet Size:</label>
-                <input asp-for="Last().FleetSize" class="form-control" type="number">
-                <label asp-for="Last().Description">Description:</label>
-                <textarea asp-for="Last().Description" class="form-control"></textarea>
+                <label asp-for="Airlines.Last().Name">Name:</label>
+                <input asp-for="Airlines.Last().Name" class="form-control">
+                <label asp-for="Airlines.Last().Founded">Founded:</label>
+                <input asp-for="Airlines.Last().Founded" class="form-control" type="date">
+                <label asp-for="Airlines.Last().FleetSize">Fleet Size:</label>
+                <input asp-for="Airlines.Last().FleetSize" class="form-control" type="number">
+                <label asp-for="Airlines.Last().Description">Description:</label>
+                <textarea asp-for="Airlines.Last().Description" class="form-control"></textarea>
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>
         }
