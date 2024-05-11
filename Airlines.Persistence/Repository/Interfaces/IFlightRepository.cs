@@ -3,13 +3,13 @@
 namespace Airlines.Persistence.Repository.Interfaces;
 public interface IFlightRepository
 {
-    List<Flight> GetFlights();
+    public Task<List<Flight>> GetAllFlightsAsync();
 
-    public List<Flight> GetFlightsByFilter(string filter, string value);
+    public Task<List<Flight>> GetAllFlightsByFilterAsync(string filter, string value);
 
-    public bool AddFlight(Flight flight);
+    public Task<bool> AddFlightAsync(Flight flight);
 
-    public bool UpdateFlight(int id, Flight flight);
+    public Task<bool> UpdateFlightAsync(int id, Flight flight);
 
-    public bool DeleteFlight(int id);
+    public Task<bool> DeleteFlightAsync(int id);
 }

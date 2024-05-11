@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rise Airlines</title>
+    <link rel="stylesheet" href="~/Airlines.Web.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/global-styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true"/>
+</head>
+<body>
+    <header>
+        <a class="logo" asp-controller="Home" asp-action="Index">
+            <h1>Rise Airlines</h1>
+            <img src="~/assets/header-plane.png" alt="icon">
+        </a>
+        <nav class="nav-bar">
+            <ul class="nav-list">
+               <li class="nav-link"><a asp-controller="Airports" asp-action="Index">Airports</a></li>
+               <li class="nav-link"><a asp-controller="Airlines" asp-action="Index">Airlines</a></li>
+               <li class="nav-link"><a asp-controller="Flights" asp-action="Index">Flights</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <footer>
+        Rise Airlines 2024 &copy;
+    </footer>
+</body>
+</html>

@@ -17,20 +17,13 @@ public partial class Flight
     [StringLength(5)]
     public string Number { get; set; }
 
-    public int AirlineId { get; set; }
+    public int? DepartureAirportId { get; set; }
 
-    [StringLength(3)]
-    public string DepartureAirportId { get; set; }
-
-    [StringLength(3)]
-    public string ArrivalAirportId { get; set; }
+    public int? ArrivalAirportId { get; set; }
 
     public DateTime DepartureDateTime { get; set; }
 
     public DateTime ArrivalDateTime { get; set; }
-
-    [Column(TypeName = "decimal(18, 0)")]
-    public decimal Price { get; set; }
 
     [ForeignKey("ArrivalAirportId")]
     [InverseProperty("FlightArrivalAirports")]

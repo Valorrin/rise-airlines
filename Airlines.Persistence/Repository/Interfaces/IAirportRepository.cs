@@ -3,13 +3,13 @@
 namespace Airlines.Persistence.Repository.Interfaces;
 public interface IAirportRepository
 {
-    List<Airport> GetAirports();
+    public Task<List<Airport>> GetAllAirportsAsync();
 
-    public List<Airport> GetAirportsByFilter(string filter, string value);
+    public Task<List<Airport>> GetAllAirportsByFilterAsync(string filter, string value);
 
-    public bool AddAirport(Airport airport);
+    public Task<bool> AddAirportAsync(Airport airport);
 
-    public bool UpdateAirport(string id, Airport airport);
+    public Task<bool> UpdateAirportAsync(int id, Airport airport);
 
-    public bool DeleteAirport(string id);
+    public Task<bool> DeleteAirportAsync(int id);
 }

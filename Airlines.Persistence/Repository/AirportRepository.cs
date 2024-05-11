@@ -3,47 +3,44 @@ using Airlines.Persistence.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Persistence.Repository;
-public class AirportRepository : IAirportRepository, IDisposable
+public class AirportRepository : IAirportRepository
 {
-    public void Dispose() { }
-    public List<Airport> GetAirports()
+    private readonly AirlinesDBContext _context;
+
+    public AirportRepository(AirlinesDBContext context) => _context = context;
+
+    public async Task<List<Airport>> GetAllAirportsAsync()
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            return context.Airports.ToList();
+            return await _context.Airports.ToListAsync();
         }
         catch (Exception)
         {
             Console.WriteLine("There is no airport data!");
-            return new List<Airport>();
+            return [];
         }
     }
 
-    public List<Airport> GetAirportsByFilter(string filter, string value)
+    public async Task<List<Airport>> GetAllAirportsByFilterAsync(string filter, string value)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var result = context.Airports.Where(airport => EF.Property<string>(airport, filter) == value);
-
-            return result.ToList();
+            return await _context.Airports.Where(airport => EF.Property<string>(airport, filter) == value).ToListAsync();
         }
         catch (Exception)
         {
             Console.WriteLine("There is no airport data!");
-            return new List<Airport>();
+            return [];
         }
     }
 
-    public bool AddAirport(Airport airport)
+    public async Task<bool> AddAirportAsync(Airport airport)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-
-            _ = context.Airports.Add(airport);
-            _ = context.SaveChanges();
+            await _context.Airports.AddAsync(airport);
+            await _context.SaveChangesAsync();
 
             return true;
         }
@@ -53,12 +50,11 @@ public class AirportRepository : IAirportRepository, IDisposable
         }
     }
 
-    public bool UpdateAirport(string id, Airport airport)
+    public async Task<bool> UpdateAirportAsync(int id, Airport airport)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var existingAirport = context.Airports.FirstOrDefault(a => a.AirportId == id);
+            var existingAirport = await _context.Airports.FirstOrDefaultAsync(a => a.AirportId == id);
             if (existingAirport != null)
             {
                 existingAirport.Name = airport.Name;
@@ -68,7 +64,7 @@ public class AirportRepository : IAirportRepository, IDisposable
                 existingAirport.Runways = airport.Runways;
                 existingAirport.Founded = airport.Founded;
 
-                _ = context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return true;
             }
@@ -80,16 +76,15 @@ public class AirportRepository : IAirportRepository, IDisposable
         }
     }
 
-    public bool DeleteAirport(string id)
+    public async Task<bool> DeleteAirportAsync(int id)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var airport = context.Airports.FirstOrDefault(a => a.AirportId == id);
+            var airport = await _context.Airports.FirstOrDefaultAsync(a => a.AirportId == id);
             if (airport != null)
             {
-                _ = context.Airports.Remove(airport);
-                _ = context.SaveChanges();
+                _context.Airports.Remove(airport);
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;
