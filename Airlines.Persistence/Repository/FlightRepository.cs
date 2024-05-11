@@ -54,6 +54,18 @@ public class FlightRepository : IFlightRepository
         }
     }
 
+    public async Task<int> GetFlightsCountAsync()
+    {
+        try
+        {
+            return await _context.Flights.CountAsync();
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
+
     public async Task<bool> AddFlightAsync(Flight flight)
     {
         try

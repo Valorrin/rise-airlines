@@ -35,6 +35,18 @@ public class AirlineRepository : IAirlineRepository
         }
     }
 
+    public async Task<int> GetAirlinesCountAsync()
+    {
+        try
+        {
+            return await _context.Airlines.CountAsync();
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
+
     public async Task<bool> AddAirlineAsync(Airline airline)
     {
         try

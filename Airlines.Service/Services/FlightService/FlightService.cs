@@ -24,6 +24,7 @@ public class FlightService : IFlightService
         var flights = await _flightRepository.GetAllFlightsByFilterAsync(filter, value);
         return flights.Select(_flightMapper.MapFlight).ToList();
     }
+    public async Task<int> GetFlightsCountAsync() => await _flightRepository.GetFlightsCountAsync();
     public async Task<bool> AddFlightAsync(FlightDto flightDto) => await _flightRepository.AddFlightAsync(_flightMapper.MapFlight(flightDto));
     public async Task<bool> UpdateFlightAsync(int id, FlightDto updatedFlight) => await _flightRepository.UpdateFlightAsync(id, _flightMapper.MapFlight(updatedFlight));
     public async Task<bool> DeleteFlightAsync(int id) => await _flightRepository.DeleteFlightAsync(id);

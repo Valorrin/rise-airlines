@@ -7,6 +7,8 @@ public interface IAirlineRepository
 
     public Task<List<Airline>> GetAllAirlinesByFilterAsync(string filter, string value);
 
+    public Task<int> GetAirlinesCountAsync();
+
     public Task<bool> AddAirlineAsync(Airline airline);
 
     public Task<bool> UpdateAirlineAsync(int id, Airline airline);

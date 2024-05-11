@@ -35,6 +35,18 @@ public class AirportRepository : IAirportRepository
         }
     }
 
+    public async Task<int> GetAirportsCountAsync()
+    {
+        try
+        {
+            return await _context.Airports.CountAsync();
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
+
     public async Task<bool> AddAirportAsync(Airport airport)
     {
         try
