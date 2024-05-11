@@ -24,8 +24,8 @@
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.Number)</td>
-                        <td>@Html.DisplayFor(modelItem => item.DepartureAirport.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ArrivalAirport.Name)</td>
+                        <td>@(item.DepartureAirport != null ? Html.DisplayFor(modelItem => item.DepartureAirport.Name) : "")</td>
+                        <td>@(item.ArrivalAirport != null ? Html.DisplayFor(modelItem => item.ArrivalAirport.Name) : "")</td>
                         <td>@Html.DisplayFor(modelItem => item.DepartureDateTime)</td>
                         <td>@Html.DisplayFor(modelItem => item.ArrivalDateTime)</td>
                     </tr>
