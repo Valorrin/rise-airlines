@@ -7,10 +7,6 @@ using Airlines.Business;
 using Airlines.Business.Mapping;
 using Airlines.Business.Validation;
 using Airlines.Business.Utilities;
-using Airlines.Persistence.Services;
-using Airlines.Persistence.Dto;
-using Airlines.Persistence.Profiles;
-using Airlines.Persistence.Mappers;
 
 
 namespace Airlines;
@@ -49,33 +45,33 @@ public class Program
         var routeData = ReadFromFile(routeFilePath);
 
 
-        var autoMapperConfig = new AutoMapperConfig();
-        var autoMapper = autoMapperConfig.Mapper;
-        var airportMapper = new AirportMapper(autoMapper);
-        var airlineMapper = new AirlineMapper(autoMapper);
-        var flightMapper = new FlightMapper(autoMapper);
+        //var autoMapperConfig = new AutoMapperConfig();
+        //var autoMapper = autoMapperConfig.Mapper;
+        //var airportMapper = new AirportMapper(autoMapper);
+        //var airlineMapper = new AirlineMapper(autoMapper);
+        //var flightMapper = new FlightMapper(autoMapper);
 
-        var airportService = new AirportService(airportMapper);
-        var airlineService = new AirlineService(airlineMapper);
-        var flightService = new FlightService(flightMapper);
+        //var airportService = new AirportService(airportMapper);
+        //var airlineService = new AirlineService(airlineMapper);
+        //var flightService = new FlightService(flightMapper);
 
-        airportService.PrintAllAirports();
-        airportService.PrintAllAirports("City", "Dallas");
-        airportService.AddAirport(new AirportDto("ATL", "Hartsfield-Jackson Atlanta International Airport", "USA", "Atlanta", 105, 6, new DateOnly(1980, 09, 1)));
-        airportService.UpdateAirport("ATL", new AirportDto("ATL", "Edited edited edited", "EDITED", "EDITED", 999, 9, new DateOnly(2000, 01, 1)));
-        airportService.DeleteAirport("ATL");
+        //airportService.PrintAllAirports();
+        //airportService.PrintAllAirports("City", "Dallas");
+        //airportService.AddAirport(new AirportDto("ATL", "Hartsfield-Jackson Atlanta International Airport", "USA", "Atlanta", 105, 6, new DateOnly(1980, 09, 1)));
+        //airportService.UpdateAirport("ATL", new AirportDto("ATL", "Edited edited edited", "EDITED", "EDITED", 999, 9, new DateOnly(2000, 01, 1)));
+        //airportService.DeleteAirport("ATL");
 
-        airlineService.PrintAllAirlines();
-        airlineService.PrintAllAirlines("Name", "AAR");
-        airlineService.AddAirline(new AirlineDto("BBB", new DateOnly(2008, 11, 8), 40, "Description"));
-        airlineService.UpdateAirline(1, new AirlineDto("AAA", new DateOnly(2008, 07, 30), 40, "Edited"));
-        airlineService.DeleteAirline(6);
+        //airlineService.PrintAllAirlines();
+        //airlineService.PrintAllAirlines("Name", "AAR");
+        //airlineService.AddAirline(new AirlineDto("BBB", new DateOnly(2008, 11, 8), 40, "Description"));
+        //airlineService.UpdateAirline(1, new AirlineDto("AAA", new DateOnly(2008, 07, 30), 40, "Edited"));
+        //airlineService.DeleteAirline(6);
 
-        flightService.PrintAllFlights();
-        flightService.PrintAllFlights("ArrivalAirportId", "ORD");
-        flightService.AddFlight(new FlightDto("FL222", 1, "JFK", "LAX", new DateTime(2025, 4, 16, 14, 30, 0), new DateTime(2025, 4, 18, 18, 27, 0), 100));
-        flightService.UpdateFlight(5, new FlightDto("FL222", 1, "JFK", "LAX", new DateTime(2025, 4, 16, 14, 30, 0), new DateTime(2025, 4, 18, 18, 27, 0), 100));
-        flightService.DeleteFlight(6);
+        //flightService.PrintAllFlights();
+        //flightService.PrintAllFlights("ArrivalAirportId", "ORD");
+        //flightService.AddFlight(new FlightDto("FL222", 1, "JFK", "LAX", new DateTime(2025, 4, 16, 14, 30, 0), new DateTime(2025, 4, 18, 18, 27, 0), 100));
+        //flightService.UpdateFlight(5, new FlightDto("FL222", 1, "JFK", "LAX", new DateTime(2025, 4, 16, 14, 30, 0), new DateTime(2025, 4, 18, 18, 27, 0), 100));
+        //flightService.DeleteFlight(6);
 
         try
         {

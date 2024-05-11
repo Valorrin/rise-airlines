@@ -3,49 +3,44 @@ using Airlines.Persistence.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Persistence.Repository;
-public class AirlineRepository : IAirlineRepository, IDisposable
+public class AirlineRepository : IAirlineRepository
 {
-    public void Dispose() { }
-    public List<Airline> GetAirlines()
+    private readonly AirlinesDBContext _context;
+
+    public AirlineRepository(AirlinesDBContext context) => _context = context;
+
+    public async Task<List<Airline>> GetAllAirlinesAsync()
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var result = context.Airlines;
-
-            return result.ToList();
+            return await _context.Airlines.ToListAsync();
         }
         catch (Exception)
         {
             Console.WriteLine("There is no airline data!");
-            return new List<Airline>();
+            return [];
         }
     }
 
-    public List<Airline> GetAirlinesByFilter(string filter, string value)
+    public async Task<List<Airline>> GetAllAirlinesByFilterAsync(string filter, string value)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var result = context.Airlines.Where(airline => EF.Property<string>(airline, filter) == value);
-
-            return result.ToList();
+            return await _context.Airlines.Where(airline => EF.Property<string>(airline, filter) == value).ToListAsync();
         }
         catch (Exception)
         {
             Console.WriteLine("There is no airline data!");
-            return new List<Airline>();
+            return [];
         }
     }
 
-    public bool AddAirline(Airline airline)
+    public async Task<bool> AddAirlineAsync(Airline airline)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-
-            _ = context.Airlines.Add(airline);
-            _ = context.SaveChanges();
+            await _context.Airlines.AddAsync(airline);
+            await _context.SaveChangesAsync();
 
             return true;
         }
@@ -55,12 +50,11 @@ public class AirlineRepository : IAirlineRepository, IDisposable
         }
     }
 
-    public bool UpdateAirline(int id, Airline airline)
+    public async Task<bool> UpdateAirlineAsync(int id, Airline airline)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var existingAirline = context.Airlines.FirstOrDefault(a => a.AirlineId == id);
+            var existingAirline = await _context.Airlines.FirstOrDefaultAsync(a => a.AirlineId == id);
             if (existingAirline != null)
             {
                 existingAirline.Name = airline.Name;
@@ -68,7 +62,7 @@ public class AirlineRepository : IAirlineRepository, IDisposable
                 existingAirline.FleetSize = airline.FleetSize;
                 existingAirline.Description = airline.Description;
 
-                context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;
@@ -79,16 +73,15 @@ public class AirlineRepository : IAirlineRepository, IDisposable
         }
     }
 
-    public bool DeleteAirline(int id)
+    public async Task<bool> DeleteAirlineAsync(int id)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var airline = context.Airlines.FirstOrDefault(airline => airline.AirlineId == id);
+            var airline = await _context.Airlines.FirstOrDefaultAsync(airline => airline.AirlineId == id);
             if (airline != null)
             {
-                _ = context.Airlines.Remove(airline);
-                _ = context.SaveChanges();
+                _context.Airlines.Remove(airline);
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;

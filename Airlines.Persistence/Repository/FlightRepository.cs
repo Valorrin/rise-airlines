@@ -3,49 +3,63 @@ using Airlines.Persistence.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Persistence.Repository;
-public class FlightRepository : IFlightRepository, IDisposable
+public class FlightRepository : IFlightRepository
 {
-    public void Dispose() { }
 
-    public List<Flight> GetFlights()
+    private readonly AirlinesDBContext _context;
+
+    public FlightRepository(AirlinesDBContext context) => _context = context;
+
+    public async Task<List<Flight>> GetAllFlightsAsync()
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            return context.Flights.ToList();
-        }
-        catch (Exception)
-        {
+            var flights = await _context.Flights.ToListAsync();
 
-            Console.WriteLine("There is no flight data!");
-            return new List<Flight>();
-        }
-    }
+            foreach (var flight in flights)
+            {
+                _context.Entry(flight).Reference(f => f.ArrivalAirport).Load();
+                _context.Entry(flight).Reference(f => f.DepartureAirport).Load();
+            }
 
-    public List<Flight> GetFlightsByFilter(string filter, string value)
-    {
-        try
-        {
-            using var context = new AirlinesDBContext();
-            var result = context.Flights.Where(flight => EF.Property<string>(flight, filter) == value);
-
-            return result.ToList();
+            return flights;
         }
         catch (Exception)
         {
             Console.WriteLine("There is no flight data!");
-            return new List<Flight>();
+            return [];
         }
     }
 
-    public bool AddFlight(Flight flight)
+    public async Task<List<Flight>> GetAllFlightsByFilterAsync(string filter, string value)
     {
         try
         {
-            using var context = new AirlinesDBContext();
+            var flights = await _context.Flights
+                .Where(flight => EF.Property<string>(flight, filter) == value)
+                .ToListAsync();
 
-            _ = context.Flights.Add(flight);
-            _ = context.SaveChanges();
+            foreach (var flight in flights)
+            {
+                _context.Entry(flight).Reference(f => f.ArrivalAirport).Load();
+                _context.Entry(flight).Reference(f => f.DepartureAirport).Load();
+            }
+
+            return flights;
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("There is no flight data!");
+            return [];
+        }
+    }
+
+    public async Task<bool> AddFlightAsync(Flight flight)
+    {
+        try
+        {
+            await _context.Flights.AddAsync(flight);
+            await _context.SaveChangesAsync();
 
             return true;
         }
@@ -55,23 +69,20 @@ public class FlightRepository : IFlightRepository, IDisposable
         }
     }
 
-    public bool UpdateFlight(int id, Flight flight)
+    public async Task<bool> UpdateFlightAsync(int id, Flight flight)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var existingFlight = context.Flights.FirstOrDefault(f => f.FlightId == id);
+            var existingFlight = await _context.Flights.FirstOrDefaultAsync(f => f.FlightId == id);
             if (existingFlight != null)
             {
                 existingFlight.Number = flight.Number;
-                existingFlight.AirlineId = flight.AirlineId;
                 existingFlight.DepartureAirportId = flight.DepartureAirportId;
                 existingFlight.ArrivalAirportId = flight.ArrivalAirportId;
                 existingFlight.DepartureDateTime = flight.DepartureDateTime;
                 existingFlight.ArrivalDateTime = flight.ArrivalDateTime;
-                existingFlight.Price = flight.Price;
 
-                context.SaveChanges();
+                await _context.SaveChangesAsync();
 
                 return true;
             }
@@ -83,16 +94,15 @@ public class FlightRepository : IFlightRepository, IDisposable
         }
     }
 
-    public bool DeleteFlight(int id)
+    public async Task<bool> DeleteFlightAsync(int id)
     {
         try
         {
-            using var context = new AirlinesDBContext();
-            var flight = context.Flights.FirstOrDefault(flight => flight.FlightId == id);
+            var flight = await _context.Flights.FirstOrDefaultAsync(flight => flight.FlightId == id);
             if (flight != null)
             {
-                _ = context.Flights.Remove(flight);
-                _ = context.SaveChanges();
+                _context.Flights.Remove(flight);
+                await _context.SaveChangesAsync();
                 return true;
             }
             return false;

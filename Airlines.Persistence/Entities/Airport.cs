@@ -8,12 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Persistence.Entities;
 
-[Index("Code", Name = "UQ__Airports__A25C5AA77AA8471F", IsUnique = true)]
+[Index("Code", Name = "UQ__Airports__A25C5AA7465554E8", IsUnique = true)]
 public partial class Airport
 {
     [Key]
-    [StringLength(3)]
-    public string AirportId { get; set; }
+    public int AirportId { get; set; }
 
     [Required]
     [StringLength(255)]

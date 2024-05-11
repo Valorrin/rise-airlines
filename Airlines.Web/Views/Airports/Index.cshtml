@@ -1,0 +1,99 @@
+﻿@model Airlines.Web.Models.AirportViewModel
+
+<div class="main-header">
+    <a asp-controller="Home" asp-action="Index" class="arrow-back">
+        <img src="./assets/left sidebar.png" alt="arrow-back" />
+    </a>
+    <h2>Airports</h2>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Code</th>
+                <th>Runways</th>
+                <th>Founded</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Airports.Any())
+            {
+                @foreach (var item in Model.Airports)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                        <td>@Html.DisplayFor(modelItem => item.City)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Code)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Runways)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Founded)</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">No data available</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="form-wrapper">
+    <button class="show-form-button">Show Form</button>
+    <form asp-controller="Airports" asp-action="AddAirport" method="post">
+        @if (Model.Airports.Any())
+        {
+            <fieldset>
+                <legend>Add New Airline</legend>
+                <label asp-for="Airports.Last().Name">Name</label>
+                <input asp-for="Airports.Last().Name" class="form-control">
+
+                <label asp-for="Airports.Last().Country">Country</label>
+                <input asp-for="Airports.Last().Country" class="form-control">
+
+                <label asp-for="Airports.Last().City">City</label>
+                <input asp-for="Airports.Last().City" class="form-control">
+
+                <label asp-for="Airports.Last().Code">Code</label>
+                <input asp-for="Airports.Last().Code" class="form-control">
+
+                <label asp-for="Airports.Last().Runways">Runways</label>
+                <input asp-for="Airports.Last().Runways" class="form-control" type="number">
+
+                <label asp-for="Airports.Last().Founded">Founded</label>
+                <input asp-for="Airports.Last().Founded" class="form-control" type="date">
+
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
+        else
+        {
+            <fieldset>
+                <legend>Add New Airline</legend>
+                <label for="Name">Name</label>
+                <input name="Name" class="form-control">
+
+                <label for="Country">Country</label>
+                <input name="Country" class="form-control">
+
+                <label for="City">City</label>
+                <input name="City" class="form-control">
+
+                <label for="Code">Code</label>
+                <input name="Code" class="form-control">
+
+                <label for="Runways">Runways</label>
+                <input name="Runways" class="form-control" type="number">
+
+                <label for="Founded">Founded</label>
+                <input name="Founded" class="form-control" type="date">
+
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
+    </form>
+</div>

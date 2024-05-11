@@ -1,0 +1,17 @@
+﻿namespace Airlines.Service.Dto;
+public class AirportDto
+{
+    public int AirportId { get; set; }
+
+    public string? Name { get; set; }
+
+    public string? Country { get; set; }
+
+    public string? City { get; set; }
+
+    public int Code { get; set; }
+
+    public int Runways { get; set; }
+
+    public DateOnly Founded { get; set; }
+}

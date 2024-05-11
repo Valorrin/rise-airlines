@@ -1,0 +1,79 @@
+﻿@model Airlines.Web.Models.AirlinesViewModel
+
+<div class="main-header">
+    <a asp-controller="Home" asp-action="Index" class="arrow-back">
+        <img src="./assets/left sidebar.png" alt="arrow-back" />
+    </a>
+    <h2>Airlines</h2>
+</div>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Founded</th>
+                <th>Fleet Size</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Airlines.Any())
+            {
+                @foreach (var item in Model.Airlines)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Founded)</td>
+                        <td>@Html.DisplayFor(modelItem => item.FleetSize)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">No data available</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="form-wrapper">
+    <button class="show-form-button">Show Form</button>
+    <form asp-controller="Airlines" asp-action="AddAirline" method="post">
+        @if (Model.Airlines.Any())
+        {
+            <fieldset>
+                <legend>Add New Airline</legend>
+                <label asp-for="Airlines.Last().Name">Name:</label>
+                <input asp-for="Airlines.Last().Name" class="form-control">
+                <label asp-for="Airlines.Last().Founded">Founded:</label>
+                <input asp-for="Airlines.Last().Founded" class="form-control" type="date">
+                <label asp-for="Airlines.Last().FleetSize">Fleet Size:</label>
+                <input asp-for="Airlines.Last().FleetSize" class="form-control" type="number">
+                <label asp-for="Airlines.Last().Description">Description:</label>
+                <textarea asp-for="Airlines.Last().Description" class="form-control"></textarea>
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
+        else
+        {
+            <fieldset>
+                <legend>Add New Airline</legend>
+                <label for="Name">Name:</label>
+                <input name="Name" class="form-control">
+
+                <label for="Founded">Founded:</label>
+                <input name="Founded" class="form-control" type="date">
+
+                <label for="FleetSize">Fleet Size:</label>
+                <input name="FleetSize" class="form-control" type="number">
+
+                <label for="Description">Description:</label>
+                <textarea name="Description" class="form-control"></textarea>
+
+                <input type="submit" value="Submit" class="submit-form-button">
+            </fieldset>
+        }
+    </form>
+</div>
