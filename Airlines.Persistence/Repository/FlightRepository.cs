@@ -14,11 +14,18 @@ public class FlightRepository : IFlightRepository
     {
         try
         {
-            return await _context.Flights.ToListAsync();
+            var flights = await _context.Flights.ToListAsync();
+
+            foreach (var flight in flights)
+            {
+                _context.Entry(flight).Reference(f => f.ArrivalAirport).Load();
+                _context.Entry(flight).Reference(f => f.DepartureAirport).Load();
+            }
+
+            return flights;
         }
         catch (Exception)
         {
-
             Console.WriteLine("There is no flight data!");
             return [];
         }
@@ -28,7 +35,17 @@ public class FlightRepository : IFlightRepository
     {
         try
         {
-            return await _context.Flights.Where(flight => EF.Property<string>(flight, filter) == value).ToListAsync();
+            var flights = await _context.Flights
+                .Where(flight => EF.Property<string>(flight, filter) == value)
+                .ToListAsync();
+
+            foreach (var flight in flights)
+            {
+                _context.Entry(flight).Reference(f => f.ArrivalAirport).Load();
+                _context.Entry(flight).Reference(f => f.DepartureAirport).Load();
+            }
+
+            return flights;
         }
         catch (Exception)
         {

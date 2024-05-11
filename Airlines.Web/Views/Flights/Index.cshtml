@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Airlines.Service.Dto.FlightDto>
+﻿@model Airlines.Web.Models.FlightsViewModel
 
 <div class="main-header">
     <a asp-controller="Home" asp-action="Index" class="arrow-back">
@@ -18,12 +18,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Flights)
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Number)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DepartureAirportId)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ArrivalAirportId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DepartureAirport != null ? item.DepartureAirport.Name : string.Empty)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ArrivalAirport != null ? item.ArrivalAirport.Name : string.Empty)</td>
                     <td>@Html.DisplayFor(modelItem => item.DepartureDateTime)</td>
                     <td>@Html.DisplayFor(modelItem => item.ArrivalDateTime)</td>
                 </tr>
@@ -36,20 +36,24 @@
     <form asp-controller="Flights" asp-action="AddFlight" method="post">
         <fieldset>
             <legend>Add New Flight</legend>
-            <label asp-for="First().Number">Number:</label>
-            <input asp-for="First().Number" class="form-control">
+            <label asp-for="Flights.First().Number">Number:</label>
+            <input asp-for="Flights.First().Number" class="form-control">
 
-            <label asp-for="First().DepartureAirportId">From:</label>
-            <input asp-for="First().DepartureAirportId" class="form-control">
+            <label asp-for="Flights.First().DepartureAirportId">From:</label>
+            <select asp-for="Flights.First().DepartureAirportId" asp-items="@(new SelectList(Model.Airports, "AirportId", "Name"))" class="form-control">
+                <option value="">Select Departure Airport</option>
+            </select>
 
-            <label asp-for="First().ArrivalAirportId">To:</label>
-            <input asp-for="First().ArrivalAirportId" class="form-control">
+            <label asp-for="Flights.First().ArrivalAirportId">To:</label>
+            <select asp-for="Flights.First().ArrivalAirportId" asp-items="@(new SelectList(Model.Airports, "AirportId", "Name"))" class="form-control">
+                <option value="">Select Arrival Airport</option>
+            </select>
 
-            <label asp-for="First().DepartureDateTime">Departure Time:</label>
-            <input asp-for="First().DepartureDateTime" class="form-control" type="datetime-local">
+            <label asp-for="Flights.First().DepartureDateTime">Departure Time:</label>
+            <input asp-for="Flights.First().DepartureDateTime" class="form-control" type="datetime-local">
 
-            <label asp-for="First().ArrivalDateTime">Arrival Time:</label>
-            <input asp-for="First().ArrivalDateTime" class="form-control" type="datetime-local">
+            <label asp-for="Flights.First().ArrivalDateTime">Arrival Time:</label>
+            <input asp-for="Flights.First().ArrivalDateTime" class="form-control" type="datetime-local">
 
             <input type="submit" value="Submit" class="submit-form-button">
         </fieldset>
