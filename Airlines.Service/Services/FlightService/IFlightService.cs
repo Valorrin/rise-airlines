@@ -1,6 +1,4 @@
 ﻿using Airlines.Service.Dto;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace Airlines.Service.Services.FlightService;
 public interface IFlightService

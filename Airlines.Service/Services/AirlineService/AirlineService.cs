@@ -27,4 +27,5 @@ public class AirlineService : IAirlineService
     public async Task<bool> AddAirlineAsync(AirlineDto airlineDto) => await _airlineRepository.AddAirlineAsync(_mapper.MapAirline(airlineDto));
     public async Task<bool> UpdateAirlineAsync(int id, AirlineDto updatedAirline) => await _airlineRepository.UpdateAirlineAsync(id, _mapper.MapAirline(updatedAirline));
     public async Task<bool> DeleteAirlineAsync(int id) => await _airlineRepository.DeleteAirlineAsync(id);
+    public bool IsAirlineNameLengthValid(string? name) => name != null && name.Length <= 6;
 }

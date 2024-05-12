@@ -106,4 +106,16 @@ public class AirportRepository : IAirportRepository
             return false;
         }
     }
+
+    public async Task<bool> IsAirportCodeUniqueAsync(string code)
+    {
+        try
+        {
+            return await _context.Airports.AnyAsync(a => a.Code == code);
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
 }

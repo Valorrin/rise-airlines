@@ -14,4 +14,6 @@ public interface IAirportRepository
     public Task<bool> UpdateAirportAsync(int id, Airport airport);
 
     public Task<bool> DeleteAirportAsync(int id);
+
+    public Task<bool> IsAirportCodeUniqueAsync(string code);
 }

@@ -27,4 +27,7 @@ public class AirportService : IAirportService
     public async Task<bool> AddAirportAsync(AirportDto airporteDto) => await _airportRepository.AddAirportAsync(_mapper.MapAirport(airporteDto));
     public async Task<bool> UpdateAirportAsync(int id, AirportDto updatedAirport) => await _airportRepository.UpdateAirportAsync(id, _mapper.MapAirport(updatedAirport));
     public async Task<bool> DeleteAirportAsync(int id) => await _airportRepository.DeleteAirportAsync(id);
+    public async Task<bool> IsAirportCodeUniqueAsync(string code) => code != null && await _airportRepository.IsAirportCodeUniqueAsync(code);
+
+    public bool IsAirportCodeLengthValid(string? code) => code != null && code.Length <= 3;
 }

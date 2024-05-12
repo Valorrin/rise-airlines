@@ -14,4 +14,8 @@ public interface IAirportService
     Task<bool> UpdateAirportAsync(int id, AirportDto updatedAirport);
 
     Task<bool> DeleteAirportAsync(int id);
+
+    Task<bool> IsAirportCodeUniqueAsync(string code);
+
+    bool IsAirportCodeLengthValid(string? code);
 }

@@ -21,6 +21,11 @@ public class AirlinesController : Controller
     [HttpPost]
     public async Task<IActionResult> AddAirline(AirlineDto model)
     {
+        if (_airlineService.IsAirlineNameLengthValid(model.Name))
+        {
+            ModelState.AddModelError("Name", "The airport name must be up to 6 characters long.");
+        }
+
         if (!ModelState.IsValid)
         {
             var airlines = await _airlineService.GetAllAirlinesAsync();
