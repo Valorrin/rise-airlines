@@ -1,5 +1,4 @@
-﻿using Airlines.Persistence.Repository;
-using Airlines.Persistence.Repository.Interfaces;
+﻿using Airlines.Persistence.Repository.Interfaces;
 using Airlines.Service.Dto;
 using Airlines.Service.Mappers;
 

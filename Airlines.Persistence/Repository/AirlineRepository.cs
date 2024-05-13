@@ -108,7 +108,7 @@ public class AirlineRepository : IAirlineRepository
     {
         try
         {
-            return await _context.Airlines.Any(a => a.Name == name)
+            return await _context.Airlines.AnyAsync(a => a.Name == name);
         }
         catch (Exception)
         {

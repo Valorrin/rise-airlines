@@ -34,6 +34,35 @@ public class FlightsController : Controller
     [HttpPost]
     public async Task<IActionResult> AddFlight(FlightDto model)
     {
+        if (!_flightService.IsDepartureDateInTheFuture(model.DepartureDateTime))
+        {
+            ModelState.AddModelError("DepartureDateTime", "Departure time must be in the future.");
+        }
+
+        if (!_flightService.IsArrivalDateInTheFuture(model.ArrivalDateTime))
+        {
+            ModelState.AddModelError("ArrivalDateTime", "Arrival time must be in the future.");
+        }
+
+        if (_flightService.IsArrivalDateAfterDeprtureDate(model.DepartureDateTime, model.ArrivalDateTime))
+        {
+            ModelState.AddModelError("DepartureDateTime", "Arrival time must be after departure time.");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            var flights = await _flightService.GetAllFlightsAsync();
+            var airports = await _airportService.GetAllAirportsAsync();
+
+            var viewModel = new FlightsViewModel
+            {
+                Flights = flights,
+                Airports = airports,
+            };
+
+            return View("Index", viewModel);
+        }
+
         await _flightService.AddFlightAsync(model);
         return RedirectToAction(nameof(Index));
     }

@@ -28,4 +28,8 @@ public class FlightService : IFlightService
     public async Task<bool> AddFlightAsync(FlightDto flightDto) => await _flightRepository.AddFlightAsync(_flightMapper.MapFlight(flightDto));
     public async Task<bool> UpdateFlightAsync(int id, FlightDto updatedFlight) => await _flightRepository.UpdateFlightAsync(id, _flightMapper.MapFlight(updatedFlight));
     public async Task<bool> DeleteFlightAsync(int id) => await _flightRepository.DeleteFlightAsync(id);
+
+    public bool IsArrivalDateAfterDeprtureDate(DateTime departureDateTime, DateTime arrivalDateTime) => departureDateTime >= arrivalDateTime;
+    public bool IsArrivalDateInTheFuture(DateTime arrivalDateTime) => arrivalDateTime > DateTime.UtcNow;
+    public bool IsDepartureDateInTheFuture(DateTime departureDateTime) => departureDateTime > DateTime.UtcNow;
 }

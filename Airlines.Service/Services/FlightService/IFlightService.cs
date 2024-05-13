@@ -14,4 +14,10 @@ public interface IFlightService
     Task<bool> UpdateFlightAsync(int id, FlightDto updatedFlight);
 
     Task<bool> DeleteFlightAsync(int id);
+
+    bool IsArrivalDateInTheFuture(DateTime arrivalDateTime);
+
+    bool IsDepartureDateInTheFuture(DateTime departureDateTime);
+
+    bool IsArrivalDateAfterDeprtureDate(DateTime departureDateTime, DateTime arrivalDateTime);
 }

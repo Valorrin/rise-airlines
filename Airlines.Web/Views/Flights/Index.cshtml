@@ -49,22 +49,27 @@
                 <legend>Add New Flight</legend>
                 <label asp-for="Flights.Last().Number">Number:</label>
                 <input asp-for="Flights.Last().Number" class="form-control">
+                <span asp-validation-for="Flights.Last().Number" class="text-danger"></span>
 
                 <label asp-for="Flights.Last().DepartureAirportId">From:</label>
                 <select asp-for="Flights.Last().DepartureAirportId" asp-items="@(new SelectList(Model.Airports, "AirportId", "Name"))" class="form-control">
                     <option value="">Select Departure Airport</option>
                 </select>
+                <span asp-validation-for="Flights.Last().DepartureAirportId" class="text-danger"></span>
 
                 <label asp-for="Flights.Last().ArrivalAirportId">To:</label>
                 <select asp-for="Flights.Last().ArrivalAirportId" asp-items="@(new SelectList(Model.Airports, "AirportId", "Name"))" class="form-control">
                     <option value="">Select Arrival Airport</option>
                 </select>
+                <span asp-validation-for="Flights.Last().ArrivalAirportId" class="text-danger"></span>
 
                 <label asp-for="Flights.Last().DepartureDateTime">Departure Time:</label>
                 <input asp-for="Flights.Last().DepartureDateTime" class="form-control" type="datetime-local">
+                <span asp-validation-for="Flights.Last().DepartureDateTime" class="text-danger"></span>
 
                 <label asp-for="Flights.Last().ArrivalDateTime">Arrival Time:</label>
                 <input asp-for="Flights.Last().ArrivalDateTime" class="form-control" type="datetime-local">
+                <span asp-validation-for="Flights.Last().ArrivalDateTime" class="text-danger"></span>
 
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>
