@@ -11,9 +11,15 @@ public class AirlinesController : Controller
     public AirlinesController(IAirlineService airlineService) => _airlineService = airlineService;
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string searchTerm, string filter)
     {
         var airlines = await _airlineService.GetAllAirlinesAsync();
+
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            airlines = await _airlineService.GetAllAirlinesAsync(filter, searchTerm);
+        }
+
         var viewModel = new AirlinesViewModel { Airlines = airlines };
 
         return View(viewModel);
