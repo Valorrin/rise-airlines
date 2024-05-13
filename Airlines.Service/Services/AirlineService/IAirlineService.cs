@@ -16,5 +16,5 @@ public interface IAirlineService
 
     Task<bool> DeleteAirlineAsync(int id);
 
-    public bool IsAirportNameLenghtValid(string? name);
+    public bool IsAirlineNameLengthValid(string? name);
 }

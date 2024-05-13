@@ -18,6 +18,7 @@ public class HomeController : Controller
         _flightService = flightService;
     }
 
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
         var airlinesCount = await _airlineService.GetAirlinesCountAsync();

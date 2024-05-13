@@ -16,6 +16,7 @@ public class FlightsController : Controller
         _airportService = airportService;
     }
 
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
         var flights = await _flightService.GetAllFlightsAsync();

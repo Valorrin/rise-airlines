@@ -15,6 +15,7 @@ public class AirportDto
     public string? City { get; set; }
 
     [Required(ErrorMessage = "Please provide the airport code.")]
+    [StringLength(3, ErrorMessage = "Code must be up to 3 characters.")]
     public string? Code { get; set; }
 
     [Required(ErrorMessage = "Please specify the number of runways at the airport.")]

@@ -1,4 +1,5 @@
-﻿using Airlines.Persistence.Repository.Interfaces;
+﻿using Airlines.Persistence.Repository;
+using Airlines.Persistence.Repository.Interfaces;
 using Airlines.Service.Dto;
 using Airlines.Service.Mappers;
 
@@ -27,5 +28,6 @@ public class AirlineService : IAirlineService
     public async Task<bool> AddAirlineAsync(AirlineDto airlineDto) => await _airlineRepository.AddAirlineAsync(_mapper.MapAirline(airlineDto));
     public async Task<bool> UpdateAirlineAsync(int id, AirlineDto updatedAirline) => await _airlineRepository.UpdateAirlineAsync(id, _mapper.MapAirline(updatedAirline));
     public async Task<bool> DeleteAirlineAsync(int id) => await _airlineRepository.DeleteAirlineAsync(id);
+    public async Task<bool> IsAirlineNameUniqueAsync(string name) => name != null && await _airlineRepository.IsAirlineNameUniqueAsync(name);
     public bool IsAirlineNameLengthValid(string? name) => name != null && name.Length <= 6;
 }

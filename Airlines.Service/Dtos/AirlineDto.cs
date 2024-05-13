@@ -6,6 +6,7 @@ public class AirlineDto
     public int AirlineId { get; set; }
 
     [Required(ErrorMessage = "Name is required.")]
+    [StringLength(6, ErrorMessage = "Name must be up to 6 characters.")]
     public string? Name { get; set; }
 
     [Required(ErrorMessage = "Founded is required")]

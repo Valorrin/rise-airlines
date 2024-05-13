@@ -10,6 +10,7 @@ public class AirportsController : Controller
 
     public AirportsController(IAirportService airportService) => _airportService = airportService;
 
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
         var airports = await _airportService.GetAllAirportsAsync();
@@ -21,14 +22,15 @@ public class AirportsController : Controller
     [HttpPost]
     public async Task<IActionResult> AddAirport(AirportDto model)
     {
-        if (_airportService.IsAirportCodeLengthValid(model.Code))
-        {
-            ModelState.AddModelError("Code", "The airport code must be up to 3 characters long.");
-        }
 
         if (await _airportService.IsAirportCodeUniqueAsync(model.Code!))
         {
             ModelState.AddModelError("Code", "The code must be unique.");
+        }
+
+        if (await _airportService.IsAirportNameUniqueAsync(model.Name!))
+        {
+            ModelState.AddModelError("Name", "The name must be unique");
         }
 
         if (!ModelState.IsValid)

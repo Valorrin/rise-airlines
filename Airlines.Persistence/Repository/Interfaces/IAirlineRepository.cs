@@ -14,4 +14,6 @@ public interface IAirlineRepository
     public Task<bool> UpdateAirlineAsync(int id, Airline airline);
 
     public Task<bool> DeleteAirlineAsync(int id);
+
+    public Task<bool> IsAirlineNameUniqueAsync(string name);
 }

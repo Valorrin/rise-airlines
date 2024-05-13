@@ -103,4 +103,16 @@ public class AirlineRepository : IAirlineRepository
             return false;
         }
     }
+
+    public async Task<bool> IsAirlineNameUniqueAsync(string name)
+    {
+        try
+        {
+            return await _context.Airlines.Any(a => a.Name == name)
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
 }

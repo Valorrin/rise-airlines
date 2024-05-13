@@ -9,3 +9,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0058:Expression value is never used", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Service.Profiles.AirlineProfile.#ctor")]
 [assembly: SuppressMessage("Style", "IDE0058:Expression value is never used", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Service.Profiles.AirportProfile.#ctor")]
 [assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Service.Services.AirlineService.AirlineService.IsAirportNameValid(System.String)~System.Boolean")]
+[assembly: SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Service.Services.AirlineService.AirlineService.IsAirlineNameLengthValid(System.String)~System.Boolean")]

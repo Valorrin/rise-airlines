@@ -17,5 +17,7 @@ public interface IAirportService
 
     Task<bool> IsAirportCodeUniqueAsync(string code);
 
+    Task<bool> IsAirportNameUniqueAsync(string name);
+
     bool IsAirportCodeLengthValid(string? code);
 }

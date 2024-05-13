@@ -10,6 +10,7 @@ public class AirlinesController : Controller
 
     public AirlinesController(IAirlineService airlineService) => _airlineService = airlineService;
 
+    [HttpGet]
     public async Task<IActionResult> Index()
     {
         var airlines = await _airlineService.GetAllAirlinesAsync();
@@ -21,9 +22,9 @@ public class AirlinesController : Controller
     [HttpPost]
     public async Task<IActionResult> AddAirline(AirlineDto model)
     {
-        if (_airlineService.IsAirlineNameLengthValid(model.Name))
+        if (await _airlineService.IsAirlineNameUniqueAsync(model.Name!))
         {
-            ModelState.AddModelError("Name", "The airport name must be up to 6 characters long.");
+            ModelState.AddModelError("Name", "The name must be unique");
         }
 
         if (!ModelState.IsValid)
