@@ -80,6 +80,7 @@
                 <legend>Add New Flight</legend>
                 <label for="Number">Number:</label>
                 <input name="Number" class="form-control">
+                <span asp-validation-for="Flights.Last().Number" class="text-danger"></span>
 
                 <label for="DepartureAirportId">From:</label>
                 <select name="DepartureAirportId" class="form-control">
@@ -89,6 +90,7 @@
                         <option value="@airport.AirportId">@airport.Name</option>
                     }
                 </select>
+                <span asp-validation-for="Flights.Last().DepartureAirportId" class="text-danger"></span>
 
                 <label for="ArrivalAirportId">To:</label>
                 <select name="ArrivalAirportId" class="form-control">
@@ -98,12 +100,15 @@
                         <option value="@airport.AirportId">@airport.Name</option>
                     }
                 </select>
+                <span asp-validation-for="Flights.Last().ArrivalAirportId" class="text-danger"></span>
 
                 <label for="DepartureDateTime">Departure Time:</label>
                 <input name="DepartureDateTime" class="form-control" type="datetime-local">
+                <span asp-validation-for="Flights.Last().DepartureDateTime" class="text-danger"></span>
 
                 <label for="ArrivalDateTime">Arrival Time:</label>
                 <input name="ArrivalDateTime" class="form-control" type="datetime-local">
+                <span asp-validation-for="Flights.Last().ArrivalDateTime" class="text-danger"></span>
 
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>

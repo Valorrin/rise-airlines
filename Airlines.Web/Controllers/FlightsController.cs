@@ -46,7 +46,7 @@ public class FlightsController : Controller
 
         if (_flightService.IsArrivalDateAfterDeprtureDate(model.DepartureDateTime, model.ArrivalDateTime))
         {
-            ModelState.AddModelError("DepartureDateTime", "Arrival time must be after departure time.");
+            ModelState.AddModelError("ArrivalDateTime", "Arrival time must be after departure time.");
         }
 
         if (!ModelState.IsValid)
