@@ -58,14 +58,15 @@
 </div>
 <div class="form-wrapper">
     <button class="show-form-button">Show Form</button>
-    <form asp-controller="Airports" asp-action="AddAirport" method="post">
+    <form name="airportForm" asp-controller="Airports" asp-action="AddAirport" method="post" onsubmit="return validateForm()">
         @if (Model.Airports.Any())
         {
             <fieldset>
                 <legend>Add New Airline</legend>
+
                 <label asp-for="Airports.Last().Name">Name</label>
-                <input asp-for="Airports.Last().Name" class="form-control">
-                <span asp-validation-for="Airports.Last().Name" class="text-danger"></span>
+                <input asp-for="Airports.Last().Name" class="form-control" id="Name">
+                <span asp-validation-for="Airports.Last().Name" class="text-danger" id="error-message-Name"></span>
 
                 <label asp-for="Airports.Last().Country">Country</label>
                 <input asp-for="Airports.Last().Country" class="form-control">
