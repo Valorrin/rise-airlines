@@ -10,9 +10,20 @@ public class AirlinesController : Controller
 
     public AirlinesController(IAirlineService airlineService) => _airlineService = airlineService;
 
-    public async Task<IActionResult> Index()
+    [HttpGet]
+    public async Task<IActionResult> Index(string searchTerm, string filter)
     {
-        var airlines = await _airlineService.GetAllAirlinesAsync();
+        List<AirlineDto>? airlines;
+
+        if (string.IsNullOrEmpty(searchTerm))
+        {
+            airlines = await _airlineService.GetAllAirlinesAsync();
+        }
+        else
+        {
+            airlines = await _airlineService.GetAllAirlinesAsync(filter, searchTerm);
+        }
+
         var viewModel = new AirlinesViewModel { Airlines = airlines };
 
         return View(viewModel);
@@ -21,6 +32,19 @@ public class AirlinesController : Controller
     [HttpPost]
     public async Task<IActionResult> AddAirline(AirlineDto model)
     {
+        if (await _airlineService.IsAirlineNameUniqueAsync(model.Name!))
+        {
+            ModelState.AddModelError("Name", "The name must be unique");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            var airlines = await _airlineService.GetAllAirlinesAsync();
+            var viewModel = new AirlinesViewModel { Airlines = airlines };
+
+            return View("Index", viewModel);
+        }
+
         await _airlineService.AddAirlineAsync(model);
         return RedirectToAction(nameof(Index));
     }

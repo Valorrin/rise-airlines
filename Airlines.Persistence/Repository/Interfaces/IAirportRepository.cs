@@ -7,9 +7,15 @@ public interface IAirportRepository
 
     public Task<List<Airport>> GetAllAirportsByFilterAsync(string filter, string value);
 
+    public Task<int> GetAirportsCountAsync();
+
     public Task<bool> AddAirportAsync(Airport airport);
 
     public Task<bool> UpdateAirportAsync(int id, Airport airport);
 
     public Task<bool> DeleteAirportAsync(int id);
+
+    public Task<bool> IsAirportCodeUniqueAsync(string code);
+
+    public Task<bool> IsAirportNameUniqueAsync(string name);
 }

@@ -35,6 +35,18 @@ public class AirlineRepository : IAirlineRepository
         }
     }
 
+    public async Task<int> GetAirlinesCountAsync()
+    {
+        try
+        {
+            return await _context.Airlines.CountAsync();
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
+
     public async Task<bool> AddAirlineAsync(Airline airline)
     {
         try
@@ -85,6 +97,18 @@ public class AirlineRepository : IAirlineRepository
                 return true;
             }
             return false;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> IsAirlineNameUniqueAsync(string name)
+    {
+        try
+        {
+            return await _context.Airlines.AnyAsync(a => a.Name == name);
         }
         catch (Exception)
         {

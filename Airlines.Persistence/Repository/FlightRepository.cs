@@ -36,8 +36,30 @@ public class FlightRepository : IFlightRepository
         try
         {
             var flights = await _context.Flights
-                .Where(flight => EF.Property<string>(flight, filter) == value)
-                .ToListAsync();
+            .Where(flight =>
+                filter == "DepartureAirport" ? flight.DepartureAirport.Name == value :
+                filter == "ArrivalAirport" ? flight.ArrivalAirport.Name == value :
+                EF.Property<string>(flight, filter) == value)
+            .Include(f => f.ArrivalAirport)
+            .Include(f => f.DepartureAirport)
+            .ToListAsync();
+
+            return flights;
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("There is no flight data!");
+            return [];
+        }
+    }
+
+    public async Task<List<Flight>> GetAllFlightsForTodayAsync()
+    {
+        try
+        {
+            var nextDay = DateTime.UtcNow.AddDays(1);
+
+            var flights = await _context.Flights.Where(f => f.DepartureDateTime > nextDay).ToListAsync();
 
             foreach (var flight in flights)
             {
@@ -49,8 +71,68 @@ public class FlightRepository : IFlightRepository
         }
         catch (Exception)
         {
-            Console.WriteLine("There is no flight data!");
             return [];
+        }
+    }
+
+    public async Task<List<Flight>> GetAllFlightsForThisWeekAsync()
+    {
+        try
+        {
+            var today = DateTime.UtcNow.Date;
+            var daysUntilNextMonday = ((int)DayOfWeek.Monday - (int)today.DayOfWeek + 7) % 7;
+            var startOfWeek = today.AddDays(-((int)today.DayOfWeek - 1));
+            var endOfWeek = startOfWeek.AddDays(6);
+
+            var flights = await _context.Flights.Where(f => f.DepartureDateTime >= startOfWeek && f.DepartureDateTime <= endOfWeek).ToListAsync();
+
+            foreach (var flight in flights)
+            {
+                _context.Entry(flight).Reference(f => f.ArrivalAirport).Load();
+                _context.Entry(flight).Reference(f => f.DepartureAirport).Load();
+            }
+
+            return flights;
+        }
+        catch (Exception)
+        {
+            return [];
+        }
+    }
+
+    public async Task<List<Flight>> GetAllFlightsForThisMonthAsync()
+    {
+        try
+        {
+            var today = DateTime.UtcNow.Date;
+            var startOfMonth = new DateTime(today.Year, today.Month, 1);
+            var endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+
+            var flights = await _context.Flights.Where(f => f.DepartureDateTime >= startOfMonth && f.DepartureDateTime <= endOfMonth).ToListAsync();
+
+            foreach (var flight in flights)
+            {
+                _context.Entry(flight).Reference(f => f.ArrivalAirport).Load();
+                _context.Entry(flight).Reference(f => f.DepartureAirport).Load();
+            }
+
+            return flights;
+        }
+        catch (Exception)
+        {
+            return [];
+        }
+    }
+
+    public async Task<int> GetFlightsCountAsync()
+    {
+        try
+        {
+            return await _context.Flights.CountAsync();
+        }
+        catch (Exception)
+        {
+            return 0;
         }
     }
 
