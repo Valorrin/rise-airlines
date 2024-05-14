@@ -2,7 +2,6 @@
 using Airlines.Persistence.Repository.Interfaces;
 using Airlines.Service.Dto;
 using Airlines.Service.Mappers;
-using Airlines.Service.Services.AirportService;
 
 namespace Airlines.Service.Services.FlightService;
 public class FlightService : IFlightService

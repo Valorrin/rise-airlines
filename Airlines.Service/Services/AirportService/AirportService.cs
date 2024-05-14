@@ -23,15 +23,6 @@ public class AirportService : IAirportService
         var airports = await _airportRepository.GetAllAirportsByFilterAsync(filter, value);
         return airports.Select(_mapper.MapAirport).ToList();
     }
-    public async Task<AirportDto> GetAirportByName(string name)
-    {
-        var airport = await _airportRepository.GetAirportByNameAsync(name);
-        if (airport == null)
-        {
-            return null;
-        }
-        return _mapper.MapAirport(airport);
-    }
     public async Task<int> GetAirportsCountAsync() => await _airportRepository.GetAirportsCountAsync();
     public async Task<bool> AddAirportAsync(AirportDto airporteDto) => await _airportRepository.AddAirportAsync(_mapper.MapAirport(airporteDto));
     public async Task<bool> UpdateAirportAsync(int id, AirportDto updatedAirport) => await _airportRepository.UpdateAirportAsync(id, _mapper.MapAirport(updatedAirport));
