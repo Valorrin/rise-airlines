@@ -86,7 +86,7 @@ main {
     min-width: 450px;
     max-height: 450px;
     overflow: auto;
-    border-bottom: 1px solid #000000;
+    
 }
 
 table {
@@ -111,7 +111,7 @@ th {
 
 tr:last-child td,
 tr:last-child th {
-    border-bottom: none;
+   
 }
 
 thead th {
