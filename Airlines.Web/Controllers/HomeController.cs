@@ -1,25 +1,37 @@
+using Airlines.Service.Services.AirlineService;
+using Airlines.Service.Services.AirportService;
+using Airlines.Service.Services.FlightService;
 using Airlines.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 
 namespace Airlines.Web.Controllers;
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly IAirlineService _airlineService;
+    private readonly IAirportService _airportService;
+    private readonly IFlightService _flightService;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(IAirlineService airlineService, IAirportService airportService, IFlightService flightService)
     {
-        _logger = logger;
+        _airlineService = airlineService;
+        _airportService = airportService;
+        _flightService = flightService;
     }
 
-    public IActionResult Index()
+    [HttpGet]
+    public async Task<IActionResult> Index()
     {
-        return View();
-    }
+        var airlinesCount = await _airlineService.GetAirlinesCountAsync();
+        var airportsCount = await _airportService.GetAirportsCountAsync();
+        var flightsCount = await _flightService.GetFlightsCountAsync();
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var viewModel = new HomeViewModel
+        {
+            AirlinesCount = airlinesCount,
+            AirportsCount = airportsCount,
+            FlightsCount = flightsCount
+        };
+
+        return View(viewModel);
     }
 }

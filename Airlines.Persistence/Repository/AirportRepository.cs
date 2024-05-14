@@ -35,6 +35,18 @@ public class AirportRepository : IAirportRepository
         }
     }
 
+    public async Task<int> GetAirportsCountAsync()
+    {
+        try
+        {
+            return await _context.Airports.CountAsync();
+        }
+        catch (Exception)
+        {
+            return 0;
+        }
+    }
+
     public async Task<bool> AddAirportAsync(Airport airport)
     {
         try
@@ -88,6 +100,30 @@ public class AirportRepository : IAirportRepository
                 return true;
             }
             return false;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> IsAirportCodeUniqueAsync(string code)
+    {
+        try
+        {
+            return await _context.Airports.AnyAsync(a => a.Code == code);
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public async Task<bool> IsAirportNameUniqueAsync(string name)
+    {
+        try
+        {
+            return await _context.Airports.AnyAsync(a => a.Name == name);
         }
         catch (Exception)
         {

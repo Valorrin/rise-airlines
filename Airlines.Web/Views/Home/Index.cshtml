@@ -1,4 +1,6 @@
-﻿<h2 class="dashboard-header">
+﻿@model Airlines.Web.Models.HomeViewModel
+
+<h2 class="dashboard-header">
     Welcome To Dashboard
 </h2>
 <div class="card-container">
@@ -6,7 +8,7 @@
         <div class="card">
             Airports
             <img src="~/assets/mdi_airport.png" alt="airport-icon">
-            150
+            @Model.AirportsCount
         </div>
         <a asp-controller="Airports" asp-action="Index"><button class="dashboard-button">Add New Airport</button></a>
     </div>
@@ -14,7 +16,7 @@
         <div class="card">
             Airlines
             <img src="~/assets/ri_plane-fill.png" alt="plane-icon">
-            50
+            @Model.AirlinesCount
         </div>
         <a asp-controller="Airlines" asp-action="Index"><button class="dashboard-button">Add New Airline</button></a>
     </div>
@@ -22,7 +24,7 @@
         <div class="card">
             Flights
             <img src="~/assets/carbon_flight-schedule.png" alt="flight-icon">
-            200
+            @Model.FlightsCount
         </div>
         <a asp-controller="Flights" asp-action="Index"><button class="dashboard-button">Add New Flight</button></a>
     </div>
