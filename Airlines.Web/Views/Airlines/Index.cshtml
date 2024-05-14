@@ -7,7 +7,7 @@
     <h2>Airlines</h2>
 </div>
 <div class="search-container">
-    <form class="search" asp-controller="Airlines" asp-action="Index" method="get">
+    <form class="search-form" asp-controller="Airlines" asp-action="Index" method="get">
         <input type="text" placeholder="search" name="searchTerm" />
         <select name="filter">
             <option value="Name">Name</option>
@@ -15,10 +15,9 @@
             <option value="FleetSize">Fleet Size</option>
             <option value="Description">Description</option>
         </select>
-        <input type="submit" value="Submit" class="submit-form-button">
+        <button class="search-form-button">Search</button>
     </form>
 </div>
-
 <div class="table-container">
     <table>
         <thead>

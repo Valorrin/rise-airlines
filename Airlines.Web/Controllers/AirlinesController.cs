@@ -13,9 +13,13 @@ public class AirlinesController : Controller
     [HttpGet]
     public async Task<IActionResult> Index(string searchTerm, string filter)
     {
-        var airlines = await _airlineService.GetAllAirlinesAsync();
+        List<AirlineDto>? airlines;
 
-        if (!string.IsNullOrEmpty(searchTerm))
+        if (string.IsNullOrEmpty(searchTerm))
+        {
+            airlines = await _airlineService.GetAllAirlinesAsync();
+        }
+        else
         {
             airlines = await _airlineService.GetAllAirlinesAsync(filter, searchTerm);
         }

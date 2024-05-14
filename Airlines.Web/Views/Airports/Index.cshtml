@@ -6,6 +6,20 @@
     </a>
     <h2>Airports</h2>
 </div>
+<div class="search-container">
+    <form class="search-form" asp-controller="Airports" asp-action="Index" method="get">
+        <input type="text" placeholder="search" name="searchTerm" />
+        <select name="filter">
+            <option value="Name">Name</option>
+            <option value="Country">Country</option>
+            <option value="City">City</option>
+            <option value="Code">Code</option>
+            <option value="Runways">Runways</option>
+            <option value="Founded">Founded</option>
+        </select>
+        <button class="search-form-button">Search</button>
+    </form>
+</div>
 <div class="table-container">
     <table>
         <thead>

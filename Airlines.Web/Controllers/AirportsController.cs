@@ -11,9 +11,19 @@ public class AirportsController : Controller
     public AirportsController(IAirportService airportService) => _airportService = airportService;
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string searchTerm, string filter)
     {
-        var airports = await _airportService.GetAllAirportsAsync();
+        List<AirportDto>? airports;
+
+        if (string.IsNullOrEmpty(searchTerm))
+        {
+            airports = await _airportService.GetAllAirportsAsync();
+        }
+        else
+        {
+            airports = await _airportService.GetAllAirportsAsync(filter, searchTerm);
+        }
+
         var viewModel = new AirportViewModel { Airports = airports };
 
         return View(viewModel);

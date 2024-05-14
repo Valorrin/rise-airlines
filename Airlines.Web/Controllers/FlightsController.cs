@@ -17,9 +17,19 @@ public class FlightsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string searchTerm, string filter)
     {
-        var flights = await _flightService.GetAllFlightsAsync();
+        List<FlightDto>? flights;
+
+        if (string.IsNullOrEmpty(searchTerm))
+        {
+            flights = await _flightService.GetAllFlightsAsync();
+        }
+        else
+        {
+            flights = await _flightService.GetAllFlightsAsync(filter, searchTerm);
+        }
+
         var airports = await _airportService.GetAllAirportsAsync();
 
         var viewModel = new FlightsViewModel
