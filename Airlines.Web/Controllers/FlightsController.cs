@@ -25,10 +25,12 @@ public class FlightsController : Controller
         {
             flights = await _flightService.GetAllFlightsAsync(filter, searchTerm);
         }
+
         else if (!string.IsNullOrEmpty(timePeriod))
         {
             flights = await _flightService.GetAllFlightForTimePeriod(timePeriod);
         }
+
         else
         {
             flights = await _flightService.GetAllFlightsAsync();

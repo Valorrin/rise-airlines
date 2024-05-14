@@ -9,6 +9,8 @@ public interface IAirportRepository
 
     public Task<int> GetAirportsCountAsync();
 
+    Task<Airport> GetAirportByNameAsync(string name);
+
     public Task<bool> AddAirportAsync(Airport airport);
 
     public Task<bool> UpdateAirportAsync(int id, Airport airport);

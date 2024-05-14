@@ -36,14 +36,13 @@ public class FlightRepository : IFlightRepository
         try
         {
             var flights = await _context.Flights
-                .Where(flight => EF.Property<string>(flight, filter) == value)
-                .ToListAsync();
-
-            foreach (var flight in flights)
-            {
-                _context.Entry(flight).Reference(f => f.ArrivalAirport).Load();
-                _context.Entry(flight).Reference(f => f.DepartureAirport).Load();
-            }
+            .Where(flight =>
+                filter == "DepartureAirport" ? flight.DepartureAirport.Name == value :
+                filter == "ArrivalAirport" ? flight.ArrivalAirport.Name == value :
+                EF.Property<string>(flight, filter) == value)
+            .Include(f => f.ArrivalAirport)
+            .Include(f => f.DepartureAirport)
+            .ToListAsync();
 
             return flights;
         }

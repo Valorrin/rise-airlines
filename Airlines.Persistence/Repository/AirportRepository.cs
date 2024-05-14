@@ -35,6 +35,8 @@ public class AirportRepository : IAirportRepository
         }
     }
 
+    public async Task<Airport> GetAirportByNameAsync(string name) => await _context.Airports.Where(a => a.Name == name).FirstOrDefaultAsync();
+
     public async Task<int> GetAirportsCountAsync()
     {
         try
