@@ -197,14 +197,31 @@ legend {
 }
 
 .search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     width: 50%;
     min-width: 450px;
+}
+
+#search-container-flights {
+    justify-content: flex-end;
 }
 
 .search-form {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    width: 60%;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.filter-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 40%;
     align-items: center;
     margin-bottom: 14px;
 }
@@ -214,16 +231,22 @@ select {
     border-radius: 6px;
 }
 
-    .search-form
-    input, .search-form select {
-        margin-bottom: 0px;
-        margin-right: 5px;
-    }
+.filter-form
+input, .filter-form select {
+    margin-bottom: 0px;
+    margin-right: 5px;
+}
+
+.search-form
+input, .search-form select {
+    margin-bottom: 0px;
+    margin-right: 5px;
+}
 
 .search-form-button {
     background-color: #fca311;
     margin-left: 5px;
-    height: 28px;
+    height: 26px;
     width: 20%;
     border: 0;
     color: #ffffff;

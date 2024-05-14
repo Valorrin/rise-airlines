@@ -17,17 +17,21 @@ public class FlightsController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(string searchTerm, string filter)
+    public async Task<IActionResult> Index(string searchTerm, string filter, string timePeriod)
     {
         List<FlightDto>? flights;
 
-        if (string.IsNullOrEmpty(searchTerm))
+        if (!string.IsNullOrEmpty(searchTerm))
         {
-            flights = await _flightService.GetAllFlightsAsync();
+            flights = await _flightService.GetAllFlightsAsync(filter, searchTerm);
+        }
+        else if (!string.IsNullOrEmpty(timePeriod))
+        {
+            flights = await _flightService.GetAllFlightForTimePeriod(timePeriod);
         }
         else
         {
-            flights = await _flightService.GetAllFlightsAsync(filter, searchTerm);
+            flights = await _flightService.GetAllFlightsAsync();
         }
 
         var airports = await _airportService.GetAllAirportsAsync();

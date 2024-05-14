@@ -1,4 +1,5 @@
-﻿using Airlines.Persistence.Repository.Interfaces;
+﻿using Airlines.Persistence.Entities;
+using Airlines.Persistence.Repository.Interfaces;
 using Airlines.Service.Dto;
 using Airlines.Service.Mappers;
 
@@ -23,6 +24,27 @@ public class FlightService : IFlightService
     {
         var flights = await _flightRepository.GetAllFlightsByFilterAsync(filter, value);
         return flights.Select(_flightMapper.MapFlight).ToList();
+    }
+    public async Task<List<FlightDto>> GetAllFlightForTimePeriod(string timePeriod)
+    {
+        List<Flight> flights = [];
+
+        if (timePeriod == "day")
+        {
+            flights = await _flightRepository.GetAllFlightsForTodayAsync();
+        }
+
+        else if (timePeriod == "week")
+        {
+            flights = await _flightRepository.GetAllFlightsForThisWeekAsync();
+        }
+
+        else if (timePeriod == "month")
+        {
+            flights = await _flightRepository.GetAllFlightsForThisMonthAsync();
+        }
+
+        return flights.Select(_flightMapper.MapFlight).ToList(); ;
     }
     public async Task<int> GetFlightsCountAsync() => await _flightRepository.GetFlightsCountAsync();
     public async Task<bool> AddFlightAsync(FlightDto flightDto) => await _flightRepository.AddFlightAsync(_flightMapper.MapFlight(flightDto));

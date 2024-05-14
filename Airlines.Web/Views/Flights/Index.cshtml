@@ -6,7 +6,16 @@
     </a>
     <h2>Flights</h2>
 </div>
-<div class="search-container">
+<div class="search-container" id="search-container-flights">
+    <form class="filter-form" asp-controller="Flights" asp-action="Index" method="get">
+        <select name="timePeriod">
+            <option value="">Select time period</option>
+            <option value="day">Flights in one day</option>
+            <option value="week">Flights in one week</option>
+            <option value="month">Flights in one month</option>
+        </select>
+        <button class="search-form-button">Filter</button>
+    </form>
     <form class="search-form" asp-controller="Flights" asp-action="Index" method="get">
         <input type="text" placeholder="search" name="searchTerm" />
         <select name="filter">
