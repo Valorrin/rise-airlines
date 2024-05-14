@@ -268,10 +268,31 @@ input, .search-form select {
     font-weight: 700;
 }
 
-    .submit-form-button:hover {
-        background-color: #14213d;
-        transition: all 0.3s ease;
-    }
+.toggle-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 80%;
+    min-width: 450px;
+    margin-bottom: 10px;
+}
+
+.toggle-button {
+    background-color: #fca311;
+    margin-left: 5px;
+    height: 26px;
+    width: 100px;
+    border: 0;
+    color: #ffffff;
+    font-size: 12px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.submit-form-button:hover {
+    background-color: #14213d;
+    transition: all 0.3s ease;
+}
 
 input,
 textarea {
