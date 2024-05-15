@@ -53,8 +53,10 @@
         </tbody>
     </table>
 </div>
-<div class="form-wrapper">
+<div class="show-form-button-container">
     <button class="show-form-button">Show Form</button>
+</div>
+<div class="form-wrapper">
     <form asp-controller="Airlines" asp-action="AddAirline" method="post">
         @if (Model.Airlines.Any())
         {
@@ -106,9 +108,7 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/validation.js"></script>
+    <script src="~/js/airline-alidation.js"></script>
     <script src="~/js/hideTable.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
+    <script src ="~/js/animation.js"></script>
 }

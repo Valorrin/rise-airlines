@@ -4,6 +4,10 @@ const foundedInputElement = document.querySelector("input[name='Founded']");
 const fleetSizeInputElement = document.querySelector("input[name='FleetSize']");
 const descriptionTextAreaElement = document.querySelector("textarea[name='Description']");
 const submitButtonElement = document.querySelector(".submit-form-button");
+const countryInputElement = document.querySelector("input[name='Country']");
+const cityInputElement = document.querySelector("input[name='City']");
+const codeInputElement = document.querySelector("input[name='Code']");
+const runwaysInputElement = document.querySelector("input[name='Runways']");
 
 formElement.addEventListener("change", validateForm);
 nameInputElement.addEventListener("blur", validateName);
@@ -12,10 +16,10 @@ fleetSizeInputElement.addEventListener("blur", validateFleetSize);
 descriptionTextAreaElement.addEventListener("blur", validateDescription);
 
 function validateForm() {
-    const isFormValid = validateName(false) &&
-        validateFounded(false) &&
-        validateFleetSize(false) &&
-        validateDescription(false);
+    const isFormValid = validateName() &&
+        validateFounded() &&
+        validateFleetSize() &&
+        validateDescription();
 
     if (isFormValid) {
         submitButtonElement.removeAttribute("disabled");
@@ -31,6 +35,9 @@ function validateName() {
 
     if (name === '') {
         nameError.textContent = 'Name is required';
+        return false;
+    } else if (name.length > 6) {
+        nameError.textContent = 'Name must be no more than 6 characters long';
         return false;
     } else if (!/^[A-Za-z\s]+$/.test(name)) {
         nameError.textContent = 'Name must only contain letters and spaces';
@@ -58,6 +65,7 @@ function validateFounded() {
         return true;
     }
 }
+
 function validateFleetSize() {
     let fleetSizeInput = document.getElementById('fleetSize');
     let fleetSizeError = document.getElementById('fleetSize-error');

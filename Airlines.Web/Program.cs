@@ -9,7 +9,7 @@ using Airlines.Service.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("Home");
+var connectionString = builder.Configuration.GetConnectionString("Local");
 builder.Services.AddDbContext<AirlinesDBContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddControllersWithViews();
 

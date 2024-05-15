@@ -59,37 +59,39 @@
         </tbody>
     </table>
 </div>
-<div class="form-wrapper">
+<div class="show-form-button-container">
     <button class="show-form-button">Show Form</button>
-    <form name="airportForm" asp-controller="Airports" asp-action="AddAirport" method="post" onsubmit="return validateForm()">
+</div>
+<div class="form-wrapper">
+    <form asp-controller="Airports" asp-action="AddAirport" method="post">
         @if (Model.Airports.Any())
         {
             <fieldset>
                 <legend>Add New Airline</legend>
 
                 <label asp-for="Airports.Last().Name">Name</label>
-                <input asp-for="Airports.Last().Name" class="form-control" id="Name">
-                <span asp-validation-for="Airports.Last().Name" class="text-danger" id="error-message-Name"></span>
+                <input asp-for="Airports.Last().Name" class="form-control" id="name">
+                <span asp-validation-for="Airports.Last().Name" class="text-danger" id="name-error"></span>
 
                 <label asp-for="Airports.Last().Country">Country</label>
-                <input asp-for="Airports.Last().Country" class="form-control">
-                <span asp-validation-for="Airports.Last().Country" class="text-danger"></span>
+                <input asp-for="Airports.Last().Country" class="form-control" id="country">
+                <span asp-validation-for="Airports.Last().Country" class="text-danger" id="country-error"></span>
 
                 <label asp-for="Airports.Last().City">City</label>
-                <input asp-for="Airports.Last().City" class="form-control">
-                <span asp-validation-for="Airports.Last().City" class="text-danger"></span>
+                <input asp-for="Airports.Last().City" class="form-control" id="city">
+                <span asp-validation-for="Airports.Last().City" class="text-danger" id="city-error"></span>
 
                 <label asp-for="Airports.Last().Code">Code</label>
-                <input asp-for="Airports.Last().Code" class="form-control">
-                <span asp-validation-for="Airports.Last().Code" class="text-danger"></span>
+                <input asp-for="Airports.Last().Code" class="form-control" id="code">
+                <span asp-validation-for="Airports.Last().Code" class="text-danger" id="code-error"></span>
 
                 <label asp-for="Airports.Last().Runways">Runways</label>
-                <input asp-for="Airports.Last().Runways" class="form-control" type="number">
-                <span asp-validation-for="Airports.Last().Runways" class="text-danger"></span>
+                <input asp-for="Airports.Last().Runways" class="form-control" id="runways" type="number">
+                <span asp-validation-for="Airports.Last().Runways" class="text-danger" id="runways-error"></span>
 
                 <label asp-for="Airports.Last().Founded">Founded</label>
-                <input asp-for="Airports.Last().Founded" class="form-control" type="date">
-                <span asp-validation-for="Airports.Last().Founded" class="text-danger"></span>
+                <input asp-for="Airports.Last().Founded" class="form-control" id="founded" type="date">
+                <span asp-validation-for="Airports.Last().Founded" class="text-danger" id="founded-error"></span>
 
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>
@@ -100,31 +102,36 @@
                 <legend>Add New Airline</legend>
                 <label for="Name">Name</label>
                 <input name="Name" class="form-control">
-                <span asp-validation-for="Airports.Last().Name" class="text-danger"></span>
+                <span asp-validation-for="Airports.Last().Name" class="text-danger" id="name-error"></span>
 
                 <label for="Country">Country</label>
                 <input name="Country" class="form-control">
-                <span asp-validation-for="Airports.Last().Country" class="text-danger"></span>
+                <span asp-validation-for="Airports.Last().Country" class="text-danger" id="country-error"></span>
 
                 <label for="City">City</label>
                 <input name="City" class="form-control">
-                <span asp-validation-for="Airports.Last().City" class="text-danger"></span>
+                <span asp-validation-for="Airports.Last().City" class="text-danger" id="city-error"></span>
 
                 <label for="Code">Code</label>
                 <input name="Code" class="form-control">
-                <span asp-validation-for="Airports.Last().Code" class="text-danger"></span>
+                <span asp-validation-for="Airports.Last().Code" class="text-danger" id="code-error"></span>
 
                 <label for="Runways">Runways</label>
                 <input name="Runways" class="form-control" type="number">
-                <span asp-validation-for="Airports.Last().Runways" class="text-danger"></span>
-
+                <span asp-validation-for="Airports.Last().Runways" class="text-danger" id="runways-error"></span>
 
                 <label for="Founded">Founded</label>
                 <input name="Founded" class="form-control" type="date">
-                <span asp-validation-for="Airports.Last().Runways" class="text-danger"></span>
+                <span asp-validation-for="Airports.Last().Founded" class="text-danger" id="founded-error"></span>
 
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>
         }
     </form>
 </div>
+
+@section Scripts {
+    <script src="~/js/airport-validation.js"></script>
+    <script src="~/js/hideTable.js"></script>
+    <script src="~/js/animation.js"></script>
+}

@@ -1,12 +1,20 @@
 window.addEventListener('load', function () {
-    let formElement = document.querySelector('.form-wrapper');
     let toggleTableButton = document.querySelector('.toggle-button');
     let tableElement = document.querySelector('.table-container');
+
+    let toggleFormButton = document.querySelector('.show-form-button');
+    let formElement = document.querySelector('.form-wrapper');
+
 
     formElement.style.display = 'none';
     toggleTableButton.onclick = function () {
         tableElement.style.display = (tableElement.style.display === 'none') ? 'flex' : 'none';
         toggleTableButton.textContent = (tableElement.style.display === 'none') ? 'Show Table' : 'Hide Table';
+    };
+
+    toggleFormButton.onclick = function () {
+        formElement.style.display = (formElement.style.display === 'none') ? 'flex' : 'none';
+        toggleFormButton.textContent = (formElement.style.display === 'none') ? 'Show Form' : 'Hide Form';
     };
 
     let table = document.querySelector('.table-container table');
