@@ -88,19 +88,19 @@
                 <legend>Add New Airline</legend>
                 <label for="Name">Name:</label>
                 <input name="Name" class="form-control">
-                <span asp-validation-for="Airlines.Last().Name" class="text-danger"></span>
+                <span asp-validation-for="Airlines.Last().Name" class="text-danger" id="name-error"></span>
 
                 <label for="Founded">Founded:</label>
                 <input name="Founded" class="form-control" type="date">
-                <span asp-validation-for="Airlines.Last().Founded" class="text-danger"></span>
+                <span asp-validation-for="Airlines.Last().Founded" class="text-danger" id="founded-error"></span>
 
                 <label for="FleetSize">Fleet Size:</label>
                 <input name="FleetSize" class="form-control" type="number">
-                <span asp-validation-for="Airlines.Last().FleetSize" class="text-danger"></span>
+                <span asp-validation-for="Airlines.Last().FleetSize" class="text-danger" id="fleetSize-error"></span>
 
                 <label for="Description">Description:</label>
                 <textarea name="Description" class="form-control"></textarea>
-                <span asp-validation-for="Airlines.Last().Description" class="text-danger"></span>
+                <span asp-validation-for="Airlines.Last().Description" class="text-danger" id="description-error"></span>
 
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>
