@@ -134,6 +134,10 @@ tbody tr {
     white-space: nowrap;
 }
 
+#go-to-top-button {
+    display: none;
+}
+
 tr:hover {
     overflow: visible;
     white-space: initial;

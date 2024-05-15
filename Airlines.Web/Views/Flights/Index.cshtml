@@ -7,7 +7,7 @@
     <h2>Flights</h2>
 </div>
 <div class="toggle-button-container">
-    <button class="toggle-button">Toggle table</button>
+    <button class="toggle-button">Hide table</button>
 </div>
 <div class="search-container" id="search-container-flights">
     <form class="filter-form" asp-controller="Flights" asp-action="Index" method="get">
@@ -64,6 +64,7 @@
             }
         </tbody>
     </table>
+    <button id="go-to-top-button">^</button>
 </div>
 <div class="show-form-button-container">
     <button class="show-form-button">Show Form</button>
@@ -144,7 +145,7 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/flight-validation.js"></script>
-    <script src="~/js/hideTable.js"></script>
+    <script src="~/js/validation/flight-validation.js"></script>
+    <script src="~/js/interactions.js"></script>
     <script src="~/js/animation.js"></script>
 }
