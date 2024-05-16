@@ -9,6 +9,7 @@ public interface IAirlineService
     Task<List<AirlineDto>> GetAllAirlinesAsync(string filter, string value);
     Task<int> GetAirlinesCountAsync();
     Task<bool> AddAirlineAsync(AirlineDto airlineDto);
+    Task<bool> UpdateAirlineAsync(AirlineDto updatedAirline);
     Task<bool> UpdateAirlineAsync(int id, AirlineDto updatedAirline);
     Task<bool> DeleteAirlineAsync(int id);
     Task<bool> IsAirlineNameUniqueAsync(string name);

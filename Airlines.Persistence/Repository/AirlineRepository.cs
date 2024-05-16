@@ -62,6 +62,20 @@ public class AirlineRepository : IAirlineRepository
         }
     }
 
+    public async Task<bool> UpdateAirlineAsync(Airline airline)
+    {
+        try
+        {
+            _context.Update(airline);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
     public async Task<bool> UpdateAirlineAsync(int id, Airline airline)
     {
         try
