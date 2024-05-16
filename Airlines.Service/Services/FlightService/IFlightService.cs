@@ -3,6 +3,7 @@
 namespace Airlines.Service.Services.FlightService;
 public interface IFlightService
 {
+    Task<FlightDto?> GetFlightByIdAsync(int id);
     Task<List<FlightDto>> GetAllFlightsAsync();
     Task<List<FlightDto>> GetAllFlightsAsync(string filter, string value);
     Task<int> GetFlightsCountAsync();

@@ -13,6 +13,11 @@ public class AirlineService : IAirlineService
         _mapper = mapper;
     }
 
+    public async Task<AirlineDto?> GetAirlineByIdAsync(int id)
+    {
+        var airline = await _airlineRepository.GetAirlineByIdAsync(id);
+        return airline != null ? _mapper.MapAirline(airline) : null;
+    }
     public async Task<List<AirlineDto>> GetAllAirlinesAsync()
     {
         var airlines = await _airlineRepository.GetAllAirlinesAsync();

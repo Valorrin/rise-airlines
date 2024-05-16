@@ -9,6 +9,8 @@ public class AirlineRepository : IAirlineRepository
 
     public AirlineRepository(AirlinesDBContext context) => _context = context;
 
+    public async Task<Airline?> GetAirlineByIdAsync(int id) => await _context.Airlines.FirstOrDefaultAsync(a => a.AirlineId == id);
+
     public async Task<List<Airline>> GetAllAirlinesAsync()
     {
         try
@@ -17,7 +19,6 @@ public class AirlineRepository : IAirlineRepository
         }
         catch (Exception)
         {
-            Console.WriteLine("There is no airline data!");
             return [];
         }
     }
@@ -30,7 +31,6 @@ public class AirlineRepository : IAirlineRepository
         }
         catch (Exception)
         {
-            Console.WriteLine("There is no airline data!");
             return [];
         }
     }

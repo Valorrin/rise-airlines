@@ -10,6 +10,8 @@ public class FlightRepository : IFlightRepository
 
     public FlightRepository(AirlinesDBContext context) => _context = context;
 
+    public async Task<Flight?> GetFlightByIdAsync(int id) => await _context.Flights.FirstOrDefaultAsync(a => a.FlightId == id);
+
     public async Task<List<Flight>> GetAllFlightsAsync()
     {
         try
@@ -26,7 +28,6 @@ public class FlightRepository : IFlightRepository
         }
         catch (Exception)
         {
-            Console.WriteLine("There is no flight data!");
             return [];
         }
     }
@@ -48,7 +49,6 @@ public class FlightRepository : IFlightRepository
         }
         catch (Exception)
         {
-            Console.WriteLine("There is no flight data!");
             return [];
         }
     }

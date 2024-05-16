@@ -4,6 +4,7 @@ namespace Airlines.Service.Services.AirlineService;
 
 public interface IAirlineService
 {
+    Task<AirlineDto?> GetAirlineByIdAsync(int id);
     Task<List<AirlineDto>> GetAllAirlinesAsync();
     Task<List<AirlineDto>> GetAllAirlinesAsync(string filter, string value);
     Task<int> GetAirlinesCountAsync();

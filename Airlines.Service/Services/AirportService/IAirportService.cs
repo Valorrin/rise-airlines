@@ -3,6 +3,7 @@
 namespace Airlines.Service.Services.AirportService;
 public interface IAirportService
 {
+    Task<AirportDto?> GetAirportByIdAsync(int id);
     Task<List<AirportDto>> GetAllAirportsAsync();
     Task<List<AirportDto>> GetAllAirportsAsync(string filter, string value);
     Task<int> GetAirportsCountAsync();
