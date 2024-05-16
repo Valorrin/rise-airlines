@@ -107,11 +107,11 @@
             <fieldset>
                 <legend>Add New Flight</legend>
                 <label for="Number">Number:</label>
-                <input name="Number" class="form-control">
+                <input name="Number" class="form-control" id="number">
                 <span asp-validation-for="Flights.Last().Number" class="text-danger" id="number-error"></span>
 
                 <label for="DepartureAirportId">From:</label>
-                <select name="DepartureAirportId" class="form-control">
+                <select name="DepartureAirportId" class="form-control" id="from">
                     <option value="">Select Departure Airport</option>
                     @foreach (var airport in Model.Airports)
                     {
@@ -121,7 +121,7 @@
                 <span asp-validation-for="Flights.Last().DepartureAirportId" class="text-danger" id="from-error"></span>
 
                 <label for="ArrivalAirportId">To:</label>
-                <select name="ArrivalAirportId" class="form-control">
+                <select name="ArrivalAirportId" class="form-control" id="to">
                     <option value="">Select Arrival Airport</option>
                     @foreach (var airport in Model.Airports)
                     {
@@ -131,11 +131,11 @@
                 <span asp-validation-for="Flights.Last().ArrivalAirportId" class="text-danger" id="to-error"></span>
 
                 <label for="DepartureDateTime">Departure Time:</label>
-                <input name="DepartureDateTime" class="form-control" type="datetime-local">
+                <input name="DepartureDateTime" class="form-control" type="datetime-local" id="departureTime">
                 <span asp-validation-for="Flights.Last().DepartureDateTime" class="text-danger" id="depertureTime-error"></span>
 
                 <label for="ArrivalDateTime">Arrival Time:</label>
-                <input name="ArrivalDateTime" class="form-control" type="datetime-local">
+                <input name="ArrivalDateTime" class="form-control" type="datetime-local" id="arrivalTime">
                 <span asp-validation-for="Flights.Last().ArrivalDateTime" class="text-danger" id="arrivalTime-error"></span>
 
                 <input type="submit" value="Submit" class="submit-form-button">

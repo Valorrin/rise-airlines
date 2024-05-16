@@ -39,9 +39,6 @@ function validateName() {
     } else if (name.length > 6) {
         nameError.textContent = 'Name must be no more than 6 characters long';
         return false;
-    } else if (!/^[A-Za-z\s]+$/.test(name)) {
-        nameError.textContent = 'Name must only contain letters and spaces';
-        return false;
     } else {
         nameError.textContent = '';
         return true;
