@@ -6,6 +6,9 @@
     </a>
     <h2>Airlines</h2>
 </div>
+<div class="toggle-button-container">
+    <button class="toggle-button">Hide table</button>
+</div>
 <div class="search-container">
     <form class="search-form" asp-controller="Airlines" asp-action="Index" method="get">
         <input type="text" placeholder="search" name="searchTerm" />
@@ -49,29 +52,32 @@
             }
         </tbody>
     </table>
+    <button id="go-to-top-button">^</button>
+</div>
+<div class="show-form-button-container">
+    <button class="show-form-button">Show Form</button>
 </div>
 <div class="form-wrapper">
-    <button class="show-form-button">Show Form</button>
     <form asp-controller="Airlines" asp-action="AddAirline" method="post">
         @if (Model.Airlines.Any())
         {
             <fieldset>
                 <legend>Add New Airline</legend>
                 <label asp-for="Airlines.Last().Name">Name:</label>
-                <input asp-for="Airlines.Last().Name" class="form-control">
-                <span asp-validation-for="Airlines.Last().Name" class="text-danger"></span>
+                <input asp-for="Airlines.Last().Name" class="form-control" id="name">
+                <span asp-validation-for="Airlines.Last().Name" class="text-danger" id="name-error"></span>
 
                 <label asp-for="Airlines.Last().Founded">Founded:</label>
-                <input asp-for="Airlines.Last().Founded" class="form-control" type="date">
-                <span asp-validation-for="Airlines.Last().Founded" class="text-danger"></span>
+                <input asp-for="Airlines.Last().Founded" class="form-control" type="date" id="founded">
+                <span asp-validation-for="Airlines.Last().Founded" class="text-danger" id="founded-error"></span>
 
                 <label asp-for="Airlines.Last().FleetSize">Fleet Size:</label>
-                <input asp-for="Airlines.Last().FleetSize" class="form-control" type="number">
-                <span asp-validation-for="Airlines.Last().FleetSize" class="text-danger"></span>
+                <input asp-for="Airlines.Last().FleetSize" class="form-control" type="number" id="fleetSize">
+                <span asp-validation-for="Airlines.Last().FleetSize" class="text-danger" id="fleetSize-error"></span>
 
                 <label asp-for="Airlines.Last().Description">Description:</label>
-                <textarea asp-for="Airlines.Last().Description" class="form-control"></textarea>
-                <span asp-validation-for="Airlines.Last().Description" class="text-danger"></span>
+                <textarea asp-for="Airlines.Last().Description" class="form-control" id="description"></textarea>
+                <span asp-validation-for="Airlines.Last().Description" class="text-danger" id="description-error"></span>
 
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>
@@ -81,23 +87,29 @@
             <fieldset>
                 <legend>Add New Airline</legend>
                 <label for="Name">Name:</label>
-                <input name="Name" class="form-control">
-                <span asp-validation-for="Airlines.Last().Name" class="text-danger"></span>
+                <input name="Name" class="form-control" id="name">
+                <span asp-validation-for="Airlines.Last().Name" class="text-danger" id="name-error"></span>
 
                 <label for="Founded">Founded:</label>
-                <input name="Founded" class="form-control" type="date">
-                <span asp-validation-for="Airlines.Last().Founded" class="text-danger"></span>
+                <input name="Founded" class="form-control" type="date" id="founded">
+                <span asp-validation-for="Airlines.Last().Founded" class="text-danger" id="founded-error"></span>
 
                 <label for="FleetSize">Fleet Size:</label>
-                <input name="FleetSize" class="form-control" type="number">
-                <span asp-validation-for="Airlines.Last().FleetSize" class="text-danger"></span>
+                <input name="FleetSize" class="form-control" type="number" id="fleetSize">
+                <span asp-validation-for="Airlines.Last().FleetSize" class="text-danger" id="fleetSize-error"></span>
 
                 <label for="Description">Description:</label>
-                <textarea name="Description" class="form-control"></textarea>
-                <span asp-validation-for="Airlines.Last().Description" class="text-danger"></span>
+                <textarea name="Description" class="form-control" id="description"></textarea>
+                <span asp-validation-for="Airlines.Last().Description" class="text-danger" id="description-error"></span>
 
                 <input type="submit" value="Submit" class="submit-form-button">
             </fieldset>
         }
     </form>
 </div>
+
+@section Scripts {
+    <script src="~/js/validation/airline-validation.js"></script>
+    <script src="~/js/interactions.js"></script>
+    <script src ="~/js/animation.js"></script>
+}
