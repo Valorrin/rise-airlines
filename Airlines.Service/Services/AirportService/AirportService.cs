@@ -7,6 +7,7 @@ public class AirportService : IAirportService
 {
     private readonly IAirportRepository _airportRepository;
     private readonly AirportMapper _mapper;
+
     public AirportService(IAirportRepository airportRepository, AirportMapper mapper)
     {
         _airportRepository = airportRepository;
