@@ -6,3 +6,5 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0058:Expression value is never used", Justification = "<Pending>")]
+[assembly: SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Web.Api.Controllers.AirlinesController.GetOne(System.Int32)~System.Threading.Tasks.Task{Microsoft.AspNetCore.Mvc.ActionResult{Airlines.Service.Dto.AirlineDto}}")]
+[assembly: SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "<Pending>", Scope = "member", Target = "~M:Airlines.Web.Api.Controllers.AirlinesController.GetAll~System.Threading.Tasks.Task{Microsoft.AspNetCore.Mvc.ActionResult{System.Collections.Generic.List{Airlines.Service.Dto.AirlineDto}}}")]

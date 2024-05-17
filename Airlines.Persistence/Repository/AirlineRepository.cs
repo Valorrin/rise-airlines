@@ -9,7 +9,18 @@ public class AirlineRepository : IAirlineRepository
 
     public AirlineRepository(AirlinesDBContext context) => _context = context;
 
-    public async Task<Airline?> GetAirlineByIdAsync(int id) => await _context.Airlines.FirstOrDefaultAsync(a => a.AirlineId == id);
+    public async Task<Airline?> GetAirlineByIdAsync(int id)
+    {
+        try
+        {
+            var airline = await _context.Airlines.FirstOrDefaultAsync(a => a.AirlineId == id);
+            return airline;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while retrieving the airline by ID.", ex);
+        }
+    }
 
     public async Task<List<Airline>> GetAllAirlinesAsync()
     {
@@ -17,9 +28,9 @@ public class AirlineRepository : IAirlineRepository
         {
             return await _context.Airlines.ToListAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return [];
+            throw new Exception("An error occurred while retrieving all airlines.", ex);
         }
     }
 
@@ -29,9 +40,9 @@ public class AirlineRepository : IAirlineRepository
         {
             return await _context.Airlines.Where(airline => EF.Property<string>(airline, filter) == value).ToListAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return [];
+            throw new Exception("An error occurred while retrieving airlines by filter.", ex);
         }
     }
 
@@ -44,9 +55,9 @@ public class AirlineRepository : IAirlineRepository
 
             return airline;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return null;
+            throw new Exception("An error occurred while adding the airline.", ex);
         }
     }
 
@@ -58,9 +69,9 @@ public class AirlineRepository : IAirlineRepository
             await _context.SaveChangesAsync();
             return airline;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return null;
+            throw new Exception("An error occurred while updating the airline.", ex);
         }
     }
 
@@ -80,9 +91,9 @@ public class AirlineRepository : IAirlineRepository
             }
             return airline;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return null;
+            throw new Exception("An error occurred while updating the airline.", ex);
         }
     }
 
@@ -98,9 +109,9 @@ public class AirlineRepository : IAirlineRepository
             }
             return airline;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return null;
+            throw new Exception("An error occurred while deleting the airline.", ex);
         }
     }
 
@@ -110,9 +121,9 @@ public class AirlineRepository : IAirlineRepository
         {
             return await _context.Airlines.CountAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return 0;
+            throw new Exception("An error occurred while retrieving the count of airlines.", ex);
         }
     }
 
@@ -122,9 +133,9 @@ public class AirlineRepository : IAirlineRepository
         {
             return await _context.Airlines.AnyAsync(a => a.Name == name);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception("An error occurred while checking if the airline name is unique.", ex);
         }
     }
 }
