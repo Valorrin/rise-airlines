@@ -6,6 +6,7 @@ using Airlines.Service.Services.AirlineService;
 using Airlines.Service.Services.AirportService;
 using Airlines.Service.Services.FlightService;
 using Airlines.Service.Mappers;
+using YourProject.Web.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
