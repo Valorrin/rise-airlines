@@ -32,8 +32,6 @@ public class AirlineService : IAirlineService
         return airlines.Select(_mapper.MapAirline).ToList();
     }
 
-    public async Task<int> GetAirlinesCountAsync() => await _airlineRepository.GetAirlinesCountAsync();
-
     public async Task<AirlineDto?> AddAirlineAsync(AirlineDto airlineDto)
     {
         var airline = await _airlineRepository.AddAirlineAsync(_mapper.MapAirline(airlineDto));
@@ -57,6 +55,8 @@ public class AirlineService : IAirlineService
         var airline = await _airlineRepository.DeleteAirlineAsync(id);
         return airline != null ? _mapper.MapAirline(airline) : null;
     }
+
+    public async Task<int> GetAirlinesCountAsync() => await _airlineRepository.GetAirlinesCountAsync();
 
     public async Task<bool> IsAirlineNameUniqueAsync(string name) => name != null && await _airlineRepository.IsAirlineNameUniqueAsync(name);
 

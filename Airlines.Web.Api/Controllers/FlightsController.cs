@@ -12,6 +12,19 @@ public class FlightsController : ControllerBase
 
     public FlightsController(IFlightService flightService) => _flightService = flightService;
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<FlightDto>> GetOne(int id)
+    {
+        var flight = await _flightService.GetFlightByIdAsync(id);
+
+        if (flight == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(flight);
+    }
+
     [HttpGet]
     public async Task<ActionResult<List<FlightDto>>> GetAll()
     {
@@ -25,17 +38,11 @@ public class FlightsController : ControllerBase
         return Ok(flights);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<FlightDto>> GetOne(int id)
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetCount()
     {
-        var flight = await _flightService.GetFlightByIdAsync(id);
-
-        if (flight == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(flight);
+        var count = await _flightService.GetFlightsCountAsync();
+        return Ok(count);
     }
 
     [HttpPost]

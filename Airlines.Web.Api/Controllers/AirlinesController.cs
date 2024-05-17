@@ -12,6 +12,19 @@ public class AirlinesController : ControllerBase
 
     public AirlinesController(IAirlineService airlineService) => _airlineService = airlineService;
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<AirlineDto>> GetOne(int id)
+    {
+        var airline = await _airlineService.GetAirlineByIdAsync(id);
+
+        if (airline == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(airline);
+    }
+
     [HttpGet]
     public async Task<ActionResult<List<AirlineDto>>> GetAll()
     {
@@ -25,18 +38,13 @@ public class AirlinesController : ControllerBase
         return Ok(airlines);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<AirlineDto>> GetOne(int id)
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> GetCount()
     {
-        var airline = await _airlineService.GetAirlineByIdAsync(id);
-
-        if (airline == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(airline);
+        var count = await _airlineService.GetAirlinesCountAsync();
+        return Ok(count);
     }
+
 
     [HttpPost]
     public async Task<ActionResult<AirlineDto>> Create([FromBody] AirlineDto airlineDTO)

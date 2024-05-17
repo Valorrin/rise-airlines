@@ -32,8 +32,6 @@ public class AirportService : IAirportService
         return airports.Select(_mapper.MapAirport).ToList();
     }
 
-    public async Task<int> GetAirportsCountAsync() => await _airportRepository.GetAirportsCountAsync();
-
     public async Task<AirportDto?> AddAirportAsync(AirportDto airporteDto)
     {
         var airport = await _airportRepository.AddAirportAsync(_mapper.MapAirport(airporteDto));
@@ -57,6 +55,8 @@ public class AirportService : IAirportService
         var airport = await _airportRepository.DeleteAirportAsync(id);
         return airport != null ? _mapper.MapAirport(airport) : null;
     }
+
+    public async Task<int> GetAirportsCountAsync() => await _airportRepository.GetAirportsCountAsync();
 
     public async Task<bool> IsAirportCodeUniqueAsync(string code) => code != null && await _airportRepository.IsAirportCodeUniqueAsync(code);
 
