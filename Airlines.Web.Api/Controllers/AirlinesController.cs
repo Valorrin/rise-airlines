@@ -45,7 +45,6 @@ public class AirlinesController : ControllerBase
         return Ok(count);
     }
 
-
     [HttpPost]
     public async Task<ActionResult<AirlineDto>> Create([FromBody] AirlineDto airlineDTO)
     {
@@ -76,6 +75,11 @@ public class AirlinesController : ControllerBase
     public async Task<ActionResult<AirlineDto>> Delete(int id)
     {
         var airline = await _airlineService.DeleteAirlineAsync(id);
+
+        if (airline == null)
+        {
+            return NotFound();
+        }
 
         return Ok(airline);
     }

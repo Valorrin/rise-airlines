@@ -76,6 +76,11 @@ public class AirportsController : ControllerBase
     {
         var airport = await _airportService.DeleteAirportAsync(id);
 
+        if (airport == null)
+        {
+            return NotFound();
+        }
+
         return Ok(airport);
     }
 }

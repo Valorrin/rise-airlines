@@ -76,6 +76,11 @@ public class FlightsController : ControllerBase
     {
         var flight = await _flightService.DeleteFlightAsync(id);
 
+        if (flight == null)
+        {
+            return NotFound();
+        }
+
         return Ok(flight);
     }
 }
