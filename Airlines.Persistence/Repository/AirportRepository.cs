@@ -50,6 +50,20 @@ public class AirportRepository : IAirportRepository
         }
     }
 
+    public async Task<Airport?> UpdateAirportAsync(Airport airport)
+    {
+        try
+        {
+            _context.Update(airport);
+            await _context.SaveChangesAsync();
+            return airport;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
     public async Task<Airport?> UpdateAirportAsync(int id, Airport airport)
     {
         try

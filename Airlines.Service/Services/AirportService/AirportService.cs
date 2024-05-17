@@ -39,6 +39,12 @@ public class AirportService : IAirportService
         return airport != null ? _mapper.MapAirport(airport) : null;
     }
 
+    public async Task<AirportDto?> UpdateAirportAsync(AirportDto updatedAirport)
+    {
+        var airport = await _airportRepository.UpdateAirportAsync(_mapper.MapAirport(updatedAirport));
+        return airport != null ? _mapper.MapAirport(airport) : null;
+    }
+
     public async Task<AirportDto?> UpdateAirportAsync(int id, AirportDto updatedAirport)
     {
         var airport = await _airportRepository.UpdateAirportAsync(id, _mapper.MapAirport(updatedAirport));

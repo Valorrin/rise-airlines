@@ -63,6 +63,12 @@ public class FlightService : IFlightService
         return flight != null ? _mapper.MapFlight(flight) : null;
     }
 
+    public async Task<FlightDto?> UpdateFlightAsync(FlightDto updatedFlight)
+    {
+        var flight = await _flightRepository.UpdateFlightAsync(_mapper.MapFlight(updatedFlight));
+        return flight != null ? _mapper.MapFlight(flight) : null;
+    }
+
     public async Task<FlightDto?> UpdateFlightAsync(int id, FlightDto updatedFlight)
     {
         var flight = await _flightRepository.UpdateFlightAsync(id, _mapper.MapFlight(updatedFlight));

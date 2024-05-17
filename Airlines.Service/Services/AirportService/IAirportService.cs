@@ -7,6 +7,7 @@ public interface IAirportService
     Task<List<AirportDto>> GetAllAirportsAsync();
     Task<List<AirportDto>> GetAllAirportsAsync(string filter, string value);
     Task<AirportDto?> AddAirportAsync(AirportDto airporteDto);
+    Task<AirportDto?> UpdateAirportAsync(AirportDto updatedAirport);
     Task<AirportDto?> UpdateAirportAsync(int id, AirportDto updatedAirport);
     Task<AirportDto?> DeleteAirportAsync(int id);
     Task<int> GetAirportsCountAsync();

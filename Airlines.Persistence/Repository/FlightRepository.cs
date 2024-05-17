@@ -151,6 +151,20 @@ public class FlightRepository : IFlightRepository
         }
     }
 
+    public async Task<Flight?> UpdateFlightAsync(Flight flight)
+    {
+        try
+        {
+            _context.Update(flight);
+            await _context.SaveChangesAsync();
+            return flight;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
     public async Task<Flight?> UpdateFlightAsync(int id, Flight flight)
     {
         try

@@ -8,6 +8,7 @@ public interface IFlightService
     Task<List<FlightDto>> GetAllFlightsAsync(string filter, string value);
     Task<List<FlightDto>> GetAllFlightForTimePeriod(string timePeriod);
     Task<FlightDto?> AddFlightAsync(FlightDto flightDto);
+    Task<FlightDto?> UpdateFlightAsync(FlightDto updatedFlight);
     Task<FlightDto?> UpdateFlightAsync(int id, FlightDto updatedFlight);
     Task<FlightDto?> DeleteFlightAsync(int id);
     Task<int> GetFlightsCountAsync();

@@ -10,6 +10,7 @@ public interface IFlightRepository
     public Task<List<Flight>> GetAllFlightsForThisWeekAsync();
     public Task<List<Flight>> GetAllFlightsForThisMonthAsync();
     public Task<Flight?> AddFlightAsync(Flight flight);
+    public Task<Flight?> UpdateFlightAsync(Flight flight);
     public Task<Flight?> UpdateFlightAsync(int id, Flight flight);
     public Task<Flight?> DeleteFlightAsync(int id);
     public Task<int> GetFlightsCountAsync();

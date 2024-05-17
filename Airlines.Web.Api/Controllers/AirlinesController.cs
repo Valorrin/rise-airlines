@@ -46,14 +46,14 @@ public class AirlinesController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _airlineService.AddAirlineAsync(airlineDTO);
+        var airline = await _airlineService.AddAirlineAsync(airlineDTO);
 
-        if (result == null)
+        if (airline == null)
         {
             return StatusCode(500, new { message = "Internal server error." });
         }
 
-        return CreatedAtAction("Create", result);
+        return CreatedAtAction("Create", airline);
     }
 
     [HttpPut]
@@ -64,26 +64,26 @@ public class AirlinesController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var result = await _airlineService.UpdateAirlineAsync(airlineDTO);
+        var airline = await _airlineService.UpdateAirlineAsync(airlineDTO);
 
-        if (result == null)
+        if (airline == null)
         {
             return StatusCode(500, new { message = "Internal server error." });
         }
 
-        return Ok(result);
+        return Ok(airline);
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<AirlineDto>> Delete(int id)
     {
-        var result = await _airlineService.DeleteAirlineAsync(id);
+        var airline = await _airlineService.DeleteAirlineAsync(id);
 
-        if (result == null)
+        if (airline == null)
         {
             return StatusCode(500, new { message = "Internal server error." });
         }
 
-        return Ok(result);
+        return Ok(airline);
     }
 }
