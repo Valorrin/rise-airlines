@@ -136,22 +136,22 @@ public class FlightRepository : IFlightRepository
         }
     }
 
-    public async Task<bool> AddFlightAsync(Flight flight)
+    public async Task<Flight?> AddFlightAsync(Flight flight)
     {
         try
         {
             await _context.Flights.AddAsync(flight);
             await _context.SaveChangesAsync();
 
-            return true;
+            return flight;
         }
         catch (Exception)
         {
-            return false;
+            return null;
         }
     }
 
-    public async Task<bool> UpdateFlightAsync(int id, Flight flight)
+    public async Task<Flight?> UpdateFlightAsync(int id, Flight flight)
     {
         try
         {
@@ -165,18 +165,16 @@ public class FlightRepository : IFlightRepository
                 existingFlight.ArrivalDateTime = flight.ArrivalDateTime;
 
                 await _context.SaveChangesAsync();
-
-                return true;
             }
-            return false;
+            return flight;
         }
         catch (Exception)
         {
-            return false;
+            return null;
         }
     }
 
-    public async Task<bool> DeleteFlightAsync(int id)
+    public async Task<Flight?> DeleteFlightAsync(int id)
     {
         try
         {
@@ -185,13 +183,12 @@ public class FlightRepository : IFlightRepository
             {
                 _context.Flights.Remove(flight);
                 await _context.SaveChangesAsync();
-                return true;
             }
-            return false;
+            return flight;
         }
         catch (Exception)
         {
-            return false;
+            return null;
         }
     }
 }

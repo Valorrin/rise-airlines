@@ -35,34 +35,22 @@ public class AirportRepository : IAirportRepository
         }
     }
 
-    public async Task<int> GetAirportsCountAsync()
-    {
-        try
-        {
-            return await _context.Airports.CountAsync();
-        }
-        catch (Exception)
-        {
-            return 0;
-        }
-    }
-
-    public async Task<bool> AddAirportAsync(Airport airport)
+    public async Task<Airport?> AddAirportAsync(Airport airport)
     {
         try
         {
             await _context.Airports.AddAsync(airport);
             await _context.SaveChangesAsync();
 
-            return true;
+            return airport;
         }
         catch (Exception)
         {
-            return false;
+            return null;
         }
     }
 
-    public async Task<bool> UpdateAirportAsync(int id, Airport airport)
+    public async Task<Airport?> UpdateAirportAsync(int id, Airport airport)
     {
         try
         {
@@ -77,18 +65,16 @@ public class AirportRepository : IAirportRepository
                 existingAirport.Founded = airport.Founded;
 
                 await _context.SaveChangesAsync();
-
-                return true;
             }
-            return false;
+            return airport;
         }
         catch (Exception)
         {
-            return false;
+            return null;
         }
     }
 
-    public async Task<bool> DeleteAirportAsync(int id)
+    public async Task<Airport?> DeleteAirportAsync(int id)
     {
         try
         {
@@ -97,13 +83,24 @@ public class AirportRepository : IAirportRepository
             {
                 _context.Airports.Remove(airport);
                 await _context.SaveChangesAsync();
-                return true;
             }
-            return false;
+            return airport;
         }
         catch (Exception)
         {
-            return false;
+            return null;
+        }
+    }
+
+    public async Task<int> GetAirportsCountAsync()
+    {
+        try
+        {
+            return await _context.Airports.CountAsync();
+        }
+        catch (Exception)
+        {
+            return 0;
         }
     }
 

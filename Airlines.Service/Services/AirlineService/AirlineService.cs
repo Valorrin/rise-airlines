@@ -33,13 +33,29 @@ public class AirlineService : IAirlineService
 
     public async Task<int> GetAirlinesCountAsync() => await _airlineRepository.GetAirlinesCountAsync();
 
-    public async Task<bool> AddAirlineAsync(AirlineDto airlineDto) => await _airlineRepository.AddAirlineAsync(_mapper.MapAirline(airlineDto));
+    public async Task<AirlineDto?> AddAirlineAsync(AirlineDto airlineDto)
+    {
+        var airline = await _airlineRepository.AddAirlineAsync(_mapper.MapAirline(airlineDto));
+        return airline != null ? _mapper.MapAirline(airline) : null;
+    }
 
-    public async Task<bool> UpdateAirlineAsync(AirlineDto updatedAirline) => await _airlineRepository.UpdateAirlineAsync(_mapper.MapAirline(updatedAirline));
+    public async Task<AirlineDto?> UpdateAirlineAsync(AirlineDto updatedAirline)
+    {
+        var airline = await _airlineRepository.UpdateAirlineAsync(_mapper.MapAirline(updatedAirline));
+        return airline != null ? _mapper.MapAirline(airline) : null;
+    }
 
-    public async Task<bool> UpdateAirlineAsync(int id, AirlineDto updatedAirline) => await _airlineRepository.UpdateAirlineAsync(id, _mapper.MapAirline(updatedAirline));
+    public async Task<AirlineDto?> UpdateAirlineAsync(int id, AirlineDto updatedAirline)
+    {
+        var airline = await _airlineRepository.UpdateAirlineAsync(id, _mapper.MapAirline(updatedAirline));
+        return airline != null ? _mapper.MapAirline(airline) : null;
+    }
 
-    public async Task<bool> DeleteAirlineAsync(int id) => await _airlineRepository.DeleteAirlineAsync(id);
+    public async Task<AirlineDto?> DeleteAirlineAsync(int id)
+    {
+        var airline = await _airlineRepository.DeleteAirlineAsync(id);
+        return airline != null ? _mapper.MapAirline(airline) : null;
+    }
 
     public async Task<bool> IsAirlineNameUniqueAsync(string name) => name != null && await _airlineRepository.IsAirlineNameUniqueAsync(name);
 

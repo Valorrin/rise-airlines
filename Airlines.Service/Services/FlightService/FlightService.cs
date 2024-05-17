@@ -57,13 +57,25 @@ public class FlightService : IFlightService
         return flights.Select(_mapper.MapFlight).ToList(); ;
     }
 
+    public async Task<FlightDto?> AddFlightAsync(FlightDto flightDto)
+    {
+        var flight = await _flightRepository.AddFlightAsync(_mapper.MapFlight(flightDto));
+        return flight != null ? _mapper.MapFlight(flight) : null;
+    }
+
+    public async Task<FlightDto?> UpdateFlightAsync(int id, FlightDto updatedFlight)
+    {
+        var flight = await _flightRepository.UpdateFlightAsync(id, _mapper.MapFlight(updatedFlight));
+        return flight != null ? _mapper.MapFlight(flight) : null;
+    }
+
+    public async Task<FlightDto?> DeleteFlightAsync(int id)
+    {
+        var flight = await _flightRepository.DeleteFlightAsync(id);
+        return flight != null ? _mapper.MapFlight(flight) : null;
+    }
+
     public async Task<int> GetFlightsCountAsync() => await _flightRepository.GetFlightsCountAsync();
-
-    public async Task<bool> AddFlightAsync(FlightDto flightDto) => await _flightRepository.AddFlightAsync(_mapper.MapFlight(flightDto));
-
-    public async Task<bool> UpdateFlightAsync(int id, FlightDto updatedFlight) => await _flightRepository.UpdateFlightAsync(id, _mapper.MapFlight(updatedFlight));
-
-    public async Task<bool> DeleteFlightAsync(int id) => await _flightRepository.DeleteFlightAsync(id);
 
     public bool IsArrivalDateAfterDeprtureDate(DateTime departureDateTime, DateTime arrivalDateTime) => departureDateTime >= arrivalDateTime;
 

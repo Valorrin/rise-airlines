@@ -6,10 +6,10 @@ public interface IAirportService
     Task<AirportDto?> GetAirportByIdAsync(int id);
     Task<List<AirportDto>> GetAllAirportsAsync();
     Task<List<AirportDto>> GetAllAirportsAsync(string filter, string value);
+    Task<AirportDto?> AddAirportAsync(AirportDto airporteDto);
+    Task<AirportDto?> UpdateAirportAsync(int id, AirportDto updatedAirport);
+    Task<AirportDto?> DeleteAirportAsync(int id);
     Task<int> GetAirportsCountAsync();
-    Task<bool> AddAirportAsync(AirportDto airporteDto);
-    Task<bool> UpdateAirportAsync(int id, AirportDto updatedAirport);
-    Task<bool> DeleteAirportAsync(int id);
     Task<bool> IsAirportCodeUniqueAsync(string code);
     Task<bool> IsAirportNameUniqueAsync(string name);
     bool IsAirportCodeLengthValid(string? code);

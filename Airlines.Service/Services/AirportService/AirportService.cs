@@ -33,11 +33,23 @@ public class AirportService : IAirportService
 
     public async Task<int> GetAirportsCountAsync() => await _airportRepository.GetAirportsCountAsync();
 
-    public async Task<bool> AddAirportAsync(AirportDto airporteDto) => await _airportRepository.AddAirportAsync(_mapper.MapAirport(airporteDto));
+    public async Task<AirportDto?> AddAirportAsync(AirportDto airporteDto)
+    {
+        var airport = await _airportRepository.AddAirportAsync(_mapper.MapAirport(airporteDto));
+        return airport != null ? _mapper.MapAirport(airport) : null;
+    }
 
-    public async Task<bool> UpdateAirportAsync(int id, AirportDto updatedAirport) => await _airportRepository.UpdateAirportAsync(id, _mapper.MapAirport(updatedAirport));
+    public async Task<AirportDto?> UpdateAirportAsync(int id, AirportDto updatedAirport)
+    {
+        var airport = await _airportRepository.UpdateAirportAsync(id, _mapper.MapAirport(updatedAirport));
+        return airport != null ? _mapper.MapAirport(airport) : null;
+    }
 
-    public async Task<bool> DeleteAirportAsync(int id) => await _airportRepository.DeleteAirportAsync(id);
+    public async Task<AirportDto?> DeleteAirportAsync(int id)
+    {
+        var airport = await _airportRepository.DeleteAirportAsync(id);
+        return airport != null ? _mapper.MapAirport(airport) : null;
+    }
 
     public async Task<bool> IsAirportCodeUniqueAsync(string code) => code != null && await _airportRepository.IsAirportCodeUniqueAsync(code);
 

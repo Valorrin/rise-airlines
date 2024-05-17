@@ -35,48 +35,36 @@ public class AirlineRepository : IAirlineRepository
         }
     }
 
-    public async Task<int> GetAirlinesCountAsync()
-    {
-        try
-        {
-            return await _context.Airlines.CountAsync();
-        }
-        catch (Exception)
-        {
-            return 0;
-        }
-    }
-
-    public async Task<bool> AddAirlineAsync(Airline airline)
+    public async Task<Airline?> AddAirlineAsync(Airline airline)
     {
         try
         {
             await _context.Airlines.AddAsync(airline);
             await _context.SaveChangesAsync();
 
-            return true;
+            return airline;
         }
         catch (Exception)
         {
-            return false;
+            return null;
         }
     }
 
-    public async Task<bool> UpdateAirlineAsync(Airline airline)
+    public async Task<Airline?> UpdateAirlineAsync(Airline airline)
     {
         try
         {
             _context.Update(airline);
             await _context.SaveChangesAsync();
-            return true;
+            return airline;
         }
         catch (Exception)
         {
-            return false;
+            return null;
         }
     }
 
-    public async Task<bool> UpdateAirlineAsync(int id, Airline airline)
+    public async Task<Airline?> UpdateAirlineAsync(int id, Airline airline)
     {
         try
         {
@@ -89,17 +77,16 @@ public class AirlineRepository : IAirlineRepository
                 existingAirline.Description = airline.Description;
 
                 await _context.SaveChangesAsync();
-                return true;
             }
-            return false;
+            return airline;
         }
         catch (Exception)
         {
-            return false;
+            return null;
         }
     }
 
-    public async Task<bool> DeleteAirlineAsync(int id)
+    public async Task<Airline?> DeleteAirlineAsync(int id)
     {
         try
         {
@@ -108,13 +95,24 @@ public class AirlineRepository : IAirlineRepository
             {
                 _context.Airlines.Remove(airline);
                 await _context.SaveChangesAsync();
-                return true;
             }
-            return false;
+            return airline;
         }
         catch (Exception)
         {
-            return false;
+            return null;
+        }
+    }
+
+    public async Task<int> GetAirlinesCountAsync()
+    {
+        try
+        {
+            return await _context.Airlines.CountAsync();
+        }
+        catch (Exception)
+        {
+            return 0;
         }
     }
 
