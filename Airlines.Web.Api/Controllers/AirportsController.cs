@@ -48,11 +48,6 @@ public class AirportsController : ControllerBase
 
         var airport = await _airportService.AddAirportAsync(airportDto);
 
-        if (airport == null)
-        {
-            return StatusCode(500, new { message = "Internal server error." });
-        }
-
         return CreatedAtAction("Create", airport);
     }
 
@@ -66,11 +61,6 @@ public class AirportsController : ControllerBase
 
         var airport = await _airportService.UpdateAirportAsync(airportDTO);
 
-        if (airport == null)
-        {
-            return StatusCode(500, new { message = "Internal server error." });
-        }
-
         return Ok(airport);
     }
 
@@ -78,11 +68,6 @@ public class AirportsController : ControllerBase
     public async Task<ActionResult<AirportDto>> Delete(int id)
     {
         var airport = await _airportService.DeleteAirportAsync(id);
-
-        if (airport == null)
-        {
-            return StatusCode(500, new { message = "Internal server error." });
-        }
 
         return Ok(airport);
     }

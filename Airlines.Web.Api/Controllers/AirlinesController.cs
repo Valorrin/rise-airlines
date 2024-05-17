@@ -48,11 +48,6 @@ public class AirlinesController : ControllerBase
 
         var airline = await _airlineService.AddAirlineAsync(airlineDTO);
 
-        if (airline == null)
-        {
-            return StatusCode(500, new { message = "Internal server error." });
-        }
-
         return CreatedAtAction("Create", airline);
     }
 
@@ -66,11 +61,6 @@ public class AirlinesController : ControllerBase
 
         var airline = await _airlineService.UpdateAirlineAsync(airlineDTO);
 
-        if (airline == null)
-        {
-            return StatusCode(500, new { message = "Internal server error." });
-        }
-
         return Ok(airline);
     }
 
@@ -78,11 +68,6 @@ public class AirlinesController : ControllerBase
     public async Task<ActionResult<AirlineDto>> Delete(int id)
     {
         var airline = await _airlineService.DeleteAirlineAsync(id);
-
-        if (airline == null)
-        {
-            return StatusCode(500, new { message = "Internal server error." });
-        }
 
         return Ok(airline);
     }
