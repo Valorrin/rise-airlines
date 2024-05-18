@@ -3,11 +3,24 @@ using Airlines.Persistence.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Airlines.Persistence.Repository;
+
 public class AirportRepository : IAirportRepository
 {
     private readonly AirlinesDBContext _context;
 
     public AirportRepository(AirlinesDBContext context) => _context = context;
+
+    public async Task<Airport?> GetAirportByIdAsync(int id)
+    {
+        try
+        {
+            return await _context.Airports.FirstOrDefaultAsync(a => a.AirportId == id);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while retrieving the airport by ID.", ex);
+        }
+    }
 
     public async Task<List<Airport>> GetAllAirportsAsync()
     {
@@ -15,10 +28,9 @@ public class AirportRepository : IAirportRepository
         {
             return await _context.Airports.ToListAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Console.WriteLine("There is no airport data!");
-            return [];
+            throw new Exception("An error occurred while retrieving all airports.", ex);
         }
     }
 
@@ -28,41 +40,41 @@ public class AirportRepository : IAirportRepository
         {
             return await _context.Airports.Where(airport => EF.Property<string>(airport, filter) == value).ToListAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Console.WriteLine("There is no airport data!");
-            return [];
+            throw new Exception("An error occurred while retrieving airports by filter.", ex);
         }
     }
 
-    public async Task<int> GetAirportsCountAsync()
-    {
-        try
-        {
-            return await _context.Airports.CountAsync();
-        }
-        catch (Exception)
-        {
-            return 0;
-        }
-    }
-
-    public async Task<bool> AddAirportAsync(Airport airport)
+    public async Task<Airport?> AddAirportAsync(Airport airport)
     {
         try
         {
             await _context.Airports.AddAsync(airport);
             await _context.SaveChangesAsync();
-
-            return true;
+            return airport;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception("An error occurred while adding the airport.", ex);
         }
     }
 
-    public async Task<bool> UpdateAirportAsync(int id, Airport airport)
+    public async Task<Airport?> UpdateAirportAsync(Airport airport)
+    {
+        try
+        {
+            _context.Update(airport);
+            await _context.SaveChangesAsync();
+            return airport;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while updating the airport.", ex);
+        }
+    }
+
+    public async Task<Airport?> UpdateAirportAsync(int id, Airport airport)
     {
         try
         {
@@ -75,20 +87,17 @@ public class AirportRepository : IAirportRepository
                 existingAirport.Code = airport.Code;
                 existingAirport.Runways = airport.Runways;
                 existingAirport.Founded = airport.Founded;
-
                 await _context.SaveChangesAsync();
-
-                return true;
             }
-            return false;
+            return airport;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception("An error occurred while updating the airport.", ex);
         }
     }
 
-    public async Task<bool> DeleteAirportAsync(int id)
+    public async Task<Airport?> DeleteAirportAsync(int id)
     {
         try
         {
@@ -97,13 +106,24 @@ public class AirportRepository : IAirportRepository
             {
                 _context.Airports.Remove(airport);
                 await _context.SaveChangesAsync();
-                return true;
             }
-            return false;
+            return airport;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception("An error occurred while deleting the airport.", ex);
+        }
+    }
+
+    public async Task<int> GetAirportsCountAsync()
+    {
+        try
+        {
+            return await _context.Airports.CountAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while retrieving the count of airports.", ex);
         }
     }
 
@@ -113,9 +133,9 @@ public class AirportRepository : IAirportRepository
         {
             return await _context.Airports.AnyAsync(a => a.Code == code);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception("An error occurred while checking if the airport code is unique.", ex);
         }
     }
 
@@ -125,9 +145,9 @@ public class AirportRepository : IAirportRepository
         {
             return await _context.Airports.AnyAsync(a => a.Name == name);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception("An error occurred while checking if the airport name is unique.", ex);
         }
     }
 }

@@ -10,6 +10,18 @@ public class FlightRepository : IFlightRepository
 
     public FlightRepository(AirlinesDBContext context) => _context = context;
 
+    public async Task<Flight?> GetFlightByIdAsync(int id)
+    {
+        try
+        {
+            return await _context.Flights.FirstOrDefaultAsync(a => a.FlightId == id);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while retrieving the flight by ID.", ex);
+        }
+    }
+
     public async Task<List<Flight>> GetAllFlightsAsync()
     {
         try
@@ -24,10 +36,9 @@ public class FlightRepository : IFlightRepository
 
             return flights;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Console.WriteLine("There is no flight data!");
-            return [];
+            throw new Exception("An error occurred while retrieving all flights.", ex);
         }
     }
 
@@ -46,10 +57,9 @@ public class FlightRepository : IFlightRepository
 
             return flights;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Console.WriteLine("There is no flight data!");
-            return [];
+            throw new Exception("An error occurred while retrieving flights by filter.", ex);
         }
     }
 
@@ -69,9 +79,9 @@ public class FlightRepository : IFlightRepository
 
             return flights;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return [];
+            throw new Exception("An error occurred while retrieving flights for today.", ex);
         }
     }
 
@@ -94,9 +104,9 @@ public class FlightRepository : IFlightRepository
 
             return flights;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return [];
+            throw new Exception("An error occurred while retrieving flights for this week.", ex);
         }
     }
 
@@ -118,9 +128,9 @@ public class FlightRepository : IFlightRepository
 
             return flights;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return [];
+            throw new Exception("An error occurred while retrieving flights for month.", ex);
         }
     }
 
@@ -130,28 +140,42 @@ public class FlightRepository : IFlightRepository
         {
             return await _context.Flights.CountAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return 0;
+            throw new Exception("An error occurred while adding the flight.", ex);
         }
     }
 
-    public async Task<bool> AddFlightAsync(Flight flight)
+    public async Task<Flight?> AddFlightAsync(Flight flight)
     {
         try
         {
             await _context.Flights.AddAsync(flight);
             await _context.SaveChangesAsync();
 
-            return true;
+            return flight;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception("An error occurred while retrieving the count of flights.", ex);
         }
     }
 
-    public async Task<bool> UpdateFlightAsync(int id, Flight flight)
+    public async Task<Flight?> UpdateFlightAsync(Flight flight)
+    {
+        try
+        {
+            _context.Update(flight);
+            await _context.SaveChangesAsync();
+            return flight;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while updating the flight.", ex);
+        }
+    }
+
+    public async Task<Flight?> UpdateFlightAsync(int id, Flight flight)
     {
         try
         {
@@ -165,18 +189,16 @@ public class FlightRepository : IFlightRepository
                 existingFlight.ArrivalDateTime = flight.ArrivalDateTime;
 
                 await _context.SaveChangesAsync();
-
-                return true;
             }
-            return false;
+            return flight;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception("An error occurred while updating the flight.", ex);
         }
     }
 
-    public async Task<bool> DeleteFlightAsync(int id)
+    public async Task<Flight?> DeleteFlightAsync(int id)
     {
         try
         {
@@ -185,13 +207,12 @@ public class FlightRepository : IFlightRepository
             {
                 _context.Flights.Remove(flight);
                 await _context.SaveChangesAsync();
-                return true;
             }
-            return false;
+            return flight;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return false;
+            throw new Exception("An error occurred while deleting the flight.", ex);
         }
     }
 }
