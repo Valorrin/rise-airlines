@@ -68,6 +68,11 @@ public class AirportsController : ControllerBase
 
         var airport = await _airportService.UpdateAirportAsync(airportDTO);
 
+        if (airport == null)
+        {
+            return NotFound();
+        }
+
         return Ok(airport);
     }
 

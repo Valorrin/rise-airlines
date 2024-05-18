@@ -1,4 +1,5 @@
 ﻿using Airlines.Persistence.Entities;
+using Airlines.Persistence.Repository;
 using Airlines.Persistence.Repository.Interfaces;
 using Airlines.Service.Dto;
 using Airlines.Service.Mappers;
@@ -65,6 +66,13 @@ public class FlightService : IFlightService
 
     public async Task<FlightDto?> UpdateFlightAsync(FlightDto updatedFlight)
     {
+        var targetFlight = _flightRepository.GetFlightByIdAsync(updatedFlight.FlightId);
+
+        if (targetFlight == null)
+        {
+            return null;
+        }
+
         var flight = await _flightRepository.UpdateFlightAsync(_mapper.MapFlight(updatedFlight));
         return flight != null ? _mapper.MapFlight(flight) : null;
     }

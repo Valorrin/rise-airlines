@@ -1,4 +1,5 @@
-﻿using Airlines.Persistence.Repository.Interfaces;
+﻿using Airlines.Persistence.Repository;
+using Airlines.Persistence.Repository.Interfaces;
 using Airlines.Service.Dto;
 using Airlines.Service.Mappers;
 
@@ -32,14 +33,22 @@ public class AirportService : IAirportService
         return airports.Select(_mapper.MapAirport).ToList();
     }
 
-    public async Task<AirportDto?> AddAirportAsync(AirportDto airporteDto)
+    public async Task<AirportDto?> AddAirportAsync(AirportDto airportDto)
     {
-        var airport = await _airportRepository.AddAirportAsync(_mapper.MapAirport(airporteDto));
+
+        var airport = await _airportRepository.AddAirportAsync(_mapper.MapAirport(airportDto));
         return airport != null ? _mapper.MapAirport(airport) : null;
     }
 
     public async Task<AirportDto?> UpdateAirportAsync(AirportDto updatedAirport)
     {
+        var targetAirport = _airportRepository.GetAirportByIdAsync(updatedAirport.AirportId);
+
+        if (targetAirport == null)
+        {
+            return null;
+        }
+
         var airport = await _airportRepository.UpdateAirportAsync(_mapper.MapAirport(updatedAirport));
         return airport != null ? _mapper.MapAirport(airport) : null;
     }

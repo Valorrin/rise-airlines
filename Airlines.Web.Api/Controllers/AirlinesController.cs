@@ -68,6 +68,11 @@ public class AirlinesController : ControllerBase
 
         var airline = await _airlineService.UpdateAirlineAsync(airlineDTO);
 
+        if (airline == null)
+        {
+            return NotFound();
+        }
+
         return Ok(airline);
     }
 
