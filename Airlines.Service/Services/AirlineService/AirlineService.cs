@@ -40,8 +40,7 @@ public class AirlineService : IAirlineService
 
     public async Task<AirlineDto?> UpdateAirlineAsync(AirlineDto updatedAirline)
     {
-        var updatedAirlineId = updatedAirline.AirlineId;
-        var targetAirline = _airlineRepository.GetAirlineByIdAsync(updatedAirlineId);
+        var targetAirline = _airlineRepository.GetAirlineByIdAsync(updatedAirline.AirlineId);
 
         if (targetAirline == null)
         {

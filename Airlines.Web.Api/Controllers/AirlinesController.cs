@@ -76,6 +76,24 @@ public class AirlinesController : ControllerBase
         return Ok(airline);
     }
 
+    [HttpPut("{id}")]
+    public async Task<ActionResult<AirlineDto>> Update(int id, [FromBody] AirlineDto airlineDTO)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var airline = await _airlineService.UpdateAirlineAsync(id, airlineDTO);
+
+        if (airline == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(airline);
+    }
+
     [HttpDelete("{id}")]
     public async Task<ActionResult<AirlineDto>> Delete(int id)
     {

@@ -68,6 +68,29 @@ public class FlightsController : ControllerBase
 
         var flight = await _flightService.UpdateFlightAsync(flightDto);
 
+        if (flight == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(flight);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<FlightDto>> Update(int id, [FromBody] FlightDto flightDTO)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var flight = await _flightService.UpdateFlightAsync(id, flightDTO);
+
+        if (flight == null)
+        {
+            return NotFound();
+        }
+
         return Ok(flight);
     }
 
