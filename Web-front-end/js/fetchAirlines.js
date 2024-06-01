@@ -3,11 +3,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const airlineData = await getAllAsync(type);
 
   if (airlineData) {
-      console.log("Airline data is available.");
       const tableBody = document.getElementById('airlines-tbody');
-      tableBody.innerHTML = ''; // Clear any existing rows
+      tableBody.innerHTML = '';
 
-      // Append airport data to table
       airlineData.forEach(airline => {
           const row = document.createElement('tr');
           row.setAttribute('data-id', airline.airportId);
@@ -28,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               if (success) {
                   tableBody.removeChild(row);
               } else {
-                  console.error("Failed to delete airline data.");
+                  console.error("Failed to delete the airline.");
               }
           });
 
