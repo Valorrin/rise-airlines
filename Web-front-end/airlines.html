@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airlines</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="./js/httpRequests.js"></script>
+    <script src="./js/Airlines.js"></script>
 </head>
 <body>
     <header>
@@ -23,74 +25,33 @@
     <main>
         <div class="main-header">
             <a href="./index.html" class="arrow-back">
-              <img src="./assets/left sidebar.png" alt="arrow-back" />
+                <img src="./assets/left sidebar.png" alt="arrow-back">
             </a>
             <h2>Airlines</h2>
-        </div>    
+        </div>
         <div class="table-container">
-            <table>
+            <table id="airlines-table">
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Founded</th>
                         <th>Fleet Size</th>
                         <th>Description</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Aer Lingus</td>
-                        <td>2010-10-12</td>
-                        <td>12</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, consequatur!</td>
-                    </tr>
-                    <tr>
-                        <td>British Airways</td>
-                        <td>2001-05-03</td>
-                        <td>25</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, atque?</td>
-                    </tr>
-                    <tr>
-                        <td>Qantas</td>
-                        <td>2015-08-20</td>
-                        <td>18</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, expedita.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, expedita.</td>
-                    </tr>
-                    <tr>
-                        <td>Lufthansa</td>
-                        <td>2008-12-30</td>
-                        <td>20</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus, culpa!</td>
-                    </tr>
-                    <tr>
-                        <td>Emirates</td>
-                        <td>2012-04-15</td>
-                        <td>22</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, veritatis.</td>
-                    </tr>
-                    <tr>
-                        <td>All Nippon Airways</td>
-                        <td>2005-09-28</td>
-                        <td>16</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat, distinctio.</td>
-                    </tr>
-                    <tr>
-                        <td>Singapore Airlines</td>
-                        <td>2003-11-17</td>
-                        <td>28</td>
-                        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, laboriosam.</td>
-                    </tr>
+                <tbody id="airlines-tbody">
                 </tbody>
             </table>
         </div>
         <div class="form-wrapper">
-            <button class="show-form-button">Show Form</button>
-            <form method="post">
+            <button class="show-form-button" onclick="document.querySelector('form').classList.toggle('hidden');">Show Form</button>
+            <form method="post" class="hidden">
                 <fieldset>
                     <legend>Add New Airline</legend>
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name">
-                    <label for="founed">Founded</label>
+                    <label for="founded">Founded</label>
                     <input type="date" id="founded" name="founded">
                     <label for="fleetSize">Fleet size</label>
                     <input type="number" id="fleetSize" name="fleetSize">

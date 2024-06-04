@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flights</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="./js/httpRequests.js"></script>
+    <script src="./js/Flights.js"></script>
 </head>
 <body>
     <header>
@@ -28,127 +30,18 @@
             <h2>Flights</h2>
         </div>    
         <div class="table-container">
-            <table>
+            <table id="flights-table">
                 <thead>
                     <tr>
                         <th>Flight Number</th>
-                        <th>Airline</th>
-                        <th>Price</th>
                         <th>From</th>
                         <th>To</th>
                         <th>Departure</th>
                         <th>Arrival</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>FL123</td>
-                        <td>British Airways</td>
-                        <td>40 $</td>
-                        <td>DallasFort Worth Airport</td>
-                        <td>OHare Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL456</td>
-                        <td>Aer Lingus</td>
-                        <td>23 $</td>
-                        <td>John F Kennedy Airport</td>
-                        <td>Los Angeles Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL123</td>
-                        <td>British Airways</td>
-                        <td>40 $</td>
-                        <td>Dallas/Fort Worth Airport</td>
-                        <td>O'Hare International Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL456</td>
-                        <td>Aer Lingus</td>
-                        <td>23 $</td>
-                        <td>John F Kennedy Airport</td>
-                        <td>Los Angeles Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL789</td>
-                        <td>Lufthansa</td>
-                        <td>55 $</td>
-                        <td>Heathrow Airport</td>
-                        <td>Charles de Gaulle Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL101</td>
-                        <td>Qantas</td>
-                        <td>30 $</td>
-                        <td>Sydney Airport</td>
-                        <td>Hong Kong International Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL202</td>
-                        <td>Emirates</td>
-                        <td>70 $</td>
-                        <td>Dubai International Airport</td>
-                        <td>Shanghai Pudong International Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL303</td>
-                        <td>All Nippon Airways</td>
-                        <td>45 $</td>
-                        <td>Tokyo Haneda Airport</td>
-                        <td>Indira Gandhi International Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL404</td>
-                        <td>Singapore Airlines</td>
-                        <td>60 $</td>
-                        <td>Singapore Changi Airport</td>
-                        <td>Frankfurt Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL505</td>
-                        <td>Air France</td>
-                        <td>48 $</td>
-                        <td>Beijing Capital International Airport</td>
-                        <td>Adolfo Suárez Madrid–Barajas Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL606</td>
-                        <td>Delta Air Lines</td>
-                        <td>37 $</td>
-                        <td>Denver International Airport</td>
-                        <td>Atlanta Hartsfield-Jackson International Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>FL707</td>
-                        <td>KLM Royal Dutch Airlines</td>
-                        <td>52 $</td>
-                        <td>Amsterdam Airport Schiphol</td>
-                        <td>Los Angeles International Airport</td>
-                        <td>2024-04-16 14:30:00</td>
-                        <td>2024-04-16 14:30:00</td>
-                    </tr>
+                <tbody id="flights-tbody">
                 </tbody>
             </table>
         </div>
