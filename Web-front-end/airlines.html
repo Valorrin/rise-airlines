@@ -6,7 +6,7 @@
     <title>Airlines</title>
     <link rel="stylesheet" href="styles.css">
     <script src="./js/httpRequests.js"></script>
-    <script src="./js/fetchAirlines.js"></script>
+    <script src="./js/Airlines.js"></script>
 </head>
 <body>
     <header>
@@ -45,8 +45,8 @@
             </table>
         </div>
         <div class="form-wrapper">
-            <button class="show-form-button">Show Form</button>
-            <form method="post">
+            <button class="show-form-button" onclick="document.querySelector('form').classList.toggle('hidden');">Show Form</button>
+            <form method="post" class="hidden">
                 <fieldset>
                     <legend>Add New Airline</legend>
                     <label for="name">Name:</label>
